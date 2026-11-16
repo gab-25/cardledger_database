@@ -57,7 +57,12 @@ S3 settings come only from the environment (the workflow reads them from reposit
 
 - `CARDLEDGER_S3_BUCKET`: the bucket (required without `--out`, no default)
 - `CARDLEDGER_S3_ENDPOINT`: endpoint of an S3-compatible service (optional, empty means AWS)
-- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`
+- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`: the credentials
+- `AWS_DEFAULT_REGION`: required (use `auto` for Cloudflare R2)
+
+The credentials need `s3:GetObject`, `s3:PutObject` and `s3:ListBucket` on the bucket. `s3:ListBucket` is needed even
+though nothing is listed: without it a missing key (the first run, before any manifest or cache exists) answers
+`AccessDenied` instead of `NoSuchKey`, and the run fails.
 
 ## CI
 
