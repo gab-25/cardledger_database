@@ -168,3 +168,37 @@ def test_result_lists_the_expansion_of_every_single():
     products += [cm(5, "Lonely Card", 11), cm(6, "Booster Box", 11, id_category=5)]
     result = match(products, [group()], cards, SINGLES)
     assert result.single_expansions == {1: 10, 2: 10, 3: 10, 4: 10, 5: 11}
+
+
+# --- one expansion per group (Magic bench) ---
+
+def test_group_goes_only_to_its_best_expansion():
+    products, cards = named_set()
+    # a second expansion with the same four names and two more (e.g. a promo set of the same cards)
+    promos = [cm(11 + i, n, 11) for i, n in enumerate(NAMES + ["Omega Titan", "Sigma Seer"])]
+    result = match(products + promos, [group()], cards, SINGLES)
+    assert result.expansion_pairs == {10: 100}
+    assert set(result.card_pairs) == {1, 2, 3, 4}
+
+
+def test_expansions_tied_for_a_group_get_none():
+    products, cards = named_set()
+    twins, _ = named_set(id_expansion=11, first_id=11)
+    result = match(products + twins, [group()], cards, SINGLES)
+    assert result.expansion_pairs == {}
+    assert result.card_pairs == {}
+
+
+def test_expansion_with_more_printings_than_its_group_is_not_matched():
+    # every name twice on Cardmarket (e.g. prerelease and promo pack stamps), once in the group
+    products = [cm(i + 1, f"{n} (V.{v})") for i, (n, v) in enumerate((n, v) for n in NAMES for v in (1, 2))]
+    _, cards = named_set()
+    assert match(products, [group()], cards, SINGLES).expansion_pairs == {}
+
+
+def test_expansion_with_some_reprinted_names_is_matched():
+    products, cards = named_set()
+    products += [cm(5, "Alpha Dragon (V.2)"), cm(6, "Beta Knight (V.2)")]  # 6 printings of 4 names: ratio 1.5
+    result = match(products, [group()], cards, SINGLES)
+    assert result.expansion_pairs == {10: 100}
+    assert matcher.MAX_PRINTING_RATIO == 1.5

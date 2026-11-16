@@ -13,6 +13,7 @@ from .sources.tcgcsv import TcgGroup, TcgProduct
 MIN_COMMON = 2  # keys an expansion must share with its group
 MIN_SHARE = 0.3  # ... and as a share of the expansion's keys
 MIN_MARGIN = 0.1  # F1 lead of the best group over the second best
+MAX_PRINTING_RATIO = 1.5  # printings per key of the expansion over printings per key of the group
 
 CODE = re.compile(r"\(([A-Z0-9]{1,6}-(?:[A-Z]{2})?\d{1,4}[A-Z]?)\)")
 _BRACKETS = re.compile(r"\[[^\]]*\]|\([^)]*\)")
@@ -74,14 +75,20 @@ def f1(common: int, exp_keys: int, group_keys: int) -> float:
     return 2 * common / (exp_keys + group_keys) if exp_keys + group_keys else 0.0
 
 
-def best_group(exp_keys: set[str], group_keys: dict[int, set[str]], index: dict[str, set[int]]) -> int | None:
-    """The group sharing the most keys by F1, when it shares at least MIN_COMMON keys and MIN_SHARE of the
-    expansion's keys and leads the second best by MIN_MARGIN; else None."""
+def group_scores(exp_keys: set[str], group_keys: dict[int, set[str]],
+                 index: dict[str, set[int]]) -> dict[int, tuple[float, int]]:
+    """{groupId: (F1, common keys)} of every group sharing a key with the expansion."""
     common: Counter = Counter()
     for key in exp_keys:
         for group_id in index.get(key, ()):
             common[group_id] += 1
-    scored = sorted(((f1(n, len(exp_keys), len(group_keys[g])), n, g) for g, n in common.items()), reverse=True)
+    return {g: (f1(n, len(exp_keys), len(group_keys[g])), n) for g, n in common.items()}
+
+
+def best_group(exp_keys: set[str], scores: dict[int, tuple[float, int]]) -> int | None:
+    """The group sharing the most keys by F1, when it shares at least MIN_COMMON keys and MIN_SHARE of the
+    expansion's keys and leads the second best by MIN_MARGIN; else None."""
+    scored = sorted(((score, n, g) for g, (score, n) in scores.items()), reverse=True)
     if not scored:
         return None
     score, n, group_id = scored[0]
@@ -90,6 +97,23 @@ def best_group(exp_keys: set[str], group_keys: dict[int, set[str]], index: dict[
     if len(scored) > 1 and score - scored[1][0] < MIN_MARGIN:
         return None
     return group_id
+
+
+def best_expansion(group_id: int, scores: dict[int, dict[int, tuple[float, int]]]) -> int | None:
+    """The expansion with the highest F1 for the group, None on a tie: a group holds one Cardmarket expansion."""
+    ranked = sorted(((s[group_id][0], e) for e, s in scores.items() if group_id in s), reverse=True)
+    if not ranked or len(ranked) > 1 and ranked[0][0] == ranked[1][0]:
+        return None
+    return ranked[0][1]
+
+
+def printing_ratio(keys: dict[int, str], cards: list[TcgProduct], mode: str) -> float:
+    """Printings per key of the expansion over those of the group: well above 1 when the group holds only some of
+    the expansion's printings (e.g. promo pack stamps but not the prerelease ones)."""
+    card_keys = [k for k in (tcg_key(c, mode) for c in cards) if k]
+    if not keys or not card_keys:
+        return 0.0
+    return (len(keys) / len(set(keys.values()))) / (len(card_keys) / len(set(card_keys)))
 
 
 def pair_cards(keys: dict[int, str], cards: list[TcgProduct], mode: str) -> dict[int, TcgProduct]:
@@ -119,6 +143,8 @@ def large_image(url: str) -> str:
 
 def match(products: list[CmProduct], groups: list[TcgGroup], tcg: list[TcgProduct],
           single_category_ids: set[int]) -> MatchResult:
+    """Pair each expansion with its best group when the group's best expansion is that one too and holds as many
+    printings per key, then pair the cards whose key is unique on both sides."""
     codes = set_codes(groups)
     by_group: dict[int, list[TcgProduct]] = defaultdict(list)
     for card in tcg:
@@ -140,11 +166,17 @@ def match(products: list[CmProduct], groups: list[TcgGroup], tcg: list[TcgProduc
     cards: dict[int, SourceCard] = {}
     card_pairs: dict[int, int] = {}
     expansion_pairs: dict[int, int] = {}
+    modes = {e: expansion_mode(items) for e, items in singles.items()}
+    keys_of = {e: cm_keys(items, modes[e]) for e, items in singles.items()}
+    scores = {e: group_scores(set(keys_of[e].values()), group_keys[modes[e]], index[modes[e]]) for e in singles}
     for id_expansion, items in singles.items():
-        mode = expansion_mode(items)
-        keys = cm_keys(items, mode)
-        group_id = best_group(set(keys.values()), group_keys[mode], index[mode])
+        mode, keys = modes[id_expansion], keys_of[id_expansion]
+        group_id = best_group(set(keys.values()), scores[id_expansion])
         if group_id is None or group_id not in groups_by_id:
+            continue
+        if best_expansion(group_id, scores) != id_expansion:
+            continue
+        if printing_ratio(keys, by_group[group_id], mode) > MAX_PRINTING_RATIO:
             continue
         expansion_pairs[id_expansion] = group_id
         names = {p.id_product: p.name for p in items}
