@@ -9,6 +9,7 @@ import json
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, date, datetime, timedelta
+from urllib.parse import quote
 
 import httpx
 
@@ -49,7 +50,7 @@ def _needs_fetch(entry, now):
 
 
 def _read_card(client, lang, card_id, set_id, now):
-    data = _get(client, f"{BASE}/{lang}/cards/{card_id}", missing_ok=True)
+    data = _get(client, f"{BASE}/{lang}/cards/{quote(card_id, safe='')}", missing_ok=True)
     if data is None:
         return None
     cardmarket = (data.get("pricing") or {}).get("cardmarket") or {}
@@ -68,7 +69,7 @@ def _fetch_language(client, store, lang, now):
     try:
         listing = _get(client, f"{BASE}/{lang}/sets")
         with ThreadPoolExecutor(MAX_WORKERS) as pool:
-            details = list(pool.map(lambda s: _get(client, f"{BASE}/{lang}/sets/{s['id']}"), listing))
+            details = list(pool.map(lambda s: _get(client, f"{BASE}/{lang}/sets/{quote(s['id'], safe='')}"), listing))
             cache = _load_cache(store, lang)
             wanted = [
                 (c["id"], d["id"]) for d in details for c in d.get("cards") or [] if _needs_fetch(cache.get(c["id"]), now)

@@ -165,3 +165,18 @@ def test_shared_abbreviation_across_languages_uses_tcgdex_ids(tmp_path):
     }
     sets = tcgdex.fetch(make(routes)[0], LocalStore(tmp_path), now=NOW).sets
     assert set(sets) == {"sv08", "sv8"}
+
+
+def test_ids_with_reserved_characters_are_escaped_in_urls(tmp_path):
+    def handler(request):
+        routes = {
+            "/v2/ja/sets": [{"id": "SM1+"}],
+            "/v2/ja/sets/SM1%2B": {"id": "SM1+", "name": "J", "cards": [{"id": "SM1+-001", "localId": "001"}]},
+            "/v2/ja/cards/SM1%2B-001": card("SM1+-001", "001", cm=777),
+        }
+        path = request.url.raw_path.decode()
+        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    result = tcgdex.fetch(client, LocalStore(tmp_path), langs=("ja",), now=NOW)
+    assert result.cards[777].set_code == "sm1+"
