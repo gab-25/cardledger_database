@@ -5,7 +5,7 @@ prefers no match over a doubtful one."""
 import re
 import unicodedata
 from collections import Counter, defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from .model import CmProduct, Enrichment, SourceCard, SourceSet
 from .sources.tcgcsv import TcgGroup, TcgProduct
@@ -28,6 +28,7 @@ class MatchResult:
     enrichment: Enrichment
     card_pairs: dict[int, int]  # Cardmarket idProduct -> TCGplayer productId
     expansion_pairs: dict[int, int]  # Cardmarket idExpansion -> TCGplayer groupId
+    single_expansions: dict[int, int] = field(default_factory=dict)  # every single's idProduct -> idExpansion
 
 
 def code_of(name: str) -> str | None:
@@ -157,4 +158,5 @@ def match(products: list[CmProduct], groups: list[TcgGroup], tcg: list[TcgProduc
         for g in set(expansion_pairs.values())
     }
     expansions = {exp: codes[g] for exp, g in expansion_pairs.items()}
-    return MatchResult(Enrichment(cards, sets, expansions), card_pairs, expansion_pairs)
+    single_expansions = {p.id_product: id_expansion for id_expansion, items in singles.items() for p in items}
+    return MatchResult(Enrichment(cards, sets, expansions), card_pairs, expansion_pairs, single_expansions)

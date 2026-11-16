@@ -161,3 +161,10 @@ def test_shared_abbreviation_falls_back_to_group_id():
 
 def test_thresholds_are_module_constants():
     assert (matcher.MIN_COMMON, matcher.MIN_SHARE, matcher.MIN_MARGIN) == (2, 0.3, 0.1)
+
+
+def test_result_lists_the_expansion_of_every_single():
+    products, cards = named_set()
+    products += [cm(5, "Lonely Card", 11), cm(6, "Booster Box", 11, id_category=5)]
+    result = match(products, [group()], cards, SINGLES)
+    assert result.single_expansions == {1: 10, 2: 10, 3: 10, 4: 10, 5: 11}
