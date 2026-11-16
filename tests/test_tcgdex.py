@@ -131,3 +131,37 @@ def test_other_errors_raise_source_error(tmp_path):
     client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500)))
     with pytest.raises(SourceError):
         tcgdex.fetch(client, LocalStore(tmp_path), langs=("en",), now=NOW)
+
+
+def test_failed_card_keeps_the_cards_fetched_in_the_cache(tmp_path):
+    routes = en_routes(**{
+        "/en/sets/sv08": {"id": "sv08", "name": "S", "cards": [
+            {"id": "sv08-001", "localId": "001"}, {"id": "sv08-002", "localId": "002"},
+            {"id": "sv08-003", "localId": "003"}]},
+        "/en/cards/sv08-002": card("sv08-002", "002", cm=2),
+        "/en/cards/sv08-003": card("sv08-003", "003", cm=3),
+    })
+
+    def handler(request):
+        path = request.url.path.removeprefix("/v2")
+        if path == "/en/cards/sv08-002":
+            return httpx.Response(500)
+        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
+
+    store = LocalStore(tmp_path)
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    with pytest.raises(SourceError):
+        tcgdex.fetch(client, store, langs=("en",), now=NOW)
+    cached = json.loads(store.get("cache/tcgdex/en.json"))
+    assert set(cached) == {"sv08-001", "sv08-003"}
+
+
+def test_shared_abbreviation_across_languages_uses_tcgdex_ids(tmp_path):
+    routes = {
+        "/en/sets": [{"id": "sv08"}],
+        "/en/sets/sv08": {"id": "sv08", "name": "E", "abbreviation": {"official": "SSP"}, "cards": []},
+        "/ja/sets": [{"id": "SV8"}],
+        "/ja/sets/SV8": {"id": "SV8", "name": "J", "abbreviation": {"official": "SSP"}, "cards": []},
+    }
+    sets = tcgdex.fetch(make(routes)[0], LocalStore(tmp_path), now=NOW).sets
+    assert set(sets) == {"sv08", "sv8"}

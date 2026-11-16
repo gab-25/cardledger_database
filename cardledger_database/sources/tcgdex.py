@@ -73,11 +73,19 @@ def _fetch_language(client, store, lang, now):
             wanted = [
                 (c["id"], d["id"]) for d in details for c in d.get("cards") or [] if _needs_fetch(cache.get(c["id"]), now)
             ]
-            results = pool.map(lambda w: (w[0], _read_card(client, lang, w[0], w[1], now)), wanted)
-            for card_id, entry in results:
+            futures = [pool.submit(_read_card, client, lang, card_id, set_id, now) for card_id, set_id in wanted]
+            failure = None
+            for (card_id, _), future in zip(wanted, futures):
+                try:
+                    entry = future.result()
+                except Exception as exc:  # keep what the other cards fetched, raise once they are saved
+                    failure = failure or exc
+                    continue
                 if entry is not None:
                     cache[card_id] = entry
         store.put(f"cache/tcgdex/{lang}.json", json.dumps(cache, sort_keys=True).encode())
+        if failure:
+            raise failure
     except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"TCGdex: {type(exc).__name__}: {exc}") from exc
     return details, cache
