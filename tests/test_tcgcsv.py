@@ -63,3 +63,18 @@ def test_http_error_raises_source_error():
     client = make({"/tcgplayer/68/groups": GROUPS[:1]})
     with pytest.raises(SourceError):
         tcgcsv.fetch(client, 68)
+
+
+def test_transient_errors_are_retried():
+    routes = {"/tcgplayer/68/groups": GROUPS[:1], "/tcgplayer/68/3188/products": [product(2, "Sabo", "OP05-007")]}
+    failed = set()
+
+    def handler(request):
+        path = request.url.path
+        if path not in failed:  # every path fails once
+            failed.add(path)
+            raise httpx.ConnectError("reset", request=request)
+        return httpx.Response(200, json={"success": True, "errors": [], "results": routes[path]})
+
+    _, products = tcgcsv.fetch(httpx.Client(transport=httpx.MockTransport(handler)), 68)
+    assert [p.product_id for p in products] == [2]

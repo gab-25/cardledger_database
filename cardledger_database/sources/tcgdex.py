@@ -14,6 +14,7 @@ from urllib.parse import quote
 
 import httpx
 
+from .. import http
 from ..errors import SourceError
 from ..model import Enrichment, SourceCard, SourceSet, cardmarket_id, normalize_number
 from ..store import Store
@@ -26,7 +27,7 @@ RETRY_AFTER = timedelta(days=7)
 
 
 def _get(client, url, *, missing_ok=False):
-    response = client.get(url)
+    response = http.get(client, url)
     if missing_ok and response.status_code == 404:
         return None
     response.raise_for_status()

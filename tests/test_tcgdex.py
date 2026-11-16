@@ -225,3 +225,19 @@ def test_non_integer_cardmarket_id_counts_as_none(tmp_path, raw):
     store = LocalStore(tmp_path)
     assert tcgdex.fetch(make(routes)[0], store, langs=("en",), now=NOW).cards == {}
     assert json.loads(store.get("cache/tcgdex/en.json"))["sv08-001"]["cm"] is None
+
+
+def test_transient_errors_are_retried(tmp_path):
+    routes = en_routes()
+    failed = set()
+
+    def handler(request):
+        path = request.url.path.removeprefix("/v2")
+        if path not in failed:  # every path fails once
+            failed.add(path)
+            return httpx.Response(503)
+        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
+
+    result = tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), LocalStore(tmp_path), langs=("en",),
+                          now=NOW)
+    assert 794256 in result.cards

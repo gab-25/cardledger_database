@@ -6,6 +6,7 @@ from datetime import date
 
 import httpx
 
+from .. import http
 from ..errors import SourceError
 
 BASE = "https://tcgcsv.com/tcgplayer"
@@ -31,7 +32,7 @@ class TcgProduct:
 
 
 def _results(client, url):
-    response = client.get(url)
+    response = http.get(client, url)
     response.raise_for_status()
     return response.json()["results"]
 
