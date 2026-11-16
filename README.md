@@ -17,7 +17,8 @@ Every product keeps its Cardmarket product id; the sources add set codes, collec
 
 The Cardmarket product lists are the public files published by Cardmarket. The TCGCSV games are matched to Cardmarket
 products by name; the matcher is gated by a Magic bench (at most 1% wrong matches), and above that threshold those games
-are not published. A game with less than half the products of the previous publication is not published either.
+are not published. A game with less than half the products of the previous publication, or less than half the
+products enriched by its source (products that got a source card), is not published either.
 No prices are included.
 
 ## Output (format v1)
@@ -28,8 +29,8 @@ Under `catalog/v1/` in the bucket:
   lines, first the `expansion` lines (`code`, `name`, `released_at`, `language`), then the `product` lines
   (`id_product`, `name`, `expansion_code`, `number`, `rarity`, `image_url`, `image_large_url`, `category_id`,
   `category_name`).
-- `manifest.json`: `format_version`, `generated_at` and, per game, `key`, `sha256`, `products`, `expansions` and
-  `generated_at`.
+- `manifest.json`: `format_version`, `generated_at` and, per game, `key`, `sha256`, `products`, `enriched` (products
+  that got a card from the source, after corrections), `expansions` and `generated_at`.
 
 The TCGdex cache is kept under `cache/tcgdex/`.
 

@@ -115,3 +115,9 @@ def test_unmatched_product_takes_the_code_in_its_name_as_number():
 def test_stand_in_product_takes_the_code_in_its_name_as_number():
     c = assemble(GAMES["onepiece"], [prod(2, id_expansion=77, name="Sabo (OP13-004) (Parallel)")], enrich(), SINGLES)
     assert (c.products[0].expansion_code, c.products[0].number) == ("cmx77", "OP13-004")
+
+
+def test_enriched_counts_the_products_with_a_source_card():
+    e = enrich({1: card("lea"), 2: card("lea"), 99: card("lea")})
+    c = assemble(GAMES["pokemon"], [prod(1), prod(2), prod(3), prod(4, id_expansion=77)], e, SINGLES)
+    assert c.enriched == 2

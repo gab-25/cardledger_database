@@ -17,7 +17,9 @@ from .store import Store
 
 logger = logging.getLogger(__name__)
 
-PRUNE_MIN_SHARE = 0.5  # a game is not published with fewer products than this share of the previous publication
+# a game is not published with fewer products, or fewer products enriched by its source, than this share of the
+# previous publication
+PRUNE_MIN_SHARE = 0.5
 
 # slug -> (source, TCGCSV category)
 SOURCES: dict[str, tuple[str, int | None]] = {
@@ -95,17 +97,27 @@ def generate_game(slug: str, client, store: Store, bench_result: BenchResult | N
 
 
 def _check_size(catalog: GameCatalog, previous: dict | None) -> None:
-    if previous and len(catalog.products) < PRUNE_MIN_SHARE * previous["products"]:
+    """Blocks a game that shrank: fewer products, or (the games keeping unmatched products under a stand-in
+    expansion would not shrink with an empty source) fewer products with a source card. An entry without
+    `enriched` (older manifests) skips that check."""
+    if not previous:
+        return
+    if len(catalog.products) < PRUNE_MIN_SHARE * previous["products"]:
         raise QualityError(
             f"{len(catalog.products)} products, less than {PRUNE_MIN_SHARE:.0%} of the {previous['products']} "
             "previously published"
+        )
+    if previous.get("enriched") is not None and catalog.enriched < PRUNE_MIN_SHARE * previous["enriched"]:
+        raise QualityError(
+            f"{catalog.enriched} products enriched by the source, less than {PRUNE_MIN_SHARE:.0%} of the "
+            f"{previous['enriched']} previously published"
         )
 
 
 def _counts(catalog: GameCatalog, warnings: list[str], seconds: float) -> str:
     with_image = sum(1 for p in catalog.products if p.image_url)
     share = with_image / len(catalog.products) if catalog.products else 0
-    return (f"products={len(catalog.products)} expansions={len(catalog.expansions)} with_image={share:.1%} "
+    return (f"products={len(catalog.products)} enriched={catalog.enriched} expansions={len(catalog.expansions)} with_image={share:.1%} "
             f"skipped={catalog.skipped} correction_warnings={len(warnings)} seconds={seconds:.0f}")
 
 
@@ -139,6 +151,7 @@ def run(slugs: list[str], store: Store, client) -> dict[str, str]:
             entry = game_entry(slug, data, catalog, now)
             old = previous["games"].get(slug)
             if old and old.get("sha256") == entry["sha256"]:
+                games[slug] = {**old, "enriched": entry["enriched"]}  # an older entry may lack the count
                 outcomes[slug] = "unchanged"
             else:
                 store.put(catalog_key(slug), data)

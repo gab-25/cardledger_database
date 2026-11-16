@@ -25,10 +25,12 @@ def enrichment_for(products, code="set"):
 
 
 class Fakes:
-    """Fake sources: each game gets `sizes[slug]` products; a slug in `broken` makes its source fail."""
+    """Fake sources: each game gets `sizes[slug]` products, of which the source enriches `enriched[slug]` (default:
+    all); a slug in `broken` makes its source fail."""
 
     def __init__(self, monkeypatch):
         self.sizes = {"mtg": 4, "pokemon": 4, "lorcana": 4, "onepiece": 4, "yugioh": 4, "riftbound": 4}
+        self.enriched: dict[str, int] = {}
         self.broken: set[str] = set()
         self.calls: list[str] = []
         self.bench = PASSING
@@ -42,7 +44,7 @@ class Fakes:
         def source(slug):
             if slug in self.broken:
                 raise SourceError(f"{slug} source is down")
-            return enrichment_for(cm_products(self.sizes[slug]), code=slug)
+            return enrichment_for(cm_products(self.enriched.get(slug, self.sizes[slug])), code=slug)
 
         def fake_scryfall(client):
             self.calls.append("scryfall")
@@ -127,6 +129,49 @@ def test_half_size_game_is_published(fakes, store):
 
     assert generate.run(["lorcana"], store, client=None) == {"lorcana": "published"}
     assert manifest(store)["games"]["lorcana"]["products"] == 2
+
+
+def test_game_whose_source_is_empty_is_not_published(fakes, store):
+    generate.run(["lorcana"], store, client=None)
+    before = store.get(catalog_key("lorcana"))
+    entry = manifest(store)["games"]["lorcana"]
+    assert entry["enriched"] == 4
+
+    fakes.enriched["lorcana"] = 0  # every product is still there, under a cmx stand-in, with no source data
+    outcomes = generate.run(["lorcana"], store, client=None)
+
+    assert "enriched" in outcomes["lorcana"] and "50%" in outcomes["lorcana"]
+    assert store.get(catalog_key("lorcana")) == before
+    assert manifest(store)["games"]["lorcana"] == entry
+
+
+def test_game_with_half_its_products_enriched_is_published(fakes, store):
+    generate.run(["lorcana"], store, client=None)
+    fakes.enriched["lorcana"] = 2
+
+    assert generate.run(["lorcana"], store, client=None) == {"lorcana": "published"}
+    assert manifest(store)["games"]["lorcana"]["enriched"] == 2
+
+
+def test_previous_entry_without_enriched_count_is_not_checked(fakes, store):
+    generate.run(["lorcana"], store, client=None)
+    data = json.loads(store.get(MANIFEST_KEY))
+    del data["games"]["lorcana"]["enriched"]
+    store.put(MANIFEST_KEY, json.dumps(data).encode())
+    fakes.enriched["lorcana"] = 0
+
+    assert generate.run(["lorcana"], store, client=None) == {"lorcana": "published"}
+    assert manifest(store)["games"]["lorcana"]["enriched"] == 0
+
+
+def test_unchanged_file_records_the_missing_enriched_count(fakes, store):
+    generate.run(["lorcana"], store, client=None)
+    data = json.loads(store.get(MANIFEST_KEY))
+    del data["games"]["lorcana"]["enriched"]
+    store.put(MANIFEST_KEY, json.dumps(data).encode())
+
+    assert generate.run(["lorcana"], store, client=None) == {"lorcana": "unchanged"}
+    assert manifest(store)["games"]["lorcana"]["enriched"] == 4
 
 
 def test_failed_game_keeps_previous_entry(fakes, store):

@@ -56,6 +56,7 @@ class GameCatalog:
     expansions: list[SourceSet]
     products: list[Product]
     skipped: int
+    enriched: int = 0  # products that got a source card (their id is in the corrected enrichment's cards)
 
 
 _NUMBER = re.compile(r"^0*(\d+)(.*)$")

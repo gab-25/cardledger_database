@@ -21,12 +21,13 @@ def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
     main = _main_sets(products, enrichment, single_category_ids)
     rows: list[Product] = []
     stand_ins: dict[str, SourceSet] = {}
-    skipped = 0
+    skipped = enriched = 0
     for p in products:
         card = enrichment.cards.get(p.id_product)
         if card is not None:
             code, number, rarity = card.set_code, normalize_number(card.collector_number), card.rarity
             image, large = card.image_url, card.image_large_url
+            enriched += 1
         else:
             code = main.get(p.id_expansion)
             number = normalize_number(code_of(p.name))  # the code printed in the name ("Sabo (OP13-004)"), if any
@@ -43,4 +44,4 @@ def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
     expansions = [
         sets.get(code) or SourceSet(code, code.upper(), None) for code in sorted({r.expansion_code for r in rows})
     ]
-    return GameCatalog(game.slug, expansions, rows, skipped)
+    return GameCatalog(game.slug, expansions, rows, skipped, enriched)

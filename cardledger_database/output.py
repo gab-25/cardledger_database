@@ -67,6 +67,7 @@ def game_entry(slug: str, data: bytes, catalog: GameCatalog, generated_at: datet
         "key": catalog_key(slug),
         "sha256": hashlib.sha256(data).hexdigest(),
         "products": len(catalog.products),
+        "enriched": catalog.enriched,
         "expansions": len(catalog.expansions),
         "generated_at": generated_at.isoformat(),
     }
