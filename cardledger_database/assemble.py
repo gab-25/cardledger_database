@@ -1,7 +1,7 @@
 from collections import Counter, defaultdict
 
 from .games import Game
-from .model import CmProduct, Enrichment, GameCatalog, Product, SourceSet, normalize_number
+from .model import CmProduct, Enrichment, GameCatalog, Product, SourceSet, code_of, normalize_number
 
 
 def _main_sets(products: list[CmProduct], enrichment: Enrichment, single_category_ids: set[int]) -> dict[int, str]:
@@ -29,7 +29,8 @@ def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
             image, large = card.image_url, card.image_large_url
         else:
             code = main.get(p.id_expansion)
-            number = rarity = image = large = ""
+            number = normalize_number(code_of(p.name))  # the code printed in the name ("Sabo (OP13-004)"), if any
+            rarity = image = large = ""
             if code is None:
                 if not game.keep_unmatched:
                     skipped += 1

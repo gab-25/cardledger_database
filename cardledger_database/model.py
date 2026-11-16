@@ -59,6 +59,13 @@ class GameCatalog:
 
 
 _NUMBER = re.compile(r"^0*(\d+)(.*)$")
+CODE = re.compile(r"\(([A-Z0-9]{1,6}-(?:[A-Z]{2})?\d{1,4}[A-Z]?)\)")
+
+
+def code_of(name: str) -> str | None:
+    """The card code printed in a Cardmarket name ("Luffy (OP01-001)" -> "OP01-001"), if any."""
+    m = CODE.search(name)
+    return m.group(1) if m else None
 
 
 def normalize_number(value: str | None) -> str:

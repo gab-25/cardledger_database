@@ -7,7 +7,7 @@ import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 
-from .model import CmProduct, Enrichment, SourceCard, SourceSet
+from .model import CmProduct, Enrichment, SourceCard, SourceSet, code_of
 from .sources.tcgcsv import TcgGroup, TcgProduct
 
 MIN_COMMON = 2  # keys an expansion must share with its group
@@ -15,7 +15,6 @@ MIN_SHARE = 0.3  # ... and as a share of the expansion's keys
 MIN_MARGIN = 0.1  # F1 lead of the best group over the second best
 MAX_PRINTING_RATIO = 1.5  # printings per key of the expansion over printings per key of the group
 
-CODE = re.compile(r"\(([A-Z0-9]{1,6}-(?:[A-Z]{2})?\d{1,4}[A-Z]?)\)")
 _BRACKETS = re.compile(r"\[[^\]]*\]|\([^)]*\)")
 _SUFFIX = re.compile(r" - .*$")
 _NOT_KEPT = re.compile(r"[^a-z0-9 /]")
@@ -30,12 +29,6 @@ class MatchResult:
     card_pairs: dict[int, int]  # Cardmarket idProduct -> TCGplayer productId
     expansion_pairs: dict[int, int]  # Cardmarket idExpansion -> TCGplayer groupId
     single_expansions: dict[int, int] = field(default_factory=dict)  # every single's idProduct -> idExpansion
-
-
-def code_of(name: str) -> str | None:
-    """The card code printed in a Cardmarket name ("Luffy (OP01-001)" -> "OP01-001"), if any."""
-    m = CODE.search(name)
-    return m.group(1) if m else None
 
 
 def normalize_name(name: str) -> str:

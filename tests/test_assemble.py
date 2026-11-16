@@ -102,3 +102,16 @@ def test_input_order_is_kept_and_fields_truncated():
     p = by_id(c)[1]
     assert len(p.name) == 200 and len(p.number) == 40 and len(p.rarity) == 40
     assert len(p.image_url) == 500 and len(p.image_large_url) == 500
+
+
+def test_unmatched_product_takes_the_code_in_its_name_as_number():
+    e = enrich({1: card("op13", "OP13-001")}, expansions={10: "op13"})
+    products = [prod(1, name="Luffy (OP13-001)"), prod(2, name="Sabo (OP13-004)"), prod(3, name="Sabo")]
+    c = by_id(assemble(GAMES["onepiece"], products, e, SINGLES))
+    assert (c[2].expansion_code, c[2].number) == ("op13", "OP13-004")
+    assert c[3].number == ""
+
+
+def test_stand_in_product_takes_the_code_in_its_name_as_number():
+    c = assemble(GAMES["onepiece"], [prod(2, id_expansion=77, name="Sabo (OP13-004) (Parallel)")], enrich(), SINGLES)
+    assert (c.products[0].expansion_code, c.products[0].number) == ("cmx77", "OP13-004")
