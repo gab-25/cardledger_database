@@ -180,3 +180,48 @@ def test_ids_with_reserved_characters_are_escaped_in_urls(tmp_path):
     client = httpx.Client(transport=httpx.MockTransport(handler))
     result = tcgdex.fetch(client, LocalStore(tmp_path), langs=("ja",), now=NOW)
     assert result.cards[777].set_code == "sm1+"
+
+
+def test_cached_card_without_image_is_refetched_after_7_days(tmp_path):
+    store = LocalStore(tmp_path)
+    no_image = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=794256, image=None)})
+    assert tcgdex.fetch(make(no_image)[0], store, langs=("en",), now=NOW).cards[794256].image_url == ""
+    client, calls = make(en_routes())
+    tcgdex.fetch(client, store, langs=("en",), now=NOW + timedelta(days=3))
+    assert "/en/cards/sv08-001" not in calls
+    result = tcgdex.fetch(client, store, langs=("en",), now=NOW + timedelta(days=8))
+    assert "/en/cards/sv08-001" in calls and result.cards[794256].image_url == IMG + "/low.webp"
+
+
+def test_set_detail_404_skips_the_set(tmp_path, caplog):
+    routes = en_routes(**{"/en/sets": [{"id": "gone"}, {"id": "sv08"}]})
+    result = tcgdex.fetch(make(routes)[0], LocalStore(tmp_path), langs=("en",), now=NOW)
+    assert set(result.sets) == {"ssp"} and 794256 in result.cards
+    assert "gone" in caplog.text
+
+
+def test_set_detail_500_raises_source_error(tmp_path):
+    routes = en_routes()
+
+    def handler(request):
+        path = request.url.path.removeprefix("/v2")
+        if path == "/en/sets/sv08":
+            return httpx.Response(500)
+        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
+
+    with pytest.raises(SourceError):
+        tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), LocalStore(tmp_path), langs=("en",), now=NOW)
+
+
+@pytest.mark.parametrize("raw, expected", [("794256", 794256), (794256.0, 794256)])
+def test_cardmarket_id_is_coerced_to_int(tmp_path, raw, expected):
+    routes = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=raw)})
+    assert set(tcgdex.fetch(make(routes)[0], LocalStore(tmp_path), langs=("en",), now=NOW).cards) == {expected}
+
+
+@pytest.mark.parametrize("raw", ["abc", "12.5", True, [1]])
+def test_non_integer_cardmarket_id_counts_as_none(tmp_path, raw):
+    routes = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=raw)})
+    store = LocalStore(tmp_path)
+    assert tcgdex.fetch(make(routes)[0], store, langs=("en",), now=NOW).cards == {}
+    assert json.loads(store.get("cache/tcgdex/en.json"))["sv08-001"]["cm"] is None

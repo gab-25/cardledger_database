@@ -2,10 +2,11 @@
 
 TCGdex has no bulk file: a card is read with one request each. What was read is cached on the store
 (`cache/tcgdex/{lang}.json`) so a nightly run only asks for new cards, and for cards still without a
-Cardmarket id once they are a week old.
+Cardmarket id or without an image once they are a week old.
 """
 
 import json
+import logging
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, date, datetime, timedelta
@@ -16,6 +17,8 @@ import httpx
 from ..errors import SourceError
 from ..model import Enrichment, SourceCard, SourceSet, normalize_number
 from ..store import Store
+
+logger = logging.getLogger(__name__)
 
 BASE = "https://api.tcgdex.net/v2"
 MAX_WORKERS = 4
@@ -41,10 +44,24 @@ def _load_cache(store, lang):
     return cache if isinstance(cache, dict) else {}
 
 
+def _cm_id(value) -> int | None:
+    """A Cardmarket id as an int (also from "123" or 123.0); None when missing or not an integer."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    if isinstance(value, str) and value.strip().isdigit():
+        return int(value.strip())
+    return None
+
+
 def _needs_fetch(entry, now):
+    """New cards, and once a week the cards still without a Cardmarket id or without an image."""
     if entry is None:
         return True
-    if entry.get("cm") is not None:
+    if _cm_id(entry.get("cm")) is not None and entry.get("image"):
         return False
     return now - datetime.fromisoformat(entry["fetched_at"]) > RETRY_AFTER
 
@@ -55,7 +72,7 @@ def _read_card(client, lang, card_id, set_id, now):
         return None
     cardmarket = (data.get("pricing") or {}).get("cardmarket") or {}
     return {
-        "cm": cardmarket.get("idProduct"),
+        "cm": _cm_id(cardmarket.get("idProduct")),
         "rarity": data.get("rarity") or "",
         "local_id": str(data.get("localId") or ""),
         "image": data.get("image") or "",
@@ -69,7 +86,14 @@ def _fetch_language(client, store, lang, now):
     try:
         listing = _get(client, f"{BASE}/{lang}/sets")
         with ThreadPoolExecutor(MAX_WORKERS) as pool:
-            details = list(pool.map(lambda s: _get(client, f"{BASE}/{lang}/sets/{quote(s['id'], safe='')}"), listing))
+            details = []
+            for s, d in zip(listing, pool.map(
+                lambda s: _get(client, f"{BASE}/{lang}/sets/{quote(s['id'], safe='')}", missing_ok=True), listing
+            )):
+                if d is None:
+                    logger.warning("TCGdex: %s set %s not found, skipped", lang, s["id"])
+                else:
+                    details.append(d)
             cache = _load_cache(store, lang)
             wanted = [
                 (c["id"], d["id"]) for d in details for c in d.get("cards") or [] if _needs_fetch(cache.get(c["id"]), now)
@@ -128,10 +152,11 @@ def fetch(client: httpx.Client, store: Store, langs=("en", "ja"), now: datetime 
                 sets[code] = SourceSet(code, d["name"], released, "ja" if lang == "ja" else "")
                 for c in d.get("cards") or []:
                     entry = cache.get(c["id"])
-                    if not entry or not entry.get("cm") or entry["cm"] in cards:
+                    cm = _cm_id(entry.get("cm")) if entry else None
+                    if not cm or cm in cards:
                         continue
                     image = entry.get("image") or ""
-                    cards[entry["cm"]] = SourceCard(
+                    cards[cm] = SourceCard(
                         code, normalize_number(entry.get("local_id")), entry.get("rarity") or "",
                         (image + "/low.webp")[:500] if image else "",
                         (image + "/high.webp")[:500] if image else "",
