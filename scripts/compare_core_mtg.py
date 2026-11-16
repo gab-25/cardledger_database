@@ -4,7 +4,7 @@ Usage: python scripts/compare_core_mtg.py <generated mtg .jsonl.gz> <core dump .
 
 Export core's dump right after a `sync_catalog` run the same day, from the core checkout:
 
-    cd ~/projects/cardledger_core && uv run python manage.py shell -c "import csv,sys; from ledger.models import Blueprint; w=csv.writer(open('/tmp/core_blueprints.csv','w',newline='')); w.writerow(['cm_product_id','name','expansion_code','collector_number','rarity','image_url','image_large_url','category_cm_id']); [w.writerow([b.cm_product, b.name, b.expansion.code, b.collector_number, b.rarity, b.image_url, b.image_large_url, b.category.cm_id if b.category else '']) for b in Blueprint.objects.select_related('expansion','category').iterator()]"
+    cd ~/projects/cardledger_core && uv run python manage.py shell -c "import csv,sys; from ledger.models import Blueprint; w=csv.writer(open('/tmp/core_blueprints.csv','w',newline='')); w.writerow(['cm_product_id','name','expansion_code','collector_number','rarity','image_url','image_large_url','category_cm_id']); [w.writerow([b.cm_product_id, b.name, b.expansion.code, b.collector_number, b.rarity, b.image_url, b.image_large_url, b.category.cm_id if b.category else '']) for b in Blueprint.objects.select_related('expansion','category').iterator()]"
 
 Prints the identical rows, the rows differing per field and the ids found on one side only. Products new or
 changed between the two downloads are expected to show up as differences.
