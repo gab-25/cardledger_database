@@ -61,3 +61,20 @@ def test_sets_from_metadata():
 def test_bad_payload_raises_source_error(kwargs):
     with pytest.raises(SourceError):
         lorcanajson.fetch(client(**kwargs))
+
+
+def card_with_id(cm_id, number=1):
+    return {"setCode": "1", "number": number, "rarity": "Common", "externalLinks": {"cardmarketId": cm_id},
+            "images": {"full": "f", "thumbnail": "t"}}
+
+
+def test_cardmarket_id_is_coerced_to_int():
+    payload = {"sets": PAYLOAD["sets"], "cards": [card_with_id("7002"), card_with_id(7003.0, 2)]}
+    cards = lorcanajson.fetch(client(payload)).cards
+    assert set(cards) == {7002, 7003} and all(type(k) is int for k in cards)
+
+
+def test_non_integer_cardmarket_id_is_skipped():
+    payload = {"sets": PAYLOAD["sets"], "cards": [card_with_id(x) for x in ("abc", "1.5", True, [1], {"a": 1})]
+               + [card_with_id(7004, 2)]}
+    assert set(lorcanajson.fetch(client(payload)).cards) == {7004}

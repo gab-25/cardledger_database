@@ -5,7 +5,7 @@ from datetime import date
 import httpx
 
 from ..errors import SourceError
-from ..model import Enrichment, SourceCard, SourceSet, normalize_number
+from ..model import Enrichment, SourceCard, SourceSet, cardmarket_id, normalize_number
 
 URL = "https://lorcanajson.org/files/current/en/allCards.json"
 
@@ -22,8 +22,8 @@ def fetch(client: httpx.Client) -> Enrichment:
             released = date.fromisoformat(s["releaseDate"]) if s.get("releaseDate") else None
             sets[str(code).lower()] = SourceSet(str(code).lower(), s["name"], released)
         for card in data["cards"]:
-            cm_id = (card.get("externalLinks") or {}).get("cardmarketId")
-            if not cm_id or cm_id in cards:
+            cm_id = cardmarket_id((card.get("externalLinks") or {}).get("cardmarketId"))
+            if not cm_id or cm_id in cards:  # missing or not an integer: skipped
                 continue
             images = card.get("images") or {}
             cards[cm_id] = SourceCard(

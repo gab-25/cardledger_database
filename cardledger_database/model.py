@@ -76,3 +76,16 @@ def normalize_number(value: str | None) -> str:
     if m:
         return (m.group(1) or "0") + m.group(2)
     return value
+
+
+def cardmarket_id(value) -> int | None:
+    """A Cardmarket id from a source as an int (also from "123" or 123.0); None when missing or not an integer."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    if isinstance(value, str) and value.strip().isdigit():
+        return int(value.strip())
+    return None

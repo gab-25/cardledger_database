@@ -15,7 +15,7 @@ from urllib.parse import quote
 import httpx
 
 from ..errors import SourceError
-from ..model import Enrichment, SourceCard, SourceSet, normalize_number
+from ..model import Enrichment, SourceCard, SourceSet, cardmarket_id, normalize_number
 from ..store import Store
 
 logger = logging.getLogger(__name__)
@@ -44,24 +44,11 @@ def _load_cache(store, lang):
     return cache if isinstance(cache, dict) else {}
 
 
-def _cm_id(value) -> int | None:
-    """A Cardmarket id as an int (also from "123" or 123.0); None when missing or not an integer."""
-    if isinstance(value, bool):
-        return None
-    if isinstance(value, int):
-        return value
-    if isinstance(value, float) and value.is_integer():
-        return int(value)
-    if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
-    return None
-
-
 def _needs_fetch(entry, now):
     """New cards, and once a week the cards still without a Cardmarket id or without an image."""
     if entry is None:
         return True
-    if _cm_id(entry.get("cm")) is not None and entry.get("image"):
+    if cardmarket_id(entry.get("cm")) is not None and entry.get("image"):
         return False
     return now - datetime.fromisoformat(entry["fetched_at"]) > RETRY_AFTER
 
@@ -72,7 +59,7 @@ def _read_card(client, lang, card_id, set_id, now):
         return None
     cardmarket = (data.get("pricing") or {}).get("cardmarket") or {}
     return {
-        "cm": _cm_id(cardmarket.get("idProduct")),
+        "cm": cardmarket_id(cardmarket.get("idProduct")),
         "rarity": data.get("rarity") or "",
         "local_id": str(data.get("localId") or ""),
         "image": data.get("image") or "",
@@ -152,7 +139,7 @@ def fetch(client: httpx.Client, store: Store, langs=("en", "ja"), now: datetime 
                 sets[code] = SourceSet(code, d["name"], released, "ja" if lang == "ja" else "")
                 for c in d.get("cards") or []:
                     entry = cache.get(c["id"])
-                    cm = _cm_id(entry.get("cm")) if entry else None
+                    cm = cardmarket_id(entry.get("cm")) if entry else None
                     if not cm or cm in cards:
                         continue
                     image = entry.get("image") or ""

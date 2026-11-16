@@ -16,3 +16,9 @@ def test_normalize_number():
     assert normalize_number(" 7 ") == "7"
     assert normalize_number("") == ""
     assert normalize_number(None) == ""
+
+
+def test_cardmarket_id_accepts_only_integers():
+    from cardledger_database.model import cardmarket_id
+    assert [cardmarket_id(v) for v in (5, "5", " 5 ", 5.0)] == [5, 5, 5, 5]
+    assert [cardmarket_id(v) for v in (None, "", "abc", "1.5", 1.5, True, [1])] == [None] * 7
