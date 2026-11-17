@@ -1,9 +1,8 @@
 import httpx
 import pytest
 
-from cardledger_database.cardmarket import fetch_products
-from cardledger_database.errors import SourceError
-from cardledger_database.model import CmProduct
+from cardledger_database.sources.cardmarket import fetch_products
+from cardledger_database.model import CmProduct, SourceError
 
 BASE = "https://downloads.s3.cardmarket.com/productCatalog/productList/"
 

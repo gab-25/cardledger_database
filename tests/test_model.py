@@ -1,5 +1,4 @@
-from cardledger_database.games import GAMES
-from cardledger_database.model import normalize_number
+from cardledger_database.model import GAMES, normalize_number
 
 
 def test_games_registry():

@@ -1,7 +1,7 @@
 # Manual corrections
 
 `corrections/<slug>.toml` (slugs: mtg, pokemon, lorcana, onepiece, yugioh, riftbound) fixes wrong or missing images,
-rarities and set codes by hand. It is applied on every nightly run, after the automatic match. Entries that point to a
+rarities and set codes by hand. It is applied on every run of `generate`, after the automatic match. Entries that point to a
 product or expansion no longer in the Cardmarket list are skipped with a warning; invalid TOML, a wrong type or an
 unknown key fails the run.
 

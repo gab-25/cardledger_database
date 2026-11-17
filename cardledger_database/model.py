@@ -1,6 +1,35 @@
+"""The data model: the games, the Cardmarket products, what a source adds to them and the assembled catalog."""
+
 import re
 from dataclasses import dataclass, field
 from datetime import date
+
+
+class SourceError(Exception):
+    """A public data source could not be downloaded or did not have the expected shape."""
+
+
+@dataclass(frozen=True)
+class Game:
+    slug: str
+    cm_id: int  # Cardmarket idGame
+    name: str
+    keep_unmatched: bool  # keep Cardmarket products the source has no card for
+    source: str  # scryfall, tcgdex, lorcanajson or tcgcsv
+    tcgcsv_category: int | None = None
+
+
+GAMES: dict[str, Game] = {
+    g.slug: g
+    for g in (
+        Game("mtg", 1, "Magic: The Gathering", False, "scryfall"),
+        Game("pokemon", 6, "Pokémon", True, "tcgdex"),
+        Game("lorcana", 19, "Disney Lorcana", True, "lorcanajson"),
+        Game("onepiece", 18, "One Piece Card Game", True, "tcgcsv", 68),
+        Game("yugioh", 3, "Yu-Gi-Oh!", True, "tcgcsv", 2),
+        Game("riftbound", 22, "Riftbound", True, "tcgcsv", 89),
+    )
+}
 
 
 @dataclass(frozen=True)

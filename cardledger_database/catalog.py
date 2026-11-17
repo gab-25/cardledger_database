@@ -1,7 +1,17 @@
+"""A game's catalog: assembled from the Cardmarket products and a source, written as gzip-compressed JSON lines."""
+
+import gzip
+import json
 from collections import Counter, defaultdict
 
-from .games import Game
-from .model import CmProduct, Enrichment, GameCatalog, Product, SourceSet, code_of, normalize_number
+from .model import CmProduct, Enrichment, Game, GameCatalog, Product, SourceSet, code_of, normalize_number
+
+FORMAT_VERSION = 1
+
+
+def catalog_key(slug: str) -> str:
+    """The path of a game's file, the same under the output folder and in the bucket."""
+    return f"catalog/v{FORMAT_VERSION}/{slug}.jsonl.gz"
 
 
 def _main_sets(products: list[CmProduct], enrichment: Enrichment, single_category_ids: set[int]) -> dict[int, str]:
@@ -45,3 +55,36 @@ def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
         sets.get(code) or SourceSet(code, code.upper(), None) for code in sorted({r.expansion_code for r in rows})
     ]
     return GameCatalog(game.slug, expansions, rows, skipped, enriched)
+
+
+def _line(obj: dict) -> str:
+    return json.dumps(obj, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+
+
+def encode(catalog: GameCatalog) -> bytes:
+    """First the expansions, then the products, both sorted; the same catalog always gives the same bytes."""
+    lines = []
+    for e in sorted(catalog.expansions, key=lambda e: e.code):
+        lines.append(_line({
+            "type": "expansion",
+            "code": e.code,
+            "name": e.name,
+            "released_at": e.released_at.isoformat() if e.released_at else None,
+            "language": e.language,
+        }))
+    for p in sorted(catalog.products, key=lambda p: (p.expansion_code, p.id_product)):
+        lines.append(_line({
+            "type": "product",
+            "id_product": p.id_product,
+            "name": p.name,
+            "expansion_code": p.expansion_code,
+            "number": p.number,
+            "rarity": p.rarity,
+            "image_url": p.image_url,
+            "image_large_url": p.image_large_url,
+            "category_id": p.category_id,
+            "category_name": p.category_name,
+        }))
+    raw = ("\n".join(lines) + "\n").encode("utf-8")
+    return gzip.compress(raw, mtime=0)
+

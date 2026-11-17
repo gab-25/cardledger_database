@@ -4,8 +4,7 @@ from datetime import date
 
 import httpx
 
-from ..errors import SourceError
-from ..model import Enrichment, SourceCard, SourceSet, cardmarket_id, normalize_number
+from ..model import Enrichment, SourceCard, SourceError, SourceSet, cardmarket_id, normalize_number
 
 URL = "https://lorcanajson.org/files/current/en/allCards.json"
 

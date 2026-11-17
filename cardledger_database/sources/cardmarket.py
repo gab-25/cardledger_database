@@ -1,7 +1,6 @@
 import httpx
 
-from .errors import SourceError
-from .model import CmProduct
+from ..model import CmProduct, SourceError
 
 PRODUCT_LIST_URL = "https://downloads.s3.cardmarket.com/productCatalog/productList/products_{kind}_{game}.json"
 

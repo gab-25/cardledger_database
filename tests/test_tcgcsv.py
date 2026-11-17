@@ -3,7 +3,7 @@ from datetime import date
 import httpx
 import pytest
 
-from cardledger_database.errors import SourceError
+from cardledger_database.model import SourceError
 from cardledger_database.sources import tcgcsv
 
 

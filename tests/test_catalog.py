@@ -1,8 +1,9 @@
+import gzip
+import json
 from datetime import date
 
-from cardledger_database.assemble import assemble
-from cardledger_database.games import GAMES
-from cardledger_database.model import CmProduct, Enrichment, SourceCard, SourceSet
+from cardledger_database.catalog import assemble, catalog_key, encode
+from cardledger_database.model import GAMES, CmProduct, Enrichment, GameCatalog, Product, SourceCard, SourceSet
 
 SINGLES = {1}
 
@@ -121,3 +122,43 @@ def test_enriched_counts_the_products_with_a_source_card():
     e = enrich({1: card("lea"), 2: card("lea"), 99: card("lea")})
     c = assemble(GAMES["pokemon"], [prod(1), prod(2), prod(3), prod(4, id_expansion=77)], e, SINGLES)
     assert c.enriched == 2
+
+
+def _catalog():
+    exps = [
+        SourceSet("zzz", "Zed", None),
+        SourceSet("aaa", "Alpha é", date(1993, 8, 5), "ja"),
+    ]
+    prods = [
+        Product(20, "B", "zzz", "2", "rare", "u", "ul", 1, "Singles"),
+        Product(10, "A é", "aaa", "1", "common", "u2", "ul2", 1, "Singles"),
+        Product(5, "C", "aaa", "", "", "", "", 5, "Boosters"),
+    ]
+    return GameCatalog("mtg", exps, prods, 3)
+
+
+def _lines(data):
+    return [json.loads(x) for x in gzip.decompress(data).decode("utf-8").splitlines()]
+
+
+def test_encoding_is_deterministic():
+    a = _catalog()
+    b = GameCatalog("mtg", list(reversed(a.expansions)), list(reversed(a.products)), 0)
+    assert encode(a) == encode(b)
+    assert encode(a) == encode(a)
+
+
+def test_expansions_come_before_products():
+    lines = _lines(encode(_catalog()))
+    assert [x["type"] for x in lines] == ["expansion"] * 2 + ["product"] * 3
+    assert lines[0] == {"type": "expansion", "code": "aaa", "name": "Alpha é", "released_at": "1993-08-05",
+                        "language": "ja"}
+    assert lines[1]["released_at"] is None
+    assert [p["id_product"] for p in lines[2:]] == [5, 10, 20]
+    assert lines[3] == {"type": "product", "id_product": 10, "name": "A é", "expansion_code": "aaa", "number": "1",
+                        "rarity": "common", "image_url": "u2", "image_large_url": "ul2", "category_id": 1,
+                        "category_name": "Singles"}
+
+
+def test_catalog_key():
+    assert catalog_key("mtg") == "catalog/v1/mtg.jsonl.gz"

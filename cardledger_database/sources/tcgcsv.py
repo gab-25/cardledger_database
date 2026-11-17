@@ -7,7 +7,7 @@ from datetime import date
 import httpx
 
 from .. import http
-from ..errors import SourceError
+from ..model import SourceError
 
 BASE = "https://tcgcsv.com/tcgplayer"
 MAX_WORKERS = 4

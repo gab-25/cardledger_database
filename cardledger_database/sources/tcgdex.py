@@ -1,7 +1,7 @@
 """TCGdex's public API for Pokémon (English and Japanese): set code, number, rarity and images, keyed by Cardmarket id.
 
-TCGdex has no bulk file: a card is read with one request each. What was read is cached on the store
-(`cache/tcgdex/{lang}.json`) so a nightly run only asks for new cards, and for cards still without a
+TCGdex has no bulk file: a card is read with one request each. What was read is cached in a local folder
+(`<cache>/tcgdex/{lang}.json`) so a run only asks for new cards, and for cards still without a
 Cardmarket id or without an image once they are a week old.
 """
 
@@ -10,14 +10,13 @@ import logging
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, date, datetime, timedelta
+from pathlib import Path
 from urllib.parse import quote
 
 import httpx
 
 from .. import http
-from ..errors import SourceError
-from ..model import Enrichment, SourceCard, SourceSet, cardmarket_id, normalize_number
-from ..store import Store
+from ..model import Enrichment, SourceCard, SourceError, SourceSet, cardmarket_id, normalize_number
 
 logger = logging.getLogger(__name__)
 
@@ -34,12 +33,16 @@ def _get(client, url, *, missing_ok=False):
     return response.json()
 
 
-def _load_cache(store, lang):
-    raw = store.get(f"cache/tcgdex/{lang}.json")
-    if raw is None:
+def _cache_path(cache_dir: Path, lang: str) -> Path:
+    return cache_dir / "tcgdex" / f"{lang}.json"
+
+
+def _load_cache(cache_dir, lang):
+    path = _cache_path(cache_dir, lang)
+    if not path.is_file():
         return {}
     try:
-        cache = json.loads(raw)
+        cache = json.loads(path.read_bytes())
     except ValueError:
         return {}
     return cache if isinstance(cache, dict) else {}
@@ -69,7 +72,7 @@ def _read_card(client, lang, card_id, set_id, now):
     }
 
 
-def _fetch_language(client, store, lang, now):
+def _fetch_language(client, cache_dir, lang, now):
     """The sets of a language (id, name, date, official abbreviation) and their cards' cache entries."""
     try:
         listing = _get(client, f"{BASE}/{lang}/sets")
@@ -82,7 +85,7 @@ def _fetch_language(client, store, lang, now):
                     logger.warning("TCGdex: %s set %s not found, skipped", lang, s["id"])
                 else:
                     details.append(d)
-            cache = _load_cache(store, lang)
+            cache = _load_cache(cache_dir, lang)
             wanted = [
                 (c["id"], d["id"]) for d in details for c in d.get("cards") or [] if _needs_fetch(cache.get(c["id"]), now)
             ]
@@ -96,7 +99,9 @@ def _fetch_language(client, store, lang, now):
                     continue
                 if entry is not None:
                     cache[card_id] = entry
-        store.put(f"cache/tcgdex/{lang}.json", json.dumps(cache, sort_keys=True).encode())
+        path = _cache_path(cache_dir, lang)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(cache, sort_keys=True), encoding="utf-8")
         if failure:
             raise failure
     except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
@@ -125,10 +130,10 @@ def _set_codes(by_lang):
     return codes
 
 
-def fetch(client: httpx.Client, store: Store, langs=("en", "ja"), now: datetime | None = None) -> Enrichment:
+def fetch(client: httpx.Client, cache_dir: Path, langs=("en", "ja"), now: datetime | None = None) -> Enrichment:
     """The Pokémon enrichment: cards with a Cardmarket id (the first one wins, English first) and every set."""
     now = now or datetime.now(UTC)
-    fetched = {lang: _fetch_language(client, store, lang, now) for lang in langs}
+    fetched = {lang: _fetch_language(client, cache_dir, lang, now) for lang in langs}
     codes = _set_codes({lang: details for lang, (details, _) in fetched.items()})
     cards: dict[int, SourceCard] = {}
     sets: dict[str, SourceSet] = {}

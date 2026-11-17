@@ -1,8 +1,14 @@
-from cardledger_database import bench as bench_module
-from cardledger_database.bench import BenchResult, bench
+import importlib.util
+from pathlib import Path
+
 from cardledger_database.matcher import MatchResult
 from cardledger_database.model import Enrichment
 from cardledger_database.sources.tcgcsv import TcgProduct
+
+SPEC = importlib.util.spec_from_file_location("run_bench", Path(__file__).parent.parent / "scripts" / "run_bench.py")
+run_bench = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(run_bench)
+BenchResult, bench = run_bench.BenchResult, run_bench.bench
 
 
 def tcg(product_id, group_id):
@@ -37,7 +43,7 @@ def test_bench_counts_expansion_errors():
 
 
 def test_bench_fails_above_one_percent():
-    assert bench_module.MAX_ERROR_RATE == 0.01
+    assert run_bench.MAX_ERROR_RATE == 0.01
     assert BenchResult(100, 1, 100, 1).passed
     assert not BenchResult(100, 2, 100, 0).passed
     assert not BenchResult(100, 0, 100, 2).passed
@@ -56,4 +62,4 @@ def test_bench_ignores_products_without_truth():
 
 def test_reused_product_ids():
     r = result({1: 1000, 2: 1000, 3: 1001, 4: 1000, 5: 1002, 6: 1002}, {}, {})
-    assert bench_module.reused_product_ids(r) == {1000: [1, 2, 4], 1002: [5, 6]}
+    assert run_bench.reused_product_ids(r) == {1000: [1, 2, 4], 1002: [5, 6]}

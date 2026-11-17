@@ -5,7 +5,7 @@ from datetime import date
 import httpx
 import pytest
 
-from cardledger_database.errors import SourceError
+from cardledger_database.model import SourceError
 from cardledger_database.http import make_client
 from cardledger_database.model import SourceCard, SourceSet
 from cardledger_database.sources import scryfall

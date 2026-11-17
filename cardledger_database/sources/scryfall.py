@@ -10,8 +10,7 @@ from datetime import date
 
 import httpx
 
-from ..errors import SourceError
-from ..model import Enrichment, SourceCard, SourceSet, normalize_number
+from ..model import Enrichment, SourceCard, SourceError, SourceSet, normalize_number
 
 BULK_DATA_URL = "https://api.scryfall.com/bulk-data"
 SETS_URL = "https://api.scryfall.com/sets"
