@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A CLI (`cardledger-db`) that builds the CardLedger card catalog for six games (mtg, pokemon, lorcana, onepiece,
 yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.jsonl.gz`, a human
 checks the logged counts, `upload` copies the files to S3. Generated files are never committed. README.md is the
-user-facing reference (sources and licences, output format, env vars, Docker usage).
+user-facing reference (sources and licences, output format, env vars).
 
 ## Commands
 
@@ -22,7 +22,7 @@ uv run cardledger-db generate --game pokemon       # real network run; --out / -
 uv run cardledger-db upload --game pokemon         # needs CARDLEDGER_S3_* (env or .env)
 ```
 
-There is no linter or formatter configured. Docker: `docker compose run --rm cardledger-db generate` (needs `.env`).
+There is no linter or formatter configured.
 
 ## Architecture
 
