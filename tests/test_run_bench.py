@@ -3,7 +3,7 @@ from pathlib import Path
 
 from cardledger_database.matcher import MatchResult
 from cardledger_database.model import Enrichment
-from cardledger_database.sources.tcgcsv import TcgProduct
+from cardledger_database.matcher import Printing
 
 SPEC = importlib.util.spec_from_file_location("run_bench", Path(__file__).parent.parent / "scripts" / "run_bench.py")
 run_bench = importlib.util.module_from_spec(SPEC)
@@ -12,7 +12,7 @@ BenchResult, bench = run_bench.BenchResult, run_bench.bench
 
 
 def tcg(product_id, group_id):
-    return TcgProduct(product_id, group_id, f"Card {product_id}", str(product_id), "C", "")
+    return Printing(product_id, group_id, f"Card {product_id}", str(product_id), "C", "", "")
 
 
 def result(card_pairs, expansion_pairs, single_expansions):

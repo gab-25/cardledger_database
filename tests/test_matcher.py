@@ -1,9 +1,8 @@
 from datetime import date
 
 from cardledger_database import matcher
-from cardledger_database.matcher import MatchResult, card_key, match, normalize_name
+from cardledger_database.matcher import Group, MatchResult, Printing, card_key, match, normalize_name, set_codes
 from cardledger_database.model import CmProduct, SourceSet
-from cardledger_database.sources.tcgcsv import TcgGroup, TcgProduct
 
 SINGLES = {1}
 
@@ -14,11 +13,12 @@ def cm(id_product, name, id_expansion=10, id_category=1, id_metacard=None):
 
 
 def tcg(product_id, name, number, group_id=100, rarity="Common"):
-    return TcgProduct(product_id, group_id, name, number, rarity, f"https://tcgplayer-cdn/{product_id}_200w.jpg")
+    return Printing(product_id, group_id, name, number, rarity, f"https://tcgplayer-cdn/{product_id}_200w.jpg",
+                    f"https://tcgplayer-cdn/{product_id}_in_1000x1000.jpg")
 
 
 def group(group_id=100, abbreviation="OP01", name="Romance Dawn"):
-    return TcgGroup(group_id, name, abbreviation, date(2022, 12, 2))
+    return Group(group_id, name, abbreviation, date(2022, 12, 2))
 
 
 NAMES = ["Alpha Dragon", "Beta Knight", "Gamma Wizard", "Delta Rogue"]
@@ -145,18 +145,35 @@ def test_large_image_url():
     assert c.image_large_url == "https://tcgplayer-cdn/1000_in_1000x1000.jpg"
 
 
-def test_set_code_falls_back_to_group_id():
+def test_set_code_falls_back_to_the_group_name():
     products, cards = named_set()
     result = match(products, [group(abbreviation="")], cards, SINGLES)
-    assert result.enrichment.expansions == {10: "tcg100"}
-    assert result.enrichment.cards[1].set_code == "tcg100"
+    assert result.enrichment.expansions == {10: "set-romance-dawn"}
+    assert result.enrichment.cards[1].set_code == "set-romance-dawn"
 
 
-def test_shared_abbreviation_falls_back_to_group_id():
+def test_shared_abbreviation_falls_back_to_the_group_name():
     products, cards = named_set()
     other = group(200, "OP01", "Romance Dawn (Japanese)")
     result = match(products, [group(), other], cards, SINGLES)
-    assert result.enrichment.expansions == {10: "tcg100"}
+    assert result.enrichment.expansions == {10: "op01-romance-dawn"}
+
+
+def test_fallback_set_code_is_stable():
+    groups = [Group(1, "Savage Strike", "", None), Group(2, "Legend of Blue Eyes", "SDK", None),
+              Group(3, "Starter Deck: Kaiba", "SDK", None), Group(4, "Metal Raiders", "MRD", None)]
+    assert set_codes(groups) == {1: "set-savage-strike", 2: "sdk-legend-of-blue-eyes", 3: "sdk-starter-deck-kaiba",
+                                 4: "mrd"}
+
+
+def test_fallback_set_code_collision():
+    groups = [Group(7, "Promo", "", None), Group(3, "Promo", "", None)]
+    assert set_codes(groups) == {3: "set-promo", 7: "set-promo-7"}
+
+
+def test_fallback_set_code_is_at_most_40_characters():
+    code = set_codes([Group(1, "A very long set name " * 5, "", None)])[1]
+    assert len(code) <= 40 and code.startswith("set-a-very-long-set-name") and not code.endswith("-")
 
 
 def test_thresholds_are_module_constants():

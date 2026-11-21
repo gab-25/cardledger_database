@@ -1,14 +1,14 @@
-"""Links Cardmarket products to TCGCSV (TCGplayer) cards by name or printed code, for the games without a
-dedicated source. A wrong match shows another variant's image, a missing one only shows none: every rule
+"""Links Cardmarket products to a source's printings by name or printed code, for the games whose source has no
+Cardmarket ids. A wrong match shows another variant's image, a missing one only shows none: every rule
 prefers no match over a doubtful one."""
 
 import re
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
+from datetime import date
 
 from .model import CmProduct, Enrichment, SourceCard, SourceSet, code_of
-from .sources.tcgcsv import TcgGroup, TcgProduct
 
 MIN_COMMON = 2  # keys an expansion must share with its group
 MIN_SHARE = 0.3  # ... and as a share of the expansion's keys
@@ -20,14 +20,36 @@ _SUFFIX = re.compile(r" - .*$")
 _NOT_KEPT = re.compile(r"[^a-z0-9 /]")
 _SPACES = re.compile(r"\s+")
 
-SMALL_IMAGE, LARGE_IMAGE = "_200w", "_in_1000x1000"
+_SLUG = re.compile(r"[^a-z0-9]+")
+MAX_CODE = 40
+
+
+@dataclass(frozen=True)
+class Group:
+    """A set of the source."""
+    group_id: int
+    name: str
+    abbreviation: str
+    published_on: date | None
+
+
+@dataclass(frozen=True)
+class Printing:
+    """A card printing of the source, in one group."""
+    printing_id: int
+    group_id: int
+    name: str
+    number: str
+    rarity: str
+    image_url: str
+    image_large_url: str
 
 
 @dataclass(frozen=True)
 class MatchResult:
     enrichment: Enrichment
-    card_pairs: dict[int, int]  # Cardmarket idProduct -> TCGplayer productId
-    expansion_pairs: dict[int, int]  # Cardmarket idExpansion -> TCGplayer groupId
+    card_pairs: dict[int, int]  # Cardmarket idProduct -> printing id
+    expansion_pairs: dict[int, int]  # Cardmarket idExpansion -> group id
     single_expansions: dict[int, int] = field(default_factory=dict)  # every single's idProduct -> idExpansion
 
 
@@ -44,7 +66,7 @@ def card_key(name: str) -> tuple[str, str]:
     return ("code", code) if code else ("name", normalize_name(name))
 
 
-def tcg_key(product: TcgProduct, mode: str) -> str:
+def tcg_key(product: Printing, mode: str) -> str:
     return product.number.upper() if mode == "code" else normalize_name(product.name)
 
 
@@ -100,7 +122,7 @@ def best_expansion(group_id: int, scores: dict[int, dict[int, tuple[float, int]]
     return ranked[0][1]
 
 
-def printing_ratio(keys: dict[int, str], cards: list[TcgProduct], mode: str) -> float:
+def printing_ratio(keys: dict[int, str], cards: list[Printing], mode: str) -> float:
     """Printings per key of the expansion over those of the group: well above 1 when the group holds only some of
     the expansion's printings (e.g. promo pack stamps but not the prerelease ones)."""
     card_keys = [k for k in (tcg_key(c, mode) for c in cards) if k]
@@ -109,10 +131,10 @@ def printing_ratio(keys: dict[int, str], cards: list[TcgProduct], mode: str) -> 
     return (len(keys) / len(set(keys.values()))) / (len(card_keys) / len(set(card_keys)))
 
 
-def pair_cards(keys: dict[int, str], cards: list[TcgProduct], mode: str) -> dict[int, TcgProduct]:
+def pair_cards(keys: dict[int, str], cards: list[Printing], mode: str) -> dict[int, Printing]:
     """{idProduct: card} for the keys found exactly once on each side; never by id order."""
     cm_count = Counter(keys.values())
-    by_key: dict[str, list[TcgProduct]] = defaultdict(list)
+    by_key: dict[str, list[Printing]] = defaultdict(list)
     for card in cards:
         by_key[tcg_key(card, mode)].append(card)
     return {
@@ -120,26 +142,35 @@ def pair_cards(keys: dict[int, str], cards: list[TcgProduct], mode: str) -> dict
     }
 
 
-def set_codes(groups: list[TcgGroup]) -> dict[int, str]:
-    """{groupId: set code}: the lower-case abbreviation, "tcg<groupId>" when empty or shared by groups."""
+def _fallback_code(group: Group) -> str:
+    """"<abbreviation or set>-<slug of the name>": stable across runs, unlike the (often synthetic) group id."""
+    abbr = _SLUG.sub("", group.abbreviation.strip().lower()) or "set"
+    slug = _SLUG.sub("-", group.name.lower()).strip("-")
+    return f"{abbr}-{slug}"[:MAX_CODE].rstrip("-")
+
+
+def set_codes(groups: list[Group]) -> dict[int, str]:
+    """{group id: set code}: the lower-case abbreviation when unique, else the fallback code (plus "-<group id>" for
+    the groups after the first, by id, sharing it)."""
     counts = Counter(g.abbreviation.strip().lower() for g in groups)
-    return {
-        g.group_id: abbr if abbr and counts[abbr] == 1 else f"tcg{g.group_id}"
-        for g in groups
-        for abbr in [g.abbreviation.strip().lower()]
-    }
+    codes: dict[int, str] = {}
+    taken: set[str] = set()
+    for g in sorted(groups, key=lambda g: g.group_id):
+        abbr = g.abbreviation.strip().lower()
+        code = abbr if abbr and counts[abbr] == 1 else _fallback_code(g)
+        if code in taken:
+            code = f"{code[:MAX_CODE - len(str(g.group_id)) - 1]}-{g.group_id}"
+        taken.add(code)
+        codes[g.group_id] = code
+    return codes
 
 
-def large_image(url: str) -> str:
-    return url.replace(SMALL_IMAGE, LARGE_IMAGE)
-
-
-def match(products: list[CmProduct], groups: list[TcgGroup], tcg: list[TcgProduct],
+def match(products: list[CmProduct], groups: list[Group], tcg: list[Printing],
           single_category_ids: set[int]) -> MatchResult:
     """Pair each expansion with its best group when the group's best expansion is that one too and holds as many
     printings per key, then pair the cards whose key is unique on both sides."""
     codes = set_codes(groups)
-    by_group: dict[int, list[TcgProduct]] = defaultdict(list)
+    by_group: dict[int, list[Printing]] = defaultdict(list)
     for card in tcg:
         by_group[card.group_id].append(card)
     group_keys = {mode: {g: {tcg_key(c, mode) for c in cards} - {""} for g, cards in by_group.items()}
@@ -174,9 +205,9 @@ def match(products: list[CmProduct], groups: list[TcgGroup], tcg: list[TcgProduc
         expansion_pairs[id_expansion] = group_id
         names = {p.id_product: p.name for p in items}
         for pid, card in pair_cards(keys, by_group[group_id], mode).items():
-            card_pairs[pid] = card.product_id
+            card_pairs[pid] = card.printing_id
             cards[pid] = SourceCard(codes[group_id], code_of(names[pid]) or card.number, card.rarity,
-                                    card.image_url, large_image(card.image_url))
+                                    card.image_url, card.image_large_url)
 
     sets = {
         codes[g]: SourceSet(codes[g], groups_by_id[g].name, groups_by_id[g].published_on)

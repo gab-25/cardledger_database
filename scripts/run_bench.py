@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cardledger_database.http import make_client  # noqa: E402
 from cardledger_database.matcher import MatchResult, match  # noqa: E402
 from cardledger_database.sources import cardmarket, mtgjson, tcgcsv  # noqa: E402
-from cardledger_database.sources.tcgcsv import TcgProduct  # noqa: E402
+from cardledger_database.matcher import Printing  # noqa: E402
 
 MAGIC = (1, 1)  # Cardmarket idGame, TCGCSV category
 TCGCSV_GAMES = {"yugioh": (3, 2), "riftbound": (22, 89)}
@@ -50,9 +50,9 @@ class BenchResult:
         return self.card_error_rate <= MAX_ERROR_RATE and self.expansion_error_rate <= MAX_ERROR_RATE
 
 
-def true_groups(result: MatchResult, truth: dict[int, set[int]], tcg: list[TcgProduct]) -> dict[int, Counter]:
+def true_groups(result: MatchResult, truth: dict[int, set[int]], tcg: list[Printing]) -> dict[int, Counter]:
     """{idExpansion: Counter(groupId)} of the true TCGplayer cards of each expansion's singles."""
-    group_of = {p.product_id: p.group_id for p in tcg}
+    group_of = {p.printing_id: p.group_id for p in tcg}
     counts: dict[int, Counter] = defaultdict(Counter)
     for id_product, id_expansion in result.single_expansions.items():
         for product_id in truth.get(id_product, ()):
@@ -61,7 +61,7 @@ def true_groups(result: MatchResult, truth: dict[int, set[int]], tcg: list[TcgPr
     return counts
 
 
-def bench(result: MatchResult, truth: dict[int, set[int]], tcg: list[TcgProduct]) -> BenchResult:
+def bench(result: MatchResult, truth: dict[int, set[int]], tcg: list[Printing]) -> BenchResult:
     """A card is wrong when its product is in the truth and the paired productId is not among its true ids; an
     expansion is wrong when its group is not the most frequent group of its true cards (ties: any of them)."""
     judged = [(pid, product_id) for pid, product_id in result.card_pairs.items() if pid in truth]
@@ -99,7 +99,7 @@ def cached(cache_dir, name, fetch):
 
 def print_errors(products, groups, tcg, result, truth, limit):
     names = {p.id_product: p for p in products}
-    tcg_by_id = {p.product_id: p for p in tcg}
+    tcg_by_id = {p.printing_id: p for p in tcg}
     group_names = {g.group_id: g.name for g in groups}
     wrong = [(pid, t) for pid, t in result.card_pairs.items() if pid in truth and t not in truth[pid]]
     print(f"\nwrong cards ({len(wrong)}):")

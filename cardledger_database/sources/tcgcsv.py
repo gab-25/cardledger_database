@@ -1,34 +1,16 @@
 """TCGCSV (a public mirror of TCGplayer's catalog): groups (sets) and single cards for a TCGplayer category."""
 
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
 from datetime import date
 
 import httpx
 
 from .. import http
+from ..matcher import Group, Printing
 from ..model import SourceError
 
 BASE = "https://tcgcsv.com/tcgplayer"
 MAX_WORKERS = 4
-
-
-@dataclass(frozen=True)
-class TcgGroup:
-    group_id: int
-    name: str
-    abbreviation: str
-    published_on: date | None
-
-
-@dataclass(frozen=True)
-class TcgProduct:
-    product_id: int
-    group_id: int
-    name: str
-    number: str
-    rarity: str
-    image_url: str
 
 
 def _results(client, url):
@@ -46,7 +28,7 @@ def _extended(product, name):
 
 def _group(raw):
     published = raw.get("publishedOn")
-    return TcgGroup(
+    return Group(
         raw["groupId"], raw["name"], raw.get("abbreviation") or "",
         date.fromisoformat(published[:10]) if published else None,
     )
@@ -58,20 +40,21 @@ def _products(client, category_id, group_id):
         tokens = _extended(raw, "Number").split()
         if not tokens:  # sealed products have no number
             continue
-        products.append(TcgProduct(
+        image = raw.get("imageUrl") or ""
+        products.append(Printing(
             raw["productId"], group_id, raw["name"], tokens[0].upper(),
-            _extended(raw, "Rarity"), raw.get("imageUrl") or "",
+            _extended(raw, "Rarity"), image, image.replace("_200w", "_in_1000x1000"),
         ))
     return products
 
 
-def fetch(client: httpx.Client, category_id: int) -> tuple[list[TcgGroup], list[TcgProduct]]:
+def fetch(client: httpx.Client, category_id: int) -> tuple[list[Group], list[Printing]]:
     """The groups of a category and their single cards (products with a Number), 4 requests at a time."""
     try:
         groups = [_group(raw) for raw in _results(client, f"{BASE}/{category_id}/groups")]
         with ThreadPoolExecutor(MAX_WORKERS) as pool:
             futures = [pool.submit(_products, client, category_id, g.group_id) for g in groups]
-            products: list[TcgProduct] = []
+            products: list[Printing] = []
             failure = None
             for future in futures:
                 try:
