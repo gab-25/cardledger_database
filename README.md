@@ -38,39 +38,37 @@ See [corrections/README.md](corrections/README.md).
 
 ## Running
 
+With Docker Compose, after copying `.env.example` to `.env` and filling it in (`compose.yaml` needs it, even for
+`generate`):
+
+```bash
+docker compose build
+docker compose run --rm cardledger-db generate                # all games into out/catalog/v1/
+docker compose run --rm cardledger-db generate --game pokemon # only some games
+docker compose run --rm cardledger-db upload                  # out/catalog/v1/*.jsonl.gz to the bucket
+docker compose run --rm cardledger-db upload --game pokemon   # only some games
+```
+
+`out/`, `.cache/` and `corrections/` are mounted from the repository, so edits to the corrections apply without a
+rebuild; rebuild after changing the code. The container runs as uid 1000 (or `$UID:$GID` when exported): `out/` and
+`.cache/` must be writable by that user.
+
+`generate` logs, per game, the products, the products enriched by the source, the expansions and the share with an
+image: compare them with the previous run before uploading. A game that fails keeps its previous file in `out/`, and the
+command exits with 1. `upload` refuses to start if a requested game has no file. The TCGdex cards are cached in
+`.cache/tcgdex/`: keep that folder between runs, without it every Pokémon card is downloaded again.
+
+### Without Docker
+
 ```bash
 uv sync
 uv run pytest -q
-uv run cardledger-db generate                # all games into out/catalog/v1/
-uv run cardledger-db generate --game pokemon # only some games
-uv run cardledger-db upload                  # out/catalog/v1/*.jsonl.gz to the bucket
-uv run cardledger-db upload --game pokemon   # only some games
+uv run cardledger-db generate --game pokemon
+uv run --env-file .env cardledger-db upload --game pokemon
 ```
 
-Run it from the repository root (`corrections/` is read relative to the working directory). `generate` logs, per game,
-the products, the products enriched by the source, the expansions and the share with an image: compare them with the
-previous run before uploading. A game that fails keeps its previous file in `out/`, and the command exits with 1.
-`upload` refuses to start if a requested game has no file. The TCGdex cards are cached in `.cache/tcgdex/` (`--cache`
-to change it): keep that folder between runs, without it every Pokémon card is downloaded again.
-
-### With Docker
-
-```bash
-docker build -t cardledger-db .
-docker run --rm -v "$PWD/out:/app/out" -v "$PWD/.cache:/app/.cache" cardledger-db generate
-docker run --rm -v "$PWD/out:/app/out" --env-file .env cardledger-db upload
-```
-
-The image runs as uid 1000: the mounted `out/` and `.cache/` folders must be writable by that user. The corrections are
-copied into the image at build time, so rebuild it after changing them.
-
-`compose.yaml` does the same with the folders already mounted (`corrections/` too, so edits apply without a rebuild)
-and needs a `.env` file (copy it from `.env.example`), even for `generate`:
-
-```bash
-docker compose run --rm cardledger-db generate --game pokemon
-docker compose run --rm cardledger-db upload
-```
+Run it from the repository root (`corrections/` is read relative to the working directory); `--out` and `--cache`
+change the output and cache folders.
 
 ## Environment variables
 
@@ -83,7 +81,7 @@ Only `upload` uses them:
 - `AWS_DEFAULT_REGION`: required, the bucket's region (e.g. `gra` on OVHcloud)
 
 The credentials need only `s3:PutObject` on the bucket. The CLI does not read `.env` itself: `docker compose` loads it,
-and locally `uv run --env-file .env cardledger-db upload` does.
+and `uv run --env-file .env` does without Docker.
 
 ## CI
 
