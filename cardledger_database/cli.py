@@ -91,7 +91,7 @@ def upload(slugs: list[str], out: Path, s3=None) -> list[str]:
                           aws_secret_access_key=os.environ["CARDLEDGER_S3_SECRET_ACCESS_KEY"],
                           region_name=os.environ["CARDLEDGER_S3_REGION"])
     for key, path in files.items():
-        s3.put_object(Bucket=bucket, Key=key, Body=path.read_bytes(), ContentType="application/gzip")
+        s3.put_object(Bucket=bucket, Key=key, Body=path.read_bytes(), ContentType="application/json")
         logger.info("uploaded s3://%s/%s", bucket, key)
     return list(files)
 
