@@ -23,7 +23,7 @@ logger = logging.getLogger("cardledger_database")
 def _enrichment(slug: str, client, cache_dir: Path, products, singles) -> Enrichment:
     game = GAMES[slug]
     if game.source == "mtgjson":
-        return mtgjson.fetch(client)[0]
+        return mtgjson.fetch(client)
     if game.source == "tcgdex":
         return tcgdex.fetch(client, cache_dir)
     if game.source == "lorcanajson":

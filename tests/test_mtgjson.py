@@ -7,6 +7,7 @@ import httpx
 import pytest
 
 from cardledger_database.http import make_client
+from cardledger_database.matcher import Group
 from cardledger_database.model import SourceCard, SourceError, SourceSet
 from cardledger_database.sources import mtgjson
 
@@ -22,14 +23,14 @@ def normal(scryfall_id):
 
 
 CARDS = [
-    {"uuid": "u1", "setCode": "DMR", "number": "045", "rarity": "uncommon", "side": ""},
-    {"uuid": "u2", "setCode": "DMU", "number": "1", "rarity": "common", "side": ""},  # no Cardmarket id
-    {"uuid": "u3a", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "a"},
-    {"uuid": "u3b", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "b"},  # back face, same id
-    {"uuid": "u4", "setCode": "DMU", "number": "107★", "rarity": "mythic", "side": ""},
-    {"uuid": "u5", "setCode": "DMU", "number": "107", "rarity": "mythic", "side": ""},  # same id, plain number
-    {"uuid": "u6", "setCode": "PDMU", "number": "200s", "rarity": "rare", "side": ""},
-    {"uuid": "u7", "setCode": "PDMU", "number": "201s", "rarity": "rare", "side": ""},  # same id: first wins
+    {"uuid": "u1", "name": "Llanowar Elves", "setCode": "DMR", "number": "045", "rarity": "uncommon", "side": ""},
+    {"uuid": "u2", "name": "Shivan Dragon", "setCode": "DMU", "number": "1", "rarity": "common", "side": ""},  # no Cardmarket id
+    {"uuid": "u3a", "name": "Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "a"},
+    {"uuid": "u3b", "name": "Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "b"},  # back face, same id
+    {"uuid": "u4", "name": "Sheoldred", "setCode": "DMU", "number": "107★", "rarity": "mythic", "side": ""},
+    {"uuid": "u5", "name": "Sheoldred", "setCode": "DMU", "number": "107", "rarity": "mythic", "side": ""},  # same id, plain number
+    {"uuid": "u6", "name": "Promo A", "setCode": "PDMU", "number": "200s", "rarity": "rare", "side": ""},
+    {"uuid": "u7", "name": "Promo B", "setCode": "PDMU", "number": "201s", "rarity": "rare", "side": ""},  # same id: first wins
 ]
 CARD_IDS = [
     {"uuid": "u1", "mcmId": "501201", "scryfallId": "a1", "tcgplayerProductId": "1001",
@@ -44,7 +45,7 @@ CARD_IDS = [
     {"uuid": "u6", "mcmId": "700001", "scryfallId": "d6", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""},
     {"uuid": "u7", "mcmId": "700001", "scryfallId": "d7", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""},
 ]
-TOKENS = [{"uuid": "t1", "setCode": "TDMU", "number": "3", "side": ""}]  # tokens have no rarity column
+TOKENS = [{"uuid": "t1", "name": "Soldier", "setCode": "TDMU", "number": "3", "side": ""}]  # tokens have no rarity column
 TOKEN_IDS = [{"uuid": "t1", "mcmId": "800001", "scryfallId": "e1", "tcgplayerProductId": "3001",
               "tcgplayerEtchedProductId": ""}]
 SETS = [
@@ -82,7 +83,7 @@ class FakeMtgjson:
 
 
 def test_cards_keyed_by_cardmarket_id():
-    enrichment, _ = mtgjson.fetch(FakeMtgjson().client())
+    enrichment = mtgjson.fetch(FakeMtgjson().client())
     cards = enrichment.cards
     assert cards[501201] == SourceCard("dmr", "45", "uncommon", small("a1"), normal("a1"))
     assert set(cards) == {501201, 600001, 501301, 700001, 800001}  # the card without a Cardmarket id is skipped
@@ -93,27 +94,23 @@ def test_cards_keyed_by_cardmarket_id():
 
 
 def test_tokens_have_no_rarity():
-    enrichment, _ = mtgjson.fetch(FakeMtgjson().client())
+    enrichment = mtgjson.fetch(FakeMtgjson().client())
     assert enrichment.cards[800001] == SourceCard("tdmu", "3", "", small("e1"), normal("e1"))
 
 
 def test_sets():
-    enrichment, _ = mtgjson.fetch(FakeMtgjson().client())
+    enrichment = mtgjson.fetch(FakeMtgjson().client())
     assert enrichment.sets["dmu"] == SourceSet("dmu", "Dominaria United", date(2022, 9, 9))
     assert enrichment.sets["dmr"] == SourceSet("dmr", "Dominaria Remastered", None)
     assert enrichment.sets["tdmu"] == SourceSet("tdmu", "Dominaria United Tokens", date(2022, 9, 9))  # no own row
     assert set(enrichment.sets) == {"dmu", "dmr", "tdmu"}
 
 
-def test_truth_holds_tcgplayer_ids():
-    _, truth = mtgjson.fetch(FakeMtgjson().client())
-    assert truth == {501201: {1001}, 501301: {2001, 2002, 2003}, 800001: {3001}}  # unioned, no empty values
-
 
 def test_card_without_scryfall_id_has_no_image():
     fake = FakeMtgjson()
     fake.files["cardIdentifiers"] = [{**row, "scryfallId": ""} for row in CARD_IDS]
-    enrichment, _ = mtgjson.fetch(fake.client())
+    enrichment = mtgjson.fetch(fake.client())
     assert enrichment.cards[501201].image_url == enrichment.cards[501201].image_large_url == ""
 
 
@@ -136,3 +133,16 @@ def test_not_gzip_raises():
     fake.raw["sets"] = b"not gzip"
     with pytest.raises(SourceError):
         mtgjson.fetch(fake.client())
+
+
+def test_matcher_input():
+    groups, printings = mtgjson.matcher_input(FakeMtgjson().client())
+    assert groups == [Group(1, "Dominaria Remastered", "DMR", None), Group(2, "Dominaria United", "DMU", date(2022, 9, 9)),
+                      Group(3, "NEO", "NEO", None), Group(4, "PDMU", "PDMU", None),
+                      Group(5, "Dominaria United Tokens", "TDMU", date(2022, 9, 9))]
+    rows = [(p.group_id, p.name, p.number, p.rarity) for p in printings]
+    assert rows == [(1, "Llanowar Elves", "045", "uncommon"), (2, "Shivan Dragon", "1", "common"),
+                    (3, "Fable of the Mirror-Breaker", "56", "rare"),  # front face only, name before " // "
+                    (2, "Sheoldred", "107★", "mythic"), (2, "Sheoldred", "107", "mythic"),
+                    (4, "Promo A", "200s", "rare"), (4, "Promo B", "201s", "rare"), (5, "Soldier", "3", "")]
+    assert [p.printing_id for p in printings] == list(range(1, 9))

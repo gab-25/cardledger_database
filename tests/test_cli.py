@@ -37,7 +37,7 @@ class Fakes:
             return source("pokemon")
 
         monkeypatch.setattr(cardmarket, "fetch_products", lambda client, cm_id: (cm_products(4), {1}))
-        monkeypatch.setattr(mtgjson, "fetch", lambda client: (source("mtg"), {}))
+        monkeypatch.setattr(mtgjson, "fetch", lambda client: source("mtg"))
         monkeypatch.setattr(lorcanajson, "fetch", lambda client: source("lorcana"))
         monkeypatch.setattr(punkrecords, "fetch", lambda client, products, singles: source("onepiece"))
         monkeypatch.setattr(tcgdex, "fetch", fake_tcgdex)
