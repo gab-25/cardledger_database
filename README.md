@@ -84,4 +84,4 @@ in the working directory (the environment wins); with Docker Compose, `compose.y
 
 ## CI
 
-`tests.yml` runs the tests on every push and pull request.
+`tests.yml` runs the tests on every push to `main`.
