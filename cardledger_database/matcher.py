@@ -149,6 +149,29 @@ def _fallback_code(group: Group) -> str:
     return f"{abbr}-{slug}"[:MAX_CODE].rstrip("-")
 
 
+def fill_in(keys: dict[int, str], cards: list[Printing], mode: str, paired: set[int]) -> dict[int, list[Printing]]:
+    """{idProduct: candidate printings} for the unpaired singles whose key's printings all share one number, when
+    the expansion has no more singles with that key than the group has printings with it (rarity variants pass; a
+    regular + oversized pair against one printing does not)."""
+    cm_count = Counter(keys.values())
+    by_key: dict[str, list[Printing]] = defaultdict(list)
+    for card in cards:
+        by_key[tcg_key(card, mode)].append(card)
+    found = {}
+    for pid, key in keys.items():
+        candidates = by_key.get(key, [])
+        if pid in paired or not candidates or cm_count[key] > len(candidates):
+            continue
+        if len({c.number for c in candidates}) == 1:
+            found[pid] = candidates
+    return found
+
+
+def _shared(values) -> str:
+    values = set(values)
+    return values.pop() if len(values) == 1 else ""
+
+
 def set_codes(groups: list[Group]) -> dict[int, str]:
     """{group id: set code}: the lower-case abbreviation when unique, else the fallback code (plus "-<group id>" for
     the groups after the first, by id, sharing it)."""
@@ -208,6 +231,13 @@ def match(products: list[CmProduct], groups: list[Group], tcg: list[Printing],
             card_pairs[pid] = card.printing_id
             cards[pid] = SourceCard(codes[group_id], code_of(names[pid]) or card.number, card.rarity,
                                     card.image_url, card.image_large_url)
+        for pid, candidates in fill_in(keys, by_group[group_id], mode, set(cards)).items():
+            images = {(c.image_url, c.image_large_url) for c in candidates}
+            image, large = images.pop() if len(images) == 1 else ("", "")
+            if not image:
+                image = large = ""
+            cards[pid] = SourceCard(codes[group_id], code_of(names[pid]) or candidates[0].number,
+                                    _shared(c.rarity for c in candidates), image, large)
 
     sets = {
         codes[g]: SourceSet(codes[g], groups_by_id[g].name, groups_by_id[g].published_on)

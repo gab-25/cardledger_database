@@ -2,7 +2,7 @@ from datetime import date
 
 from cardledger_database import matcher
 from cardledger_database.matcher import Group, MatchResult, Printing, card_key, match, normalize_name, set_codes
-from cardledger_database.model import CmProduct, SourceSet
+from cardledger_database.model import CmProduct, SourceCard, SourceSet
 
 SINGLES = {1}
 
@@ -91,7 +91,8 @@ def test_variants_are_not_paired_by_id_order():
              tcg(1002, "Roronoa Zoro", "OP01-025"), tcg(1003, "Nami", "OP01-016")]
     result = match(products, [group()], cards, SINGLES)
     assert result.card_pairs == {3: 1002, 4: 1003}
-    assert 1 not in result.enrichment.cards and 2 not in result.enrichment.cards
+    # not paired, but both printings share the number: filled in, without an image (the two images differ)
+    assert result.enrichment.cards[1] == result.enrichment.cards[2] == SourceCard("op01", "OP01-001", "Common", "", "")
 
 
 def test_expansion_below_threshold_is_not_matched():
@@ -219,3 +220,56 @@ def test_expansion_with_some_reprinted_names_is_matched():
     result = match(products, [group()], cards, SINGLES)
     assert result.expansion_pairs == {10: 100}
     assert matcher.MAX_PRINTING_RATIO == 1.5
+
+
+# --- fill-in of repeated names ---
+
+def echo(products, cards, cm_ids=(20, 21), printings=(("9", "Common", "img"), ("9", "Rare", "img"))):
+    products = products + [cm(i, "Echo Mage") for i in cm_ids]
+    cards = cards + [Printing(2000 + i, 100, "Echo Mage", n, r, i_ and f"https://x/{i_}.png", i_ and f"https://x/{i_}-l.png")
+                     for i, (n, r, i_) in enumerate(printings)]
+    return match(products, [group()], cards, SINGLES)
+
+
+def test_fill_in_rarity_twins():
+    r = echo(*named_set())
+    card = SourceCard("op01", "9", "", "https://x/img.png", "https://x/img-l.png")
+    assert r.enrichment.cards[20] == r.enrichment.cards[21] == card
+    assert 20 not in r.card_pairs and 21 not in r.card_pairs
+
+
+def test_fill_in_same_rarity_kept():
+    r = echo(*named_set(), printings=(("9", "Rare", "img"), ("9", "Rare", "img")))
+    assert r.enrichment.cards[20].rarity == "Rare"
+
+
+def test_no_fill_in_when_numbers_differ():
+    r = echo(*named_set(), printings=(("9", "Common", "img"), ("10", "Rare", "img")))
+    assert 20 not in r.enrichment.cards and 21 not in r.enrichment.cards
+
+
+def test_no_fill_in_when_cardmarket_has_more():
+    r = echo(*named_set(), printings=(("9", "Common", "img"),))
+    assert 20 not in r.enrichment.cards and 21 not in r.enrichment.cards
+
+
+def test_single_cardmarket_product_filled_from_two_printings():
+    r = echo(*named_set(), cm_ids=(20,))
+    assert r.enrichment.cards[20].collector_number == "9"
+
+
+def test_fill_in_image_dropped_when_images_differ():
+    r = echo(*named_set(), printings=(("9", "Common", "a"), ("9", "Rare", "b")))
+    assert (r.enrichment.cards[20].image_url, r.enrichment.cards[20].image_large_url) == ("", "")
+
+
+def test_fill_in_image_dropped_when_one_image_empty():
+    r = echo(*named_set(), printings=(("9", "Common", "a"), ("9", "Rare", "")))
+    assert (r.enrichment.cards[20].image_url, r.enrichment.cards[20].image_large_url) == ("", "")
+
+
+def test_unpaired_expansion_gets_no_fill_in():
+    products = [cm(1, "Echo Mage"), cm(2, "Echo Mage")]
+    cards = [tcg(1000, "Echo Mage", "9"), tcg(1001, "Echo Mage", "9")]
+    r = match(products, [group()], cards, SINGLES)  # one common key < MIN_COMMON: not paired
+    assert r.enrichment.cards == {} and r.expansion_pairs == {}
