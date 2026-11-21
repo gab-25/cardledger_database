@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A CLI (`cardledger-db`) that builds the CardLedger card catalog for six games (mtg, pokemon, lorcana, onepiece,
-yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.jsonl.gz`, a human
+yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.json`, a human
 checks the logged counts, `upload` copies the files to S3. Generated files are never committed. README.md is the
 user-facing reference (sources and licences, output format, env vars).
 
@@ -42,7 +42,7 @@ Per game, `cli.generate_game` runs a fixed pipeline:
    schema: unknown keys/wrong types fail the run; stale ids only warn. Format in `corrections/README.md`.
 4. **Assemble** (`catalog.assemble`): unmatched products get their expansion's majority set code; if none and
    `Game.keep_unmatched` is true they get a stand-in `cmx<idExpansion>` expansion, otherwise they are dropped
-   (`skipped`). `catalog.encode` is deterministic (sorted lines, gzip `mtime=0`): same catalog, same bytes.
+   (`skipped`). `catalog.encode` is deterministic (sorted lists and keys): same catalog, same bytes.
 
 A game that fails logs and keeps its previous output file; `SourceError` is the expected "source unavailable / bad
 shape" error (logged without traceback). HTTP goes through `http.get` (3 attempts on 5xx/transport errors); TCGdex

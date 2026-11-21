@@ -1,4 +1,3 @@
-import gzip
 import json
 import os
 from pathlib import Path
@@ -55,8 +54,7 @@ def fakes(monkeypatch):
 
 
 def products_in(path):
-    lines = [json.loads(x) for x in gzip.decompress(path.read_bytes()).decode().splitlines()]
-    return [x for x in lines if x["type"] == "product"]
+    return json.loads(path.read_bytes())["products"]
 
 
 def test_generate_writes_every_game(fakes, tmp_path):
@@ -98,7 +96,7 @@ def test_upload_copies_the_files_under_the_same_keys(fakes, tmp_path, monkeypatc
     s3 = FakeS3()
 
     assert cli.upload(["lorcana", "mtg"], tmp_path, s3) == [catalog_key("lorcana"), catalog_key("mtg")]
-    assert s3.objects[("bucket", "catalog/v1/lorcana.jsonl.gz")] == (tmp_path / catalog_key("lorcana")).read_bytes()
+    assert s3.objects[("bucket", "catalog/v1/lorcana.json")] == (tmp_path / catalog_key("lorcana")).read_bytes()
 
 
 def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
@@ -106,7 +104,7 @@ def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
     cli.generate(["lorcana"], tmp_path, tmp_path, client=None)
     s3 = FakeS3()
 
-    with pytest.raises(SourceError, match="mtg.jsonl.gz"):
+    with pytest.raises(SourceError, match="mtg.json"):
         cli.upload(["lorcana", "mtg"], tmp_path, s3)
     assert s3.objects == {}
 

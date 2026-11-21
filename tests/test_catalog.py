@@ -1,4 +1,3 @@
-import gzip
 import json
 from datetime import date
 
@@ -137,8 +136,6 @@ def _catalog():
     return GameCatalog("mtg", exps, prods, 3)
 
 
-def _lines(data):
-    return [json.loads(x) for x in gzip.decompress(data).decode("utf-8").splitlines()]
 
 
 def test_encoding_is_deterministic():
@@ -148,17 +145,19 @@ def test_encoding_is_deterministic():
     assert encode(a) == encode(a)
 
 
-def test_expansions_come_before_products():
-    lines = _lines(encode(_catalog()))
-    assert [x["type"] for x in lines] == ["expansion"] * 2 + ["product"] * 3
-    assert lines[0] == {"type": "expansion", "code": "aaa", "name": "Alpha é", "released_at": "1993-08-05",
+def test_encoding_is_one_sorted_document():
+    doc = json.loads(encode(_catalog()).decode("utf-8"))
+    assert list(doc) == ["expansions", "products"]
+    exps, prods = doc["expansions"], doc["products"]
+    assert len(exps) == 2
+    assert exps[0] == {"code": "aaa", "name": "Alpha é", "released_at": "1993-08-05",
                         "language": "ja"}
-    assert lines[1]["released_at"] is None
-    assert [p["id_product"] for p in lines[2:]] == [5, 10, 20]
-    assert lines[3] == {"type": "product", "id_product": 10, "name": "A é", "expansion_code": "aaa", "number": "1",
+    assert exps[1]["released_at"] is None
+    assert [p["id_product"] for p in prods] == [5, 10, 20]
+    assert prods[1] == {"id_product": 10, "name": "A é", "expansion_code": "aaa", "number": "1",
                         "rarity": "common", "image_url": "u2", "image_large_url": "ul2", "category_id": 1,
                         "category_name": "Singles"}
 
 
 def test_catalog_key():
-    assert catalog_key("mtg") == "catalog/v1/mtg.jsonl.gz"
+    assert catalog_key("mtg") == "catalog/v1/mtg.json"

@@ -26,10 +26,11 @@ prices are included.
 
 ## Output (format v1)
 
-`<slug>.jsonl.gz` under `catalog/v1/`, one per game (`mtg`, `pokemon`, `lorcana`, `onepiece`, `yugioh`, `riftbound`),
-the same path in the output folder and in the bucket: gzip-compressed JSON lines, first the `expansion` lines (`code`,
-`name`, `released_at`, `language`), then the `product` lines (`id_product`, `name`, `expansion_code`, `number`,
-`rarity`, `image_url`, `image_large_url`, `category_id`, `category_name`).
+`<slug>.json` under `catalog/v1/`, one per game (`mtg`, `pokemon`, `lorcana`, `onepiece`, `yugioh`, `riftbound`),
+the same path in the output folder and in the bucket: one uncompressed JSON object,
+`{"expansions": [...], "products": [...]}`. Each expansion has `code`, `name`, `released_at`, `language`; each
+product has `id_product`, `name`, `expansion_code`, `number`, `rarity`, `image_url`, `image_large_url`,
+`category_id`, `category_name`.
 
 ## Corrections
 
@@ -43,7 +44,7 @@ uv sync
 uv run pytest -q
 uv run cardledger-db generate                # all games into out/catalog/v1/
 uv run cardledger-db generate --game pokemon # only some games
-uv run cardledger-db upload                  # out/catalog/v1/*.jsonl.gz to the bucket
+uv run cardledger-db upload                  # out/catalog/v1/*.json to the bucket
 uv run cardledger-db upload --game pokemon   # only some games
 ```
 
