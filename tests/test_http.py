@@ -41,3 +41,16 @@ def test_other_answers_are_not_retried(status, sleeps):
     client, calls = flaky(status)
     assert http.get(client, "https://x/a").status_code == status
     assert len(calls) == 1 and sleeps == []
+
+
+def test_timeout_is_passed_to_the_request():
+    seen = []
+
+    def handler(request):
+        seen.append(request.extensions["timeout"])
+        return httpx.Response(200)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    http.get(client, "https://x/a", timeout=300)
+    http.get(client, "https://x/a")
+    assert seen[0]["read"] == 300 and seen[1]["read"] != 300
