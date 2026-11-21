@@ -7,7 +7,6 @@ import httpx
 import pytest
 
 from cardledger_database.http import make_client
-from cardledger_database.matcher import Group
 from cardledger_database.model import SourceCard, SourceError, SourceSet
 from cardledger_database.sources import mtgjson
 
@@ -134,22 +133,3 @@ def test_not_gzip_raises():
     with pytest.raises(SourceError):
         mtgjson.fetch(fake.client())
 
-
-def test_matcher_input():
-    groups, printings = mtgjson.matcher_input(FakeMtgjson().client())
-    assert groups == [Group(1, "Dominaria Remastered", "DMR", None), Group(2, "Dominaria United", "DMU", date(2022, 9, 9)),
-                      Group(3, "NEO", "NEO", None), Group(4, "PDMU", "PDMU", None),
-                      Group(5, "Dominaria United Tokens", "TDMU", date(2022, 9, 9))]
-    rows = [(p.group_id, p.name, p.number, p.rarity) for p in printings]
-    assert rows == [(1, "Llanowar Elves", "045", "uncommon"), (2, "Shivan Dragon", "1", "common"),
-                    (3, "Fable of the Mirror-Breaker", "56", "rare"),  # front face only, name before " // "
-                    (2, "Sheoldred", "107★", "mythic"), (2, "Sheoldred", "107", "mythic"),
-                    (4, "Promo A", "200s", "rare"), (4, "Promo B", "201s", "rare"), (5, "Soldier", "3", "")]
-    assert [p.printing_id for p in printings] == list(range(1, 9))
-
-
-def test_matcher_input_per_finish():
-    _, printings = mtgjson.matcher_input(FakeMtgjson().client(), per_finish=True)
-    rows = [(p.name, p.number) for p in printings]
-    assert rows[:2] == [("Llanowar Elves", "045"), ("Llanowar Elves", "045")]  # nonfoil and foil
-    assert len(printings) == 9 and [p.printing_id for p in printings] == list(range(1, 10))

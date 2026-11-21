@@ -119,5 +119,5 @@ def test_upload_requires_the_bucket(tmp_path, monkeypatch):
 
 def test_no_tcgcsv_left():
     root = Path(__file__).parent.parent
-    files = [*root.glob("cardledger_database/**/*.py"), *root.glob("scripts/*.py"), root / "README.md"]
+    files = [*root.glob("cardledger_database/**/*.py"), root / "README.md"]
     assert [str(f) for f in files if "tcgcsv" in f.read_text().lower()] == []

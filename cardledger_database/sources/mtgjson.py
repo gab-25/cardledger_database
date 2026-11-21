@@ -1,8 +1,7 @@
 """MTGJSON's open card data (MIT licence) for Magic: set code, collector number and rarity, keyed by Cardmarket id.
 
 Read from MTGJSON's gzip CSV files (cards and tokens, each with its identifiers file), decompressed while parsed.
-MTGJSON has no images: the URLs are Scryfall's, built from each printing's scryfallId. `matcher_input` gives the
-same printings as matcher input (ignoring the Cardmarket ids), for the matcher bench.
+MTGJSON has no images: the URLs are Scryfall's, built from each printing's scryfallId.
 """
 
 import csv
@@ -13,7 +12,6 @@ from datetime import date
 import httpx
 
 from .. import http
-from ..matcher import Group, Printing
 from ..model import Enrichment, SourceCard, SourceError, SourceSet, cardmarket_id, normalize_number
 
 CSV_URL = "https://mtgjson.com/api/v5/csv/{name}.csv.gz"
@@ -82,27 +80,3 @@ def fetch(client: httpx.Client) -> Enrichment:
         raise SourceError(f"MTGJSON: {type(exc).__name__}: {exc}") from exc
     return Enrichment(cards={cm_id: card for cm_id, (_, card) in cards.items()}, sets=sets)
 
-
-def matcher_input(client: httpx.Client, per_finish: bool = False) -> tuple[list[Group], list[Printing]]:
-    """Groups (one per set code, ids by sorted code) and printings (front faces of cards and tokens, the name before
-    " // "), without images: the bench judges set codes and numbers only. `per_finish` gives one printing per finish
-    (nonfoil, foil, ...), all with the same number, like yaml-yugi's one printing per rarity: Cardmarket sells them as
-    one product, so the matcher fills them in instead of pairing them, and the bench judges the fill-in."""
-    try:
-        sets = _sets(client)
-        rows = [row for name in ("cards", "tokens") for row in _rows(client, name) if row["side"] in ("", "a")]
-    except (httpx.HTTPError, OSError, EOFError, csv.Error, ValueError, KeyError, TypeError) as exc:
-        raise SourceError(f"MTGJSON: {type(exc).__name__}: {exc}") from exc
-    groups = []
-    ids = {}
-    for code in sorted({row["setCode"] for row in rows}):
-        known = sets.get(code.lower())
-        ids[code] = len(groups) + 1
-        groups.append(Group(ids[code], known.name if known else code, code, known.released_at if known else None))
-    printings = []
-    for row in rows:
-        finishes = [f for f in (row.get("finishes") or "").split(", ") if f] if per_finish else [""]
-        for _ in finishes or [""]:
-            printings.append(Printing(len(printings) + 1, ids[row["setCode"]], row["name"].split(" // ")[0],
-                                      row["number"], row.get("rarity") or "", "", ""))
-    return groups, printings

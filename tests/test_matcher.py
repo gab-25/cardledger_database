@@ -188,7 +188,7 @@ def test_result_lists_the_expansion_of_every_single():
     assert result.single_expansions == {1: 10, 2: 10, 3: 10, 4: 10, 5: 11}
 
 
-# --- one expansion per group (Magic bench) ---
+# --- one expansion per group ---
 
 def test_group_goes_only_to_its_best_expansion():
     products, cards = named_set()

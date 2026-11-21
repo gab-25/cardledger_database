@@ -21,9 +21,7 @@ The catalog stores only image URLs, served by each source. MTGJSON has no images
 | Riftbound | [Riftcodex](https://riftcodex.com), images from Riot's CDN | Fan API, no licence stated; card data © Riot Games |
 
 The Cardmarket product lists are the public files published by Cardmarket. One Piece is joined on the card code printed in the Cardmarket name (images only where the variant is unambiguous). Yu-Gi-Oh! and Riftbound are matched to Cardmarket products by name (a repeated name still gets its
-number, and its image and rarity when all its printings agree); after changing the matcher, check it with
-`uv run python scripts/run_bench.py` (it runs the matcher on Magic with MTGJSON's printings and judges the result against
-MTGJSON's Cardmarket ids, exiting with 1 above 1%). Riftcodex is slow: a Riftbound run can take several minutes. No
+number, and its image and rarity when all its printings agree). Riftcodex is slow: a Riftbound run can take several minutes. No
 prices are included.
 
 ## Output (format v1)
