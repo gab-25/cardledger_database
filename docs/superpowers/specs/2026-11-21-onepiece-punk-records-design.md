@@ -48,9 +48,11 @@ Variants: punk-records keys are `<code>` and `<code>_pN` (parallels/reprints); e
 
 1. **Expansion → pack.** For every Cardmarket expansion, each of its singles whose code is in punk-records votes for the
    packs its code's variants belong to. The expansion maps to the top pack when that pack has at least 80% of the
-   expansion's coded singles and strictly more votes than the second. (Several Cardmarket expansions may map to the same
-   pack.) Mapped expansions go in `Enrichment.expansions`.
-2. **Card with image.** A single gets a full `SourceCard` (set code of the pack, number = the code, rarity, image) when its
+   expansion's coded singles and strictly more votes than the second. Several Cardmarket expansions may map to the same
+   pack (e.g. OP01: the English booster, its Non-English and Pre-Errata versions, the demo decks): the one with the most
+   coded singles takes the pack code, the others get `<pack code>-cm<idExpansion>` ("<pack title> (Cardmarket #id)") and
+   no images, so their rows stay apart. Mapped expansions go in `Enrichment.expansions`.
+2. **Card with image.** A single in the pack's main expansion gets a full `SourceCard` (set code of the pack, number = the code, rarity, image) when its
    expansion is mapped, it is the only Cardmarket product with that code in its expansion, and exactly one variant of the
    code is in that pack.
 3. **Card without image.** Otherwise, when every variant of the code has the same rarity, the single gets a `SourceCard`

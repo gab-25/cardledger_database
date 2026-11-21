@@ -146,3 +146,13 @@ def test_bad_json():
     c, _ = client(content=b"not json")
     with pytest.raises(SourceError, match="punk-records"):
         punkrecords.fetch(c, PRODUCTS, SINGLES)
+
+
+def test_secondary_expansion_of_a_pack_gets_its_own_code_and_no_image():
+    products = PRODUCTS + [prod(11, "A (OP05-001)", 30), prod(12, "Enel (OP05-098)", 30)]
+    e = build(products=products)
+    assert e.expansions == {10: "op05", 30: "op05-cm30"}
+    assert e.sets["op05-cm30"] == SourceSet("op05-cm30", "Awakening of the New Era (Cardmarket #30)", None)
+    assert e.cards[1].image_url  # the pack's main expansion keeps the image
+    assert e.cards[11] == SourceCard("op05-cm30", "OP05-001", "C", "", "")
+    assert e.cards[12] == SourceCard("op05-cm30", "OP05-098", "L", "", "")

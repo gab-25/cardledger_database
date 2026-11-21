@@ -94,23 +94,40 @@ def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int]
     def code_of_pack(pack_id: str) -> str:
         return pack_codes.get(pack_id) or set_code(pack_id, None)
 
+    # Several Cardmarket expansions (booster, pre-release, reprint) can map to one pack. The one with the most coded
+    # singles is the pack's main expansion and takes its code; the others get their own code and no images, so their
+    # rows stay apart and never show the booster's artwork for a printing that may differ.
+    coded_per_expansion = Counter(p.id_expansion for p, _ in coded)
+    main_expansion: dict[str, int] = {}
+    for exp, pack_id in sorted(exp_packs.items()):
+        best = main_expansion.get(pack_id)
+        if best is None or coded_per_expansion[exp] > coded_per_expansion[best]:
+            main_expansion[pack_id] = exp
+    expansions: dict[int, str] = {}
+    for exp, pack_id in exp_packs.items():
+        code = code_of_pack(pack_id)
+        if main_expansion[pack_id] != exp:
+            base = sets.get(code)
+            name = f"{base.name if base else code.upper()} (Cardmarket #{exp})"
+            code = f"{code}-cm{exp}"
+            sets[code] = SourceSet(code, name, None)
+        expansions[exp] = code
+
     result: dict[int, SourceCard] = {}
     for p, code in coded:
         pack_id = exp_packs.get(p.id_expansion)
-        if pack_id is not None:
+        if pack_id is not None and main_expansion[pack_id] == p.id_expansion:
             in_pack = [v for v in variants[code] if v.pack_id == pack_id]
             if len(in_pack) == 1 and per_expansion[(code, p.id_expansion)] == 1:
                 v = in_pack[0]
                 result[p.id_product] = SourceCard(
-                    code_of_pack(pack_id), code, RARITIES.get(v.rarity, v.rarity), v.image, v.image)
+                    expansions[p.id_expansion], code, RARITIES.get(v.rarity, v.rarity), v.image, v.image)
                 continue
         rarities = {v.rarity for v in variants[code]}
         if len(rarities) == 1:
             rarity = rarities.pop()
-            result[p.id_product] = SourceCard(
-                code_of_pack(pack_id if pack_id is not None else variants[code][0].pack_id), code,
-                RARITIES.get(rarity, rarity), "", "")
-    expansions = {exp: code_of_pack(pack_id) for exp, pack_id in exp_packs.items()}
+            set_code_ = expansions.get(p.id_expansion) or code_of_pack(variants[code][0].pack_id)
+            result[p.id_product] = SourceCard(set_code_, code, RARITIES.get(rarity, rarity), "", "")
     return Enrichment(cards=result, sets=sets, expansions=expansions)
 
 
