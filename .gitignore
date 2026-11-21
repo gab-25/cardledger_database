@@ -222,3 +222,7 @@ __marimo__/
 # Generator output and cache
 out/
 .cache/
+
+# Superpowers working files (specs, plans, workspaces): local only
+docs/superpowers/
+.superpowers/
