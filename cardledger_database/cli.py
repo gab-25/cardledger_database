@@ -10,6 +10,8 @@ import sys
 import time
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from . import corrections
 from .catalog import assemble, catalog_key, encode
 from .http import make_client
@@ -80,7 +82,14 @@ def upload(slugs: list[str], out: Path, s3=None) -> list[str]:
     if s3 is None:
         import boto3
 
-        s3 = boto3.client("s3", endpoint_url=os.environ.get("CARDLEDGER_S3_ENDPOINT") or None)
+        required = ("CARDLEDGER_S3_ACCESS_KEY_ID", "CARDLEDGER_S3_SECRET_ACCESS_KEY", "CARDLEDGER_S3_REGION")
+        unset = [name for name in required if not os.environ.get(name)]
+        if unset:
+            raise SourceError(f"{', '.join(unset)} not set")
+        s3 = boto3.client("s3", endpoint_url=os.environ.get("CARDLEDGER_S3_ENDPOINT") or None,
+                          aws_access_key_id=os.environ["CARDLEDGER_S3_ACCESS_KEY_ID"],
+                          aws_secret_access_key=os.environ["CARDLEDGER_S3_SECRET_ACCESS_KEY"],
+                          region_name=os.environ["CARDLEDGER_S3_REGION"])
     for key, path in files.items():
         s3.put_object(Bucket=bucket, Key=key, Body=path.read_bytes(), ContentType="application/gzip")
         logger.info("uploaded s3://%s/%s", bucket, key)
@@ -108,6 +117,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "generate":
             with make_client() as client:
                 return 1 if generate(slugs, args.out, args.cache, client) else 0
+        load_dotenv(Path(".env"))  # the working directory's .env, without overriding the environment
         try:
             upload(slugs, args.out)
         except SourceError as exc:

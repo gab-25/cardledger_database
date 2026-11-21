@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Generator of the CardLedger card catalog"
 requires-python = ">=3.14"
 license = { text = "GPL-3.0-only" }
-dependencies = ["httpx", "boto3"]
+dependencies = ["httpx", "boto3", "python-dotenv"]
 
 [project.scripts]
 cardledger-db = "cardledger_database.cli:main"
