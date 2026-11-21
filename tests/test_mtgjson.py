@@ -23,14 +23,14 @@ def normal(scryfall_id):
 
 
 CARDS = [
-    {"uuid": "u1", "name": "Llanowar Elves", "setCode": "DMR", "number": "045", "rarity": "uncommon", "side": ""},
-    {"uuid": "u2", "name": "Shivan Dragon", "setCode": "DMU", "number": "1", "rarity": "common", "side": ""},  # no Cardmarket id
-    {"uuid": "u3a", "name": "Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "a"},
-    {"uuid": "u3b", "name": "Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "b"},  # back face, same id
-    {"uuid": "u4", "name": "Sheoldred", "setCode": "DMU", "number": "107★", "rarity": "mythic", "side": ""},
-    {"uuid": "u5", "name": "Sheoldred", "setCode": "DMU", "number": "107", "rarity": "mythic", "side": ""},  # same id, plain number
-    {"uuid": "u6", "name": "Promo A", "setCode": "PDMU", "number": "200s", "rarity": "rare", "side": ""},
-    {"uuid": "u7", "name": "Promo B", "setCode": "PDMU", "number": "201s", "rarity": "rare", "side": ""},  # same id: first wins
+    {"uuid": "u1", "name": "Llanowar Elves", "setCode": "DMR", "number": "045", "rarity": "uncommon", "side": "", "finishes": "nonfoil, foil"},
+    {"uuid": "u2", "name": "Shivan Dragon", "setCode": "DMU", "number": "1", "rarity": "common", "side": "", "finishes": "nonfoil"},  # no Cardmarket id
+    {"uuid": "u3a", "name": "Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "a", "finishes": "nonfoil"},
+    {"uuid": "u3b", "name": "Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", "setCode": "NEO", "number": "56", "rarity": "rare", "side": "b", "finishes": "nonfoil"},  # back face, same id
+    {"uuid": "u4", "name": "Sheoldred", "setCode": "DMU", "number": "107★", "rarity": "mythic", "side": "", "finishes": "nonfoil"},
+    {"uuid": "u5", "name": "Sheoldred", "setCode": "DMU", "number": "107", "rarity": "mythic", "side": "", "finishes": "nonfoil"},  # same id, plain number
+    {"uuid": "u6", "name": "Promo A", "setCode": "PDMU", "number": "200s", "rarity": "rare", "side": "", "finishes": "nonfoil"},
+    {"uuid": "u7", "name": "Promo B", "setCode": "PDMU", "number": "201s", "rarity": "rare", "side": "", "finishes": "nonfoil"},  # same id: first wins
 ]
 CARD_IDS = [
     {"uuid": "u1", "mcmId": "501201", "scryfallId": "a1", "tcgplayerProductId": "1001",
@@ -45,7 +45,7 @@ CARD_IDS = [
     {"uuid": "u6", "mcmId": "700001", "scryfallId": "d6", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""},
     {"uuid": "u7", "mcmId": "700001", "scryfallId": "d7", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""},
 ]
-TOKENS = [{"uuid": "t1", "name": "Soldier", "setCode": "TDMU", "number": "3", "side": ""}]  # tokens have no rarity column
+TOKENS = [{"uuid": "t1", "name": "Soldier", "setCode": "TDMU", "number": "3", "side": "", "finishes": "nonfoil"}]  # tokens have no rarity column
 TOKEN_IDS = [{"uuid": "t1", "mcmId": "800001", "scryfallId": "e1", "tcgplayerProductId": "3001",
               "tcgplayerEtchedProductId": ""}]
 SETS = [
@@ -146,3 +146,10 @@ def test_matcher_input():
                     (2, "Sheoldred", "107★", "mythic"), (2, "Sheoldred", "107", "mythic"),
                     (4, "Promo A", "200s", "rare"), (4, "Promo B", "201s", "rare"), (5, "Soldier", "3", "")]
     assert [p.printing_id for p in printings] == list(range(1, 9))
+
+
+def test_matcher_input_per_finish():
+    _, printings = mtgjson.matcher_input(FakeMtgjson().client(), per_finish=True)
+    rows = [(p.name, p.number) for p in printings]
+    assert rows[:2] == [("Llanowar Elves", "045"), ("Llanowar Elves", "045")]  # nonfoil and foil
+    assert len(printings) == 9 and [p.printing_id for p in printings] == list(range(1, 10))

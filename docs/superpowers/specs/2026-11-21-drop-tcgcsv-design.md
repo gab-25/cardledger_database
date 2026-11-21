@@ -22,6 +22,11 @@ with the loose rule 82 wrong of 256 (32%, mostly Commander oversized and promo s
 with the final rule 0 wrong of 1. A rule on differing `id_metacard` was also measured and changed nothing, so it is not
 added.
 
+Real runs after implementation: Yu-Gi-Oh! 34,414 enriched, with_image 32.2%. Riftbound 850 enriched, with_image 42.3%,
+below TCGCSV's 939: Riftcodex has 147 duplicate records (deduplicated, latest update wins) and an ambiguous
+`collector_number` (4 = rune R04, card 004, showcase SP4), so numbers come from `riftbound_id`; base and variant
+numbers then differ (229 vs 229*) and those ~200 products are no longer filled in with the base number.
+
 ## Goals
 
 - Yu-Gi-Oh! and Riftbound enriched from yaml-yugi and Riftcodex through the existing matcher, plus a fill-in step.

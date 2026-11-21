@@ -6,7 +6,8 @@ matcher: it exits with 1 when more than 1% of the Magic cards or expansions are 
 Usage: python scripts/run_bench.py [--cache-dir DIR] [--errors N]
 
 Downloads Cardmarket Magic and MTGJSON, runs the matcher on MTGJSON's printings ignoring their Cardmarket ids, and
-judges every produced card (pairs and fill-ins) against those ids: a card is wrong when its set code or number differs.
+judges every produced card against those ids: a card is wrong when its set code or number differs. It runs twice:
+with one printing per (set, number), which exercises the pairs, and with one per finish, which exercises the fill-in.
 MTGJSON names cards the way Cardmarket does more often than other sources, so this is a regression guard, not an
 estimate of the error on the other games. Then, for yugioh and riftbound, prints the share of Cardmarket singles with
 a card. --cache-dir keeps every download as a pickle (delete it to refresh); --errors prints that many wrong cards
@@ -140,19 +141,24 @@ def main(argv):
     with make_client() as client:
         products, singles = cached(args.cache_dir, "cardmarket_1", lambda: cardmarket.fetch_products(client, MAGIC))
         truth = cached(args.cache_dir, "mtgjson", lambda: mtgjson.fetch(client))
-        groups, printings = cached(args.cache_dir, "mtgjson_input", lambda: mtgjson.matcher_input(client))
-        result = match(products, groups, printings, singles)
-        bench_result = bench(result, truth)
-        print(bench_result)
-        print(f"card_error_rate={bench_result.card_error_rate:.4f} "
-              f"expansion_error_rate={bench_result.expansion_error_rate:.4f} passed={bench_result.passed}")
+        passed = True
         magic_singles = sum(1 for p in products if p.id_category in singles)
-        print(f"magic: {len(result.card_pairs)} pairs, {len(result.enrichment.cards) - len(result.card_pairs)} "
-              f"fill-ins, {len(result.expansion_pairs)} expansion pairs, "
-              f"coverage {len(result.enrichment.cards) / magic_singles:.1%} of {magic_singles} singles, "
-              f"{len(reused_printing_ids(result))} printings paired more than once")
-        if args.errors:
-            print_errors(products, result, truth, args.errors)
+        # Pairs: one printing per (set, number). Fill-ins: one printing per finish, which Cardmarket sells as one
+        # product, so the matcher must fill them in.
+        for label, per_finish in (("pairs", False), ("fill-ins", True)):
+            groups, printings = cached(args.cache_dir, f"mtgjson_input_{label}",
+                                       lambda: mtgjson.matcher_input(client, per_finish=per_finish))
+            result = match(products, groups, printings, singles)
+            bench_result = bench(result, truth)
+            passed = passed and bench_result.passed
+            print(f"magic ({label}): {bench_result}")
+            print(f"  card_error_rate={bench_result.card_error_rate:.4f} "
+                  f"expansion_error_rate={bench_result.expansion_error_rate:.4f} passed={bench_result.passed}")
+            print(f"  {len(result.card_pairs)} pairs, {len(result.enrichment.cards) - len(result.card_pairs)} "
+                  f"fill-ins, {len(result.expansion_pairs)} expansion pairs, "
+                  f"coverage {len(result.enrichment.cards) / magic_singles:.1%} of {magic_singles} singles")
+            if args.errors:
+                print_errors(products, result, truth, args.errors)
 
         for slug, (cm_game, fetch) in NAME_GAMES.items():
             products, singles = cached(args.cache_dir, f"cardmarket_{cm_game}",
@@ -163,7 +169,7 @@ def main(argv):
             print(f"{slug}: {len(result.card_pairs)} pairs, {len(result.enrichment.cards) - len(result.card_pairs)} "
                   f"fill-ins, {len(result.expansion_pairs)} expansion pairs, "
                   f"coverage {len(result.enrichment.cards) / n if n else 0:.1%} of {n} singles")
-    return 0 if bench_result.passed else 1
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":

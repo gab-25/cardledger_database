@@ -83,9 +83,11 @@ def fetch(client: httpx.Client) -> Enrichment:
     return Enrichment(cards={cm_id: card for cm_id, (_, card) in cards.items()}, sets=sets)
 
 
-def matcher_input(client: httpx.Client) -> tuple[list[Group], list[Printing]]:
+def matcher_input(client: httpx.Client, per_finish: bool = False) -> tuple[list[Group], list[Printing]]:
     """Groups (one per set code, ids by sorted code) and printings (front faces of cards and tokens, the name before
-    " // "), without images: the bench judges set codes and numbers only."""
+    " // "), without images: the bench judges set codes and numbers only. `per_finish` gives one printing per finish
+    (nonfoil, foil, ...), all with the same number, like yaml-yugi's one printing per rarity: Cardmarket sells them as
+    one product, so the matcher fills them in instead of pairing them, and the bench judges the fill-in."""
     try:
         sets = _sets(client)
         rows = [row for name in ("cards", "tokens") for row in _rows(client, name) if row["side"] in ("", "a")]
@@ -97,8 +99,10 @@ def matcher_input(client: httpx.Client) -> tuple[list[Group], list[Printing]]:
         known = sets.get(code.lower())
         ids[code] = len(groups) + 1
         groups.append(Group(ids[code], known.name if known else code, code, known.released_at if known else None))
-    printings = [
-        Printing(i, ids[row["setCode"]], row["name"].split(" // ")[0], row["number"], row.get("rarity") or "", "", "")
-        for i, row in enumerate(rows, start=1)
-    ]
+    printings = []
+    for row in rows:
+        finishes = [f for f in (row.get("finishes") or "").split(", ") if f] if per_finish else [""]
+        for _ in finishes or [""]:
+            printings.append(Printing(len(printings) + 1, ids[row["setCode"]], row["name"].split(" // ")[0],
+                                      row["number"], row.get("rarity") or "", "", ""))
     return groups, printings
