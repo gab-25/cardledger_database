@@ -53,6 +53,25 @@ previous run before uploading. A game that fails keeps its previous file in `out
 `upload` refuses to start if a requested game has no file. The TCGdex cards are cached in `.cache/tcgdex/` (`--cache`
 to change it): keep that folder between runs, without it every Pokémon card is downloaded again.
 
+### With Docker
+
+```bash
+docker build -t cardledger-db .
+docker run --rm -v "$PWD/out:/app/out" -v "$PWD/.cache:/app/.cache" cardledger-db generate
+docker run --rm -v "$PWD/out:/app/out" --env-file .env cardledger-db upload
+```
+
+The image runs as uid 1000: the mounted `out/` and `.cache/` folders must be writable by that user. The corrections are
+copied into the image at build time, so rebuild it after changing them.
+
+`compose.yaml` does the same with the folders already mounted (`corrections/` too, so edits apply without a rebuild)
+and reads `.env` if present (copy it from `.env.example`):
+
+```bash
+docker compose run --rm cardledger-db generate --game pokemon
+docker compose run --rm cardledger-db upload
+```
+
 ## Environment variables
 
 Only `upload` uses them:

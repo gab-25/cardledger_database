@@ -1,0 +1,13 @@
+services:
+  cardledger-db:
+    build: .
+    image: cardledger-db
+    user: "${UID:-1000}:${GID:-1000}"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./out:/app/out
+      - ./.cache:/app/.cache
+      - ./corrections:/app/corrections:ro
+    command: ["generate"]
