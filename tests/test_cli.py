@@ -1,5 +1,6 @@
 import gzip
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -111,10 +112,31 @@ def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
 
 
 def test_upload_requires_the_bucket(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
     monkeypatch.delenv("CARDLEDGER_S3_BUCKET", raising=False)
     with pytest.raises(SourceError, match="CARDLEDGER_S3_BUCKET"):
         cli.upload(["lorcana"], tmp_path, FakeS3())
     assert cli.main(["upload", "--out", str(tmp_path)]) == 1
+
+
+def test_upload_reads_dotenv_from_the_working_directory(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("CARDLEDGER_S3_BUCKET", raising=False)
+    (tmp_path / ".env").write_text("CARDLEDGER_S3_BUCKET=from-dotenv\n")
+    seen = []
+    monkeypatch.setattr(cli, "upload", lambda slugs, out: seen.append(os.environ.get("CARDLEDGER_S3_BUCKET")))
+    assert cli.main(["upload"]) == 0
+    assert seen == ["from-dotenv"]
+
+
+def test_dotenv_does_not_override_the_environment(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "from-env")
+    (tmp_path / ".env").write_text("CARDLEDGER_S3_BUCKET=from-dotenv\n")
+    seen = []
+    monkeypatch.setattr(cli, "upload", lambda slugs, out: seen.append(os.environ.get("CARDLEDGER_S3_BUCKET")))
+    assert cli.main(["upload"]) == 0
+    assert seen == ["from-env"]
 
 
 def test_no_tcgcsv_left():

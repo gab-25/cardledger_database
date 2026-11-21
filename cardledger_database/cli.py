@@ -10,6 +10,8 @@ import sys
 import time
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from . import corrections
 from .catalog import assemble, catalog_key, encode
 from .http import make_client
@@ -108,6 +110,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "generate":
             with make_client() as client:
                 return 1 if generate(slugs, args.out, args.cache, client) else 0
+        load_dotenv(Path(".env"))  # the working directory's .env, without overriding the environment
         try:
             upload(slugs, args.out)
         except SourceError as exc:

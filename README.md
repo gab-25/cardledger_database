@@ -64,7 +64,7 @@ command exits with 1. `upload` refuses to start if a requested game has no file.
 uv sync
 uv run pytest -q
 uv run cardledger-db generate --game pokemon
-uv run --env-file .env cardledger-db upload --game pokemon
+uv run cardledger-db upload --game pokemon
 ```
 
 Run it from the repository root (`corrections/` is read relative to the working directory); `--out` and `--cache`
@@ -79,8 +79,8 @@ Only `upload` uses them:
 - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`: the credentials
 - `AWS_DEFAULT_REGION`: required, the bucket's region
 
-The credentials need only `s3:PutObject` on the bucket. The CLI does not read `.env` itself: `docker compose` loads it,
-and `uv run --env-file .env` does without Docker.
+The credentials need only `s3:PutObject` on the bucket. `upload` reads them from the environment or from the `.env` file
+in the working directory (the environment wins); with Docker Compose, `compose.yaml` passes `.env` to the container.
 
 ## CI
 
