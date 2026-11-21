@@ -93,7 +93,7 @@ class FakeS3:
 
 
 def test_upload_copies_the_files_under_the_same_keys(fakes, tmp_path, monkeypatch):
-    monkeypatch.setenv("S3_BUCKET", "bucket")
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "bucket")
     cli.generate(["lorcana", "mtg"], tmp_path, tmp_path, client=None)
     s3 = FakeS3()
 
@@ -102,7 +102,7 @@ def test_upload_copies_the_files_under_the_same_keys(fakes, tmp_path, monkeypatc
 
 
 def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
-    monkeypatch.setenv("S3_BUCKET", "bucket")
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "bucket")
     cli.generate(["lorcana"], tmp_path, tmp_path, client=None)
     s3 = FakeS3()
 
@@ -112,11 +112,11 @@ def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
 
 
 S3_ENV = {
-    "S3_BUCKET": "bucket",
-    "S3_ENDPOINT": "https://s3.example.com",
-    "S3_ACCESS_KEY_ID": "key",
-    "S3_SECRET_ACCESS_KEY": "secret",
-    "S3_REGION": "region",
+    "CARDLEDGER_S3_BUCKET": "bucket",
+    "CARDLEDGER_S3_ENDPOINT": "https://s3.example.com",
+    "CARDLEDGER_S3_ACCESS_KEY_ID": "key",
+    "CARDLEDGER_S3_SECRET_ACCESS_KEY": "secret",
+    "CARDLEDGER_S3_REGION": "region",
 }
 
 
@@ -134,7 +134,8 @@ def test_upload_builds_the_client_from_the_cardledger_variables(fakes, tmp_path,
                                 "aws_secret_access_key": "secret", "region_name": "region"})]
 
 
-@pytest.mark.parametrize("name", ["S3_ACCESS_KEY_ID", "S3_SECRET_ACCESS_KEY", "S3_REGION"])
+@pytest.mark.parametrize("name", ["CARDLEDGER_S3_ACCESS_KEY_ID", "CARDLEDGER_S3_SECRET_ACCESS_KEY",
+                                  "CARDLEDGER_S3_REGION"])
 def test_upload_requires_the_credentials_and_region(fakes, tmp_path, monkeypatch, name):
     for key, value in S3_ENV.items():
         monkeypatch.setenv(key, value)
@@ -147,28 +148,28 @@ def test_upload_requires_the_credentials_and_region(fakes, tmp_path, monkeypatch
 
 def test_upload_requires_the_bucket(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    monkeypatch.delenv("S3_BUCKET", raising=False)
-    with pytest.raises(SourceError, match="S3_BUCKET"):
+    monkeypatch.delenv("CARDLEDGER_S3_BUCKET", raising=False)
+    with pytest.raises(SourceError, match="CARDLEDGER_S3_BUCKET"):
         cli.upload(["lorcana"], tmp_path, FakeS3())
     assert cli.main(["upload", "--out", str(tmp_path)]) == 1
 
 
 def test_upload_reads_dotenv_from_the_working_directory(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    monkeypatch.delenv("S3_BUCKET", raising=False)
-    (tmp_path / ".env").write_text("S3_BUCKET=from-dotenv\n")
+    monkeypatch.delenv("CARDLEDGER_S3_BUCKET", raising=False)
+    (tmp_path / ".env").write_text("CARDLEDGER_S3_BUCKET=from-dotenv\n")
     seen = []
-    monkeypatch.setattr(cli, "upload", lambda slugs, out: seen.append(os.environ.get("S3_BUCKET")))
+    monkeypatch.setattr(cli, "upload", lambda slugs, out: seen.append(os.environ.get("CARDLEDGER_S3_BUCKET")))
     assert cli.main(["upload"]) == 0
     assert seen == ["from-dotenv"]
 
 
 def test_dotenv_does_not_override_the_environment(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setenv("S3_BUCKET", "from-env")
-    (tmp_path / ".env").write_text("S3_BUCKET=from-dotenv\n")
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "from-env")
+    (tmp_path / ".env").write_text("CARDLEDGER_S3_BUCKET=from-dotenv\n")
     seen = []
-    monkeypatch.setattr(cli, "upload", lambda slugs, out: seen.append(os.environ.get("S3_BUCKET")))
+    monkeypatch.setattr(cli, "upload", lambda slugs, out: seen.append(os.environ.get("CARDLEDGER_S3_BUCKET")))
     assert cli.main(["upload"]) == 0
     assert seen == ["from-env"]
 
