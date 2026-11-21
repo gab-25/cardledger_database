@@ -7,7 +7,7 @@ from cardledger_database import cli
 from cardledger_database.catalog import catalog_key
 from cardledger_database.matcher import MatchResult
 from cardledger_database.model import GAMES, CmProduct, Enrichment, SourceCard, SourceError, SourceSet
-from cardledger_database.sources import cardmarket, lorcanajson, scryfall, tcgcsv, tcgdex
+from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, tcgcsv, tcgdex
 
 
 def cm_products(n):
@@ -37,7 +37,7 @@ class Fakes:
             return source("pokemon")
 
         monkeypatch.setattr(cardmarket, "fetch_products", lambda client, cm_id: (cm_products(4), {1}))
-        monkeypatch.setattr(scryfall, "fetch", lambda client: (source("mtg"), {}))
+        monkeypatch.setattr(mtgjson, "fetch", lambda client: (source("mtg"), {}))
         monkeypatch.setattr(lorcanajson, "fetch", lambda client: source("lorcana"))
         monkeypatch.setattr(tcgdex, "fetch", fake_tcgdex)
         monkeypatch.setattr(tcgcsv, "fetch", lambda client, category: ([], [category]))

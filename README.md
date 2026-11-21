@@ -8,16 +8,18 @@ bucket) and are never committed to this repository; only the code is.
 ## Sources and licences
 
 Every product keeps its Cardmarket product id; the sources add set codes, collector numbers, rarities and images.
+The catalog stores only image URLs, served by each source. MTGJSON has no images: the Magic URLs point to
+[Scryfall](https://scryfall.com)'s image server, built from MTGJSON's Scryfall ids.
 
 | Game | Source | Terms |
 | --- | --- | --- |
-| Magic | [Scryfall](https://scryfall.com) bulk data | [Scryfall data guidelines](https://scryfall.com/docs/api) (attribution, no paywalling the data) |
+| Magic | [MTGJSON](https://mtgjson.com) CSV files | MIT |
 | Pokémon | [TCGdex](https://tcgdex.dev) (EN + JA) | MIT |
 | Lorcana | [LorcanaJSON](https://lorcanajson.org) | Fan project, used under Ravensburger's Community Code Policy |
 | One Piece, Yu-Gi-Oh!, Riftbound | [TCGCSV](https://tcgcsv.com) (TCGplayer data) | No licence stated |
 
 The Cardmarket product lists are the public files published by Cardmarket. The TCGCSV games are matched to Cardmarket products by name; after changing the matcher, check it with
-`uv run python scripts/run_bench.py` (it measures the wrong matches on Magic, where Scryfall gives the truth, and exits
+`uv run python scripts/run_bench.py` (it measures the wrong matches on Magic, where MTGJSON gives the truth, and exits
 with 1 above 1%). No prices are included.
 
 ## Output (format v1)

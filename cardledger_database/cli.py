@@ -15,15 +15,15 @@ from .catalog import assemble, catalog_key, encode
 from .http import make_client
 from .matcher import match
 from .model import GAMES, Enrichment, GameCatalog, SourceError
-from .sources import cardmarket, lorcanajson, scryfall, tcgcsv, tcgdex
+from .sources import cardmarket, lorcanajson, mtgjson, tcgcsv, tcgdex
 
 logger = logging.getLogger("cardledger_database")
 
 
 def _enrichment(slug: str, client, cache_dir: Path, products, singles) -> Enrichment:
     game = GAMES[slug]
-    if game.source == "scryfall":
-        return scryfall.fetch(client)[0]
+    if game.source == "mtgjson":
+        return mtgjson.fetch(client)[0]
     if game.source == "tcgdex":
         return tcgdex.fetch(client, cache_dir)
     if game.source == "lorcanajson":

@@ -5,8 +5,8 @@ matcher: it exits with 1 when more than 1% of the Magic matches are wrong.
 
 Usage: python scripts/run_bench.py [--cache-dir DIR] [--errors N]
 
-Downloads Cardmarket Magic, TCGCSV category 1 and Scryfall (the truth), runs the matcher on Magic ignoring
-Scryfall, and prints the BenchResult; then, for onepiece/yugioh/riftbound, the share of Cardmarket singles with a
+Downloads Cardmarket Magic, TCGCSV category 1 and MTGJSON (the truth), runs the matcher on Magic ignoring
+MTGJSON, and prints the BenchResult; then, for onepiece/yugioh/riftbound, the share of Cardmarket singles with a
 match. --cache-dir keeps every download as a pickle so tuning rounds don't download again (delete it to refresh);
 --errors prints that many wrong card and expansion pairs.
 """
@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from cardledger_database.http import make_client  # noqa: E402
 from cardledger_database.matcher import MatchResult, match  # noqa: E402
-from cardledger_database.sources import cardmarket, scryfall, tcgcsv  # noqa: E402
+from cardledger_database.sources import cardmarket, mtgjson, tcgcsv  # noqa: E402
 from cardledger_database.sources.tcgcsv import TcgProduct  # noqa: E402
 
 MAGIC = (1, 1)  # Cardmarket idGame, TCGCSV category
@@ -130,7 +130,7 @@ def main(argv):
         cm_game, category = MAGIC
         products, singles = cached(args.cache_dir, "cardmarket_1", lambda: cardmarket.fetch_products(client, cm_game))
         groups, tcg = cached(args.cache_dir, f"tcgcsv_{category}", lambda: tcgcsv.fetch(client, category))
-        _, truth = cached(args.cache_dir, "scryfall", lambda: scryfall.fetch(client))
+        _, truth = cached(args.cache_dir, "mtgjson", lambda: mtgjson.fetch(client))
         result = match(products, groups, tcg, singles)
         bench_result = bench(result, truth, tcg)
         reused = reused_product_ids(result)

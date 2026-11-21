@@ -15,14 +15,14 @@ class Game:
     cm_id: int  # Cardmarket idGame
     name: str
     keep_unmatched: bool  # keep Cardmarket products the source has no card for
-    source: str  # scryfall, tcgdex, lorcanajson or tcgcsv
+    source: str  # mtgjson, tcgdex, lorcanajson or tcgcsv
     tcgcsv_category: int | None = None
 
 
 GAMES: dict[str, Game] = {
     g.slug: g
     for g in (
-        Game("mtg", 1, "Magic: The Gathering", False, "scryfall"),
+        Game("mtg", 1, "Magic: The Gathering", False, "mtgjson"),
         Game("pokemon", 6, "Pokémon", True, "tcgdex"),
         Game("lorcana", 19, "Disney Lorcana", True, "lorcanajson"),
         Game("onepiece", 18, "One Piece Card Game", True, "tcgcsv", 68),
