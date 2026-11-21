@@ -240,3 +240,35 @@ def test_transient_errors_are_retried(tmp_path):
     result = tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, langs=("en",),
                           now=NOW)
     assert 794256 in result.cards
+
+
+def test_interrupt_saves_fetched_cards_and_cancels_the_rest(tmp_path, monkeypatch):
+    ids = [f"sv08-{n:03}" for n in range(1, 41)]
+    routes = en_routes(**{"/en/sets/sv08": {"id": "sv08", "name": "S", "cards": [{"id": i} for i in ids]}})
+    routes.update({f"/en/cards/{i}": card(i, i[-3:], cm=n) for n, i in enumerate(ids, 1)})
+    client, calls = make(routes)
+    read_card = tcgdex._read_card
+
+    def interrupted(client, lang, card_id, set_id, now):
+        if card_id == "sv08-003":
+            raise KeyboardInterrupt
+        return read_card(client, lang, card_id, set_id, now)
+
+    monkeypatch.setattr(tcgdex, "_read_card", interrupted)
+    monkeypatch.setattr(tcgdex, "MAX_WORKERS", 1)
+    with pytest.raises(KeyboardInterrupt):
+        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+    cached = json.loads((tmp_path / "tcgdex" / "en.json").read_text())
+    assert set(cached) == {"sv08-001", "sv08-002"}
+    assert sum(p.startswith("/en/cards/") for p in calls) < len(ids)
+
+
+def test_progress_is_saved_every_save_every_cards(tmp_path, monkeypatch, caplog):
+    ids = [f"sv08-{n:03}" for n in range(1, 6)]
+    routes = en_routes(**{"/en/sets/sv08": {"id": "sv08", "name": "S", "cards": [{"id": i} for i in ids]}})
+    routes.update({f"/en/cards/{i}": card(i, i[-3:], cm=n) for n, i in enumerate(ids, 1)})
+    client, _ = make(routes)
+    monkeypatch.setattr(tcgdex, "SAVE_EVERY", 2)
+    with caplog.at_level("INFO"):
+        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+    assert "en 2/5 cards fetched" in caplog.text and "en 4/5 cards fetched" in caplog.text

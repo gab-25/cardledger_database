@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 BASE = "https://api.tcgdex.net/v2"
 MAX_WORKERS = 4
 RETRY_AFTER = timedelta(days=7)
+SAVE_EVERY = 1000  # cards between cache saves and progress lines
 
 
 def _get(client, url, *, missing_ok=False):
@@ -72,40 +73,55 @@ def _read_card(client, lang, card_id, set_id, now):
     }
 
 
+def _save_cache(cache_dir, lang, cache):
+    path = _cache_path(cache_dir, lang)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(cache, sort_keys=True), encoding="utf-8")
+
+
 def _fetch_language(client, cache_dir, lang, now):
-    """The sets of a language (id, name, date, official abbreviation) and their cards' cache entries."""
+    """The sets of a language (id, name, date, official abbreviation) and their cards' cache entries.
+
+    The cache is saved every `SAVE_EVERY` cards and on the way out (errors and Ctrl+C included), so an interrupted
+    run resumes where it stopped; on Ctrl+C the queued requests are cancelled instead of waited for."""
+    pool = ThreadPoolExecutor(MAX_WORKERS)
+    cache = None
     try:
         listing = _get(client, f"{BASE}/{lang}/sets")
-        with ThreadPoolExecutor(MAX_WORKERS) as pool:
-            details = []
-            for s, d in zip(listing, pool.map(
-                lambda s: _get(client, f"{BASE}/{lang}/sets/{quote(s['id'], safe='')}", missing_ok=True), listing
-            )):
-                if d is None:
-                    logger.warning("TCGdex: %s set %s not found, skipped", lang, s["id"])
-                else:
-                    details.append(d)
-            cache = _load_cache(cache_dir, lang)
-            wanted = [
-                (c["id"], d["id"]) for d in details for c in d.get("cards") or [] if _needs_fetch(cache.get(c["id"]), now)
-            ]
-            futures = [pool.submit(_read_card, client, lang, card_id, set_id, now) for card_id, set_id in wanted]
-            failure = None
-            for (card_id, _), future in zip(wanted, futures):
-                try:
-                    entry = future.result()
-                except Exception as exc:  # keep what the other cards fetched, raise once they are saved
-                    failure = failure or exc
-                    continue
-                if entry is not None:
-                    cache[card_id] = entry
-        path = _cache_path(cache_dir, lang)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(cache, sort_keys=True), encoding="utf-8")
+        details = []
+        for s, d in zip(listing, pool.map(
+            lambda s: _get(client, f"{BASE}/{lang}/sets/{quote(s['id'], safe='')}", missing_ok=True), listing
+        )):
+            if d is None:
+                logger.warning("TCGdex: %s set %s not found, skipped", lang, s["id"])
+            else:
+                details.append(d)
+        cache = _load_cache(cache_dir, lang)
+        wanted = [
+            (c["id"], d["id"]) for d in details for c in d.get("cards") or [] if _needs_fetch(cache.get(c["id"]), now)
+        ]
+        logger.info("TCGdex: %s sets=%d cards to fetch=%d (cached=%d)", lang, len(details), len(wanted), len(cache))
+        futures = [pool.submit(_read_card, client, lang, card_id, set_id, now) for card_id, set_id in wanted]
+        failure = None
+        for done, ((card_id, _), future) in enumerate(zip(wanted, futures), 1):
+            try:
+                entry = future.result()
+            except Exception as exc:  # keep what the other cards fetched, raise once they are saved
+                failure = failure or exc
+                continue
+            if entry is not None:
+                cache[card_id] = entry
+            if done % SAVE_EVERY == 0:
+                _save_cache(cache_dir, lang, cache)
+                logger.info("TCGdex: %s %d/%d cards fetched", lang, done, len(wanted))
         if failure:
             raise failure
     except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"TCGdex: {type(exc).__name__}: {exc}") from exc
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+        if cache is not None:
+            _save_cache(cache_dir, lang, cache)
     return details, cache
 
 
