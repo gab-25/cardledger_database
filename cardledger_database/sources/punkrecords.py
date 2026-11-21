@@ -95,8 +95,8 @@ def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int]
         return pack_codes.get(pack_id) or set_code(pack_id, None)
 
     # Several Cardmarket expansions (booster, pre-release, reprint) can map to one pack. The one with the most coded
-    # singles is the pack's main expansion and takes its code; the others get their own code and no images, so their
-    # rows stay apart and never show the booster's artwork for a printing that may differ.
+    # singles is the pack's main expansion and takes its code; the others get their own code so their rows stay apart.
+    # They share the pack's artwork (checked on Cardmarket: same images), so they get images under the same rule.
     coded_per_expansion = Counter(p.id_expansion for p, _ in coded)
     main_expansion: dict[str, int] = {}
     for exp, pack_id in sorted(exp_packs.items()):
@@ -116,7 +116,7 @@ def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int]
     result: dict[int, SourceCard] = {}
     for p, code in coded:
         pack_id = exp_packs.get(p.id_expansion)
-        if pack_id is not None and main_expansion[pack_id] == p.id_expansion:
+        if pack_id is not None:
             in_pack = [v for v in variants[code] if v.pack_id == pack_id]
             if len(in_pack) == 1 and per_expansion[(code, p.id_expansion)] == 1:
                 v = in_pack[0]
