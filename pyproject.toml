@@ -1,6 +1,6 @@
 [project]
 name = "cardledger-database"
-version = "0.1.0"
+version = "1.0.0"
 description = "Generator of the CardLedger card catalog"
 requires-python = ">=3.14"
 license = { text = "GPL-3.0-only" }
