@@ -65,7 +65,7 @@ The image runs as uid 1000: the mounted `out/` and `.cache/` folders must be wri
 copied into the image at build time, so rebuild it after changing them.
 
 `compose.yaml` does the same with the folders already mounted (`corrections/` too, so edits apply without a rebuild)
-and reads `.env` if present (copy it from `.env.example`):
+and needs a `.env` file (copy it from `.env.example`), even for `generate`:
 
 ```bash
 docker compose run --rm cardledger-db generate --game pokemon
