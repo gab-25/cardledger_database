@@ -72,9 +72,9 @@ def generate(slugs: list[str], out: Path, cache_dir: Path, client) -> list[str]:
 
 def upload(slugs: list[str], out: Path, s3=None) -> list[str]:
     """Copies the games' files from `out` to the bucket under the same keys; returns the keys uploaded."""
-    bucket = os.environ.get("CARDLEDGER_S3_BUCKET")
+    bucket = os.environ.get("S3_BUCKET")
     if not bucket:
-        raise SourceError("CARDLEDGER_S3_BUCKET is not set")
+        raise SourceError("S3_BUCKET is not set")
     files = {catalog_key(slug): out / catalog_key(slug) for slug in slugs}
     missing = [str(path) for path in files.values() if not path.is_file()]
     if missing:
@@ -82,7 +82,13 @@ def upload(slugs: list[str], out: Path, s3=None) -> list[str]:
     if s3 is None:
         import boto3
 
-        s3 = boto3.client("s3", endpoint_url=os.environ.get("CARDLEDGER_S3_ENDPOINT") or None)
+        unset = [name for name in ("S3_ACCESS_KEY_ID", "S3_SECRET_ACCESS_KEY", "S3_REGION") if not os.environ.get(name)]
+        if unset:
+            raise SourceError(f"{', '.join(unset)} not set")
+        s3 = boto3.client("s3", endpoint_url=os.environ.get("S3_ENDPOINT") or None,
+                          aws_access_key_id=os.environ["S3_ACCESS_KEY_ID"],
+                          aws_secret_access_key=os.environ["S3_SECRET_ACCESS_KEY"],
+                          region_name=os.environ["S3_REGION"])
     for key, path in files.items():
         s3.put_object(Bucket=bucket, Key=key, Body=path.read_bytes(), ContentType="application/gzip")
         logger.info("uploaded s3://%s/%s", bucket, key)

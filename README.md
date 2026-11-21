@@ -74,10 +74,10 @@ change the output and cache folders.
 
 Only `upload` uses them:
 
-- `CARDLEDGER_S3_BUCKET`: the bucket (required, no default)
-- `CARDLEDGER_S3_ENDPOINT`: endpoint of an S3-compatible service (optional, empty means AWS)
-- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`: the credentials
-- `AWS_DEFAULT_REGION`: required, the bucket's region
+- `S3_BUCKET`: the bucket (required)
+- `S3_ENDPOINT`: endpoint of the S3-compatible service (optional, empty means AWS)
+- `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`: the credentials (required)
+- `S3_REGION`: the bucket's region (required)
 
 The credentials need only `s3:PutObject` on the bucket. `upload` reads them from the environment or from the `.env` file
 in the working directory (the environment wins); with Docker Compose, `compose.yaml` passes `.env` to the container.
