@@ -130,3 +130,18 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+def run() -> None:
+    """The console entry point: `main`, with Ctrl+C ending the run at once (exit 130) and without a traceback.
+
+    `os._exit` skips the interpreter's wait for the download threads still running, which otherwise blocks the
+    exit and needs more Ctrl+C presses. Whatever had to be kept (the TCGdex cache) is already saved by then."""
+    try:
+        code = main()
+    except KeyboardInterrupt:
+        print("interrupted", file=sys.stderr)
+        code = 130
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os._exit(code)

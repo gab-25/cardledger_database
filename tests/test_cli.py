@@ -178,3 +178,15 @@ def test_no_tcgcsv_left():
     root = Path(__file__).parent.parent
     files = [*root.glob("cardledger_database/**/*.py"), root / "README.md"]
     assert [str(f) for f in files if "tcgcsv" in f.read_text().lower()] == []
+
+
+def test_ctrl_c_exits_130_without_waiting_for_threads(monkeypatch, capsys):
+    def interrupted():
+        raise KeyboardInterrupt
+
+    exits = []
+    monkeypatch.setattr(cli, "main", interrupted)
+    monkeypatch.setattr(cli.os, "_exit", exits.append)
+    cli.run()
+    assert exits == [130]
+    assert capsys.readouterr().err == "interrupted\n"

@@ -7,7 +7,7 @@ license = { text = "GPL-3.0-only" }
 dependencies = ["httpx", "boto3", "python-dotenv"]
 
 [project.scripts]
-cardledger-db = "cardledger_database.cli:main"
+cardledger-db = "cardledger_database.cli:run"
 
 [dependency-groups]
 dev = ["pytest"]
