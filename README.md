@@ -77,11 +77,13 @@ docker compose run --rm cardledger-db upload
 Only `upload` uses them:
 
 - `CARDLEDGER_S3_BUCKET`: the bucket (required, no default)
-- `CARDLEDGER_S3_ENDPOINT`: endpoint of an S3-compatible service (optional, empty means AWS)
+- `CARDLEDGER_S3_ENDPOINT`: endpoint of an S3-compatible service (optional, empty means AWS); the bucket is on OVHcloud
+  Object Storage, e.g. `https://s3.gra.io.cloud.ovh.net`
 - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`: the credentials
-- `AWS_DEFAULT_REGION`: required (use `auto` for Cloudflare R2)
+- `AWS_DEFAULT_REGION`: required, the bucket's region (e.g. `gra` on OVHcloud)
 
-The credentials need only `s3:PutObject` on the bucket.
+The credentials need only `s3:PutObject` on the bucket. The CLI does not read `.env` itself: `docker compose` loads it,
+and locally `uv run --env-file .env cardledger-db upload` does.
 
 ## CI
 
