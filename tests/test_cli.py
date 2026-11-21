@@ -7,7 +7,7 @@ from cardledger_database import cli
 from cardledger_database.catalog import catalog_key
 from cardledger_database.matcher import MatchResult
 from cardledger_database.model import GAMES, CmProduct, Enrichment, SourceCard, SourceError, SourceSet
-from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, tcgcsv, tcgdex
+from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, punkrecords, tcgcsv, tcgdex
 
 
 def cm_products(n):
@@ -39,6 +39,7 @@ class Fakes:
         monkeypatch.setattr(cardmarket, "fetch_products", lambda client, cm_id: (cm_products(4), {1}))
         monkeypatch.setattr(mtgjson, "fetch", lambda client: (source("mtg"), {}))
         monkeypatch.setattr(lorcanajson, "fetch", lambda client: source("lorcana"))
+        monkeypatch.setattr(punkrecords, "fetch", lambda client, products, singles: source("onepiece"))
         monkeypatch.setattr(tcgdex, "fetch", fake_tcgdex)
         monkeypatch.setattr(tcgcsv, "fetch", lambda client, category: ([], [category]))
         monkeypatch.setattr(
@@ -113,3 +114,12 @@ def test_upload_requires_the_bucket(tmp_path, monkeypatch):
     with pytest.raises(SourceError, match="CARDLEDGER_S3_BUCKET"):
         cli.upload(["lorcana"], tmp_path, FakeS3())
     assert cli.main(["upload", "--out", str(tmp_path)]) == 1
+
+
+def test_onepiece_does_not_use_tcgcsv(fakes, tmp_path, monkeypatch):
+    def no_tcgcsv(client, category):
+        raise AssertionError("TCGCSV used for One Piece")
+
+    monkeypatch.setattr(tcgcsv, "fetch", no_tcgcsv)
+    assert cli.generate(["onepiece"], tmp_path, tmp_path, client=None) == []
+    assert {p["expansion_code"] for p in products_in(tmp_path / catalog_key("onepiece"))} == {"onepiece"}

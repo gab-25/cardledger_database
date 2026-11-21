@@ -15,7 +15,7 @@ class Game:
     cm_id: int  # Cardmarket idGame
     name: str
     keep_unmatched: bool  # keep Cardmarket products the source has no card for
-    source: str  # mtgjson, tcgdex, lorcanajson or tcgcsv
+    source: str  # mtgjson, tcgdex, lorcanajson, punkrecords or tcgcsv
     tcgcsv_category: int | None = None
 
 
@@ -25,7 +25,7 @@ GAMES: dict[str, Game] = {
         Game("mtg", 1, "Magic: The Gathering", False, "mtgjson"),
         Game("pokemon", 6, "Pokémon", True, "tcgdex"),
         Game("lorcana", 19, "Disney Lorcana", True, "lorcanajson"),
-        Game("onepiece", 18, "One Piece Card Game", True, "tcgcsv", 68),
+        Game("onepiece", 18, "One Piece Card Game", True, "punkrecords"),
         Game("yugioh", 3, "Yu-Gi-Oh!", True, "tcgcsv", 2),
         Game("riftbound", 22, "Riftbound", True, "tcgcsv", 89),
     )

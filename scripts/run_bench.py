@@ -6,7 +6,7 @@ matcher: it exits with 1 when more than 1% of the Magic matches are wrong.
 Usage: python scripts/run_bench.py [--cache-dir DIR] [--errors N]
 
 Downloads Cardmarket Magic, TCGCSV category 1 and MTGJSON (the truth), runs the matcher on Magic ignoring
-MTGJSON, and prints the BenchResult; then, for onepiece/yugioh/riftbound, the share of Cardmarket singles with a
+MTGJSON, and prints the BenchResult; then, for yugioh/riftbound, the share of Cardmarket singles with a
 match. --cache-dir keeps every download as a pickle so tuning rounds don't download again (delete it to refresh);
 --errors prints that many wrong card and expansion pairs.
 """
@@ -26,7 +26,7 @@ from cardledger_database.sources import cardmarket, mtgjson, tcgcsv  # noqa: E40
 from cardledger_database.sources.tcgcsv import TcgProduct  # noqa: E402
 
 MAGIC = (1, 1)  # Cardmarket idGame, TCGCSV category
-TCGCSV_GAMES = {"onepiece": (18, 68), "yugioh": (3, 2), "riftbound": (22, 89)}
+TCGCSV_GAMES = {"yugioh": (3, 2), "riftbound": (22, 89)}
 MAX_ERROR_RATE = 0.01  # above this the matcher is not good enough for the TCGCSV games
 
 
