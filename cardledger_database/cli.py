@@ -15,7 +15,7 @@ from .catalog import assemble, catalog_key, encode
 from .http import make_client
 from .matcher import match
 from .model import GAMES, Enrichment, GameCatalog, SourceError
-from .sources import cardmarket, lorcanajson, mtgjson, punkrecords, tcgcsv, tcgdex
+from .sources import cardmarket, lorcanajson, mtgjson, punkrecords, riftcodex, tcgdex, yamlyugi
 
 logger = logging.getLogger("cardledger_database")
 
@@ -30,8 +30,8 @@ def _enrichment(slug: str, client, cache_dir: Path, products, singles) -> Enrich
         return lorcanajson.fetch(client)
     if game.source == "punkrecords":
         return punkrecords.fetch(client, products, singles)
-    groups, tcg = tcgcsv.fetch(client, game.tcgcsv_category)
-    return match(products, groups, tcg, singles).enrichment
+    groups, printings = (yamlyugi if game.source == "yamlyugi" else riftcodex).fetch(client)
+    return match(products, groups, printings, singles).enrichment
 
 
 def generate_game(slug: str, client, cache_dir: Path) -> GameCatalog:

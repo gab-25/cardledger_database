@@ -1,5 +1,6 @@
 import gzip
 import json
+from pathlib import Path
 
 import pytest
 
@@ -7,7 +8,7 @@ from cardledger_database import cli
 from cardledger_database.catalog import catalog_key
 from cardledger_database.matcher import MatchResult
 from cardledger_database.model import GAMES, CmProduct, Enrichment, SourceCard, SourceError, SourceSet
-from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, punkrecords, tcgcsv, tcgdex
+from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, punkrecords, riftcodex, tcgdex, yamlyugi
 
 
 def cm_products(n):
@@ -25,7 +26,6 @@ class Fakes:
     def __init__(self, monkeypatch):
         self.broken: set[str] = set()
         self.cache_dirs = []
-        slugs_by_category = {g.tcgcsv_category: slug for slug, g in GAMES.items() if g.source == "tcgcsv"}
 
         def source(slug):
             if slug in self.broken:
@@ -41,9 +41,10 @@ class Fakes:
         monkeypatch.setattr(lorcanajson, "fetch", lambda client: source("lorcana"))
         monkeypatch.setattr(punkrecords, "fetch", lambda client, products, singles: source("onepiece"))
         monkeypatch.setattr(tcgdex, "fetch", fake_tcgdex)
-        monkeypatch.setattr(tcgcsv, "fetch", lambda client, category: ([], [category]))
+        monkeypatch.setattr(yamlyugi, "fetch", lambda client: ([], ["yugioh"]))
+        monkeypatch.setattr(riftcodex, "fetch", lambda client: ([], ["riftbound"]))
         monkeypatch.setattr(
-            cli, "match", lambda products, groups, tcg, singles: MatchResult(source(slugs_by_category[tcg[0]]), {}, {}, {})
+            cli, "match", lambda products, groups, printings, singles: MatchResult(source(printings[0]), {}, {}, {})
         )
 
 
@@ -116,10 +117,7 @@ def test_upload_requires_the_bucket(tmp_path, monkeypatch):
     assert cli.main(["upload", "--out", str(tmp_path)]) == 1
 
 
-def test_onepiece_does_not_use_tcgcsv(fakes, tmp_path, monkeypatch):
-    def no_tcgcsv(client, category):
-        raise AssertionError("TCGCSV used for One Piece")
-
-    monkeypatch.setattr(tcgcsv, "fetch", no_tcgcsv)
-    assert cli.generate(["onepiece"], tmp_path, tmp_path, client=None) == []
-    assert {p["expansion_code"] for p in products_in(tmp_path / catalog_key("onepiece"))} == {"onepiece"}
+def test_no_tcgcsv_left():
+    root = Path(__file__).parent.parent
+    files = [*root.glob("cardledger_database/**/*.py"), *root.glob("scripts/*.py"), root / "README.md"]
+    assert [str(f) for f in files if "tcgcsv" in f.read_text().lower()] == []

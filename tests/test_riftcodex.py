@@ -14,8 +14,9 @@ SETS = [
 ]
 
 
-def rc_card(name, set_id, number, label="Origins", rarity="Rare"):
+def rc_card(name, set_id, number, label="Origins", rarity="Rare", riftbound_id=None, updated="2026-07-10T00:00:00"):
     return {"name": name, "collector_number": number, "classification": {"rarity": rarity},
+            "riftbound_id": riftbound_id if riftbound_id is not None else f"{set_id.lower()}-{number:03d}-298", "metadata": {"updated_on": updated},
             "set": {"set_id": set_id, "label": label}, "media": {"image_url": f"https://cms/{set_id}{number}.png"}}
 
 
@@ -30,7 +31,7 @@ def test_parse_cards():
                                                rc_card("Teemo", "PR", 3, label="Promos")], groups)
     assert printings == [
         Printing(1, 1, "Vi, Piltover Enforcer (Signature)", "229", "Rare", "https://cms/OGN229.png", "https://cms/OGN229.png"),
-        Printing(2, 3, "Teemo", "3", "Rare", "https://cms/PR3.png", "https://cms/PR3.png"),
+        Printing(2, 3, "Teemo", "003", "Rare", "https://cms/PR3.png", "https://cms/PR3.png"),
     ]
     assert groups[-1] == Group(3, "Promos", "PR", None)  # a set missing from /sets gets its own group
 
@@ -87,3 +88,22 @@ def test_fewer_cards_than_announced_raises():
 
     with pytest.raises(SourceError, match="Riftcodex"):
         riftcodex.fetch(httpx.Client(transport=httpx.MockTransport(handler)))
+
+
+def test_number_comes_from_the_riftbound_id():
+    printings, _ = riftcodex.parse_cards([
+        rc_card("Body Rune", "VEN", 4, riftbound_id="ven-r04"),
+        rc_card("Dune Surfer", "VEN", 4, riftbound_id="ven-004-166"),
+        rc_card("Sett, Brawler", "VEN", 4, riftbound_id="ven-sp4-006"),
+        rc_card("Vi", "UNL", 229, riftbound_id="unl-229*-219"),
+        rc_card("Odd", "UNL", 7, riftbound_id=""),
+    ], [])
+    assert [p.number for p in printings] == ["R04", "004", "SP4", "229*", "7"]
+
+
+def test_duplicate_records_keep_the_latest():
+    printings, _ = riftcodex.parse_cards([
+        rc_card("Shen", "OGN", 5, riftbound_id="ogn-005-298", updated="2026-07-10T00:00:00", rarity="Common"),
+        rc_card("Shen", "OGN", 5, riftbound_id="ogn-005-298", updated="2026-07-14T00:00:00", rarity="Rare"),
+    ], [])
+    assert [(p.number, p.rarity) for p in printings] == [("005", "Rare")]

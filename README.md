@@ -17,11 +17,14 @@ The catalog stores only image URLs, served by each source. MTGJSON has no images
 | Pokémon | [TCGdex](https://tcgdex.dev) (EN + JA) | MIT |
 | Lorcana | [LorcanaJSON](https://lorcanajson.org) | Fan project, used under Ravensburger's Community Code Policy |
 | One Piece | [punk-records](https://github.com/buhbbl/punk-records) (English, from the official card list) | Pipeline AGPL-3.0; card data © Bandai/Shueisha |
-| Yu-Gi-Oh!, Riftbound | [TCGCSV](https://tcgcsv.com) (TCGplayer data) | No licence stated |
+| Yu-Gi-Oh! | [yaml-yugi](https://github.com/DawnbrandBots/yaml-yugi) (English), images from [Yugipedia](https://yugipedia.com) | Pipeline AGPL-3.0; card data © Konami |
+| Riftbound | [Riftcodex](https://riftcodex.com), images from Riot's CDN | Fan API, no licence stated; card data © Riot Games |
 
-The Cardmarket product lists are the public files published by Cardmarket. One Piece is joined on the card code printed in the Cardmarket name (images only where the variant is unambiguous). The TCGCSV games are matched to Cardmarket products by name; after changing the matcher, check it with
-`uv run python scripts/run_bench.py` (it measures the wrong matches on Magic, where MTGJSON gives the truth, and exits
-with 1 above 1%). No prices are included.
+The Cardmarket product lists are the public files published by Cardmarket. One Piece is joined on the card code printed in the Cardmarket name (images only where the variant is unambiguous). Yu-Gi-Oh! and Riftbound are matched to Cardmarket products by name (a repeated name still gets its
+number, and its image and rarity when all its printings agree); after changing the matcher, check it with
+`uv run python scripts/run_bench.py` (it runs the matcher on Magic with MTGJSON's printings and judges the result against
+MTGJSON's Cardmarket ids, exiting with 1 above 1%). Riftcodex is slow: a Riftbound run can take several minutes. No
+prices are included.
 
 ## Output (format v1)
 

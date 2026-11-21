@@ -25,20 +25,43 @@ def parse_sets(items: list) -> list[Group]:
     return groups
 
 
+def _number(card: dict) -> str:
+    """The number in the Riftbound id ("ven-r04" -> "R04", "ven-004-166" -> "004", "unl-229*-219" -> "229*"):
+    `collector_number` alone is ambiguous (4 for the rune r04, the card 004 and the showcase sp4)."""
+    parts = (card.get("riftbound_id") or "").split("-")
+    return parts[1].upper() if len(parts) >= 2 and parts[1] else str(card["collector_number"])
+
+
+def _latest(items: list) -> list:
+    """One record per Riftbound id (Riftcodex has duplicates), the most recently updated, in first-seen order."""
+    kept: dict[str, dict] = {}
+    order: list[str] = []
+    for i, card in enumerate(items):
+        key = card.get("riftbound_id") or f"#{i}"
+        updated = (card.get("metadata") or {}).get("updated_on") or ""
+        if key not in kept:
+            order.append(key)
+        elif updated <= ((kept[key].get("metadata") or {}).get("updated_on") or ""):
+            continue
+        kept[key] = card
+    return [kept[k] for k in order]
+
+
 def parse_cards(items: list, groups: list[Group]) -> tuple[list[Printing], list[Group]]:
-    """One printing per card, and the groups plus one for each card set missing from them. Cardmarket writes
-    "Miss Fortune, Buccaneer" where Riftcodex writes "Miss Fortune - Buccaneer" (the matcher drops " - ...")."""
+    """One printing per card (duplicates dropped), and the groups plus one for each card set missing from them.
+    Cardmarket writes "Miss Fortune, Buccaneer" where Riftcodex writes "Miss Fortune - Buccaneer" (the matcher drops
+    " - ...")."""
     groups = list(groups)
     ids = {g.abbreviation: g.group_id for g in groups}
     printings = []
-    for card in items:
+    for card in _latest(items):
         set_id = card["set"]["set_id"]
         if set_id not in ids:
             ids[set_id] = len(groups) + 1
             groups.append(Group(ids[set_id], card["set"].get("label") or set_id, set_id, None))
         image = (card.get("media") or {}).get("image_url") or ""
         printings.append(Printing(
-            len(printings) + 1, ids[set_id], card["name"].replace(" - ", ", "), str(card["collector_number"]),
+            len(printings) + 1, ids[set_id], card["name"].replace(" - ", ", "), _number(card),
             (card.get("classification") or {}).get("rarity") or "", image, image,
         ))
     return printings, groups
