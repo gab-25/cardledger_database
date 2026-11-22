@@ -30,6 +30,13 @@ CARDS = [
     {"uuid": "u5", "name": "Sheoldred", "setCode": "DMU", "number": "107", "rarity": "mythic", "side": "", "finishes": "nonfoil"},  # same id, plain number
     {"uuid": "u6", "name": "Promo A", "setCode": "PDMU", "number": "200s", "rarity": "rare", "side": "", "finishes": "nonfoil"},
     {"uuid": "u7", "name": "Promo B", "setCode": "PDMU", "number": "201s", "rarity": "rare", "side": "", "finishes": "nonfoil"},  # same id: first wins
+    {"uuid": "u8", "name": "Mountain", "setCode": "POR", "number": "208s", "rarity": "common", "side": "", "finishes": "nonfoil", "promoTypes": "schinesealtart"},
+    {"uuid": "u9", "name": "Mountain", "setCode": "POR", "number": "209s", "rarity": "common", "side": "", "finishes": "nonfoil"},
+    {"uuid": "u10", "name": "Mountain", "setCode": "POR", "number": "210", "rarity": "common", "side": "", "finishes": "nonfoil"},  # same id: really plain number
+    {"uuid": "u11", "name": "Alt Art", "setCode": "PTK", "number": "S5a", "rarity": "rare", "side": "", "finishes": "nonfoil"},
+    {"uuid": "u12", "name": "Alt Art", "setCode": "PTK", "number": "S5", "rarity": "rare", "side": "", "finishes": "nonfoil", "promoTypes": "boosterfun,schinesealtart"},
+    {"uuid": "u13", "name": "Alt Art", "setCode": "PTK", "number": "S6", "rarity": "rare", "side": "", "finishes": "nonfoil"},  # same id: not alt-art, set prefix
+    {"uuid": "u14", "name": "Only Alt Art", "setCode": "PTK", "number": "7s", "rarity": "rare", "side": "", "finishes": "nonfoil", "promoTypes": "schinesealtart"},  # kept when alone
 ]
 CARD_IDS = [
     {"uuid": "u1", "mcmId": "501201", "scryfallId": "a1", "tcgplayerProductId": "1001",
@@ -43,6 +50,10 @@ CARD_IDS = [
      "tcgplayerEtchedProductId": ""},
     {"uuid": "u6", "mcmId": "700001", "scryfallId": "d6", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""},
     {"uuid": "u7", "mcmId": "700001", "scryfallId": "d7", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""},
+] + [
+    {"uuid": uuid, "mcmId": mcm_id, "scryfallId": "", "tcgplayerProductId": "", "tcgplayerEtchedProductId": ""}
+    for uuid, mcm_id in [("u8", "700002"), ("u9", "700002"), ("u10", "700002"),
+                         ("u11", "700003"), ("u12", "700003"), ("u13", "700003"), ("u14", "700004")]
 ]
 TOKENS = [{"uuid": "t1", "name": "Soldier", "setCode": "TDMU", "number": "3", "side": "", "finishes": "nonfoil"}]  # tokens have no rarity column
 TOKEN_IDS = [{"uuid": "t1", "mcmId": "800001", "scryfallId": "e1", "tcgplayerProductId": "3001",
@@ -55,7 +66,8 @@ SETS = [
 
 def gz_csv(rows):
     out = io.StringIO()
-    writer = csv.DictWriter(out, fieldnames=list(rows[0]), lineterminator="\n")
+    fieldnames = list(dict.fromkeys(key for row in rows for key in row))
+    writer = csv.DictWriter(out, fieldnames=fieldnames, lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     return gzip.compress(out.getvalue().encode())
@@ -85,11 +97,18 @@ def test_cards_keyed_by_cardmarket_id():
     enrichment = mtgjson.fetch(FakeMtgjson().client())
     cards = enrichment.cards
     assert cards[501201] == SourceCard("dmr", "45", "uncommon", small("a1"), normal("a1"))
-    assert set(cards) == {501201, 600001, 501301, 700001, 800001}  # the card without a Cardmarket id is skipped
+    assert set(cards) == {501201, 600001, 501301, 700001, 700002, 700003, 700004, 800001}  # the card without a Cardmarket id is skipped
     assert cards[600001].image_url == small("f3")  # double-faced: front face
     assert cards[501301] == SourceCard("dmu", "107", "mythic", small(SHEOLDRED), normal(SHEOLDRED))  # plain number
     assert cards[700001].collector_number == "200S"  # otherwise the first entry wins
     assert enrichment.expansions == {}
+
+
+def test_several_printings_prefer_plain_number_over_alt_art():
+    cards = mtgjson.fetch(FakeMtgjson().client()).cards
+    assert (cards[700002].set_code, cards[700002].collector_number) == ("por", "210")  # not 208s (alt art) or 209s
+    assert cards[700003].collector_number == "S6"  # S5a has a suffix, S5 is a Chinese alt art
+    assert cards[700004].collector_number == "7S"  # an alt art alone is still kept
 
 
 def test_tokens_have_no_rarity():

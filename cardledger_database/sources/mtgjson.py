@@ -7,6 +7,7 @@ MTGJSON has no images: the URLs are Scryfall's, built from each printing's scryf
 import csv
 import gzip
 import io
+import re
 from datetime import date
 
 import httpx
@@ -17,6 +18,7 @@ from ..model import Enrichment, SourceCard, SourceError, SourceSet, cardmarket_i
 CSV_URL = "https://mtgjson.com/api/v5/csv/{name}.csv.gz"
 IMAGE_URL = "https://cards.scryfall.io/{size}/front/{id[0]}/{id[1]}/{id}.jpg"
 csv.field_size_limit(1 << 24)  # rules text and printings lists can exceed the default 128 KB
+_PLAIN_NUMBER = re.compile(r"[A-Za-z]*\d+")  # "24", "S5"; not "24s", "S5a", "107★"
 
 
 def _rows(client, name):
@@ -40,20 +42,32 @@ def _identifiers(client, name):
     return ids
 
 
+def _rank(row):
+    """How good a printing is as the one shown for its Cardmarket product (higher is better). Cardmarket often sells
+    a card and its variants as one product: prefer a printing that is not a Chinese alt art, then one without ★/†,
+    then a really plain number (digits, optionally after a set prefix)."""
+    number = row["number"]
+    return (
+        "schinesealtart" not in (row.get("promoTypes") or "").replace(" ", "").split(","),
+        number.isalnum(),
+        _PLAIN_NUMBER.fullmatch(number) is not None,
+    )
+
+
 def _printings(client, name, ids_name, cards):
-    """Adds to cards the front face of each printing. Cardmarket often sells a card and its ★/† variant as one
-    product: the plain number is kept, otherwise the first printing."""
+    """Adds to cards the front face of each printing; among printings sharing a Cardmarket id the best _rank wins,
+    then the first in the file."""
     ids = _identifiers(client, ids_name)
     for row in _rows(client, name):
         found = ids.get(row["uuid"])
         if found is None or row["side"] not in ("", "a"):
             continue
         cm_id, scryfall_id = found
-        number = row["number"]
-        if cm_id in cards and (not number.isalnum() or cards[cm_id][0]):
+        rank = _rank(row)
+        if cm_id in cards and rank <= cards[cm_id][0]:
             continue
-        cards[cm_id] = (number.isalnum(), SourceCard(
-            row["setCode"].lower(), normalize_number(number), row.get("rarity") or "",
+        cards[cm_id] = (rank, SourceCard(
+            row["setCode"].lower(), normalize_number(row["number"]), row.get("rarity") or "",
             _image(scryfall_id, "small"), _image(scryfall_id, "normal"),
         ))
 
@@ -71,7 +85,7 @@ def _sets(client):
 
 def fetch(client: httpx.Client) -> Enrichment:
     """The Magic enrichment: every MTGJSON card and token with a Cardmarket id, and the sets."""
-    cards: dict[int, tuple[bool, SourceCard]] = {}
+    cards: dict[int, tuple[tuple[bool, bool, bool], SourceCard]] = {}
     try:
         _printings(client, "cards", "cardIdentifiers", cards)
         _printings(client, "tokens", "tokenIdentifiers", cards)
