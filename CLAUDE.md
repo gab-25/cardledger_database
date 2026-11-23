@@ -5,8 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A CLI (`cardledger-db`) that builds the CardLedger card catalog for six games (mtg, pokemon, lorcana, onepiece,
-yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.json`, a human
-checks the logged counts, `upload` copies the files to S3. Generated files are never committed. README.md is the
+yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.json` and its recognition index
+`out/vision/v1/<slug>.bin`, a human checks the logged counts, `upload` copies the files to S3. Generated files are never committed. README.md is the
 user-facing reference (sources and licences, output format, env vars).
 
 ## Commands
@@ -19,6 +19,7 @@ uv run pytest -q                                   # all tests (what CI runs)
 uv run pytest tests/test_matcher.py -q             # one file
 uv run pytest tests/test_matcher.py::test_name -q  # one test
 uv run cardledger-db generate --game pokemon       # real network run; --out / --cache change folders
+uv run cardledger-db index --game pokemon          # only the index, from the catalog already in out/
 uv run cardledger-db upload --game pokemon         # needs CARDLEDGER_S3_* (env or .env)
 ```
 
@@ -45,11 +46,16 @@ Per game, `cli.generate_game` runs a fixed pipeline:
    `Game.keep_unmatched` is true they get a stand-in `cmx<idExpansion>` expansion, otherwise they are dropped
    (`skipped`). `catalog.encode` is deterministic (sorted lists and keys): same catalog, same bytes.
 
-A game that fails logs and keeps its previous output file; `SourceError` is the expected "source unavailable / bad
+5. **Index** (`cli._index`): `cardledger_vision.build_index` (a git dependency pinned to a release tag) hashes the catalog's
+   images into the recognition index, cached in `.cache/vision/`. It is built before anything is written, so a game
+   whose source or index fails keeps its previous pair of files; `upload` checks each index's game and catalog
+   sha256 before uploading anything. The hash, format and thresholds belong to cardledger_vision: change them there.
+
+A game that fails logs and keeps its previous output files; `SourceError` is the expected "source unavailable / bad
 shape" error (logged without traceback). HTTP goes through `http.get` (3 attempts on 5xx/transport errors); TCGdex
 cards are cached in `.cache/tcgdex/`.
 
-Tests never hit the network: sources are tested with `httpx.MockTransport` clients, and `tests/conftest.py`
+Tests never hit the network: sources are tested with `httpx.MockTransport` clients, the CLI tests fake `build_index`, and `tests/conftest.py`
 autouse-patches `http.sleep` so retries don't wait.
 
 ## Constraints
