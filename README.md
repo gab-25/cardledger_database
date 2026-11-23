@@ -35,10 +35,11 @@ product has `id_product`, `name`, `expansion_code`, `number`, `rarity`, `image_u
 
 Next to each catalog, `generate` writes `vision/v1/<slug>.bin`, the index that recognizes the game's single cards in
 photos, built by [cardledger_vision](https://github.com/gab-25/cardledger_vision) (`build_index`) from the catalog's
-images. Its header holds the sha256 of the catalog it was built from. cardledger_vision follows its `main` branch, locked to
-one commit in `uv.lock`: when the hash, the index format or the thresholds change there, run
-`uv lock --upgrade-package cardledger-vision` and then `index`. A game marked `confirm_only` in `model.GAMES` gets an index that never accepts a card without
-confirmation. For now every game is: set `confirm_only=False` for a game once cardledger_vision's `bench` finds at
+images. Its header holds the sha256 of the catalog it was built from. cardledger_vision is pinned to a release tag in
+`pyproject.toml` (`[tool.uv.sources]`): when the hash, the index format or the thresholds change there, move the
+`tag` to the new release, run `uv lock --upgrade-package cardledger-vision` and then `index`.
+
+A game marked `confirm_only` in `model.GAMES` gets an index that never accepts a card without confirmation. For now every game is: set `confirm_only=False` for a game once cardledger_vision's `bench` finds at
 most 2% `wrong_certain` for it.
 
 ## Corrections

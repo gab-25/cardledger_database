@@ -45,7 +45,7 @@ Per game, `cli.generate_game` runs a fixed pipeline:
    `Game.keep_unmatched` is true they get a stand-in `cmx<idExpansion>` expansion, otherwise they are dropped
    (`skipped`). `catalog.encode` is deterministic (sorted lists and keys): same catalog, same bytes.
 
-5. **Index** (`cli._index`): `cardledger_vision.build_index` (a git dependency on its `main`, locked in `uv.lock`) hashes the catalog's
+5. **Index** (`cli._index`): `cardledger_vision.build_index` (a git dependency pinned to a release tag) hashes the catalog's
    images into the recognition index, cached in `.cache/vision/`. It is built before anything is written, so a game
    whose source or index fails keeps its previous pair of files; `upload` checks each index's game and catalog
    sha256 before uploading anything. The hash, format and thresholds belong to cardledger_vision: change them there.

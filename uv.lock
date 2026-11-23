@@ -62,7 +62,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "boto3" },
-    { name = "cardledger-vision", git = "https://github.com/gab-25/cardledger_vision.git?branch=main" },
+    { name = "cardledger-vision", git = "https://github.com/gab-25/cardledger_vision.git?tag=v0.1.0" },
     { name = "httpx" },
     { name = "python-dotenv" },
 ]
@@ -73,7 +73,7 @@ dev = [{ name = "pytest" }]
 [[package]]
 name = "cardledger-vision"
 version = "0.1.0"
-source = { git = "https://github.com/gab-25/cardledger_vision.git?branch=main#8663b93565d29127e6704dc856047cfd77af156e" }
+source = { git = "https://github.com/gab-25/cardledger_vision.git?tag=v0.1.0#8663b93565d29127e6704dc856047cfd77af156e" }
 dependencies = [
     { name = "httpx" },
     { name = "numpy" },

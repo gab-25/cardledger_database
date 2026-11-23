@@ -10,7 +10,7 @@ dependencies = ["httpx", "boto3", "python-dotenv", "cardledger-vision"]
 cardledger-db = "cardledger_database.cli:run"
 
 [tool.uv.sources]
-cardledger-vision = { git = "https://github.com/gab-25/cardledger_vision.git", branch = "main" }
+cardledger-vision = { git = "https://github.com/gab-25/cardledger_vision.git", tag = "v0.1.0" }
 
 [dependency-groups]
 dev = ["pytest"]
