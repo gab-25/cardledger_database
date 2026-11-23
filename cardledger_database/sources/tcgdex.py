@@ -3,6 +3,9 @@
 TCGdex has no bulk file: a card is read with one request each. What was read is cached in a local folder
 (`<cache>/tcgdex/{lang}.json`) so a run only asks for new cards, and for cards still without a
 Cardmarket id or without an image once they are a week old.
+
+A card has a Cardmarket id of its own and one per variant (`variants_detailed`): Cardmarket often sells a card's
+stamped or special-foil versions as separate products. The variants show the card's image and number.
 """
 
 import json
@@ -50,8 +53,9 @@ def _load_cache(cache_dir, lang):
 
 
 def _needs_fetch(entry, now):
-    """New cards, and once a week the cards still without a Cardmarket id or without an image."""
-    if entry is None:
+    """New cards, cards cached before variant ids were kept, and once a week the cards still without a Cardmarket id
+    or without an image."""
+    if entry is None or "variant_cms" not in entry:
         return True
     if cardmarket_id(entry.get("cm")) is not None and entry.get("image"):
         return False
@@ -63,8 +67,11 @@ def _read_card(client, lang, card_id, set_id, now):
     if data is None:
         return None
     cardmarket = (data.get("pricing") or {}).get("cardmarket") or {}
+    variant_cms = [cardmarket_id((v.get("thirdParty") or {}).get("cardmarket"))
+                   for v in data.get("variants_detailed") or []]
     return {
         "cm": cardmarket_id(cardmarket.get("idProduct")),
+        "variant_cms": sorted({cm for cm in variant_cms if cm is not None}),
         "rarity": data.get("rarity") or "",
         "local_id": str(data.get("localId") or ""),
         "image": data.get("image") or "",
@@ -147,12 +154,14 @@ def _set_codes(by_lang):
 
 
 def fetch(client: httpx.Client, cache_dir: Path, langs=("en", "ja"), now: datetime | None = None) -> Enrichment:
-    """The Pokémon enrichment: cards with a Cardmarket id (the first one wins, English first) and every set."""
+    """The Pokémon enrichment: cards with a Cardmarket id (the first one wins, English first) and every set. The
+    cards' own ids are assigned before their variants' ids, so a wrong variant id cannot take another card's place."""
     now = now or datetime.now(UTC)
     fetched = {lang: _fetch_language(client, cache_dir, lang, now) for lang in langs}
     codes = _set_codes({lang: details for lang, (details, _) in fetched.items()})
     cards: dict[int, SourceCard] = {}
     sets: dict[str, SourceSet] = {}
+    variants: list[tuple[int, SourceCard]] = []
     try:
         for lang, (details, cache) in fetched.items():
             for d in details:
@@ -161,15 +170,20 @@ def fetch(client: httpx.Client, cache_dir: Path, langs=("en", "ja"), now: dateti
                 sets[code] = SourceSet(code, d["name"], released, "ja" if lang == "ja" else "")
                 for c in d.get("cards") or []:
                     entry = cache.get(c["id"])
-                    cm = cardmarket_id(entry.get("cm")) if entry else None
-                    if not cm or cm in cards:
+                    if not entry:
                         continue
                     image = entry.get("image") or ""
-                    cards[cm] = SourceCard(
+                    card = SourceCard(
                         code, normalize_number(entry.get("local_id")), entry.get("rarity") or "",
                         (image + "/low.webp")[:500] if image else "",
                         (image + "/high.webp")[:500] if image else "",
                     )
+                    cm = cardmarket_id(entry.get("cm"))
+                    if cm and cm not in cards:
+                        cards[cm] = card
+                    variants.extend((v, card) for v in map(cardmarket_id, entry.get("variant_cms") or []) if v)
+        for cm, card in variants:
+            cards.setdefault(cm, card)
     except (ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"TCGdex: {type(exc).__name__}: {exc}") from exc
     return Enrichment(cards=cards, sets=sets)
