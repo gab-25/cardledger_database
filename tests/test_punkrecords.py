@@ -2,7 +2,7 @@ import httpx
 import pytest
 
 from cardledger_database.model import CmProduct, SourceCard, SourceError, SourceSet
-from cardledger_database.sources import punkrecords
+from cardledger_database.sources import cardmarket, punkrecords
 
 PACKS = {
     "569105": {"id": "569105", "raw_title": "BOOSTER PACK -AWAKENING OF THE NEW ERA- [OP-05]",
@@ -45,8 +45,8 @@ PRODUCTS = [
 SINGLES = {1}
 
 
-def build(cards=CARDS, packs=PACKS, products=PRODUCTS):
-    return punkrecords.build(packs, cards, products, SINGLES)
+def build(cards=CARDS, packs=PACKS, products=PRODUCTS, trends=None):
+    return punkrecords.build(packs, cards, products, SINGLES, trends)
 
 
 def test_set_code():
@@ -124,6 +124,9 @@ def client(status=200, content=None):
             return httpx.Response(status, json=PACKS)
         if str(request.url) == punkrecords.CARDS_URL:
             return httpx.Response(status, json=CARDS)
+        if str(request.url) == cardmarket.PRICE_GUIDE_URL.format(game=18):
+            guide = [{"idProduct": 2, "trend": 1.5}, {"idProduct": 3, "trend": 30}]
+            return httpx.Response(status, json={"priceGuides": guide})
         return httpx.Response(404)
 
     return httpx.Client(transport=httpx.MockTransport(handler)), seen
@@ -132,8 +135,10 @@ def client(status=200, content=None):
 def test_fetch_urls():
     c, seen = client()
     e = punkrecords.fetch(c, PRODUCTS, SINGLES)
-    assert sorted(seen) == sorted([punkrecords.PACKS_URL, punkrecords.CARDS_URL])
+    assert sorted(seen) == sorted([punkrecords.PACKS_URL, punkrecords.CARDS_URL,
+                                   cardmarket.PRICE_GUIDE_URL.format(game=18)])
     assert e.expansions == {10: "op05"}
+    assert e.cards[3].image_url == CARDS["OP05-098_p1"]["img_url"]  # paired with the Cardmarket trends
 
 
 def test_http_error():
@@ -157,3 +162,47 @@ def test_secondary_expansion_of_a_pack_gets_its_own_code_and_the_image():
     assert e.cards[1] == SourceCard("op05", "OP05-001", "C", url, url)
     assert e.cards[11] == SourceCard("op05-cm30", "OP05-001", "C", url, url)  # same artwork (Non-English, Pre-Errata)
     assert e.cards[12] == SourceCard("op05-cm30", "OP05-098", "L", "", "")  # two OP05-098 variants in the pack
+
+
+def image(key):
+    return CARDS[key]["img_url"]
+
+
+def test_base_and_parallel_paired_by_id_and_price():
+    e = build(trends={2: 1.5, 3: 30.0})
+    assert e.cards[2] == SourceCard("op05", "OP05-098", "L", image("OP05-098"), image("OP05-098"))
+    assert e.cards[3] == SourceCard("op05", "OP05-098", "L", image("OP05-098_p1"), image("OP05-098_p1"))
+
+
+@pytest.mark.parametrize("trends", [
+    {2: 30.0, 3: 1.5},  # the older product is the dearer one: order not trusted
+    {2: 5.0, 3: 5.0},
+    {2: 1.5},  # a price is missing
+    {2: 0, 3: 30.0},
+    None,
+])
+def test_no_pairing_without_a_clear_price_order(trends):
+    e = build(trends=trends)
+    assert e.cards[2].image_url == e.cards[3].image_url == ""
+
+
+def test_three_printings_only_the_base_is_paired():
+    cards = {**CARDS, "OP05-098_p3": card("OP05-098_p3", "569105", "Leader")}
+    products = PRODUCTS + [prod(13, "Enel (OP05-098)", 10)]
+    e = build(cards=cards, products=products, trends={2: 1.0, 3: 20.0, 13: 300.0})
+    assert e.cards[2].image_url == image("OP05-098")
+    assert e.cards[3].image_url == e.cards[13].image_url == ""
+
+
+def test_no_pairing_when_the_counts_differ():
+    products = PRODUCTS + [prod(13, "Enel (OP05-098)", 10)]
+    e = build(products=products, trends={2: 1.0, 3: 20.0, 13: 300.0})
+    assert e.cards[2].image_url == e.cards[3].image_url == e.cards[13].image_url == ""
+
+
+def test_no_pairing_without_the_base_printing_in_the_pack():
+    cards = {"OP05-001": CARDS["OP05-001"], "OP05-098": card("OP05-098", "569202", "Leader"),
+             "OP05-098_p1": card("OP05-098_p1", "569105", "Leader"),
+             "OP05-098_p2": card("OP05-098_p2", "569105", "Leader")}
+    e = build(cards=cards, trends={2: 1.5, 3: 30.0})
+    assert e.cards[2].image_url == e.cards[3].image_url == ""
