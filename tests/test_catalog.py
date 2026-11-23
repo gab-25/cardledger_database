@@ -161,3 +161,35 @@ def test_encoding_is_one_sorted_document():
 
 def test_catalog_key():
     assert catalog_key("mtg") == "catalog/v1/mtg.json"
+
+
+def test_pokemon_version_without_image_takes_the_image_of_its_card():
+    e = enrich({1: card("base", "4")})
+    products = [prod(1, name="Charizard"), prod(2, name="Charizard")]
+    p = by_id(assemble(GAMES["pokemon"], products, e, SINGLES))[2]
+    assert (p.expansion_code, p.image_url, p.image_large_url) == ("base", "small", "large")
+    assert (p.number, p.rarity) == ("", "")
+
+
+def test_shared_image_needs_same_expansion_and_name():
+    e = enrich({1: card("base")})
+    products = [prod(1, name="Charizard"), prod(2, name="Blastoise"), prod(3, id_expansion=11, name="Charizard")]
+    c = by_id(assemble(GAMES["pokemon"], products, e, SINGLES))
+    assert c[2].image_url == "" and c[3].image_url == ""
+
+
+def test_shared_image_is_skipped_when_versions_disagree():
+    e = enrich({1: SourceCard("base", "4", "", "a", "A"), 2: SourceCard("base", "5", "", "b", "B")})
+    products = [prod(1, name="Pikachu"), prod(2, name="Pikachu"), prod(3, name="Pikachu")]
+    assert by_id(assemble(GAMES["pokemon"], products, e, SINGLES))[3].image_url == ""
+
+
+def test_shared_image_only_between_singles():
+    e = enrich({1: card("base")})
+    products = [prod(1, name="Charizard"), prod(2, id_category=5, name="Charizard")]
+    assert by_id(assemble(GAMES["pokemon"], products, e, SINGLES))[2].image_url == ""
+
+
+def test_other_games_do_not_share_images():
+    e = enrich({1: card("lea")})
+    assert by_id(assemble(GAMES["mtg"], [prod(1, name="Bolt"), prod(2, name="Bolt")], e, SINGLES))[2].image_url == ""

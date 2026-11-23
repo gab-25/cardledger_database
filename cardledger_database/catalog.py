@@ -25,9 +25,22 @@ def _main_sets(products: list[CmProduct], enrichment: Enrichment, single_categor
     return {**voted, **enrichment.expansions}
 
 
+def _shared_images(products: list[CmProduct], enrichment: Enrichment,
+                   single_category_ids: set[int]) -> dict[tuple[int, str], tuple[str, str]]:
+    """{(Cardmarket expansion id, name): (image, large image)} for the singles whose versions with an image all
+    show the same one; names with differing images are left out (no image beats a wrong one)."""
+    images: dict[tuple[int, str], set[tuple[str, str]]] = defaultdict(set)
+    for p in products:
+        card = enrichment.cards.get(p.id_product)
+        if p.id_category in single_category_ids and card is not None and card.image_url:
+            images[(p.id_expansion, p.name)].add((card.image_url, card.image_large_url))
+    return {key: next(iter(found)) for key, found in images.items() if len(found) == 1}
+
+
 def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
              single_category_ids: set[int]) -> GameCatalog:
     main = _main_sets(products, enrichment, single_category_ids)
+    shared = _shared_images(products, enrichment, single_category_ids) if game.share_images else {}
     rows: list[Product] = []
     stand_ins: dict[str, SourceSet] = {}
     skipped = enriched = 0
@@ -47,6 +60,8 @@ def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
                     continue
                 code = f"cmx{p.id_expansion}"
                 stand_ins[code] = SourceSet(code, f"Cardmarket expansion #{p.id_expansion}", None)
+        if not image and p.id_category in single_category_ids:
+            image, large = shared.get((p.id_expansion, p.name), (image, large))
         rows.append(Product(p.id_product, p.name[:200], code, number[:40], rarity[:40], image[:500], large[:500],
                             p.id_category, p.category_name))
     sets = {**enrichment.sets, **stand_ins}

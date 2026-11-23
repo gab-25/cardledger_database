@@ -16,13 +16,14 @@ class Game:
     name: str
     keep_unmatched: bool  # keep Cardmarket products the source has no card for
     source: str  # mtgjson, tcgdex, lorcanajson, punkrecords, yamlyugi or riftcodex
+    share_images: bool = False  # a single without image takes the one image of same-name singles in its expansion
 
 
 GAMES: dict[str, Game] = {
     g.slug: g
     for g in (
         Game("mtg", 1, "Magic: The Gathering", False, "mtgjson"),
-        Game("pokemon", 6, "Pokémon", True, "tcgdex"),
+        Game("pokemon", 6, "Pokémon", True, "tcgdex", share_images=True),
         Game("lorcana", 19, "Disney Lorcana", True, "lorcanajson"),
         Game("onepiece", 18, "One Piece Card Game", True, "punkrecords"),
         Game("yugioh", 3, "Yu-Gi-Oh!", True, "yamlyugi"),

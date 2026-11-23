@@ -20,7 +20,7 @@ The catalog stores only image URLs, served by each source. MTGJSON has no images
 | Yu-Gi-Oh! | [yaml-yugi](https://github.com/DawnbrandBots/yaml-yugi) (English), images from [Yugipedia](https://yugipedia.com) | Pipeline AGPL-3.0; card data © Konami |
 | Riftbound | [Riftcodex](https://riftcodex.com), images from Riot's CDN | Fan API, no licence stated; card data © Riot Games |
 
-The Cardmarket product lists are the public files published by Cardmarket. One Piece is joined on the card code printed in the Cardmarket name (images only where the variant is unambiguous). Yu-Gi-Oh! and Riftbound are matched to Cardmarket products by name (a repeated name still gets its
+The Cardmarket product lists are the public files published by Cardmarket. One Piece is joined on the card code printed in the Cardmarket name (images only where the variant is unambiguous). TCGdex links each Pokémon card to one Cardmarket product: the card's other versions (same name, same Cardmarket expansion) get its image when all versions with an image agree. Yu-Gi-Oh! and Riftbound are matched to Cardmarket products by name (a repeated name still gets its
 number, and its image and rarity when all its printings agree). Riftcodex is slow: a Riftbound run can take several minutes. No
 prices are included.
 
