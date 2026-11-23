@@ -1,6 +1,10 @@
 """Links Cardmarket products to a source's printings by name or printed code, for the games whose source has no
 Cardmarket ids. A wrong match shows another variant's image, a missing one only shows none: every rule
-prefers no match over a doubtful one."""
+prefers no match over a doubtful one.
+
+Reprint sets often hold the same cards as their original (Dark Beginning 1 and Beginner's Edition 1), so the cards
+alone cannot tell them apart. Then the expansion's name decides: the public product list has no expansion names, but
+an expansion's sealed products carry it ("Dark Beginning 1 Booster")."""
 
 import re
 import unicodedata
@@ -14,6 +18,8 @@ MIN_COMMON = 2  # keys an expansion must share with its group
 MIN_SHARE = 0.3  # ... and as a share of the expansion's keys
 MIN_MARGIN = 0.1  # F1 lead of the best group over the second best
 MAX_PRINTING_RATIO = 1.5  # printings per key of the expansion over printings per key of the group
+MIN_NAME_FIT = 0.75  # share of a group name's words an expansion's sealed products must mention to win a tie
+NAME_LEAD = 0.25  # ... and its lead over every other contender (or, both at 1, strictly more words)
 
 _BRACKETS = re.compile(r"\[[^\]]*\]|\([^)]*\)")
 _SUFFIX = re.compile(r" - .*$")
@@ -22,6 +28,11 @@ _SPACES = re.compile(r"\s+")
 
 _SLUG = re.compile(r"[^a-z0-9]+")
 MAX_CODE = 40
+
+_WORD = re.compile(r"[a-z0-9]+")
+_APOSTROPHES = re.compile(r"['’`]")
+GENERIC_WORDS = {"a", "and", "of", "the", "booster", "box", "case", "deck", "display", "pack", "packs", "set", "tin",
+                 "tins", "yu", "gi", "oh", "yugioh"}
 
 
 @dataclass(frozen=True)
@@ -100,9 +111,36 @@ def group_scores(exp_keys: set[str], group_keys: dict[int, set[str]],
     return {g: (f1(n, len(exp_keys), len(group_keys[g])), n) for g, n in common.items()}
 
 
-def best_group(exp_keys: set[str], scores: dict[int, tuple[float, int]]) -> int | None:
+def name_tokens(text: str) -> set[str]:
+    """The words of a name, ASCII and lower case, without apostrophes and GENERIC_WORDS."""
+    text = unicodedata.normalize("NFKD", _APOSTROPHES.sub("", text)).encode("ascii", "ignore").decode().lower()
+    return set(_WORD.findall(text)) - GENERIC_WORDS
+
+
+def name_fit(group_name: str, tokens: set[str]) -> tuple[float, int]:
+    """(share of the group name's words found among an expansion's words, words found)."""
+    words = name_tokens(group_name)
+    found = len(words & tokens)
+    return (found / len(words) if words else 0.0), found
+
+
+def by_name(contenders: list[int], fit) -> int | None:
+    """The contender whose name fits clearly best (`fit(c)` -> (share, words found)): at least MIN_NAME_FIT, and
+    NAME_LEAD more than every other one, or, when both fit fully, strictly more words found; else None."""
+    ranked = sorted(((fit(c), c) for c in contenders), reverse=True)
+    (share, words), best = ranked[0]
+    if share < MIN_NAME_FIT:
+        return None
+    for (other_share, other_words), _ in ranked[1:]:
+        if share - other_share < NAME_LEAD and not (share == other_share == 1.0 and words > other_words):
+            return None
+    return best
+
+
+def best_group(exp_keys: set[str], scores: dict[int, tuple[float, int]], fit=None) -> int | None:
     """The group sharing the most keys by F1, when it shares at least MIN_COMMON keys and MIN_SHARE of the
-    expansion's keys and leads the second best by MIN_MARGIN; else None."""
+    expansion's keys and leads the second best by MIN_MARGIN; else None. Without that lead, the group whose name
+    fits the expansion's clearly best (see by_name) among those within MIN_MARGIN that pass the same thresholds."""
     scored = sorted(((score, n, g) for g, (score, n) in scores.items()), reverse=True)
     if not scored:
         return None
@@ -110,14 +148,25 @@ def best_group(exp_keys: set[str], scores: dict[int, tuple[float, int]]) -> int 
     if n < MIN_COMMON or n < MIN_SHARE * len(exp_keys):
         return None
     if len(scored) > 1 and score - scored[1][0] < MIN_MARGIN:
-        return None
+        if fit is None:
+            return None
+        contenders = [g for s, k, g in scored
+                      if score - s < MIN_MARGIN and k >= MIN_COMMON and k >= MIN_SHARE * len(exp_keys)]
+        return by_name(contenders, fit)
     return group_id
 
 
-def best_expansion(group_id: int, scores: dict[int, dict[int, tuple[float, int]]]) -> int | None:
-    """The expansion with the highest F1 for the group, None on a tie: a group holds one Cardmarket expansion."""
+def best_expansion(group_id: int, scores: dict[int, dict[int, tuple[float, int]]], fit=None) -> int | None:
+    """The expansion with the highest F1 for the group, None on a tie: a group holds one Cardmarket expansion.
+    When several are within MIN_MARGIN, the one whose name fits the group's clearly best (see by_name) wins."""
     ranked = sorted(((s[group_id][0], e) for e, s in scores.items() if group_id in s), reverse=True)
-    if not ranked or len(ranked) > 1 and ranked[0][0] == ranked[1][0]:
+    if not ranked:
+        return None
+    if fit is not None:
+        contenders = [e for score, e in ranked if ranked[0][0] - score < MIN_MARGIN]
+        if len(contenders) > 1 and (chosen := by_name(contenders, fit)) is not None:
+            return chosen
+    if len(ranked) > 1 and ranked[0][0] == ranked[1][0]:
         return None
     return ranked[0][1]
 
@@ -205,11 +254,18 @@ def match(products: list[CmProduct], groups: list[Group], tcg: list[Printing],
                 index[mode][key].add(group_id)
 
     singles: dict[int, list[CmProduct]] = defaultdict(list)
+    sealed_words: dict[int, set[str]] = defaultdict(set)
     for p in products:
         if p.id_category in single_category_ids:
             singles[p.id_expansion].append(p)
+        else:
+            sealed_words[p.id_expansion] |= name_tokens(p.name)
 
     groups_by_id = {g.group_id: g for g in groups}
+
+    def fit(group_id: int, id_expansion: int) -> tuple[float, int]:
+        group = groups_by_id.get(group_id)
+        return name_fit(group.name, sealed_words.get(id_expansion, set())) if group else (0.0, 0)
     cards: dict[int, SourceCard] = {}
     card_pairs: dict[int, int] = {}
     expansion_pairs: dict[int, int] = {}
@@ -218,10 +274,10 @@ def match(products: list[CmProduct], groups: list[Group], tcg: list[Printing],
     scores = {e: group_scores(set(keys_of[e].values()), group_keys[modes[e]], index[modes[e]]) for e in singles}
     for id_expansion, items in singles.items():
         mode, keys = modes[id_expansion], keys_of[id_expansion]
-        group_id = best_group(set(keys.values()), scores[id_expansion])
+        group_id = best_group(set(keys.values()), scores[id_expansion], lambda g: fit(g, id_expansion))
         if group_id is None or group_id not in groups_by_id:
             continue
-        if best_expansion(group_id, scores) != id_expansion:
+        if best_expansion(group_id, scores, lambda e: fit(group_id, e)) != id_expansion:
             continue
         if printing_ratio(keys, by_group[group_id], mode) > MAX_PRINTING_RATIO:
             continue

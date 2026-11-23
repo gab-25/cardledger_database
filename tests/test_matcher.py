@@ -273,3 +273,52 @@ def test_unpaired_expansion_gets_no_fill_in():
     cards = [tcg(1000, "Echo Mage", "9"), tcg(1001, "Echo Mage", "9")]
     r = match(products, [group()], cards, SINGLES)  # one common key < MIN_COMMON: not paired
     assert r.enrichment.cards == {} and r.expansion_pairs == {}
+
+
+# --- ties broken by the expansion's name (from its sealed products) ---
+
+def sealed(id_product, name, id_expansion):
+    return cm(id_product, name, id_expansion, id_category=2)
+
+
+def test_tied_groups_are_told_apart_by_the_expansion_name():
+    products, cards = named_set()
+    _, reprint = named_set(group_id=200, first_pid=2000)
+    groups = [group(), group(200, "RP01", "Romance Dawn (25th Anniversary Edition)")]
+    boxes = {"Romance Dawn Booster": {10: 100}, "Romance Dawn 25th Anniversary Edition Box": {10: 200}}
+    for box, expected in boxes.items():
+        result = match(products + [sealed(90, box, 10)], groups, cards + reprint, SINGLES)
+        assert result.expansion_pairs == expected
+
+
+def test_tied_expansions_are_told_apart_by_their_names():
+    products, cards = named_set()
+    twins, _ = named_set(id_expansion=11, first_id=11)
+    boxes = [sealed(90, "Romance Dawn Booster", 10), sealed(91, "Beginner's Edition Booster Box", 11)]
+    result = match(products + twins + boxes, [group()], cards, SINGLES)
+    assert result.expansion_pairs == {10: 100}
+    assert set(result.card_pairs) == {1, 2, 3, 4}
+
+
+def test_close_expansion_with_the_right_name_wins():
+    names = [f"Card {i}" for i in range(10)]
+    cards = [tcg(1000 + i, n, str(i + 1)) for i, n in enumerate(names)]
+    reprint = [cm(i + 1, n, 11) for i, n in enumerate(names)]  # F1 1.0
+    original = [cm(20 + i, n, 10) for i, n in enumerate(names + ["Extra"])]  # F1 0.95
+    boxes = [sealed(90, "Dark Revelation 1 Booster", 10), sealed(91, "Expert Edition Volume 1 Booster", 11)]
+    groups = [group(name="Dark Revelation Volume 1")]
+    assert match(reprint + original, groups, cards, SINGLES).expansion_pairs == {11: 100}
+    assert match(reprint + original + boxes, groups, cards, SINGLES).expansion_pairs == {10: 100}
+
+
+def test_names_that_fit_alike_break_no_tie():
+    products, cards = named_set()
+    twins, _ = named_set(id_expansion=11, first_id=11)
+    boxes = [sealed(90, "Romance Dawn Booster", 10), sealed(91, "Romance Dawn Booster Box", 11)]
+    assert match(products + twins + boxes, [group()], cards, SINGLES).expansion_pairs == {}
+
+
+def test_name_fit_ignores_generic_words_and_apostrophes():
+    assert matcher.name_fit("Duelist's Advance", matcher.name_tokens("Duelist’s Advance Booster Box")) == (1.0, 2)
+    assert matcher.name_fit("Dark Revelation Volume 1", matcher.name_tokens("Dark Revelation 1 Booster")) == (0.75, 3)
+    assert matcher.name_fit("", matcher.name_tokens("Anything")) == (0.0, 0)

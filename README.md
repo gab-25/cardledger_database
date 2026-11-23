@@ -21,7 +21,7 @@ The catalog stores only image URLs, served by each source. MTGJSON has no images
 | Riftbound | [OpenRift](https://openrift.app/developers) API, images served by OpenRift | Pipeline AGPL-3.0; card data and images © Riot Games |
 
 The Cardmarket product lists are the public files published by Cardmarket. One Piece is joined on the card code printed in the Cardmarket name. When one code has several Cardmarket products in an expansion (base and parallels), the base is the oldest product and must also be the cheapest one in Cardmarket's price guide; otherwise those products get no image. OpenRift gives each Riftbound printing its Cardmarket product id; when several printings (languages, foil) share one product, the English plain one is used. TCGdex links each Pokémon card, and each of its variants (stamps, special foils), to a Cardmarket product; a variant shows its card's number and image. The card's other versions (same name, same Cardmarket expansion) get its image when all versions with an image agree. Yu-Gi-Oh! is matched to Cardmarket products by name (a repeated name still gets its
-number, and its image and rarity when all its printings agree). No prices are included.
+number, and its image and rarity when all its printings agree); when reprint sets hold the same cards, the name of the expansion, taken from its sealed products, decides, and without a clear winner the products stay unmatched. No prices are included.
 
 ## Output (format v1)
 
