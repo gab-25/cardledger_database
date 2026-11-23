@@ -272,3 +272,44 @@ def test_progress_is_saved_every_save_every_cards(tmp_path, monkeypatch, caplog)
     with caplog.at_level("INFO"):
         tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
     assert "en 2/5 cards fetched" in caplog.text and "en 4/5 cards fetched" in caplog.text
+
+
+def with_variants(c, *cms):
+    c["variants_detailed"] = [{"type": "normal", "thirdParty": {"cardmarket": cm}} for cm in cms]
+    return c
+
+
+def test_variant_cardmarket_ids_get_the_card(tmp_path):
+    routes = en_routes(**{"/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=794256),
+                                                               794256, 720365, "794908", "x", None)})
+    cards = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards
+    assert set(cards) == {794256, 720365, 794908}
+    assert cards[720365] == cards[794256]
+
+
+def test_variant_id_without_card_level_id(tmp_path):
+    routes = en_routes(**{"/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=None), 720365)})
+    assert set(tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards) == {720365}
+
+
+def test_card_level_ids_win_over_variant_ids(tmp_path):
+    routes = en_routes(**{
+        "/en/sets/sv08": {
+            "id": "sv08", "name": "Surging Sparks", "abbreviation": {"official": "SSP"},
+            "cards": [{"id": "sv08-001", "localId": "001"}, {"id": "sv08-002", "localId": "002"}],
+        },
+        "/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=1), 2),  # TCGdex error: 2 is card 002
+        "/en/cards/sv08-002": card("sv08-002", "002", cm=2),
+    })
+    cards = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards
+    assert cards[2].collector_number == "2"
+
+
+def test_cache_entry_without_variant_ids_is_refetched(tmp_path):
+    tcgdex._save_cache(tmp_path, "en", {"sv08-001": {
+        "cm": 794256, "rarity": "Common", "local_id": "001", "image": IMG, "set": "sv08",
+        "fetched_at": NOW.isoformat()}})
+    routes = en_routes(**{"/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=794256), 720365)})
+    client, calls = make(routes)
+    cards = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+    assert "/en/cards/sv08-001" in calls and 720365 in cards.cards
