@@ -75,3 +75,19 @@ def test_invalid_json_raises_source_error():
     client = _client(lambda request: httpx.Response(200, content=b"not json"))
     with pytest.raises(SourceError):
         fetch_products(client, 6)
+
+
+def test_fetch_trends():
+    from cardledger_database.sources.cardmarket import fetch_trends
+
+    guide = {"priceGuides": [{"idProduct": 1, "trend": 2.5}, {"idProduct": 2, "trend": None}, {"idProduct": 3}]}
+    trends = fetch_trends(_client(_handler({"price_guide_18.json": guide})), 18)
+    assert trends == {1: 2.5}
+
+
+@pytest.mark.parametrize("files", [{}, {"price_guide_18.json": {"nothing": []}}, {"price_guide_18.json": [1]}])
+def test_fetch_trends_bad_file_raises_source_error(files):
+    from cardledger_database.sources.cardmarket import fetch_trends
+
+    with pytest.raises(SourceError, match="Cardmarket price_guide_18.json"):
+        fetch_trends(_client(_handler(files)), 18)

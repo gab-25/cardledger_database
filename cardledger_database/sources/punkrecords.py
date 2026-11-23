@@ -1,5 +1,8 @@
 """punk-records' One Piece card data (from the official Bandai card list), joined to Cardmarket on the card code printed
-in the product name. Images only where the variant is unambiguous: a wrong image is worse than none."""
+in the product name. Images only where the variant is unambiguous: a wrong image is worse than none.
+
+One code often has several printings (base, parallels) that Cardmarket sells as products with the same name. Those
+are told apart by `_paired`, with Cardmarket's own product order and trend prices."""
 
 import re
 from collections import Counter, defaultdict
@@ -8,11 +11,13 @@ from dataclasses import dataclass
 import httpx
 
 from ..model import CmProduct, Enrichment, SourceCard, SourceError, SourceSet, code_of
+from . import cardmarket
 
 BASE_URL = "https://raw.githubusercontent.com/buhbbl/punk-records/main/english"
 PACKS_URL = f"{BASE_URL}/packs.json"
 CARDS_URL = f"{BASE_URL}/index/cards_by_id.json"
 
+CARDMARKET_GAME = 18
 MIN_SHARE = 0.8  # share of an expansion's coded singles its pack must have
 
 RARITIES = {
@@ -80,8 +85,39 @@ def _expansion_packs(coded: list[tuple[CmProduct, str]], variants: dict[str, lis
     return mapped
 
 
-def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int]) -> Enrichment:
-    """The One Piece enrichment from the two punk-records files and the Cardmarket products."""
+def _paired(coded: list[tuple[CmProduct, str]], variants: dict[str, list[_Variant]], exp_packs: dict[int, str],
+            trends: dict[int, float]) -> dict[int, _Variant]:
+    """{idProduct: variant} for the products sharing a code within an expansion, where the order is safe to trust.
+
+    Cardmarket adds a set's base printing before its parallels, so the lowest idProduct is the base, and the base is
+    the cheapest printing. Trusted only when both agree: the pack has the base and as many printings as there are
+    products, every product has a trend price and the lowest idProduct is strictly the cheapest. With two products
+    the other one is the parallel; with more only the base is taken (the parallels' order does not follow their
+    numbers). Checked against an independent mapping of 1,060 products: no wrong pair."""
+    groups: dict[tuple[int, str], list[CmProduct]] = defaultdict(list)
+    for p, code in coded:
+        groups[(p.id_expansion, code)].append(p)
+    paired: dict[int, _Variant] = {}
+    for (exp, code), group in groups.items():
+        pack_id = exp_packs.get(exp)
+        if pack_id is None or len(group) < 2:
+            continue
+        in_pack = [v for v in variants[code] if v.pack_id == pack_id]  # the base first, see _variants
+        if len(in_pack) != len(group) or in_pack[0].key != code:
+            continue
+        group = sorted(group, key=lambda p: p.id_product)
+        prices = [trends.get(p.id_product) or 0 for p in group]
+        if not all(prices) or any(prices[0] >= price for price in prices[1:]):
+            continue
+        paired[group[0].id_product] = in_pack[0]
+        if len(group) == 2:
+            paired[group[1].id_product] = in_pack[1]
+    return paired
+
+
+def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int],
+          trends: dict[int, float] | None = None) -> Enrichment:
+    """The One Piece enrichment from the two punk-records files, the Cardmarket products and their trend prices."""
     packs = packs if isinstance(packs, dict) else {}
     cards = cards if isinstance(cards, dict) else {}
     pack_codes, sets = _sets(packs)
@@ -113,13 +149,16 @@ def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int]
             sets[code] = SourceSet(code, name, None)
         expansions[exp] = code
 
+    paired = _paired(coded, variants, exp_packs, trends or {})
     result: dict[int, SourceCard] = {}
     for p, code in coded:
         pack_id = exp_packs.get(p.id_expansion)
         if pack_id is not None:
             in_pack = [v for v in variants[code] if v.pack_id == pack_id]
-            if len(in_pack) == 1 and per_expansion[(code, p.id_expansion)] == 1:
+            v = paired.get(p.id_product)
+            if v is None and len(in_pack) == 1 and per_expansion[(code, p.id_expansion)] == 1:
                 v = in_pack[0]
+            if v is not None:
                 result[p.id_product] = SourceCard(
                     expansions[p.id_expansion], code, RARITIES.get(v.rarity, v.rarity), v.image, v.image)
                 continue
@@ -140,7 +179,8 @@ def fetch(client: httpx.Client, products: list[CmProduct], singles: set[int]) ->
             data[name] = response.json()
         except (httpx.HTTPError, ValueError) as exc:
             raise SourceError(f"punk-records {name}: {type(exc).__name__}: {exc}") from exc
+    trends = cardmarket.fetch_trends(client, CARDMARKET_GAME)
     try:
-        return build(data["packs.json"], data["cards_by_id.json"], products, singles)
+        return build(data["packs.json"], data["cards_by_id.json"], products, singles, trends)
     except (ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"punk-records: {type(exc).__name__}: {exc}") from exc
