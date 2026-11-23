@@ -4,7 +4,12 @@ prefers no match over a doubtful one.
 
 Reprint sets often hold the same cards as their original (Dark Beginning 1 and Beginner's Edition 1), so the cards
 alone cannot tell them apart. Then the expansion's name decides: the public product list has no expansion names, but
-an expansion's sealed products carry it ("Dark Beginning 1 Booster")."""
+an expansion's sealed products carry it ("Dark Beginning 1 Booster").
+
+Groups may be in another language than English (`Group.language`), typically a Japanese set holding the same cards as
+its English one. An expansion whose sealed products are marked with that language ("(OCG)", "(Japanese)") is matched
+only to groups of that language; an unmarked one to English groups, and to the others only when no English group
+fits it (and, if the expansion has sealed products, only to those whose name fits theirs, see MIN_NAME_FIT)."""
 
 import re
 import unicodedata
@@ -31,6 +36,7 @@ MAX_CODE = 40
 
 _WORD = re.compile(r"[a-z0-9]+")
 _APOSTROPHES = re.compile(r"['’`]")
+LANGUAGE_WORDS = {"ja": {"ocg", "japanese"}}  # words in sealed product names marking an expansion's language
 GENERIC_WORDS = {"a", "and", "of", "the", "booster", "box", "case", "deck", "display", "pack", "packs", "set", "tin",
                  "tins", "yu", "gi", "oh", "yugioh"}
 
@@ -42,6 +48,7 @@ class Group:
     name: str
     abbreviation: str
     published_on: date | None
+    language: str = ""  # "" for English, else e.g. "ja"
 
 
 @dataclass(frozen=True)
@@ -135,6 +142,12 @@ def by_name(contenders: list[int], fit) -> int | None:
         if share - other_share < NAME_LEAD and not (share == other_share == 1.0 and words > other_words):
             return None
     return best
+
+
+def expansion_language(words: set[str]) -> str | None:
+    """The language an expansion's sealed products are marked with, if any (one of LANGUAGE_WORDS)."""
+    marked = [lang for lang, markers in LANGUAGE_WORDS.items() if words & markers]
+    return marked[0] if len(marked) == 1 else None
 
 
 def best_group(exp_keys: set[str], scores: dict[int, tuple[float, int]], fit=None) -> int | None:
@@ -271,7 +284,22 @@ def match(products: list[CmProduct], groups: list[Group], tcg: list[Printing],
     expansion_pairs: dict[int, int] = {}
     modes = {e: expansion_mode(items) for e, items in singles.items()}
     keys_of = {e: cm_keys(items, modes[e]) for e, items in singles.items()}
-    scores = {e: group_scores(set(keys_of[e].values()), group_keys[modes[e]], index[modes[e]]) for e in singles}
+    all_scores = {e: group_scores(set(keys_of[e].values()), group_keys[modes[e]], index[modes[e]]) for e in singles}
+    language_of = {g.group_id: g.language for g in groups}
+
+    def in_languages(e: int, accept) -> dict[int, tuple[float, int]]:
+        return {g: s for g, s in all_scores[e].items() if accept(language_of.get(g, ""))}
+
+    scores = {}
+    for e in singles:  # see the module docstring: marked expansions, else English groups first
+        marked = expansion_language(sealed_words.get(e, set()))
+        scores[e] = in_languages(e, lambda lang: lang == (marked or ""))
+        if marked is None and best_group(set(keys_of[e].values()), scores[e], lambda g: fit(g, e)) is None:
+            others = in_languages(e, lambda lang: lang != "")
+            if sealed_words.get(e):
+                others = {g: s for g, s in others.items() if fit(g, e)[0] >= MIN_NAME_FIT}
+            if others:
+                scores[e] = others
     for id_expansion, items in singles.items():
         mode, keys = modes[id_expansion], keys_of[id_expansion]
         group_id = best_group(set(keys.values()), scores[id_expansion], lambda g: fit(g, id_expansion))
@@ -296,7 +324,7 @@ def match(products: list[CmProduct], groups: list[Group], tcg: list[Printing],
                                     _shared(c.rarity for c in candidates), image, large)
 
     sets = {
-        codes[g]: SourceSet(codes[g], groups_by_id[g].name, groups_by_id[g].published_on)
+        codes[g]: SourceSet(codes[g], groups_by_id[g].name, groups_by_id[g].published_on, groups_by_id[g].language)
         for g in set(expansion_pairs.values())
     }
     expansions = {exp: codes[g] for exp, g in expansion_pairs.items()}

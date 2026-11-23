@@ -322,3 +322,46 @@ def test_name_fit_ignores_generic_words_and_apostrophes():
     assert matcher.name_fit("Duelist's Advance", matcher.name_tokens("Duelist’s Advance Booster Box")) == (1.0, 2)
     assert matcher.name_fit("Dark Revelation Volume 1", matcher.name_tokens("Dark Revelation 1 Booster")) == (0.75, 3)
     assert matcher.name_fit("", matcher.name_tokens("Anything")) == (0.0, 0)
+
+
+# --- Japanese (OCG) groups ---
+
+def test_marked_japanese_expansion_takes_only_japanese_groups():
+    products, cards = named_set()
+    _, ja_cards = named_set(group_id=200, first_pid=2000)
+    groups = [group(), Group(200, "Romance Dawn", "OP01-JP", None, "ja")]
+    box = sealed(90, "Romance Dawn (Japanese) Booster Box", 10)
+    result = match(products + [box], groups, cards + ja_cards, SINGLES)
+    assert result.expansion_pairs == {10: 200}
+    assert result.enrichment.sets == {"op01-jp": SourceSet("op01-jp", "Romance Dawn", None, "ja")}
+
+
+def test_unmarked_expansion_prefers_english_groups():
+    products, cards = named_set()
+    _, ja_cards = named_set(group_id=200, first_pid=2000)
+    groups = [group(), Group(200, "Romance Dawn", "OP01-JP", None, "ja")]
+    assert match(products, groups, cards + ja_cards, SINGLES).expansion_pairs == {10: 100}
+
+
+def test_unmarked_expansion_falls_back_to_japanese_groups():
+    products, _ = named_set()
+    _, ja_cards = named_set(group_id=200, first_pid=2000)
+    groups = [group(), Group(200, "Quarter Century Chronicle", "QCCU-JP", None, "ja")]
+    assert match(products, groups, ja_cards, SINGLES).expansion_pairs == {10: 200}
+
+
+def test_english_and_japanese_expansions_of_one_set_each_get_their_group():
+    products, cards = named_set()
+    ja_products, ja_cards = named_set(id_expansion=11, group_id=200, first_id=11, first_pid=2000)
+    groups = [group(), Group(200, "Romance Dawn", "OP01-JP", None, "ja")]
+    boxes = [sealed(90, "Romance Dawn Booster", 10), sealed(91, "Romance Dawn (OCG) Booster", 11)]
+    result = match(products + ja_products + boxes, groups, cards + ja_cards, SINGLES)
+    assert result.expansion_pairs == {10: 100, 11: 200}
+
+
+def test_unmarked_expansion_with_another_name_does_not_fall_back_to_japanese_groups():
+    products, _ = named_set()
+    _, ja_cards = named_set(group_id=200, first_pid=2000)
+    groups = [group(), Group(200, "Quarter Century Chronicle", "QCCU-JP", None, "ja")]
+    box = sealed(90, "Collector's Tins 2006", 10)
+    assert match(products + [box], groups, ja_cards, SINGLES).expansion_pairs == {}
