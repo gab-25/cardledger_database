@@ -8,7 +8,7 @@ from cardledger_database import cli
 from cardledger_database.catalog import catalog_key
 from cardledger_database.matcher import MatchResult
 from cardledger_database.model import GAMES, CmProduct, Enrichment, SourceCard, SourceError, SourceSet
-from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, punkrecords, riftcodex, tcgdex, yamlyugi
+from cardledger_database.sources import cardmarket, lorcanajson, mtgjson, openrift, punkrecords, tcgdex, yamlyugi
 
 
 def cm_products(n):
@@ -42,7 +42,7 @@ class Fakes:
         monkeypatch.setattr(punkrecords, "fetch", lambda client, products, singles: source("onepiece"))
         monkeypatch.setattr(tcgdex, "fetch", fake_tcgdex)
         monkeypatch.setattr(yamlyugi, "fetch", lambda client: ([], ["yugioh"]))
-        monkeypatch.setattr(riftcodex, "fetch", lambda client: ([], ["riftbound"]))
+        monkeypatch.setattr(openrift, "fetch", lambda client: source("riftbound"))
         monkeypatch.setattr(
             cli, "match", lambda products, groups, printings, singles: MatchResult(source(printings[0]), {}, {}, {})
         )

@@ -33,9 +33,9 @@ Per game, `cli.generate_game` runs a fixed pipeline:
 2. **Enrichment** from the game's source (`Game.source` in `model.GAMES` selects it in `cli._enrichment`). Every
    source returns an `Enrichment`: `cards` keyed by Cardmarket `id_product`, `sets` keyed by set code, and optionally
    `expansions` (Cardmarket idExpansion → set code). Sources join to Cardmarket differently:
-   - mtgjson, tcgdex, lorcanajson: the source carries Cardmarket ids directly.
+   - mtgjson, tcgdex, lorcanajson, openrift (Riftbound): the source carries Cardmarket ids directly.
    - punkrecords (One Piece): joined on the card code printed in the Cardmarket name (`model.code_of`).
-   - yamlyugi, riftcodex: return `Group`/`Printing` lists and go through `matcher.match`, which links by normalized
+   - yamlyugi: returns `Group`/`Printing` lists and goes through `matcher.match`, which links by normalized
      name plus an expansion→group vote. Its rule: prefer no match over a doubtful one (a wrong match shows the
      wrong image); keep that bias when changing thresholds.
 3. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes applied after the automatic match. Strict
