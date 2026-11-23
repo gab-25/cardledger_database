@@ -15,7 +15,7 @@ class Game:
     cm_id: int  # Cardmarket idGame
     name: str
     keep_unmatched: bool  # keep Cardmarket products the source has no card for
-    source: str  # mtgjson, tcgdex, lorcanajson, punkrecords, yamlyugi or riftcodex
+    source: str  # mtgjson, tcgdex, lorcanajson, punkrecords, yamlyugi or openrift
     share_images: bool = False  # a single without image takes the one image of same-name singles in its expansion
 
 
@@ -27,7 +27,7 @@ GAMES: dict[str, Game] = {
         Game("lorcana", 19, "Disney Lorcana", True, "lorcanajson"),
         Game("onepiece", 18, "One Piece Card Game", True, "punkrecords"),
         Game("yugioh", 3, "Yu-Gi-Oh!", True, "yamlyugi"),
-        Game("riftbound", 22, "Riftbound", True, "riftcodex"),
+        Game("riftbound", 22, "Riftbound", True, "openrift"),
     )
 }
 
