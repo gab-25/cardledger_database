@@ -17,6 +17,9 @@ class Game:
     keep_unmatched: bool  # keep Cardmarket products the source has no card for
     source: str  # mtgjson, tcgdex, lorcanajson, punkrecords, yamlyugi or openrift
     share_images: bool = False  # a single without image takes the one image of same-name singles in its expansion
+    # The game's recognition index never accepts a card without confirmation. Every game is confirm-only for now: set
+    # it to False for a game once cardledger_vision's bench finds at most 2% wrong_certain for it.
+    confirm_only: bool = True
 
 
 GAMES: dict[str, Game] = {

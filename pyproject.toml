@@ -4,10 +4,13 @@ version = "1.0.0"
 description = "Generator of the CardLedger card catalog"
 requires-python = ">=3.14"
 license = { text = "GPL-3.0-only" }
-dependencies = ["httpx", "boto3", "python-dotenv"]
+dependencies = ["httpx", "boto3", "python-dotenv", "cardledger-vision"]
 
 [project.scripts]
 cardledger-db = "cardledger_database.cli:run"
+
+[tool.uv.sources]
+cardledger-vision = { git = "https://github.com/gab-25/cardledger_vision.git", branch = "main" }
 
 [dependency-groups]
 dev = ["pytest"]

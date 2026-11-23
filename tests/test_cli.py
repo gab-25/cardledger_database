@@ -1,8 +1,11 @@
+import dataclasses
+import hashlib
 import json
 import os
 from pathlib import Path
 
 import pytest
+from cardledger_vision import Header, Index, encode, index_key
 
 from cardledger_database import cli
 from cardledger_database.catalog import catalog_key
@@ -26,6 +29,17 @@ class Fakes:
     def __init__(self, monkeypatch):
         self.broken: set[str] = set()
         self.cache_dirs = []
+        self.index_broken: set[str] = set()
+        self.indexed = []  # (slug, catalog sha256, cache_dir, confirm_only) of every index built
+
+        def fake_build_index(slug, data, sha256, client, cache_dir, confirm_only=False):
+            if slug in self.index_broken:
+                raise RuntimeError(f"{slug} images are down")
+            assert sha256 == hashlib.sha256(data).hexdigest()
+            self.indexed.append((slug, sha256, cache_dir, confirm_only))
+            return encode(Header(slug, "2026-01-01T00:00:00Z", sha256, confirm_only), [])
+
+        monkeypatch.setattr(cli, "build_index", fake_build_index)
 
         def source(slug):
             if slug in self.broken:
@@ -82,6 +96,60 @@ def test_generate_exit_code(fakes, tmp_path, capsys):
     assert cli.main(["generate", "--game", "lorcana", "--out", str(tmp_path), "--cache", str(tmp_path)]) == 1
 
 
+def index_header(path):
+    return Index.load(path.read_bytes()).header
+
+
+def test_generate_writes_each_catalog_with_its_index(fakes, tmp_path):
+    assert cli.generate(["lorcana", "mtg"], tmp_path, tmp_path / "cache", client=None) == []
+    for slug in ("lorcana", "mtg"):
+        header = index_header(tmp_path / index_key(slug))
+        assert header.game == slug
+        assert header.catalog_sha256 == hashlib.sha256((tmp_path / catalog_key(slug)).read_bytes()).hexdigest()
+    assert {cache_dir for _, _, cache_dir, _ in fakes.indexed} == {tmp_path / "cache" / "vision"}
+
+
+def test_every_game_is_confirm_only_for_now():
+    assert all(game.confirm_only for game in GAMES.values())
+
+
+def test_generate_passes_the_game_confirm_only(fakes, tmp_path, monkeypatch):
+    monkeypatch.setitem(cli.GAMES, "mtg", dataclasses.replace(cli.GAMES["mtg"], confirm_only=False))
+    cli.generate(["lorcana", "mtg"], tmp_path, tmp_path, client=None)
+    assert [(slug, confirm_only) for slug, _, _, confirm_only in fakes.indexed] == [("lorcana", True), ("mtg", False)]
+    assert index_header(tmp_path / index_key("lorcana")).confirm_only
+    assert not index_header(tmp_path / index_key("mtg")).confirm_only
+
+
+def test_generate_without_index(fakes, tmp_path):
+    argv = ["generate", "--game", "lorcana", "--no-index", "--out", str(tmp_path), "--cache", str(tmp_path)]
+    assert cli.main(argv) == 0
+    assert (tmp_path / catalog_key("lorcana")).is_file()
+    assert not (tmp_path / index_key("lorcana")).exists()
+    assert fakes.indexed == []
+
+
+def test_failed_index_keeps_the_previous_catalog_and_index(fakes, tmp_path):
+    cli.generate(["lorcana"], tmp_path, tmp_path, client=None)
+    before = (tmp_path / catalog_key("lorcana")).read_bytes(), (tmp_path / index_key("lorcana")).read_bytes()
+    fakes.index_broken.add("lorcana")
+
+    assert cli.generate(["lorcana", "mtg"], tmp_path, tmp_path, client=None) == ["lorcana"]
+    assert ((tmp_path / catalog_key("lorcana")).read_bytes(), (tmp_path / index_key("lorcana")).read_bytes()) == before
+    assert (tmp_path / index_key("mtg")).is_file()
+
+
+def test_index_rebuilds_from_the_catalog_in_the_folder(fakes, tmp_path, capsys):
+    cli.generate(["lorcana"], tmp_path, tmp_path, client=None, index=False)
+    sha = hashlib.sha256((tmp_path / catalog_key("lorcana")).read_bytes()).hexdigest()
+
+    argv = ["index", "--game", "lorcana", "--game", "mtg", "--out", str(tmp_path), "--cache", str(tmp_path)]
+    assert cli.main(argv) == 1
+    assert index_header(tmp_path / index_key("lorcana")).catalog_sha256 == sha
+    assert not (tmp_path / index_key("mtg")).exists()
+    assert "mtg: no catalog, run generate first" in capsys.readouterr().out
+
+
 class FakeS3:
     def __init__(self):
         self.objects = {}
@@ -95,8 +163,11 @@ def test_upload_copies_the_files_under_the_same_keys(fakes, tmp_path, monkeypatc
     cli.generate(["lorcana", "mtg"], tmp_path, tmp_path, client=None)
     s3 = FakeS3()
 
-    assert cli.upload(["lorcana", "mtg"], tmp_path, s3) == [catalog_key("lorcana"), catalog_key("mtg")]
+    assert cli.upload(["lorcana", "mtg"], tmp_path, s3) == [
+        catalog_key("lorcana"), catalog_key("mtg"), index_key("lorcana"), index_key("mtg")
+    ]
     assert s3.objects[("bucket", "catalog/v1/lorcana.json")] == (tmp_path / catalog_key("lorcana")).read_bytes()
+    assert s3.objects[("bucket", "vision/v1/lorcana.bin")] == (tmp_path / index_key("lorcana")).read_bytes()
 
 
 def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
@@ -107,6 +178,46 @@ def test_upload_refuses_missing_files(fakes, tmp_path, monkeypatch):
     with pytest.raises(SourceError, match="mtg.json"):
         cli.upload(["lorcana", "mtg"], tmp_path, s3)
     assert s3.objects == {}
+
+
+def test_upload_refuses_a_missing_index(fakes, tmp_path, monkeypatch):
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "bucket")
+    cli.generate(["lorcana"], tmp_path, tmp_path, client=None)
+    cli.generate(["mtg"], tmp_path, tmp_path, client=None, index=False)
+    s3 = FakeS3()
+
+    with pytest.raises(SourceError, match="mtg.bin"):
+        cli.upload(["lorcana", "mtg"], tmp_path, s3)
+    assert s3.objects == {}
+
+
+def test_upload_refuses_an_index_of_another_catalog(fakes, tmp_path, monkeypatch):
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "bucket")
+    cli.generate(["lorcana"], tmp_path, tmp_path, client=None)
+    (tmp_path / catalog_key("lorcana")).write_bytes(b'{"expansions":[],"products":[]}')
+    s3 = FakeS3()
+
+    with pytest.raises(SourceError, match="another catalog"):
+        cli.upload(["lorcana"], tmp_path, s3)
+    assert s3.objects == {}
+
+
+def test_upload_refuses_the_index_of_another_game(fakes, tmp_path, monkeypatch):
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "bucket")
+    cli.generate(["lorcana", "mtg"], tmp_path, tmp_path, client=None)
+    (tmp_path / index_key("lorcana")).write_bytes((tmp_path / index_key("mtg")).read_bytes())
+
+    with pytest.raises(SourceError, match="index of 'mtg'"):
+        cli.upload(["lorcana"], tmp_path, FakeS3())
+
+
+def test_upload_refuses_an_invalid_index(fakes, tmp_path, monkeypatch):
+    monkeypatch.setenv("CARDLEDGER_S3_BUCKET", "bucket")
+    cli.generate(["lorcana"], tmp_path, tmp_path, client=None)
+    (tmp_path / index_key("lorcana")).write_bytes(b"not an index")
+
+    with pytest.raises(SourceError, match="not a valid index"):
+        cli.upload(["lorcana"], tmp_path, FakeS3())
 
 
 S3_ENV = {

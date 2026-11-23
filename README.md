@@ -1,8 +1,8 @@
 # cardledger_database
 
 Generator of the CardLedger card catalog for six trading card games (Magic, Pokémon, Lorcana, One Piece, Yu-Gi-Oh!,
-Riftbound), built from public sources. It is run by hand every now and then: `generate` writes the files to a local
-folder, you look at them, `upload` copies them to the S3 bucket. The generated files are private (they live in the
+Riftbound), built from public sources, and of each catalog's recognition index. It is run by hand every now and then:
+`generate` writes the files to a local folder, you look at them, `upload` copies them to the S3 bucket. The generated files are private (they live in the
 bucket) and are never committed to this repository; only the code is.
 
 ## Sources and licences
@@ -31,6 +31,16 @@ the same path in the output folder and in the bucket: one uncompressed JSON obje
 product has `id_product`, `name`, `expansion_code`, `number`, `rarity`, `image_url`, `image_large_url`,
 `category_id`, `category_name`.
 
+### Recognition index
+
+Next to each catalog, `generate` writes `vision/v1/<slug>.bin`, the index that recognizes the game's single cards in
+photos, built by [cardledger_vision](https://github.com/gab-25/cardledger_vision) (`build_index`) from the catalog's
+images. Its header holds the sha256 of the catalog it was built from. cardledger_vision follows its `main` branch, locked to
+one commit in `uv.lock`: when the hash, the index format or the thresholds change there, run
+`uv lock --upgrade-package cardledger-vision` and then `index`. A game marked `confirm_only` in `model.GAMES` gets an index that never accepts a card without
+confirmation. For now every game is: set `confirm_only=False` for a game once cardledger_vision's `bench` finds at
+most 2% `wrong_certain` for it.
+
 ## Corrections
 
 Wrong or missing images, rarities and set codes are fixed by hand in `corrections/<slug>.toml`, applied on every run.
@@ -41,9 +51,11 @@ See [corrections/README.md](corrections/README.md).
 ```bash
 uv sync
 uv run pytest -q
-uv run cardledger-db generate                # all games into out/catalog/v1/
+uv run cardledger-db generate                # all games: out/catalog/v1/*.json and out/vision/v1/*.bin
 uv run cardledger-db generate --game pokemon # only some games
-uv run cardledger-db upload                  # out/catalog/v1/*.json to the bucket
+uv run cardledger-db generate --no-index     # only the catalogs (quicker, to look at them; upload then refuses)
+uv run cardledger-db index                   # only the indexes, from the catalogs already in out/
+uv run cardledger-db upload                  # every catalog and its index to the bucket
 uv run cardledger-db upload --game pokemon   # only some games
 ```
 
@@ -51,9 +63,11 @@ Run it from the repository root (`corrections/` is read relative to the working 
 change the output and cache folders.
 
 `generate` logs, per game, the products, the products enriched by the source, the expansions and the share with an
-image: compare them with the previous run before uploading. A game that fails keeps its previous file in `out/`, and the
-command exits with 1. `upload` refuses to start if a requested game has no file. The TCGdex cards are cached in
-`.cache/tcgdex/`: keep that folder between runs, without it every Pokémon card is downloaded again.
+image: compare them with the previous run before uploading. A game that fails (its source or its index) keeps its previous
+files in `out/`, and the command exits with 1. `upload` refuses to start if a requested game has no catalog or no
+index, or if its index was built from another catalog (run `index`). The TCGdex cards are cached in
+`.cache/tcgdex/`, the card images and their hashes in `.cache/vision/`: keep that folder between runs, without it every
+image is downloaded again.
 
 ## Environment variables
 
