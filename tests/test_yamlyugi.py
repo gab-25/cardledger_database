@@ -29,7 +29,18 @@ def test_image_url():
 
 def test_groups():
     groups, _ = yamlyugi.parse(CARDS)
-    assert groups == [Group(1, "Code of the Duelist", "COTD", None), Group(2, "OTS Tournament Pack 9", "OP09", None)]
+    assert groups == [Group(1, "Code of the Duelist", "COTD", None), Group(2, "OTS Tournament Pack 9", "OP09", None),
+                      Group(3, "Japanese only", "X-JP", None, "ja")]
+
+
+def test_japanese_set_with_an_english_name_is_its_own_group():
+    cards = [{"name": {"en": "Card"}, "sets": {
+        "en": [{"set_number": "SAST-EN001", "set_name": "Savage Strike", "rarities": ["Common"]}],
+        "ja": [{"set_number": "SAST-JP001", "set_name": "Savage Strike", "rarities": ["Super Rare"]}]}}]
+    groups, printings = yamlyugi.parse(cards)
+    assert groups == [Group(1, "Savage Strike", "SAST", None), Group(2, "Savage Strike", "SAST-JP", None, "ja")]
+    assert [(p.group_id, p.name, p.number, p.rarity) for p in printings] == [
+        (1, "Card", "SAST-EN001", "Common"), (2, "Card", "SAST-JP001", "Super Rare")]
 
 
 def test_printings():
@@ -41,8 +52,9 @@ def test_printings():
         (1, "Trickstar Lycoris", "COTD-EN002", "Common", IMG),
         (1, "Two Arts", "COTD-EN003", "", ""),  # no rarities: one printing; two artworks: no image
         (1, "Two Arts", "COTD-ENSE1", "Secret Rare", ""),
+        (3, "Trickstar Lycoris", "X-JP001", "Common", IMG),
     ]
-    assert [p.printing_id for p in printings] == [1, 2, 3, 4, 5]
+    assert [p.printing_id for p in printings] == [1, 2, 3, 4, 5, 6]
     assert all(p.image_large_url == p.image_url for p in printings)
 
 
@@ -67,7 +79,7 @@ def client(status=200, content=None):
 def test_fetch():
     c, seen = client()
     groups, printings = yamlyugi.fetch(c)
-    assert seen == [yamlyugi.URL] and len(groups) == 2 and len(printings) == 5
+    assert seen == [yamlyugi.URL] and len(groups) == 3 and len(printings) == 6
 
 
 def test_http_error():

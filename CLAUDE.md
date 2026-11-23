@@ -37,7 +37,8 @@ Per game, `cli.generate_game` runs a fixed pipeline:
    - punkrecords (One Piece): joined on the card code printed in the Cardmarket name (`model.code_of`).
    - yamlyugi: returns `Group`/`Printing` lists and goes through `matcher.match`, which links by normalized
      name plus an expansion→group vote. Its rule: prefer no match over a doubtful one (a wrong match shows the
-     wrong image); keep that bias when changing thresholds.
+     wrong image); keep that bias when changing thresholds. yaml-yugi's Japanese sets are groups with
+     `language="ja"`; the matcher keeps "(OCG)"/"(Japanese)" Cardmarket expansions to them (see its docstring).
 3. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes applied after the automatic match. Strict
    schema: unknown keys/wrong types fail the run; stale ids only warn. Format in `corrections/README.md`.
 4. **Assemble** (`catalog.assemble`): unmatched products get their expansion's majority set code; if none and
