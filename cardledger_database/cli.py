@@ -1,7 +1,7 @@
 """`cardledger-db generate` writes the game catalogs and their recognition indexes to a local folder; `cardledger-db
 upload` copies them to the bucket; `cardledger-db index` rebuilds only the indexes from the catalogs in the folder.
 
-Run from the repository root: `corrections/` is read relative to the working directory.
+Run from the repository root: `corrections/` and `expansions/` are read relative to the working directory.
 """
 
 import argparse

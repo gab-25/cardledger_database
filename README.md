@@ -45,7 +45,8 @@ most 2% `wrong_certain` for it.
 ## Corrections
 
 Wrong or missing images, rarities and set codes are fixed by hand in `corrections/<slug>.toml`, applied on every run.
-See [corrections/README.md](corrections/README.md).
+See [corrections/README.md](corrections/README.md). Expansions the source has no set for are named by hand in
+`expansions/<slug>.toml`: see [expansions/README.md](expansions/README.md).
 
 ## Running
 
@@ -60,7 +61,7 @@ uv run cardledger-db upload                  # every catalog and its index to th
 uv run cardledger-db upload --game pokemon   # only some games
 ```
 
-Run it from the repository root (`corrections/` is read relative to the working directory); `--out` and `--cache`
+Run it from the repository root (`corrections/` and `expansions/` are read relative to the working directory); `--out` and `--cache`
 change the output and cache folders.
 
 `generate` logs, per game, the products, the products enriched by the source, the expansions and the share with an

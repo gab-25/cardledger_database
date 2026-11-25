@@ -41,20 +41,25 @@ def _check(entries, schema: dict, section: str, required: str, path: Path) -> tu
     return tuple(dict(e) for e in entries)
 
 
-def load(slug: str, root: Path = Path("corrections")) -> Corrections:
-    path = root / f"{slug}.toml"
+def _read(path: Path, section: str, schema: dict, required: str) -> tuple[dict, ...]:
+    """The checked entries of a file's one allowed section; a missing file has none."""
     if not path.exists():
-        return Corrections()
+        return ()
     try:
         data = tomllib.loads(path.read_text(encoding="utf-8"))
     except (tomllib.TOMLDecodeError, UnicodeDecodeError) as exc:
         raise ValueError(f"{path}: invalid TOML: {exc}") from exc
-    unknown = set(data) - {"product", "expansion"}
+    unknown = set(data) - {section}
     if unknown:
         raise ValueError(f"{path}: unknown section {sorted(unknown)[0]!r}")
+    return _check(data.get(section, []), schema, section, required, path)
+
+
+def load(slug: str, root: Path = Path("corrections"), expansions_root: Path = Path("expansions")) -> Corrections:
+    """The card fixes of corrections/<slug>.toml and the expansion names of expansions/<slug>.toml."""
     return Corrections(
-        _check(data.get("product", []), _PRODUCT_KEYS, "product", "id_product", path),
-        _check(data.get("expansion", []), _EXPANSION_KEYS, "expansion", "id_expansion", path),
+        _read(root / f"{slug}.toml", "product", _PRODUCT_KEYS, "id_product"),
+        _read(expansions_root / f"{slug}.toml", "expansion", _EXPANSION_KEYS, "id_expansion"),
     )
 
 
