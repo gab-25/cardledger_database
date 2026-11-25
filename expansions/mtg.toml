@@ -1,0 +1,3907 @@
+# Names of every Magic expansion on Cardmarket that has singles, copied by hand from the expansion filter of
+# https://www.cardmarket.com/en/Magic/Products/Singles on 2026-11-25 (see README.md).
+
+[[expansion]]
+id_expansion = 1
+code = "cmx1"
+name = "Alpha"
+
+[[expansion]]
+id_expansion = 2
+code = "cmx2"
+name = "Beta"
+
+[[expansion]]
+id_expansion = 3
+code = "cmx3"
+name = "Unlimited"
+
+[[expansion]]
+id_expansion = 4
+code = "cmx4"
+name = "Arabian Nights"
+
+[[expansion]]
+id_expansion = 5
+code = "cmx5"
+name = "Antiquities"
+
+[[expansion]]
+id_expansion = 6
+code = "cmx6"
+name = "Revised"
+
+[[expansion]]
+id_expansion = 7
+code = "cmx7"
+name = "Legends"
+
+[[expansion]]
+id_expansion = 8
+code = "cmx8"
+name = "The Dark"
+
+[[expansion]]
+id_expansion = 9
+code = "cmx9"
+name = "Fallen Empires"
+
+[[expansion]]
+id_expansion = 10
+code = "cmx10"
+name = "Fourth Edition"
+
+[[expansion]]
+id_expansion = 11
+code = "cmx11"
+name = "Ice Age"
+
+[[expansion]]
+id_expansion = 12
+code = "cmx12"
+name = "Chronicles"
+
+[[expansion]]
+id_expansion = 14
+code = "cmx14"
+name = "Homelands"
+
+[[expansion]]
+id_expansion = 15
+code = "cmx15"
+name = "Alliances"
+
+[[expansion]]
+id_expansion = 16
+code = "cmx16"
+name = "Mirage"
+
+[[expansion]]
+id_expansion = 17
+code = "cmx17"
+name = "Visions"
+
+[[expansion]]
+id_expansion = 18
+code = "cmx18"
+name = "Weatherlight"
+
+[[expansion]]
+id_expansion = 19
+code = "cmx19"
+name = "Tempest"
+
+[[expansion]]
+id_expansion = 20
+code = "cmx20"
+name = "Stronghold"
+
+[[expansion]]
+id_expansion = 21
+code = "cmx21"
+name = "Exodus"
+
+[[expansion]]
+id_expansion = 22
+code = "cmx22"
+name = "Unglued"
+
+[[expansion]]
+id_expansion = 23
+code = "cmx23"
+name = "Fifth Edition"
+
+[[expansion]]
+id_expansion = 24
+code = "cmx24"
+name = "Portal Second Age"
+
+[[expansion]]
+id_expansion = 25
+code = "cmx25"
+name = "Portal"
+
+[[expansion]]
+id_expansion = 26
+code = "cmx26"
+name = "Urza's Saga"
+
+[[expansion]]
+id_expansion = 27
+code = "cmx27"
+name = "Urza's Legacy"
+
+[[expansion]]
+id_expansion = 28
+code = "cmx28"
+name = "Urza's Destiny"
+
+[[expansion]]
+id_expansion = 29
+code = "cmx29"
+name = "Sixth Edition"
+
+[[expansion]]
+id_expansion = 30
+code = "cmx30"
+name = "Portal Three Kingdoms"
+
+[[expansion]]
+id_expansion = 31
+code = "cmx31"
+name = "Mercadian Masques"
+
+[[expansion]]
+id_expansion = 32
+code = "cmx32"
+name = "Nemesis"
+
+[[expansion]]
+id_expansion = 33
+code = "cmx33"
+name = "Prophecy"
+
+[[expansion]]
+id_expansion = 34
+code = "cmx34"
+name = "Invasion"
+
+[[expansion]]
+id_expansion = 35
+code = "cmx35"
+name = "Planeshift"
+
+[[expansion]]
+id_expansion = 36
+code = "cmx36"
+name = "Apocalypse"
+
+[[expansion]]
+id_expansion = 37
+code = "cmx37"
+name = "Seventh Edition"
+
+[[expansion]]
+id_expansion = 38
+code = "cmx38"
+name = "Odyssey"
+
+[[expansion]]
+id_expansion = 39
+code = "cmx39"
+name = "Torment"
+
+[[expansion]]
+id_expansion = 40
+code = "cmx40"
+name = "Judgment"
+
+[[expansion]]
+id_expansion = 41
+code = "cmx41"
+name = "Onslaught"
+
+[[expansion]]
+id_expansion = 42
+code = "cmx42"
+name = "Legions"
+
+[[expansion]]
+id_expansion = 43
+code = "cmx43"
+name = "Scourge"
+
+[[expansion]]
+id_expansion = 44
+code = "cmx44"
+name = "Eighth Edition"
+
+[[expansion]]
+id_expansion = 45
+code = "cmx45"
+name = "Mirrodin"
+
+[[expansion]]
+id_expansion = 46
+code = "cmx46"
+name = "Darksteel"
+
+[[expansion]]
+id_expansion = 47
+code = "cmx47"
+name = "Fifth Dawn"
+
+[[expansion]]
+id_expansion = 48
+code = "cmx48"
+name = "Champions of Kamigawa"
+
+[[expansion]]
+id_expansion = 49
+code = "cmx49"
+name = "Ninth Edition"
+
+[[expansion]]
+id_expansion = 50
+code = "cmx50"
+name = "Saviors of Kamigawa"
+
+[[expansion]]
+id_expansion = 51
+code = "cmx51"
+name = "Betrayers of Kamigawa"
+
+[[expansion]]
+id_expansion = 52
+code = "cmx52"
+name = "Coldsnap"
+
+[[expansion]]
+id_expansion = 53
+code = "cmx53"
+name = "Dissension"
+
+[[expansion]]
+id_expansion = 54
+code = "cmx54"
+name = "Guildpact"
+
+[[expansion]]
+id_expansion = 55
+code = "cmx55"
+name = "Ravnica: City of Guilds"
+
+[[expansion]]
+id_expansion = 56
+code = "cmx56"
+name = "Time Spiral"
+
+[[expansion]]
+id_expansion = 57
+code = "cmx57"
+name = "Foreign Black Bordered"
+
+[[expansion]]
+id_expansion = 58
+code = "cmx58"
+name = "Planar Chaos"
+
+[[expansion]]
+id_expansion = 59
+code = "cmx59"
+name = "Unhinged"
+
+[[expansion]]
+id_expansion = 60
+code = "cmx60"
+name = "Renaissance"
+
+[[expansion]]
+id_expansion = 61
+code = "cmx61"
+name = "Collectors' Edition"
+
+[[expansion]]
+id_expansion = 62
+code = "cmx62"
+name = "Beatdown"
+
+[[expansion]]
+id_expansion = 63
+code = "cmx63"
+name = "Starter 1999"
+
+[[expansion]]
+id_expansion = 64
+code = "cmx64"
+name = "Battle Royale"
+
+[[expansion]]
+id_expansion = 65
+code = "cmx65"
+name = "Starter 2000"
+
+[[expansion]]
+id_expansion = 66
+code = "cmx66"
+name = "DCI Promos"
+
+[[expansion]]
+id_expansion = 67
+code = "cmx67"
+name = "Deckmasters"
+
+[[expansion]]
+id_expansion = 69
+code = "cmx69"
+name = "Vanguard"
+
+[[expansion]]
+id_expansion = 70
+code = "cmx70"
+name = "Future Sight"
+
+[[expansion]]
+id_expansion = 71
+code = "cmx71"
+name = "Harper Prism Promos"
+
+[[expansion]]
+id_expansion = 72
+code = "cmx72"
+name = "Friday Night Magic Promos"
+
+[[expansion]]
+id_expansion = 73
+code = "cmx73"
+name = "Foreign White Bordered"
+
+[[expansion]]
+id_expansion = 74
+code = "cmx74"
+name = "Tenth Edition"
+
+[[expansion]]
+id_expansion = 75
+code = "cmx75"
+name = "Anthologies"
+
+[[expansion]]
+id_expansion = 76
+code = "cmx76"
+name = "Summer Magic"
+
+[[expansion]]
+id_expansion = 77
+code = "cmx77"
+name = "International Edition"
+
+[[expansion]]
+id_expansion = 78
+code = "cmx78"
+name = "Gateway Promos"
+
+[[expansion]]
+id_expansion = 79
+code = "cmx79"
+name = "Player Rewards Promos"
+
+[[expansion]]
+id_expansion = 80
+code = "cmx80"
+name = "Judge Rewards Promos"
+
+[[expansion]]
+id_expansion = 81
+code = "cmx81"
+name = "Euro Lands"
+
+[[expansion]]
+id_expansion = 82
+code = "cmx82"
+name = "Coldsnap Theme Decks"
+
+[[expansion]]
+id_expansion = 83
+code = "cmx83"
+name = "Prerelease Promos"
+
+[[expansion]]
+id_expansion = 84
+code = "cmx84"
+name = "Lorwyn"
+
+[[expansion]]
+id_expansion = 85
+code = "cmx85"
+name = "Introductory Two-Player Set"
+
+[[expansion]]
+id_expansion = 86
+code = "cmx86"
+name = "Junior Super Series Promos"
+
+[[expansion]]
+id_expansion = 87
+code = "cmx87"
+name = "Japan Junior Tournament Promos"
+
+[[expansion]]
+id_expansion = 88
+code = "cmx88"
+name = "Guru Lands"
+
+[[expansion]]
+id_expansion = 89
+code = "cmx89"
+name = "Arena League Promos"
+
+[[expansion]]
+id_expansion = 91
+code = "cmx91"
+name = "Duel Decks: Elves vs. Goblins"
+
+[[expansion]]
+id_expansion = 92
+code = "cmx92"
+name = "Morningtide"
+
+[[expansion]]
+id_expansion = 93
+code = "cmx93"
+name = "The Duelist Promos"
+
+[[expansion]]
+id_expansion = 94
+code = "cmx94"
+name = "Champs & States Promos"
+
+[[expansion]]
+id_expansion = 95
+code = "cmx95"
+name = "Shadowmoor"
+
+[[expansion]]
+id_expansion = 96
+code = "cmx96"
+name = "Rinascimento"
+
+[[expansion]]
+id_expansion = 97
+code = "cmx97"
+name = "APAC Lands"
+
+[[expansion]]
+id_expansion = 98
+code = "cmx98"
+name = "Resale Promos"
+
+[[expansion]]
+id_expansion = 99
+code = "cmx99"
+name = "Eventide"
+
+[[expansion]]
+id_expansion = 100
+code = "cmx100"
+name = "From the Vault: Dragons"
+
+[[expansion]]
+id_expansion = 101
+code = "cmx101"
+name = "Magic Premiere Shop Promos"
+
+[[expansion]]
+id_expansion = 102
+code = "cmx102"
+name = "Shards of Alara"
+
+[[expansion]]
+id_expansion = 104
+code = "cmx104"
+name = "Duel Decks: Jace vs. Chandra"
+
+[[expansion]]
+id_expansion = 105
+code = "cmx105"
+name = "Salvat-Hachette"
+
+[[expansion]]
+id_expansion = 106
+code = "cmx106"
+name = "Conflux"
+
+[[expansion]]
+id_expansion = 107
+code = "cmx107"
+name = "Duel Decks: Divine vs. Demonic"
+
+[[expansion]]
+id_expansion = 108
+code = "cmx108"
+name = "Alara Reborn"
+
+[[expansion]]
+id_expansion = 109
+code = "cmx109"
+name = "Magic 2010"
+
+[[expansion]]
+id_expansion = 110
+code = "cmx110"
+name = "Oversized 6x9 Promos"
+
+[[expansion]]
+id_expansion = 111
+code = "cmx111"
+name = "Oversized Box Toppers"
+
+[[expansion]]
+id_expansion = 112
+code = "cmx112"
+name = "From the Vault: Exiled"
+
+[[expansion]]
+id_expansion = 113
+code = "cmx113"
+name = "Planechase"
+
+[[expansion]]
+id_expansion = 114
+code = "cmx114"
+name = "Zendikar"
+
+[[expansion]]
+id_expansion = 115
+code = "cmx115"
+name = "Duel Decks: Garruk vs. Liliana"
+
+[[expansion]]
+id_expansion = 116
+code = "cmx116"
+name = "Premium Deck Series: Slivers"
+
+[[expansion]]
+id_expansion = 117
+code = "cmx117"
+name = "Armada Comics"
+
+[[expansion]]
+id_expansion = 118
+code = "cmx118"
+name = "Worldwake"
+
+[[expansion]]
+id_expansion = 119
+code = "cmx119"
+name = "Duel Decks: Phyrexia vs. The Coalition"
+
+[[expansion]]
+id_expansion = 120
+code = "cmx120"
+name = "Rise of the Eldrazi"
+
+[[expansion]]
+id_expansion = 121
+code = "cmx121"
+name = "Pro Tour 1996: Bertrand Lestree"
+
+[[expansion]]
+id_expansion = 122
+code = "cmx122"
+name = "Pro Tour 1996: Eric Tam"
+
+[[expansion]]
+id_expansion = 123
+code = "cmx123"
+name = "Pro Tour 1996: George Baxter"
+
+[[expansion]]
+id_expansion = 124
+code = "cmx124"
+name = "Pro Tour 1996: Leon Lindback"
+
+[[expansion]]
+id_expansion = 125
+code = "cmx125"
+name = "Pro Tour 1996: Mark Justice"
+
+[[expansion]]
+id_expansion = 126
+code = "cmx126"
+name = "Pro Tour 1996: Michael Locanto"
+
+[[expansion]]
+id_expansion = 127
+code = "cmx127"
+name = "Pro Tour 1996: Preston Poulter"
+
+[[expansion]]
+id_expansion = 128
+code = "cmx128"
+name = "Pro Tour 1996: Shawn Regnier"
+
+[[expansion]]
+id_expansion = 129
+code = "cmx129"
+name = "TopDeck Promos"
+
+[[expansion]]
+id_expansion = 1193
+code = "cmx1193"
+name = "Duels of the Planeswalkers Decks"
+
+[[expansion]]
+id_expansion = 1194
+code = "cmx1194"
+name = "Archenemy"
+
+[[expansion]]
+id_expansion = 1197
+code = "cmx1197"
+name = "Magic 2011"
+
+[[expansion]]
+id_expansion = 1198
+code = "cmx1198"
+name = "Buy a Box Promos"
+
+[[expansion]]
+id_expansion = 1199
+code = "cmx1199"
+name = "WCD 1997: Jakub Slemr"
+
+[[expansion]]
+id_expansion = 1200
+code = "cmx1200"
+name = "WCD 1997: Janosch Kuhn"
+
+[[expansion]]
+id_expansion = 1202
+code = "cmx1202"
+name = "From the Vault: Relics"
+
+[[expansion]]
+id_expansion = 1203
+code = "cmx1203"
+name = "Duel Decks: Elspeth vs. Tezzeret"
+
+[[expansion]]
+id_expansion = 1206
+code = "cmx1206"
+name = "Scars of Mirrodin"
+
+[[expansion]]
+id_expansion = 1209
+code = "cmx1209"
+name = "Game Day Set Promos"
+
+[[expansion]]
+id_expansion = 1210
+code = "cmx1210"
+name = "Release Promos"
+
+[[expansion]]
+id_expansion = 1218
+code = "cmx1218"
+name = "Premium Deck Series: Fire & Lightning"
+
+[[expansion]]
+id_expansion = 1247
+code = "cmx1247"
+name = "Happy Holidays Promos"
+
+[[expansion]]
+id_expansion = 1248
+code = "cmx1248"
+name = "Dengeki Maoh Promos"
+
+[[expansion]]
+id_expansion = 1249
+code = "cmx1249"
+name = "Promos"
+
+[[expansion]]
+id_expansion = 1253
+code = "cmx1253"
+name = "Mirrodin Besieged"
+
+[[expansion]]
+id_expansion = 1259
+code = "cmx1259"
+name = "Salvat-Hachette 2011"
+
+[[expansion]]
+id_expansion = 1261
+code = "cmx1261"
+name = "Duel Decks: Knights vs. Dragons"
+
+[[expansion]]
+id_expansion = 1262
+code = "cmx1262"
+name = "New Phyrexia"
+
+[[expansion]]
+id_expansion = 1269
+code = "cmx1269"
+name = "2006 Player Cards"
+
+[[expansion]]
+id_expansion = 1273
+code = "cmx1273"
+name = "Commander"
+
+[[expansion]]
+id_expansion = 1278
+code = "cmx1278"
+name = "Duels of the Planeswalkers Promos"
+
+[[expansion]]
+id_expansion = 1280
+code = "cmx1280"
+name = "Magic 2012"
+
+[[expansion]]
+id_expansion = 1281
+code = "cmx1281"
+name = "Your Move Games Tokens"
+
+[[expansion]]
+id_expansion = 1286
+code = "cmx1286"
+name = "From the Vault: Legends"
+
+[[expansion]]
+id_expansion = 1288
+code = "cmx1288"
+name = "Duel Decks: Ajani vs. Nicol Bolas"
+
+[[expansion]]
+id_expansion = 1292
+code = "cmx1292"
+name = "WCD 1997: Paul McCabe"
+
+[[expansion]]
+id_expansion = 1293
+code = "cmx1293"
+name = "WCD 1997: Svend Geertsen"
+
+[[expansion]]
+id_expansion = 1294
+code = "cmx1294"
+name = "WCD 1998: Randy Buehler"
+
+[[expansion]]
+id_expansion = 1295
+code = "cmx1295"
+name = "WCD 1998: Brian Hacker"
+
+[[expansion]]
+id_expansion = 1296
+code = "cmx1296"
+name = "WCD 1998: Ben Rubin"
+
+[[expansion]]
+id_expansion = 1297
+code = "cmx1297"
+name = "WCD 1998: Brian Selden"
+
+[[expansion]]
+id_expansion = 1298
+code = "cmx1298"
+name = "WCD 1999: Jakub Šlemr"
+
+[[expansion]]
+id_expansion = 1299
+code = "cmx1299"
+name = "WCD 1999: Matt Linde"
+
+[[expansion]]
+id_expansion = 1300
+code = "cmx1300"
+name = "WCD 1999: Mark Le Pine"
+
+[[expansion]]
+id_expansion = 1301
+code = "cmx1301"
+name = "WCD 1999: Kai Budde"
+
+[[expansion]]
+id_expansion = 1302
+code = "cmx1302"
+name = "WCD 2000: Nicolas Labarre"
+
+[[expansion]]
+id_expansion = 1303
+code = "cmx1303"
+name = "WCD 2000: Tom Van de Logt"
+
+[[expansion]]
+id_expansion = 1304
+code = "cmx1304"
+name = "WCD 2000: Janosch Kühn"
+
+[[expansion]]
+id_expansion = 1305
+code = "cmx1305"
+name = "WCD 2000: Jon Finkel"
+
+[[expansion]]
+id_expansion = 1306
+code = "cmx1306"
+name = "WCD 2001: Jan Tomcani"
+
+[[expansion]]
+id_expansion = 1307
+code = "cmx1307"
+name = "WCD 2001: Antoine Ruel"
+
+[[expansion]]
+id_expansion = 1308
+code = "cmx1308"
+name = "WCD 2001: Alex Borteh"
+
+[[expansion]]
+id_expansion = 1309
+code = "cmx1309"
+name = "WCD 2001: Tom van de Logt"
+
+[[expansion]]
+id_expansion = 1310
+code = "cmx1310"
+name = "WCD 2002: Sim Han How"
+
+[[expansion]]
+id_expansion = 1311
+code = "cmx1311"
+name = "WCD 2002: Raphael Levy"
+
+[[expansion]]
+id_expansion = 1312
+code = "cmx1312"
+name = "WCD 2002: Brian Kibler"
+
+[[expansion]]
+id_expansion = 1313
+code = "cmx1313"
+name = "WCD 2002: Carlos Romao"
+
+[[expansion]]
+id_expansion = 1314
+code = "cmx1314"
+name = "WCD 2003: Peer Kröger"
+
+[[expansion]]
+id_expansion = 1315
+code = "cmx1315"
+name = "WCD 2003: Wolfgang Eder"
+
+[[expansion]]
+id_expansion = 1316
+code = "cmx1316"
+name = "WCD 2003: Dave Humpherys"
+
+[[expansion]]
+id_expansion = 1317
+code = "cmx1317"
+name = "WCD 2003: Daniel Zink"
+
+[[expansion]]
+id_expansion = 1318
+code = "cmx1318"
+name = "WCD 2004: Gabriel Nassif"
+
+[[expansion]]
+id_expansion = 1319
+code = "cmx1319"
+name = "WCD 2004: Manuel Bevand"
+
+[[expansion]]
+id_expansion = 1320
+code = "cmx1320"
+name = "WCD 2004: Aeo Paquette"
+
+[[expansion]]
+id_expansion = 1321
+code = "cmx1321"
+name = "WCD 2004: Julien Nuijten"
+
+[[expansion]]
+id_expansion = 1327
+code = "cmx1327"
+name = "Innistrad"
+
+[[expansion]]
+id_expansion = 1328
+code = "cmx1328"
+name = "JingHe Age: 2002 Tokens"
+
+[[expansion]]
+id_expansion = 1329
+code = "cmx1329"
+name = "JingHe Age: MtG 10th Anniversary Tokens"
+
+[[expansion]]
+id_expansion = 1332
+code = "cmx1332"
+name = "Fourth Edition: Black Bordered"
+
+[[expansion]]
+id_expansion = 1337
+code = "cmx1337"
+name = "Premium Deck Series: Graveborn"
+
+[[expansion]]
+id_expansion = 1342
+code = "cmx1342"
+name = "CardZ Promos"
+
+[[expansion]]
+id_expansion = 1345
+code = "cmx1345"
+name = "Dark Ascension"
+
+[[expansion]]
+id_expansion = 1350
+code = "cmx1350"
+name = "Duel Decks: Venser vs. Koth"
+
+[[expansion]]
+id_expansion = 1358
+code = "cmx1358"
+name = "Avacyn Restored"
+
+[[expansion]]
+id_expansion = 1360
+code = "cmx1360"
+name = "Magic Scholarship Series Promos"
+
+[[expansion]]
+id_expansion = 1361
+code = "cmx1361"
+name = "Junior Series Promos"
+
+[[expansion]]
+id_expansion = 1367
+code = "cmx1367"
+name = "Misprints"
+
+[[expansion]]
+id_expansion = 1369
+code = "cmx1369"
+name = "Planechase 2012"
+
+[[expansion]]
+id_expansion = 1388
+code = "cmx1388"
+name = "Magic 2013"
+
+[[expansion]]
+id_expansion = 1389
+code = "cmx1389"
+name = "Return to Ravnica"
+
+[[expansion]]
+id_expansion = 1391
+code = "cmx1391"
+name = "2005 Player Cards"
+
+[[expansion]]
+id_expansion = 1392
+code = "cmx1392"
+name = "2007 Player Cards"
+
+[[expansion]]
+id_expansion = 1397
+code = "cmx1397"
+name = "From the Vault: Realms"
+
+[[expansion]]
+id_expansion = 1398
+code = "cmx1398"
+name = "Duel Decks: Izzet vs. Golgari"
+
+[[expansion]]
+id_expansion = 1401
+code = "cmx1401"
+name = "Simplified Chinese Alternate Art Cards"
+
+[[expansion]]
+id_expansion = 1407
+code = "cmx1407"
+name = "Magic the Gathering Products"
+
+[[expansion]]
+id_expansion = 1408
+code = "cmx1408"
+name = "Filler Cards"
+
+[[expansion]]
+id_expansion = 1413
+code = "cmx1413"
+name = "IDW Promos"
+
+[[expansion]]
+id_expansion = 1418
+code = "cmx1418"
+name = "Commander's Arsenal"
+
+[[expansion]]
+id_expansion = 1421
+code = "cmx1421"
+name = "Hobby Japan Commemorative Promos"
+
+[[expansion]]
+id_expansion = 1424
+code = "cmx1424"
+name = "Gatecrash"
+
+[[expansion]]
+id_expansion = 1430
+code = "cmx1430"
+name = "Duel Decks: Sorin vs. Tibalt"
+
+[[expansion]]
+id_expansion = 1432
+code = "cmx1432"
+name = "Revista Serra Promos"
+
+[[expansion]]
+id_expansion = 1435
+code = "cmx1435"
+name = "Dragon's Maze"
+
+[[expansion]]
+id_expansion = 1438
+code = "cmx1438"
+name = "Starcity Games: Justin Treadway Tokens"
+
+[[expansion]]
+id_expansion = 1444
+code = "cmx1444"
+name = "Modern Masters"
+
+[[expansion]]
+id_expansion = 1449
+code = "cmx1449"
+name = "Magic 2014"
+
+[[expansion]]
+id_expansion = 1451
+code = "cmx1451"
+name = "Ultra-Pro Puzzle Cards"
+
+[[expansion]]
+id_expansion = 1454
+code = "cmx1454"
+name = "San Diego Comic-Con 2013 Promos"
+
+[[expansion]]
+id_expansion = 1455
+code = "cmx1455"
+name = "From the Vault: Twenty"
+
+[[expansion]]
+id_expansion = 1456
+code = "cmx1456"
+name = "Duel Decks: Heroes vs. Monsters"
+
+[[expansion]]
+id_expansion = 1457
+code = "cmx1457"
+name = "Theros"
+
+[[expansion]]
+id_expansion = 1464
+code = "cmx1464"
+name = "Commander 2013"
+
+[[expansion]]
+id_expansion = 1469
+code = "cmx1469"
+name = "Born of the Gods"
+
+[[expansion]]
+id_expansion = 1477
+code = "cmx1477"
+name = "Duel Decks: Jace vs. Vraska"
+
+[[expansion]]
+id_expansion = 1481
+code = "cmx1481"
+name = "Journey into Nyx"
+
+[[expansion]]
+id_expansion = 1483
+code = "cmx1483"
+name = "Conspiracy"
+
+[[expansion]]
+id_expansion = 1484
+code = "cmx1484"
+name = "Modern Event Deck 2014"
+
+[[expansion]]
+id_expansion = 1485
+code = "cmx1485"
+name = "Magic 2015"
+
+[[expansion]]
+id_expansion = 1490
+code = "cmx1490"
+name = "Clash Pack Promos"
+
+[[expansion]]
+id_expansion = 1491
+code = "cmx1491"
+name = "San Diego Comic-Con 2014 Promos"
+
+[[expansion]]
+id_expansion = 1494
+code = "cmx1494"
+name = "From the Vault: Annihilation"
+
+[[expansion]]
+id_expansion = 1495
+code = "cmx1495"
+name = "Khans of Tarkir"
+
+[[expansion]]
+id_expansion = 1496
+code = "cmx1496"
+name = "Duel Decks: Speed vs. Cunning"
+
+[[expansion]]
+id_expansion = 1499
+code = "cmx1499"
+name = "Custom Tokens"
+
+[[expansion]]
+id_expansion = 1500
+code = "cmx1500"
+name = "Starcity Games: Commemorative Tokens"
+
+[[expansion]]
+id_expansion = 1501
+code = "cmx1501"
+name = "Starcity Games: Creature Collection"
+
+[[expansion]]
+id_expansion = 1502
+code = "cmx1502"
+name = "Tokens for MTG"
+
+[[expansion]]
+id_expansion = 1509
+code = "cmx1509"
+name = "Duel Decks: Anthology"
+
+[[expansion]]
+id_expansion = 1511
+code = "cmx1511"
+name = "Tierra Media Tokens"
+
+[[expansion]]
+id_expansion = 1512
+code = "cmx1512"
+name = "Starcity Games: Kristen Plescow Tokens"
+
+[[expansion]]
+id_expansion = 1513
+code = "cmx1513"
+name = "Commander 2014"
+
+[[expansion]]
+id_expansion = 1514
+code = "cmx1514"
+name = "Starcity Games: Token Series One"
+
+[[expansion]]
+id_expansion = 1515
+code = "cmx1515"
+name = "TokyoMTG Products"
+
+[[expansion]]
+id_expansion = 1519
+code = "cmx1519"
+name = "Multiverse Gift Box"
+
+[[expansion]]
+id_expansion = 1522
+code = "cmx1522"
+name = "Fate Reforged"
+
+[[expansion]]
+id_expansion = 1586
+code = "cmx1586"
+name = "Junior APAC Series Promos"
+
+[[expansion]]
+id_expansion = 1587
+code = "cmx1587"
+name = "Ugin's Fate Promos"
+
+[[expansion]]
+id_expansion = 1588
+code = "cmx1588"
+name = "Khans of Tarkir: Promos"
+
+[[expansion]]
+id_expansion = 1589
+code = "cmx1589"
+name = "Fate Reforged: Promos"
+
+[[expansion]]
+id_expansion = 1593
+code = "cmx1593"
+name = "Duel Decks: Elspeth vs. Kiora"
+
+[[expansion]]
+id_expansion = 1594
+code = "cmx1594"
+name = "League Promos"
+
+[[expansion]]
+id_expansion = 1595
+code = "cmx1595"
+name = "Grand Prix Promos"
+
+[[expansion]]
+id_expansion = 1596
+code = "cmx1596"
+name = "Pro Tour Promos"
+
+[[expansion]]
+id_expansion = 1597
+code = "cmx1597"
+name = "Convention Promos"
+
+[[expansion]]
+id_expansion = 1599
+code = "cmx1599"
+name = "Chronicles: Japanese"
+
+[[expansion]]
+id_expansion = 1600
+code = "cmx1600"
+name = "Fourth Edition: Alternate"
+
+[[expansion]]
+id_expansion = 1601
+code = "cmx1601"
+name = "Dragons of Tarkir"
+
+[[expansion]]
+id_expansion = 1602
+code = "cmx1602"
+name = "Dragons of Tarkir: Promos"
+
+[[expansion]]
+id_expansion = 1638
+code = "cmx1638"
+name = "Fallen Empires: Wyvern Misprints"
+
+[[expansion]]
+id_expansion = 1639
+code = "cmx1639"
+name = "Oversized 9x12 Promos"
+
+[[expansion]]
+id_expansion = 1641
+code = "cmx1641"
+name = "Modern Masters 2015"
+
+[[expansion]]
+id_expansion = 1642
+code = "cmx1642"
+name = "GamingEtc Tokens"
+
+[[expansion]]
+id_expansion = 1643
+code = "cmx1643"
+name = "Judge Program Tokens"
+
+[[expansion]]
+id_expansion = 1652
+code = "cmx1652"
+name = "Magic Origins"
+
+[[expansion]]
+id_expansion = 1655
+code = "cmx1655"
+name = "Magic Origins: Promos"
+
+[[expansion]]
+id_expansion = 1658
+code = "cmx1658"
+name = "San Diego Comic-Con 2015 Promos"
+
+[[expansion]]
+id_expansion = 1659
+code = "cmx1659"
+name = "Yummy Tokens"
+
+[[expansion]]
+id_expansion = 1661
+code = "cmx1661"
+name = "From the Vault: Angels"
+
+[[expansion]]
+id_expansion = 1662
+code = "cmx1662"
+name = "Cardmarket Tokens"
+
+[[expansion]]
+id_expansion = 1663
+code = "cmx1663"
+name = "Duel Decks: Zendikar vs. Eldrazi"
+
+[[expansion]]
+id_expansion = 1665
+code = "cmx1665"
+name = "MKM Series"
+
+[[expansion]]
+id_expansion = 1668
+code = "cmx1668"
+name = "Battle for Zendikar"
+
+[[expansion]]
+id_expansion = 1669
+code = "cmx1669"
+name = "Zendikar Expeditions"
+
+[[expansion]]
+id_expansion = 1670
+code = "cmx1670"
+name = "Battle for Zendikar: Promos"
+
+[[expansion]]
+id_expansion = 1676
+code = "cmx1676"
+name = "Oath of the Gatewatch"
+
+[[expansion]]
+id_expansion = 1679
+code = "cmx1679"
+name = "Commander 2015"
+
+[[expansion]]
+id_expansion = 1686
+code = "cmx1686"
+name = "Oath of the Gatewatch: Promos"
+
+[[expansion]]
+id_expansion = 1691
+code = "cmx1691"
+name = "GnD Cards"
+
+[[expansion]]
+id_expansion = 1692
+code = "cmx1692"
+name = "Duel Decks: Blessed vs. Cursed"
+
+[[expansion]]
+id_expansion = 1694
+code = "cmx1694"
+name = "Shadows over Innistrad"
+
+[[expansion]]
+id_expansion = 1695
+code = "cmx1695"
+name = "Eldritch Moon"
+
+[[expansion]]
+id_expansion = 1696
+code = "cmx1696"
+name = "Eternal Masters"
+
+[[expansion]]
+id_expansion = 1702
+code = "cmx1702"
+name = "Conspiracy: Take the Crown"
+
+[[expansion]]
+id_expansion = 1703
+code = "cmx1703"
+name = "From the Vault: Lore"
+
+[[expansion]]
+id_expansion = 1704
+code = "cmx1704"
+name = "Shadows over Innistrad: Promos"
+
+[[expansion]]
+id_expansion = 1705
+code = "cmx1705"
+name = "Javi Alterations Tokens"
+
+[[expansion]]
+id_expansion = 1710
+code = "cmx1710"
+name = "Welcome Deck 2016"
+
+[[expansion]]
+id_expansion = 1717
+code = "cmx1717"
+name = "Kaladesh"
+
+[[expansion]]
+id_expansion = 1718
+code = "cmx1718"
+name = "Aether Revolt"
+
+[[expansion]]
+id_expansion = 1719
+code = "cmx1719"
+name = "Commander 2016"
+
+[[expansion]]
+id_expansion = 1720
+code = "cmx1720"
+name = "Duel Decks: Nissa vs. Ob Nixilis"
+
+[[expansion]]
+id_expansion = 1722
+code = "cmx1722"
+name = "Planechase Anthology"
+
+[[expansion]]
+id_expansion = 1723
+code = "cmx1723"
+name = "Eldritch Moon: Promos"
+
+[[expansion]]
+id_expansion = 1725
+code = "cmx1725"
+name = "San Diego Comic-Con 2016 Promos"
+
+[[expansion]]
+id_expansion = 1726
+code = "cmx1726"
+name = "Kaladesh: Promos"
+
+[[expansion]]
+id_expansion = 1727
+code = "cmx1727"
+name = "Modern Masters 2017"
+
+[[expansion]]
+id_expansion = 1728
+code = "cmx1728"
+name = "Duel Decks: Mind vs. Might"
+
+[[expansion]]
+id_expansion = 1729
+code = "cmx1729"
+name = "Amonkhet"
+
+[[expansion]]
+id_expansion = 1730
+code = "cmx1730"
+name = "Archenemy: Nicol Bolas"
+
+[[expansion]]
+id_expansion = 1731
+code = "cmx1731"
+name = "Hour of Devastation"
+
+[[expansion]]
+id_expansion = 1732
+code = "cmx1732"
+name = "Commander Anthology"
+
+[[expansion]]
+id_expansion = 1733
+code = "cmx1733"
+name = "Kaladesh Inventions"
+
+[[expansion]]
+id_expansion = 1750
+code = "cmx1750"
+name = "Aether Revolt: Promos"
+
+[[expansion]]
+id_expansion = 1765
+code = "cmx1765"
+name = "Mezzocielo & Friends Mini Tokens"
+
+[[expansion]]
+id_expansion = 1798
+code = "cmx1798"
+name = "Amonkhet Invocations"
+
+[[expansion]]
+id_expansion = 1802
+code = "cmx1802"
+name = "Welcome Deck 2017"
+
+[[expansion]]
+id_expansion = 1803
+code = "cmx1803"
+name = "Amonkhet: Promos"
+
+[[expansion]]
+id_expansion = 1809
+code = "cmx1809"
+name = "Standard Series Promos"
+
+[[expansion]]
+id_expansion = 1811
+code = "cmx1811"
+name = "Iconic Masters"
+
+[[expansion]]
+id_expansion = 1812
+code = "cmx1812"
+name = "Ixalan"
+
+[[expansion]]
+id_expansion = 1813
+code = "cmx1813"
+name = "Commander 2017"
+
+[[expansion]]
+id_expansion = 1818
+code = "cmx1818"
+name = "Duel Decks: Merfolk vs. Goblins"
+
+[[expansion]]
+id_expansion = 1819
+code = "cmx1819"
+name = "From the Vault: Transform"
+
+[[expansion]]
+id_expansion = 1820
+code = "cmx1820"
+name = "Masters 25"
+
+[[expansion]]
+id_expansion = 1821
+code = "cmx1821"
+name = "Unstable"
+
+[[expansion]]
+id_expansion = 1822
+code = "cmx1822"
+name = "Dominaria"
+
+[[expansion]]
+id_expansion = 1825
+code = "cmx1825"
+name = "Hour of Devastation: Promos"
+
+[[expansion]]
+id_expansion = 1828
+code = "cmx1828"
+name = "San Diego Comic-Con 2017 Promos"
+
+[[expansion]]
+id_expansion = 1829
+code = "cmx1829"
+name = "Rivals of Ixalan"
+
+[[expansion]]
+id_expansion = 1830
+code = "cmx1830"
+name = "Explorers of Ixalan"
+
+[[expansion]]
+id_expansion = 1833
+code = "cmx1833"
+name = "Rk post Products"
+
+[[expansion]]
+id_expansion = 1834
+code = "cmx1834"
+name = "Mezzocielo & Friends Classic Tokens"
+
+[[expansion]]
+id_expansion = 1835
+code = "cmx1835"
+name = "Core 2019"
+
+[[expansion]]
+id_expansion = 1836
+code = "cmx1836"
+name = "Standard Showdown Promos"
+
+[[expansion]]
+id_expansion = 1837
+code = "cmx1837"
+name = "The Dark Italian"
+
+[[expansion]]
+id_expansion = 1838
+code = "cmx1838"
+name = "Legends Italian"
+
+[[expansion]]
+id_expansion = 1841
+code = "cmx1841"
+name = "Hascon 2017 Promos"
+
+[[expansion]]
+id_expansion = 1844
+code = "cmx1844"
+name = "Open House Promos"
+
+[[expansion]]
+id_expansion = 1847
+code = "cmx1847"
+name = "Ixalan: Promos"
+
+[[expansion]]
+id_expansion = 2023
+code = "cmx2023"
+name = "Store Championship Promos"
+
+[[expansion]]
+id_expansion = 2063
+code = "cmx2063"
+name = "Rivals of Ixalan: Promos"
+
+[[expansion]]
+id_expansion = 2068
+code = "cmx2068"
+name = "Duel Decks: Elves vs. Inventors"
+
+[[expansion]]
+id_expansion = 2103
+code = "cmx2103"
+name = "Signature Spellbook: Jace"
+
+[[expansion]]
+id_expansion = 2108
+code = "cmx2108"
+name = "Global Series Jiang Yanggu & Mu Yanling"
+
+[[expansion]]
+id_expansion = 2109
+code = "cmx2109"
+name = "Commander Anthology II"
+
+[[expansion]]
+id_expansion = 2110
+code = "cmx2110"
+name = "Commander 2018"
+
+[[expansion]]
+id_expansion = 2111
+code = "cmx2111"
+name = "Battlebond"
+
+[[expansion]]
+id_expansion = 2114
+code = "cmx2114"
+name = "Johannes Voss Tokens"
+
+[[expansion]]
+id_expansion = 2315
+code = "cmx2315"
+name = "Dominaria: Promos"
+
+[[expansion]]
+id_expansion = 2333
+code = "cmx2333"
+name = "Battlebond: Promos"
+
+[[expansion]]
+id_expansion = 2337
+code = "cmx2337"
+name = "Core 2019: Promos"
+
+[[expansion]]
+id_expansion = 2341
+code = "cmx2341"
+name = "San Diego Comic-Con 2018 Promos"
+
+[[expansion]]
+id_expansion = 2348
+code = "cmx2348"
+name = "Guilds of Ravnica"
+
+[[expansion]]
+id_expansion = 2360
+code = "cmx2360"
+name = "Old School Tokens"
+
+[[expansion]]
+id_expansion = 2371
+code = "cmx2371"
+name = "Guilds of Ravnica: Extras"
+
+[[expansion]]
+id_expansion = 2372
+code = "cmx2372"
+name = "Weekend Promos"
+
+[[expansion]]
+id_expansion = 2373
+code = "cmx2373"
+name = "Guilds of Ravnica: Mythic Edition"
+
+[[expansion]]
+id_expansion = 2379
+code = "cmx2379"
+name = "Guilds of Ravnica: Guild Kits"
+
+[[expansion]]
+id_expansion = 2381
+code = "cmx2381"
+name = "Magic Game Night"
+
+[[expansion]]
+id_expansion = 2397
+code = "cmx2397"
+name = "Ultimate Masters"
+
+[[expansion]]
+id_expansion = 2398
+code = "cmx2398"
+name = "Ultimate Box Toppers"
+
+[[expansion]]
+id_expansion = 2411
+code = "cmx2411"
+name = "Ravnica Allegiance"
+
+[[expansion]]
+id_expansion = 2413
+code = "cmx2413"
+name = "MagicFest Promos"
+
+[[expansion]]
+id_expansion = 2417
+code = "cmx2417"
+name = "Heroes of the Realm Promos"
+
+[[expansion]]
+id_expansion = 2419
+code = "cmx2419"
+name = "Ravnica Allegiance: Extras"
+
+[[expansion]]
+id_expansion = 2422
+code = "cmx2422"
+name = "Ravnica Allegiance: Mythic Edition"
+
+[[expansion]]
+id_expansion = 2423
+code = "cmx2423"
+name = "Ravnica Allegiance: Guild Kits"
+
+[[expansion]]
+id_expansion = 2439
+code = "cmx2439"
+name = "War of the Spark"
+
+[[expansion]]
+id_expansion = 2440
+code = "cmx2440"
+name = "Modern Horizons"
+
+[[expansion]]
+id_expansion = 2447
+code = "cmx2447"
+name = "Core 2020"
+
+[[expansion]]
+id_expansion = 2448
+code = "cmx2448"
+name = "Commander 2019"
+
+[[expansion]]
+id_expansion = 2451
+code = "cmx2451"
+name = "War of the Spark: Extras"
+
+[[expansion]]
+id_expansion = 2457
+code = "cmx2457"
+name = "Mark Poole Tokens"
+
+[[expansion]]
+id_expansion = 2459
+code = "cmx2459"
+name = "War of the Spark: Mythic Edition"
+
+[[expansion]]
+id_expansion = 2460
+code = "cmx2460"
+name = "Signature Spellbook: Gideon"
+
+[[expansion]]
+id_expansion = 2461
+code = "cmx2461"
+name = "War of the Spark: Japanese Alternate-Art Planeswalkers"
+
+[[expansion]]
+id_expansion = 2484
+code = "cmx2484"
+name = "Modern Horizons: Art Series"
+
+[[expansion]]
+id_expansion = 2490
+code = "cmx2490"
+name = "Core 2020: Extras"
+
+[[expansion]]
+id_expansion = 2511
+code = "cmx2511"
+name = "San Diego Comic-Con 2019 Promos"
+
+[[expansion]]
+id_expansion = 2517
+code = "cmx2517"
+name = "Aaron Miller Tokens"
+
+[[expansion]]
+id_expansion = 2520
+code = "cmx2520"
+name = "ALRadeck Tokens"
+
+[[expansion]]
+id_expansion = 2523
+code = "cmx2523"
+name = "Angelarium Tokens"
+
+[[expansion]]
+id_expansion = 2526
+code = "cmx2526"
+name = "Cardamajigs Tokens"
+
+[[expansion]]
+id_expansion = 2529
+code = "cmx2529"
+name = "Cats & Cantrips Tokens"
+
+[[expansion]]
+id_expansion = 2532
+code = "cmx2532"
+name = "Durdling Around Tokens"
+
+[[expansion]]
+id_expansion = 2552
+code = "cmx2552"
+name = "Givememana's Tokens"
+
+[[expansion]]
+id_expansion = 2557
+code = "cmx2557"
+name = "Human for Scale Tokens"
+
+[[expansion]]
+id_expansion = 2562
+code = "cmx2562"
+name = "Jason Engle Tokens"
+
+[[expansion]]
+id_expansion = 2567
+code = "cmx2567"
+name = "Tokens of Spirit"
+
+[[expansion]]
+id_expansion = 2572
+code = "cmx2572"
+name = "Classic Art Tokens"
+
+[[expansion]]
+id_expansion = 2582
+code = "cmx2582"
+name = "Throne of Eldraine"
+
+[[expansion]]
+id_expansion = 2587
+code = "cmx2587"
+name = "Throne of Eldraine: Extras"
+
+[[expansion]]
+id_expansion = 2694
+code = "cmx2694"
+name = "Throne of Eldraine: Promos"
+
+[[expansion]]
+id_expansion = 2699
+code = "cmx2699"
+name = "Ponies: The Galloping"
+
+[[expansion]]
+id_expansion = 2804
+code = "cmx2804"
+name = "Game Night 2019"
+
+[[expansion]]
+id_expansion = 2809
+code = "cmx2809"
+name = "Unsanctioned"
+
+[[expansion]]
+id_expansion = 2814
+code = "cmx2814"
+name = "Theros Beyond Death"
+
+[[expansion]]
+id_expansion = 2819
+code = "cmx2819"
+name = "Ikoria: Lair of Behemoths"
+
+[[expansion]]
+id_expansion = 2869
+code = "cmx2869"
+name = "Mystery Booster: Playtest Cards"
+
+[[expansion]]
+id_expansion = 2874
+code = "cmx2874"
+name = "Mystery Booster"
+
+[[expansion]]
+id_expansion = 2901
+code = "cmx2901"
+name = "Secret Lair Drop Series"
+
+[[expansion]]
+id_expansion = 2911
+code = "cmx2911"
+name = "Commander: Ikoria"
+
+[[expansion]]
+id_expansion = 2956
+code = "cmx2956"
+name = "Card Game Tokens"
+
+[[expansion]]
+id_expansion = 2961
+code = "cmx2961"
+name = "Theros Beyond Death: Extras"
+
+[[expansion]]
+id_expansion = 2999
+code = "cmx2999"
+name = "Theros Beyond Death: Promos"
+
+[[expansion]]
+id_expansion = 3043
+code = "cmx3043"
+name = "Amaranth Alchemy Tokens"
+
+[[expansion]]
+id_expansion = 3048
+code = "cmx3048"
+name = "Core 2021"
+
+[[expansion]]
+id_expansion = 3053
+code = "cmx3053"
+name = "Jumpstart"
+
+[[expansion]]
+id_expansion = 3063
+code = "cmx3063"
+name = "Signature Spellbook: Chandra"
+
+[[expansion]]
+id_expansion = 3068
+code = "cmx3068"
+name = "Secret Lair: Ultimate Edition"
+
+[[expansion]]
+id_expansion = 3113
+code = "cmx3113"
+name = "Ikoria: Lair of Behemoths: Extras"
+
+[[expansion]]
+id_expansion = 3118
+code = "cmx3118"
+name = "Ikoria: Lair of Behemoths: Promos"
+
+[[expansion]]
+id_expansion = 3204
+code = "cmx3204"
+name = "Double Masters"
+
+[[expansion]]
+id_expansion = 3209
+code = "cmx3209"
+name = "Double Masters: Extras"
+
+[[expansion]]
+id_expansion = 3309
+code = "cmx3309"
+name = "Core 2021: Extras"
+
+[[expansion]]
+id_expansion = 3319
+code = "cmx3319"
+name = "Core 2021: Promos"
+
+[[expansion]]
+id_expansion = 3344
+code = "cmx3344"
+name = "Anthony Christou Tokens"
+
+[[expansion]]
+id_expansion = 3349
+code = "cmx3349"
+name = "Andrew Thompson Tokens"
+
+[[expansion]]
+id_expansion = 3394
+code = "cmx3394"
+name = "Commander Collection: Green"
+
+[[expansion]]
+id_expansion = 3399
+code = "cmx3399"
+name = "Commander: Zendikar Rising"
+
+[[expansion]]
+id_expansion = 3404
+code = "cmx3404"
+name = "Zendikar Rising"
+
+[[expansion]]
+id_expansion = 3454
+code = "cmx3454"
+name = "Commander Legends"
+
+[[expansion]]
+id_expansion = 3459
+code = "cmx3459"
+name = "Commander Legends: Extras"
+
+[[expansion]]
+id_expansion = 3474
+code = "cmx3474"
+name = "Zendikar Rising: Extras"
+
+[[expansion]]
+id_expansion = 3489
+code = "cmx3489"
+name = "Zendikar Rising Expeditions"
+
+[[expansion]]
+id_expansion = 3494
+code = "cmx3494"
+name = "The List"
+
+[[expansion]]
+id_expansion = 3500
+code = "cmx3500"
+name = "Zendikar Rising: Promos"
+
+[[expansion]]
+id_expansion = 3660
+code = "cmx3660"
+name = "Kaldheim"
+
+[[expansion]]
+id_expansion = 3680
+code = "cmx3680"
+name = "Kaldheim: Extras"
+
+[[expansion]]
+id_expansion = 3685
+code = "cmx3685"
+name = "Commander: Kaldheim"
+
+[[expansion]]
+id_expansion = 3723
+code = "cmx3723"
+name = "Kaldheim: Promos"
+
+[[expansion]]
+id_expansion = 3741
+code = "cmx3741"
+name = "Strixhaven: School of Mages"
+
+[[expansion]]
+id_expansion = 3746
+code = "cmx3746"
+name = "Mystical Archive"
+
+[[expansion]]
+id_expansion = 3756
+code = "cmx3756"
+name = "Commander: Strixhaven"
+
+[[expansion]]
+id_expansion = 3761
+code = "cmx3761"
+name = "Strixhaven: School of Mages: Extras"
+
+[[expansion]]
+id_expansion = 3766
+code = "cmx3766"
+name = "Time Spiral Remastered"
+
+[[expansion]]
+id_expansion = 3771
+code = "cmx3771"
+name = "Time Spiral Remastered: Extras"
+
+[[expansion]]
+id_expansion = 4175
+code = "cmx4175"
+name = "Commander: Strixhaven: Extras"
+
+[[expansion]]
+id_expansion = 4176
+code = "cmx4176"
+name = "Strixhaven: School of Mages: Promos"
+
+[[expansion]]
+id_expansion = 4219
+code = "cmx4219"
+name = "Modern Horizons 2"
+
+[[expansion]]
+id_expansion = 4244
+code = "cmx4244"
+name = "Modern Horizons 2: Extras"
+
+[[expansion]]
+id_expansion = 4259
+code = "cmx4259"
+name = "Adventures in the Forgotten Realms"
+
+[[expansion]]
+id_expansion = 4260
+code = "cmx4260"
+name = "Adventures in the Forgotten Realms: Extras"
+
+[[expansion]]
+id_expansion = 4275
+code = "cmx4275"
+name = "Modern Horizons: Retro Frame Cards"
+
+[[expansion]]
+id_expansion = 4327
+code = "cmx4327"
+name = "Modern Horizons 2: Promos"
+
+[[expansion]]
+id_expansion = 4334
+code = "cmx4334"
+name = "Secret Lair Drop Series: Dr. Lair's Secretorium Superdrop"
+
+[[expansion]]
+id_expansion = 4335
+code = "cmx4335"
+name = "Secret Lair Drop Series: All-Natural, Totally Refreshing Superdrop"
+
+[[expansion]]
+id_expansion = 4356
+code = "cmx4356"
+name = "Commander: Adventures in the Forgotten Realms"
+
+[[expansion]]
+id_expansion = 4358
+code = "cmx4358"
+name = "Adventures in the Forgotten Realms: Promos"
+
+[[expansion]]
+id_expansion = 4359
+code = "cmx4359"
+name = "Commander: Adventures in the Forgotten Realms: Extras"
+
+[[expansion]]
+id_expansion = 4362
+code = "cmx4362"
+name = "Innistrad: Midnight Hunt"
+
+[[expansion]]
+id_expansion = 4363
+code = "cmx4363"
+name = "Innistrad: Midnight Hunt: Extras"
+
+[[expansion]]
+id_expansion = 4364
+code = "cmx4364"
+name = "Innistrad: Crimson Vow"
+
+[[expansion]]
+id_expansion = 4365
+code = "cmx4365"
+name = "Commander: Innistrad: Midnight Hunt"
+
+[[expansion]]
+id_expansion = 4366
+code = "cmx4366"
+name = "Commander: Innistrad: Crimson Vow"
+
+[[expansion]]
+id_expansion = 4383
+code = "cmx4383"
+name = "Innistrad: Midnight Hunt: Promos"
+
+[[expansion]]
+id_expansion = 4395
+code = "cmx4395"
+name = "Secret Lair Drop Series: Out of Time Superdrop"
+
+[[expansion]]
+id_expansion = 4400
+code = "cmx4400"
+name = "Commander Collection: Black"
+
+[[expansion]]
+id_expansion = 4401
+code = "cmx4401"
+name = "Innistrad: Double Feature"
+
+[[expansion]]
+id_expansion = 4414
+code = "cmx4414"
+name = "Secret Lair Drop Series: October Superdrop 2021"
+
+[[expansion]]
+id_expansion = 4423
+code = "cmx4423"
+name = "Innistrad: Crimson Vow: Extras"
+
+[[expansion]]
+id_expansion = 4461
+code = "cmx4461"
+name = "Innistrad: Crimson Vow: Promos"
+
+[[expansion]]
+id_expansion = 4468
+code = "cmx4468"
+name = "Unfinity"
+
+[[expansion]]
+id_expansion = 4469
+code = "cmx4469"
+name = "Unfinity: Extras"
+
+[[expansion]]
+id_expansion = 4472
+code = "cmx4472"
+name = "Kamigawa: Neon Dynasty"
+
+[[expansion]]
+id_expansion = 4473
+code = "cmx4473"
+name = "Kamigawa: Neon Dynasty: Extras"
+
+[[expansion]]
+id_expansion = 4474
+code = "cmx4474"
+name = "Commander: Kamigawa: Neon Dynasty"
+
+[[expansion]]
+id_expansion = 4947
+code = "cmx4947"
+name = "Kamigawa: Neon Dynasty: Promos"
+
+[[expansion]]
+id_expansion = 4965
+code = "cmx4965"
+name = "Secret Lair Drop Series: Extra Life"
+
+[[expansion]]
+id_expansion = 4966
+code = "cmx4966"
+name = "Secret Lair Drop Series: MSCHF"
+
+[[expansion]]
+id_expansion = 4975
+code = "cmx4975"
+name = "Streets of New Capenna"
+
+[[expansion]]
+id_expansion = 4976
+code = "cmx4976"
+name = "Streets of New Capenna: Extras"
+
+[[expansion]]
+id_expansion = 4977
+code = "cmx4977"
+name = "Commander: Streets of New Capenna"
+
+[[expansion]]
+id_expansion = 4980
+code = "cmx4980"
+name = "Secret Lair Drop Series: Secretversary 2021"
+
+[[expansion]]
+id_expansion = 4981
+code = "cmx4981"
+name = "Secret Lair Drop Series: February Superdrop 2022"
+
+[[expansion]]
+id_expansion = 4982
+code = "cmx4982"
+name = "Secret Lair Drop Series: The Astrology Lands"
+
+[[expansion]]
+id_expansion = 5030
+code = "cmx5030"
+name = "Commander Legends: Battle for Baldur's Gate"
+
+[[expansion]]
+id_expansion = 5031
+code = "cmx5031"
+name = "Commander Legends: Battle for Baldur's Gate: Extras"
+
+[[expansion]]
+id_expansion = 5038
+code = "cmx5038"
+name = "Universes Within"
+
+[[expansion]]
+id_expansion = 5039
+code = "cmx5039"
+name = "Streets of New Capenna: Promos"
+
+[[expansion]]
+id_expansion = 5040
+code = "cmx5040"
+name = "Commander: Streets of New Capenna: Extras"
+
+[[expansion]]
+id_expansion = 5049
+code = "cmx5049"
+name = "Secret Lair Drop Series: April Superdrop 2022"
+
+[[expansion]]
+id_expansion = 5057
+code = "cmx5057"
+name = "Secret Lair Drop Series: Pride Across the Multiverse"
+
+[[expansion]]
+id_expansion = 5069
+code = "cmx5069"
+name = "Game Day Promos"
+
+[[expansion]]
+id_expansion = 5070
+code = "cmx5070"
+name = "Double Masters 2022"
+
+[[expansion]]
+id_expansion = 5071
+code = "cmx5071"
+name = "Double Masters 2022: Extras"
+
+[[expansion]]
+id_expansion = 5072
+code = "cmx5072"
+name = "Dominaria United"
+
+[[expansion]]
+id_expansion = 5073
+code = "cmx5073"
+name = "Dominaria United: Extras"
+
+[[expansion]]
+id_expansion = 5074
+code = "cmx5074"
+name = "Universes Beyond: Warhammer 40,000"
+
+[[expansion]]
+id_expansion = 5075
+code = "cmx5075"
+name = "Commander: Streets of New Capenna: Promos"
+
+[[expansion]]
+id_expansion = 5084
+code = "cmx5084"
+name = "Commander Legends: Battle for Baldur's Gate: Promos"
+
+[[expansion]]
+id_expansion = 5090
+code = "cmx5090"
+name = "Secret Lair Drop Series: Secret Lair x Beadle & Grimm's: Here Be Dragons"
+
+[[expansion]]
+id_expansion = 5092
+code = "cmx5092"
+name = "Secret Lair Drop Series: June Superdrop 2022"
+
+[[expansion]]
+id_expansion = 5108
+code = "cmx5108"
+name = "Game Night: Free For All"
+
+[[expansion]]
+id_expansion = 5110
+code = "cmx5110"
+name = "Secret Lair Drop Series: Fortnite"
+
+[[expansion]]
+id_expansion = 5118
+code = "cmx5118"
+name = "Dominaria United: Promos"
+
+[[expansion]]
+id_expansion = 5122
+code = "cmx5122"
+name = "Commander: Dominaria United"
+
+[[expansion]]
+id_expansion = 5123
+code = "cmx5123"
+name = "Commander: Dominaria United: Extras"
+
+[[expansion]]
+id_expansion = 5126
+code = "cmx5126"
+name = "30th Anniversary Celebration"
+
+[[expansion]]
+id_expansion = 5137
+code = "cmx5137"
+name = "Secret Lair Drop Series: Magic 30"
+
+[[expansion]]
+id_expansion = 5146
+code = "cmx5146"
+name = "Secret Lair Drop Series: August Superdrop 2022"
+
+[[expansion]]
+id_expansion = 5164
+code = "cmx5164"
+name = "The Brothers' War"
+
+[[expansion]]
+id_expansion = 5165
+code = "cmx5165"
+name = "The Brothers' War: Extras"
+
+[[expansion]]
+id_expansion = 5168
+code = "cmx5168"
+name = "Commander: The Brothers' War"
+
+[[expansion]]
+id_expansion = 5169
+code = "cmx5169"
+name = "Commander: The Brothers' War: Extras"
+
+[[expansion]]
+id_expansion = 5170
+code = "cmx5170"
+name = "Retro Frame Artifacts"
+
+[[expansion]]
+id_expansion = 5171
+code = "cmx5171"
+name = "30th Anniversary History Promos"
+
+[[expansion]]
+id_expansion = 5172
+code = "cmx5172"
+name = "Universes Beyond: Transformers"
+
+[[expansion]]
+id_expansion = 5173
+code = "cmx5173"
+name = "Starter Commander Decks"
+
+[[expansion]]
+id_expansion = 5178
+code = "cmx5178"
+name = "The Brothers' War: Promos"
+
+[[expansion]]
+id_expansion = 5181
+code = "cmx5181"
+name = "Secret Lair Drop Series: LI’L’ER Walkers"
+
+[[expansion]]
+id_expansion = 5183
+code = "cmx5183"
+name = "Secret Lair Drop Series: October Superdrop 2022"
+
+[[expansion]]
+id_expansion = 5184
+code = "cmx5184"
+name = "Phyrexia: All Will Be One"
+
+[[expansion]]
+id_expansion = 5185
+code = "cmx5185"
+name = "Jumpstart 2022"
+
+[[expansion]]
+id_expansion = 5186
+code = "cmx5186"
+name = "Durian Tokens"
+
+[[expansion]]
+id_expansion = 5187
+code = "cmx5187"
+name = "MorArt Tokens"
+
+[[expansion]]
+id_expansion = 5189
+code = "cmx5189"
+name = "House of Tokens, by J.F.S."
+
+[[expansion]]
+id_expansion = 5191
+code = "cmx5191"
+name = "Phyrexia: All Will Be One: Extras"
+
+[[expansion]]
+id_expansion = 5192
+code = "cmx5192"
+name = "Dominaria Remastered"
+
+[[expansion]]
+id_expansion = 5193
+code = "cmx5193"
+name = "Dominaria Remastered: Extras"
+
+[[expansion]]
+id_expansion = 5197
+code = "cmx5197"
+name = "Phyrexia: All Will Be One: Promos"
+
+[[expansion]]
+id_expansion = 5199
+code = "cmx5199"
+name = "30th Anniversary Edition"
+
+[[expansion]]
+id_expansion = 5205
+code = "cmx5205"
+name = "Secret Lair Drop Series: 30th Anniversary Countdown Kit"
+
+[[expansion]]
+id_expansion = 5208
+code = "cmx5208"
+name = "March of the Machine: The Aftermath: Extras"
+
+[[expansion]]
+id_expansion = 5215
+code = "cmx5215"
+name = "Secret Lair Drop Series: December Superdrop 2022"
+
+[[expansion]]
+id_expansion = 5225
+code = "cmx5225"
+name = "Commander: Phyrexia: All Will Be One"
+
+[[expansion]]
+id_expansion = 5227
+code = "cmx5227"
+name = "March of the Machine"
+
+[[expansion]]
+id_expansion = 5228
+code = "cmx5228"
+name = "Commander: Phyrexia: All Will Be One: Extras"
+
+[[expansion]]
+id_expansion = 5245
+code = "cmx5245"
+name = "MagicCon Products"
+
+[[expansion]]
+id_expansion = 5248
+code = "cmx5248"
+name = "Three for One Trading"
+
+[[expansion]]
+id_expansion = 5249
+code = "cmx5249"
+name = "2023 Lunar New Year Promos"
+
+[[expansion]]
+id_expansion = 5253
+code = "cmx5253"
+name = "DeadRatART Tokens"
+
+[[expansion]]
+id_expansion = 5256
+code = "cmx5256"
+name = "Zerofun's Tokens"
+
+[[expansion]]
+id_expansion = 5264
+code = "cmx5264"
+name = "Secret Lair Drop Series: Winter Superdrop 2023"
+
+[[expansion]]
+id_expansion = 5278
+code = "cmx5278"
+name = "March of the Machine: Extras"
+
+[[expansion]]
+id_expansion = 5279
+code = "cmx5279"
+name = "Commander: March of the Machine"
+
+[[expansion]]
+id_expansion = 5280
+code = "cmx5280"
+name = "Commander: March of the Machine: Extras"
+
+[[expansion]]
+id_expansion = 5284
+code = "cmx5284"
+name = "Multiverse Legends"
+
+[[expansion]]
+id_expansion = 5285
+code = "cmx5285"
+name = "The Lord of the Rings: Tales of Middle-earth"
+
+[[expansion]]
+id_expansion = 5286
+code = "cmx5286"
+name = "Commander Masters"
+
+[[expansion]]
+id_expansion = 5296
+code = "cmx5296"
+name = "Commander: The Lord of the Rings: Tales of Middle-earth"
+
+[[expansion]]
+id_expansion = 5301
+code = "cmx5301"
+name = "Secret Lair Drop: WPN Exclusive: More Borderless Planeswalkers"
+
+[[expansion]]
+id_expansion = 5308
+code = "cmx5308"
+name = "The Lord of the Rings: Tales of Middle-earth: Extras"
+
+[[expansion]]
+id_expansion = 5310
+code = "cmx5310"
+name = "March of the Machine: Promos"
+
+[[expansion]]
+id_expansion = 5320
+code = "cmx5320"
+name = "March of the Machine: The Aftermath"
+
+[[expansion]]
+id_expansion = 5321
+code = "cmx5321"
+name = "Secret Lair Drop Series: Secret Lair x Dungeons & Dragons: Honor Among Thieves"
+
+[[expansion]]
+id_expansion = 5345
+code = "cmx5345"
+name = "Stained Glass Tokens"
+
+[[expansion]]
+id_expansion = 5346
+code = "cmx5346"
+name = "Linfongart Tokens"
+
+[[expansion]]
+id_expansion = 5347
+code = "cmx5347"
+name = "Usagi Tokens"
+
+[[expansion]]
+id_expansion = 5352
+code = "cmx5352"
+name = "Secret Lair Drop Series: Spring Superdrop 2023"
+
+[[expansion]]
+id_expansion = 5358
+code = "cmx5358"
+name = "Universes Beyond: Doctor Who"
+
+[[expansion]]
+id_expansion = 5359
+code = "cmx5359"
+name = "Wilds of Eldraine"
+
+[[expansion]]
+id_expansion = 5360
+code = "cmx5360"
+name = "Commander: Wilds of Eldraine"
+
+[[expansion]]
+id_expansion = 5381
+code = "cmx5381"
+name = "Secret Lair Commander Deck: From Cute to Brute"
+
+[[expansion]]
+id_expansion = 5387
+code = "cmx5387"
+name = "Commander: The Lord of the Rings: Tales of Middle-earth: Extras"
+
+[[expansion]]
+id_expansion = 5396
+code = "cmx5396"
+name = "The Lord of the Rings: Tales of Middle-earth: Promos"
+
+[[expansion]]
+id_expansion = 5399
+code = "cmx5399"
+name = "Tzipi Tokens"
+
+[[expansion]]
+id_expansion = 5406
+code = "cmx5406"
+name = "Jenn Polk Tokens"
+
+[[expansion]]
+id_expansion = 5407
+code = "cmx5407"
+name = "Mike Bakker Tokens"
+
+[[expansion]]
+id_expansion = 5408
+code = "cmx5408"
+name = "Shannon Allen Tokens"
+
+[[expansion]]
+id_expansion = 5414
+code = "cmx5414"
+name = "Secret Lair Drop Series: Summer Superdrop 2023"
+
+[[expansion]]
+id_expansion = 5418
+code = "cmx5418"
+name = "Commander Masters: Extras"
+
+[[expansion]]
+id_expansion = 5424
+code = "cmx5424"
+name = "Universes Beyond: Doctor Who: Extras"
+
+[[expansion]]
+id_expansion = 5425
+code = "cmx5425"
+name = "Commander: Wilds of Eldraine: Extras"
+
+[[expansion]]
+id_expansion = 5428
+code = "cmx5428"
+name = "Wilds of Eldraine: Extras"
+
+[[expansion]]
+id_expansion = 5442
+code = "cmx5442"
+name = "Enchanting Tales"
+
+[[expansion]]
+id_expansion = 5463
+code = "cmx5463"
+name = "Wilds of Eldraine: Promos"
+
+[[expansion]]
+id_expansion = 5472
+code = "cmx5472"
+name = "Secret Lair Commander Deck: Angels: They're Just Like Us but Cooler"
+
+[[expansion]]
+id_expansion = 5474
+code = "cmx5474"
+name = "Secret Lair Drop Series: Fall Superdrop 2023"
+
+[[expansion]]
+id_expansion = 5489
+code = "cmx5489"
+name = "The Lord of the Rings: Tales of Middle-earth Holiday Release"
+
+[[expansion]]
+id_expansion = 5490
+code = "cmx5490"
+name = "The Lost Caverns of Ixalan"
+
+[[expansion]]
+id_expansion = 5491
+code = "cmx5491"
+name = "The Lost Caverns of Ixalan: Extras"
+
+[[expansion]]
+id_expansion = 5492
+code = "cmx5492"
+name = "Commander: The Lost Caverns of Ixalan"
+
+[[expansion]]
+id_expansion = 5493
+code = "cmx5493"
+name = "Secret Lair Drop Series: LI'L'EST WALKERS"
+
+[[expansion]]
+id_expansion = 5505
+code = "cmx5505"
+name = "Ravnica Remastered"
+
+[[expansion]]
+id_expansion = 5506
+code = "cmx5506"
+name = "Ravnica Remastered: Extras"
+
+[[expansion]]
+id_expansion = 5520
+code = "cmx5520"
+name = "Commander: The Lost Caverns of Ixalan: Extras"
+
+[[expansion]]
+id_expansion = 5521
+code = "cmx5521"
+name = "The Lost Caverns of Ixalan: Promos"
+
+[[expansion]]
+id_expansion = 5522
+code = "cmx5522"
+name = "Universes Beyond: Jurassic World Collection"
+
+[[expansion]]
+id_expansion = 5523
+code = "cmx5523"
+name = "Special Guests"
+
+[[expansion]]
+id_expansion = 5536
+code = "cmx5536"
+name = "The Lost Caverns of Ixalan: Tokens"
+
+[[expansion]]
+id_expansion = 5544
+code = "cmx5544"
+name = "Universes Beyond: Fallout"
+
+[[expansion]]
+id_expansion = 5545
+code = "cmx5545"
+name = "Universes Beyond: Fallout: Extras"
+
+[[expansion]]
+id_expansion = 5548
+code = "cmx5548"
+name = "Secret Lair Drop Series: Spookydrop 2023"
+
+[[expansion]]
+id_expansion = 5557
+code = "cmx5557"
+name = "Secret Lair Drop Series: Calling All Hydra Heads"
+
+[[expansion]]
+id_expansion = 5559
+code = "cmx5559"
+name = "Secret Lair Drop Series: Secretversary 2023"
+
+[[expansion]]
+id_expansion = 5561
+code = "cmx5561"
+name = "Murders at Karlov Manor"
+
+[[expansion]]
+id_expansion = 5562
+code = "cmx5562"
+name = "Commander: Murders at Karlov Manor"
+
+[[expansion]]
+id_expansion = 5571
+code = "cmx5571"
+name = "Alfie's Adventure Tokens"
+
+[[expansion]]
+id_expansion = 5572
+code = "cmx5572"
+name = "Ravnica: Cluedo Edition"
+
+[[expansion]]
+id_expansion = 5588
+code = "cmx5588"
+name = "Ravnica Remastered: Tokens"
+
+[[expansion]]
+id_expansion = 5597
+code = "cmx5597"
+name = "Secret Lair Drop Series: Secret Lair x Doctor Who: Regeneration"
+
+[[expansion]]
+id_expansion = 5599
+code = "cmx5599"
+name = "Murders at Karlov Manor: Extras"
+
+[[expansion]]
+id_expansion = 5600
+code = "cmx5600"
+name = "Murders at Karlov Manor: Promos"
+
+[[expansion]]
+id_expansion = 5601
+code = "cmx5601"
+name = "Commander: Murders at Karlov Manor: Extras"
+
+[[expansion]]
+id_expansion = 5602
+code = "cmx5602"
+name = "Murders at Karlov Manor: Tokens"
+
+[[expansion]]
+id_expansion = 5614
+code = "cmx5614"
+name = "Secret Lair Commander Deck: Raining Cats and Dogs"
+
+[[expansion]]
+id_expansion = 5615
+code = "cmx5615"
+name = "Mystic Tokens"
+
+[[expansion]]
+id_expansion = 5623
+code = "cmx5623"
+name = "Secret Lair Drop Series: Winter Superdrop 2024"
+
+[[expansion]]
+id_expansion = 5625
+code = "cmx5625"
+name = "2024 Lunar New Year Promos"
+
+[[expansion]]
+id_expansion = 5634
+code = "cmx5634"
+name = "SAWATARIX"
+
+[[expansion]]
+id_expansion = 5635
+code = "cmx5635"
+name = "Secret Lair Drop Series: Sheldon's Spellbook"
+
+[[expansion]]
+id_expansion = 5647
+code = "cmx5647"
+name = "Outlaws of Thunder Junction"
+
+[[expansion]]
+id_expansion = 5648
+code = "cmx5648"
+name = "Commander: Outlaws of Thunder Junction"
+
+[[expansion]]
+id_expansion = 5652
+code = "cmx5652"
+name = "Modern Horizons 3"
+
+[[expansion]]
+id_expansion = 5653
+code = "cmx5653"
+name = "Modern Horizons 3: Extras"
+
+[[expansion]]
+id_expansion = 5654
+code = "cmx5654"
+name = "Commander: Modern Horizons 3"
+
+[[expansion]]
+id_expansion = 5655
+code = "cmx5655"
+name = "Universes Beyond: Assassin's Creed"
+
+[[expansion]]
+id_expansion = 5656
+code = "cmx5656"
+name = "Universes Beyond: Assassin's Creed: Extras"
+
+[[expansion]]
+id_expansion = 5657
+code = "cmx5657"
+name = "Commander: Modern Horizons 3: Extras"
+
+[[expansion]]
+id_expansion = 5658
+code = "cmx5658"
+name = "Bloomburrow"
+
+[[expansion]]
+id_expansion = 5659
+code = "cmx5659"
+name = "Bloomburrow: Extras"
+
+[[expansion]]
+id_expansion = 5660
+code = "cmx5660"
+name = "Commander: Bloomburrow"
+
+[[expansion]]
+id_expansion = 5661
+code = "cmx5661"
+name = "Commander: Bloomburrow: Extras"
+
+[[expansion]]
+id_expansion = 5662
+code = "cmx5662"
+name = "Outlaws of Thunder Junction: Extras"
+
+[[expansion]]
+id_expansion = 5663
+code = "cmx5663"
+name = "Commander: Outlaws of Thunder Junction: Extras"
+
+[[expansion]]
+id_expansion = 5664
+code = "cmx5664"
+name = "The Big Score"
+
+[[expansion]]
+id_expansion = 5665
+code = "cmx5665"
+name = "Breaking News"
+
+[[expansion]]
+id_expansion = 5666
+code = "cmx5666"
+name = "Universes Beyond: Fallout: Tokens"
+
+[[expansion]]
+id_expansion = 5669
+code = "cmx5669"
+name = "Outlaws of Thunder Junction: Promos"
+
+[[expansion]]
+id_expansion = 5671
+code = "cmx5671"
+name = "Outlaws of Thunder Junction: Tokens"
+
+[[expansion]]
+id_expansion = 5696
+code = "cmx5696"
+name = "Mockens Tokens"
+
+[[expansion]]
+id_expansion = 5736
+code = "cmx5736"
+name = "Secret Lair Drop Series: Equinox Superdrop 2024"
+
+[[expansion]]
+id_expansion = 5745
+code = "cmx5745"
+name = "GameON Tokens"
+
+[[expansion]]
+id_expansion = 5746
+code = "cmx5746"
+name = "LocalProAlters Tokens"
+
+[[expansion]]
+id_expansion = 5759
+code = "cmx5759"
+name = "Secret Lair Drop Series: Spring Superdrop 2024"
+
+[[expansion]]
+id_expansion = 5763
+code = "cmx5763"
+name = "Modern Horizons 3: Retro Frame Cards"
+
+[[expansion]]
+id_expansion = 5784
+code = "cmx5784"
+name = "Modern Horizons 3: Tokens"
+
+[[expansion]]
+id_expansion = 5785
+code = "cmx5785"
+name = "Modern Horizons 3: Promos"
+
+[[expansion]]
+id_expansion = 5789
+code = "cmx5789"
+name = "Bloomburrow: Promos"
+
+[[expansion]]
+id_expansion = 5790
+code = "cmx5790"
+name = "Bloomburrow: Tokens"
+
+[[expansion]]
+id_expansion = 5794
+code = "cmx5794"
+name = "Universes Beyond: Assassin's Creed: Tokens"
+
+[[expansion]]
+id_expansion = 5799
+code = "cmx5799"
+name = "Secret Lair Drop Series: Summer Superdrop 2024"
+
+[[expansion]]
+id_expansion = 5806
+code = "cmx5806"
+name = "Duskmourn: House of Horror"
+
+[[expansion]]
+id_expansion = 5807
+code = "cmx5807"
+name = "Duskmourn: House of Horror: Extras"
+
+[[expansion]]
+id_expansion = 5808
+code = "cmx5808"
+name = "Commander: Duskmourn: House of Horror"
+
+[[expansion]]
+id_expansion = 5809
+code = "cmx5809"
+name = "Commander: Duskmourn: House of Horror: Extras"
+
+[[expansion]]
+id_expansion = 5843
+code = "cmx5843"
+name = "Secret Lair Drop Series: Inside an Elevator Superdrop"
+
+[[expansion]]
+id_expansion = 5852
+code = "cmx5852"
+name = "Magic: The Gathering Foundations"
+
+[[expansion]]
+id_expansion = 5854
+code = "cmx5854"
+name = "Mystery Booster 2"
+
+[[expansion]]
+id_expansion = 5862
+code = "cmx5862"
+name = "Tokens of World"
+
+[[expansion]]
+id_expansion = 5878
+code = "cmx5878"
+name = "Mystery Booster 2: Playtest Cards"
+
+[[expansion]]
+id_expansion = 5884
+code = "cmx5884"
+name = "Secret Lair Drop Series: Secret Lair x Dungeons & Dragons: 50th Anniversary Superdrop"
+
+[[expansion]]
+id_expansion = 5885
+code = "cmx5885"
+name = "Duskmourn: House of Horror: Promos"
+
+[[expansion]]
+id_expansion = 5886
+code = "cmx5886"
+name = "Duskmourn: House of Horror: Tokens"
+
+[[expansion]]
+id_expansion = 5897
+code = "cmx5897"
+name = "Gatherers' Tavern"
+
+[[expansion]]
+id_expansion = 5908
+code = "cmx5908"
+name = "Secret Lair Drop Series: Camp Totally Safe Superdrop"
+
+[[expansion]]
+id_expansion = 5911
+code = "cmx5911"
+name = "Mystery Booster 2: Reprints from Across Magic's History"
+
+[[expansion]]
+id_expansion = 5924
+code = "cmx5924"
+name = "Secret Lair Drop Series: Marvel Superdrop"
+
+[[expansion]]
+id_expansion = 5930
+code = "cmx5930"
+name = "Innistrad Remastered"
+
+[[expansion]]
+id_expansion = 5931
+code = "cmx5931"
+name = "Magic: The Gathering Foundations: Extras"
+
+[[expansion]]
+id_expansion = 5932
+code = "cmx5932"
+name = "Foundations Jumpstart"
+
+[[expansion]]
+id_expansion = 5938
+code = "cmx5938"
+name = "Magic: The Gathering Foundations: Starter Collection"
+
+[[expansion]]
+id_expansion = 5940
+code = "cmx5940"
+name = "Magic: The Gathering Foundations: Promos"
+
+[[expansion]]
+id_expansion = 5941
+code = "cmx5941"
+name = "Magic: The Gathering Foundations: Tokens"
+
+[[expansion]]
+id_expansion = 5942
+code = "cmx5942"
+name = "Magic: The Gathering Foundations: Beginner Box"
+
+[[expansion]]
+id_expansion = 5976
+code = "cmx5976"
+name = "Secret Lair Commander Deck: 20 Ways to Win"
+
+[[expansion]]
+id_expansion = 5977
+code = "cmx5977"
+name = "Innistrad Remastered: Extras"
+
+[[expansion]]
+id_expansion = 5980
+code = "cmx5980"
+name = "Vanlubow"
+
+[[expansion]]
+id_expansion = 5982
+code = "cmx5982"
+name = "Aetherdrift"
+
+[[expansion]]
+id_expansion = 5988
+code = "cmx5988"
+name = "Commander: Aetherdrift"
+
+[[expansion]]
+id_expansion = 5991
+code = "cmx5991"
+name = "Aetherdrift: Promos"
+
+[[expansion]]
+id_expansion = 5993
+code = "cmx5993"
+name = "Secret Lair Drop Series: Chaos Vault"
+
+[[expansion]]
+id_expansion = 6007
+code = "cmx6007"
+name = "Innistrad Remastered: Tokens"
+
+[[expansion]]
+id_expansion = 6011
+code = "cmx6011"
+name = "Aetherdrift: Extras"
+
+[[expansion]]
+id_expansion = 6012
+code = "cmx6012"
+name = "Aetherdrift: First-Place"
+
+[[expansion]]
+id_expansion = 6022
+code = "cmx6022"
+name = "Commander: Aetherdrift: Extras"
+
+[[expansion]]
+id_expansion = 6035
+code = "cmx6035"
+name = "Nils Hamm Tokens"
+
+[[expansion]]
+id_expansion = 6036
+code = "cmx6036"
+name = "Aetherdrift: Tokens"
+
+[[expansion]]
+id_expansion = 6042
+code = "cmx6042"
+name = "Secret Lair Drop Series: Winter Superdrop 2025"
+
+[[expansion]]
+id_expansion = 6046
+code = "cmx6046"
+name = "2025 Lunar New Year Promos"
+
+[[expansion]]
+id_expansion = 6057
+code = "cmx6057"
+name = "FINAL FANTASY"
+
+[[expansion]]
+id_expansion = 6058
+code = "cmx6058"
+name = "Commander: FINAL FANTASY"
+
+[[expansion]]
+id_expansion = 6059
+code = "cmx6059"
+name = "FINAL FANTASY Through the Ages"
+
+[[expansion]]
+id_expansion = 6060
+code = "cmx6060"
+name = "Tarkir: Dragonstorm"
+
+[[expansion]]
+id_expansion = 6062
+code = "cmx6062"
+name = "Commander: Tarkir: Dragonstorm"
+
+[[expansion]]
+id_expansion = 6063
+code = "cmx6063"
+name = "Edge of Eternities"
+
+[[expansion]]
+id_expansion = 6064
+code = "cmx6064"
+name = "Commander: Edge of Eternities"
+
+[[expansion]]
+id_expansion = 6070
+code = "cmx6070"
+name = "Marvel's Spider-Man"
+
+[[expansion]]
+id_expansion = 6091
+code = "cmx6091"
+name = "Tarkir: Dragonstorm: Extras"
+
+[[expansion]]
+id_expansion = 6095
+code = "cmx6095"
+name = "Secret Lair Drop Series: Our Boss Is on Vacation Superdrop"
+
+[[expansion]]
+id_expansion = 6100
+code = "cmx6100"
+name = "Commander: Tarkir: Dragonstorm: Extras"
+
+[[expansion]]
+id_expansion = 6102
+code = "cmx6102"
+name = "Tarkir: Dragonstorm: Tokens"
+
+[[expansion]]
+id_expansion = 6103
+code = "cmx6103"
+name = "Tarkir: Dragonstorm: Promos"
+
+[[expansion]]
+id_expansion = 6106
+code = "cmx6106"
+name = "Edge of Eternities: Promos"
+
+[[expansion]]
+id_expansion = 6112
+code = "cmx6112"
+name = "Boomer Tokns"
+
+[[expansion]]
+id_expansion = 6113
+code = "cmx6113"
+name = "Finotto's Lost Tokens"
+
+[[expansion]]
+id_expansion = 6114
+code = "cmx6114"
+name = "NTHKG Tokens"
+
+[[expansion]]
+id_expansion = 6117
+code = "cmx6117"
+name = "Street Clans"
+
+[[expansion]]
+id_expansion = 6119
+code = "cmx6119"
+name = "Secret Lair Drop Series: The Ultimate Pencil Superdrop"
+
+[[expansion]]
+id_expansion = 6120
+code = "cmx6120"
+name = "Secret Lair Commander Deck: Everyone's Invited!"
+
+[[expansion]]
+id_expansion = 6136
+code = "cmx6136"
+name = "Commander: FINAL FANTASY: Extras"
+
+[[expansion]]
+id_expansion = 6137
+code = "cmx6137"
+name = "FINAL FANTASY: Extras"
+
+[[expansion]]
+id_expansion = 6139
+code = "cmx6139"
+name = "FINAL FANTASY: Tokens"
+
+[[expansion]]
+id_expansion = 6141
+code = "cmx6141"
+name = "Secret Lair Drop Series: Summer Superdrop 2025"
+
+[[expansion]]
+id_expansion = 6143
+code = "cmx6143"
+name = "Commander: FINAL FANTASY: Collector's Edition"
+
+[[expansion]]
+id_expansion = 6162
+code = "cmx6162"
+name = "FINAL FANTASY: Promos"
+
+[[expansion]]
+id_expansion = 6166
+code = "cmx6166"
+name = "For Science!"
+
+[[expansion]]
+id_expansion = 6174
+code = "cmx6174"
+name = "Edge of Eternities: Extras"
+
+[[expansion]]
+id_expansion = 6185
+code = "cmx6185"
+name = "Secret Lair Drop Series: Secret Lair x National Association of Latino Arts and Cultures"
+
+[[expansion]]
+id_expansion = 6192
+code = "cmx6192"
+name = "Secret Lair Drop Series: The Sonic Superdrop"
+
+[[expansion]]
+id_expansion = 6201
+code = "cmx6201"
+name = "Stellar Sights"
+
+[[expansion]]
+id_expansion = 6202
+code = "cmx6202"
+name = "Commander: Edge of Eternities: Extras"
+
+[[expansion]]
+id_expansion = 6213
+code = "cmx6213"
+name = "Edge of Eternities: Tokens"
+
+[[expansion]]
+id_expansion = 6216
+code = "cmx6216"
+name = "Mana ZenZero"
+
+[[expansion]]
+id_expansion = 6234
+code = "cmx6234"
+name = "Marvel's Spider-Man: Extras"
+
+[[expansion]]
+id_expansion = 6236
+code = "cmx6236"
+name = "Marvel's Spider-Man: Eternal"
+
+[[expansion]]
+id_expansion = 6246
+code = "cmx6246"
+name = "Josu Solano Tokens"
+
+[[expansion]]
+id_expansion = 6261
+code = "cmx6261"
+name = "Avatar: The Last Airbender"
+
+[[expansion]]
+id_expansion = 6262
+code = "cmx6262"
+name = "Avatar: The Last Airbender: Eternal"
+
+[[expansion]]
+id_expansion = 6263
+code = "cmx6263"
+name = "Avatar: The Last Airbender: Extras"
+
+[[expansion]]
+id_expansion = 6296
+code = "cmx6296"
+name = "Dobi TOKENS"
+
+[[expansion]]
+id_expansion = 6305
+code = "cmx6305"
+name = "Marvel Source Material Cards"
+
+[[expansion]]
+id_expansion = 6307
+code = "cmx6307"
+name = "Marvel's Spider-Man: Tokens"
+
+[[expansion]]
+id_expansion = 6312
+code = "cmx6312"
+name = "Marvel's Spider-Man: Promos"
+
+[[expansion]]
+id_expansion = 6323
+code = "cmx6323"
+name = "Secret Lair Drop Series: Secret Lair x Marvel's Spider-Man Superdrop"
+
+[[expansion]]
+id_expansion = 6325
+code = "cmx6325"
+name = "Lorwyn Eclipsed"
+
+[[expansion]]
+id_expansion = 6326
+code = "cmx6326"
+name = "Commander: Lorwyn Eclipsed"
+
+[[expansion]]
+id_expansion = 6327
+code = "cmx6327"
+name = "Secret Lair Drop Series: Secret Scare Superdrop"
+
+[[expansion]]
+id_expansion = 6331
+code = "cmx6331"
+name = "FINAL FANTASY Holiday Release"
+
+[[expansion]]
+id_expansion = 6345
+code = "cmx6345"
+name = "Teenage Mutant Ninja Turtles"
+
+[[expansion]]
+id_expansion = 6346
+code = "cmx6346"
+name = "Commander: Teenage Mutant Ninja Turtles"
+
+[[expansion]]
+id_expansion = 6373
+code = "cmx6373"
+name = "Secret Lair Drop Series: Secret Lair x PlayStation"
+
+[[expansion]]
+id_expansion = 6384
+code = "cmx6384"
+name = "Avatar: The Last Airbender: Promos"
+
+[[expansion]]
+id_expansion = 6385
+code = "cmx6385"
+name = "Avatar: The Last Airbender: Tokens"
+
+[[expansion]]
+id_expansion = 6388
+code = "cmx6388"
+name = "Secret Lair Drop Series: Secret Lair x Avatar: The Last Airbender Superdrop"
+
+[[expansion]]
+id_expansion = 6390
+code = "cmx6390"
+name = "Secret Lair Drop Series: Secret Lair Countdown Kit: An Encyclopedia of Magic"
+
+[[expansion]]
+id_expansion = 6421
+code = "cmx6421"
+name = "Lorwyn Eclipsed: Extras"
+
+[[expansion]]
+id_expansion = 6436
+code = "cmx6436"
+name = "Lorwyn Eclipsed: Promos"
+
+[[expansion]]
+id_expansion = 6438
+code = "cmx6438"
+name = "Lorwyn Eclipsed: Tokens"
+
+[[expansion]]
+id_expansion = 6439
+code = "cmx6439"
+name = "Commander: Lorwyn Eclipsed: Extras"
+
+[[expansion]]
+id_expansion = 6470
+code = "cmx6470"
+name = "Teenage Mutant Ninja Turtles: Extras"
+
+[[expansion]]
+id_expansion = 6471
+code = "cmx6471"
+name = "Secret Lair Drop Series: Rad Superdrop"
+
+[[expansion]]
+id_expansion = 6474
+code = "cmx6474"
+name = "Secrets of Strixhaven"
+
+[[expansion]]
+id_expansion = 6475
+code = "cmx6475"
+name = "Commander: Secrets of Strixhaven"
+
+[[expansion]]
+id_expansion = 6476
+code = "cmx6476"
+name = "Marvel Super Heroes"
+
+[[expansion]]
+id_expansion = 6477
+code = "cmx6477"
+name = "Commander: Marvel Super Heroes"
+
+[[expansion]]
+id_expansion = 6484
+code = "cmx6484"
+name = "Secret Lair Drop Series: Roll for Initiative Superdrop"
+
+[[expansion]]
+id_expansion = 6493
+code = "cmx6493"
+name = "Commander: Teenage Mutant Ninja Turtles: Extras"
+
+[[expansion]]
+id_expansion = 6496
+code = "cmx6496"
+name = "Teenage Mutant Ninja Turtles: Source Material Cards"
+
+[[expansion]]
+id_expansion = 6497
+code = "cmx6497"
+name = "Teenage Mutant Ninja Turtles: Promos"
+
+[[expansion]]
+id_expansion = 6503
+code = "cmx6503"
+name = "Teenage Mutant Ninja Turtles: Tokens"
+
+[[expansion]]
+id_expansion = 6507
+code = "cmx6507"
+name = "2026 Lunar New Year Promos"
+
+[[expansion]]
+id_expansion = 6520
+code = "cmx6520"
+name = "Secret Lair Drop Series: Totally TubuLair Superdrop"
+
+[[expansion]]
+id_expansion = 6522
+code = "cmx6522"
+name = "Secret Lair Deck: Dandân"
+
+[[expansion]]
+id_expansion = 6545
+code = "cmx6545"
+name = "Commander: Secrets of Strixhaven: Extras"
+
+[[expansion]]
+id_expansion = 6546
+code = "cmx6546"
+name = "Secrets of Strixhaven: Extras"
+
+[[expansion]]
+id_expansion = 6547
+code = "cmx6547"
+name = "Secrets of Strixhaven: Mystical Archive"
+
+[[expansion]]
+id_expansion = 6550
+code = "cmx6550"
+name = "Secrets of Strixhaven: Tokens"
+
+[[expansion]]
+id_expansion = 6553
+code = "cmx6553"
+name = "Secret Lair Drop Series: Secret Lair x Marvel's Deadpool"
+
+[[expansion]]
+id_expansion = 6554
+code = "cmx6554"
+name = "Secrets of Strixhaven: Promos"
+
+[[expansion]]
+id_expansion = 6563
+code = "cmx6563"
+name = "Secret Lair Drop Series: Back to School Superdrop"
+
+[[expansion]]
+id_expansion = 6570
+code = "cmx6570"
+name = "The Hobbit"
+
+[[expansion]]
+id_expansion = 6571
+code = "cmx6571"
+name = "Reality Fracture"
+
+[[expansion]]
+id_expansion = 6572
+code = "cmx6572"
+name = "Commander: Foundations"
+
+[[expansion]]
+id_expansion = 6577
+code = "cmx6577"
+name = "Marvel Super Heroes: Extras"
+
+[[expansion]]
+id_expansion = 6578
+code = "cmx6578"
+name = "Marvel Super Heroes: Tokens"
+
+[[expansion]]
+id_expansion = 6580
+code = "cmx6580"
+name = "Secret Lair Commander Deck: Goblin Storm"
+
+[[expansion]]
+id_expansion = 6589
+code = "cmx6589"
+name = "Commander: Reality Fracture"
+
+[[expansion]]
+id_expansion = 6593
+code = "cmx6593"
+name = "Secret Lair Drop Series: Cats Are the Best Superdrop"
+
+[[expansion]]
+id_expansion = 6607
+code = "cmx6607"
+name = "Marvel Super Heroes: Promos"
+
+[[expansion]]
+id_expansion = 6610
+code = "cmx6610"
+name = "Reality Fracture: Promos"
+
+[[expansion]]
+id_expansion = 6617
+code = "cmx6617"
+name = "Commander: Marvel Super Heroes: Extras"
+
+[[expansion]]
+id_expansion = 6618
+code = "cmx6618"
+name = "Commander: Marvel Super Heroes: Collector's Edition"
+
+[[expansion]]
+id_expansion = 6657
+code = "cmx6657"
+name = "Star Trek"
+
+[[expansion]]
+id_expansion = 6658
+code = "cmx6658"
+name = "Star Trek: Extras"
+
+[[expansion]]
+id_expansion = 6661
+code = "cmx6661"
+name = "Commander: Star Trek"
+
+[[expansion]]
+id_expansion = 6663
+code = "cmx6663"
+name = "Secret Lair Drop Series: Secret Lair x Global Fund for Women"
+
+[[expansion]]
+id_expansion = 6664
+code = "cmx6664"
+name = "The Hobbit: Extras"
+
+[[expansion]]
+id_expansion = 6665
+code = "cmx6665"
+name = "The Hobbit: Eternal"
+
+[[expansion]]
+id_expansion = 6671
+code = "cmx6671"
+name = "Unlicensed Wizards"
+
+[[expansion]]
+id_expansion = 6679
+code = "cmx6679"
+name = "Secret Lair Drop Series: Superdrop of the Moonlight Jellies"
+
+[[expansion]]
+id_expansion = 6682
+code = "cmx6682"
+name = "The Hobbit: Tokens"
+
+[[expansion]]
+id_expansion = 6686
+code = "cmx6686"
+name = "Secret Lair Commander Deck: Hatsune Miku"
+
+[[expansion]]
+id_expansion = 6692
+code = "cmx6692"
+name = "Secret Lair Drop Series: A Marvelous Mathom Superdrop"
+
+[[expansion]]
+id_expansion = 6753
+code = "cmx6753"
+name = "Secret Lair Drop Series: A Perfectly Normal Superdrop"
+
+[[expansion]]
+id_expansion = 6754
+code = "cmx6754"
+name = "Reality Fracture: Extras"
+
+[[expansion]]
+id_expansion = 6755
+code = "cmx6755"
+name = "Reality Fracture: Tokens"
+
+[[expansion]]
+id_expansion = 6757
+code = "cmx6757"
+name = "Secret Lair Drop Series: Secret Lair x MSCHF: The Zeta Set"
+
+[[expansion]]
+id_expansion = 6768
+code = "cmx6768"
+name = "Secret Lair Drop Series: The Most Powerful Superdrop in the Universe"
+
+[[expansion]]
+id_expansion = 6777
+code = "cmx6777"
+name = "Commander: Reality Fracture: Extras"
+
+[[expansion]]
+id_expansion = 6784
+code = "cmx6784"
+name = "The Art V. Samak Collection"
+
+[[expansion]]
+id_expansion = 6787
+code = "cmx6787"
+name = "Secret Lair Commander Deck: Odds and Ends"
+
+[[expansion]]
+id_expansion = 6792
+code = "cmx6792"
+name = "Star Trek: Promos"
+
+[[expansion]]
+id_expansion = 6916
+code = "cmx6916"
+name = "Secret Lair Drop Series: Corn Maze Superdrop"
+
+[[expansion]]
+id_expansion = 6926
+code = "cmx6926"
+name = "Mystery Booster Commander Edition"
+
+[[expansion]]
+id_expansion = 6927
+code = "cmx6927"
+name = "Mystery Booster Commander Edition: Reprints from Across Magic's History"
+
+[[expansion]]
+id_expansion = 6931
+code = "cmx6931"
+name = "Stardates Cards"
+
+[[expansion]]
+id_expansion = 6934
+code = "cmx6934"
+name = "Commander: Star Trek: Collector's Edition"
+
+[[expansion]]
+id_expansion = 6935
+code = "cmx6935"
+name = "Commander: Star Trek: Extras"
+
+[[expansion]]
+id_expansion = 6941
+code = "cmx6941"
+name = "Star Trek: Tokens"
+
+[[expansion]]
+id_expansion = 6943
+code = "cmx6943"
+name = "Secret Lair Drop Series: Secret Lair Countdown Kit: Marvel's History of Heroes"
+
+[[expansion]]
+id_expansion = 6944
+code = "cmx6944"
+name = "Secret Lair Drop Series: Set Phasers to Superdrop"
+
+[[expansion]]
+id_expansion = 6946
+code = "cmx6946"
+name = "Djangle Tokens"

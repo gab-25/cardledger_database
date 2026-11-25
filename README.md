@@ -46,7 +46,8 @@ most 2% `wrong_certain` for it.
 
 Wrong or missing images, rarities and set codes are fixed by hand in `corrections/<slug>.toml`, applied on every run.
 See [corrections/README.md](corrections/README.md). Expansions the source has no set for are named by hand in
-`expansions/<slug>.toml`: see [expansions/README.md](expansions/README.md).
+`expansions/<slug>.toml`: see [expansions/README.md](expansions/README.md). Some of those names are copied by hand from
+Cardmarket's site, which is not an openly licensed source (a deliberate exception for a list of names).
 
 ## Running
 

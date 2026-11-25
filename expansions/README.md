@@ -16,6 +16,12 @@ released_at = 2016-01-01   # optional
 
 An entry with the stand-in code only names it: when the source later adds the set, the expansion's products move to
 it as usual and the entry is simply unused. Any other `code` maps the whole expansion to that code for good, and
-overrides the name and date of a source set with that code. The
-current entries were pre-filled from the names of each expansion's sealed products (boosters, boxes, tins) and
-reviewed by hand; expansions with no sealed product are listed as comments at the end of each file, still unnamed.
+overrides the name and date of a source set with that code. Where the names come from:
+
+- **Cardmarket's own names**, copied by hand (not scraped by the tool) from the expansion filter of each game's
+  `https://www.cardmarket.com/en/<Game>/Products/Singles` page; the date is in each file's header. That filter lists
+  only expansions with singles. Cardmarket's site is not an openly licensed source: this is a deliberate exception
+  for a list of names. `mtg.toml` holds every Magic expansion this way (unused today: Magic keeps no unmatched
+  products), so it is complete rather than limited to the stand-ins.
+- **The names of an expansion's sealed products** (boosters, boxes, tins), reviewed by hand, for the stand-ins with no
+  name from Cardmarket. Expansions with neither are listed as comments at the end of each file, still unnamed.
