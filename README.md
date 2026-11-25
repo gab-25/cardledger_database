@@ -66,7 +66,8 @@ Run it from the repository root (`corrections/` and `expansions/` are read relat
 change the output and cache folders.
 
 `generate` logs, per game, the products, the products enriched by the source, the expansions and the share with an
-image: compare them with the previous run before uploading. A game that fails (its source or its index) keeps its previous
+image: compare them with the previous run before uploading. It also warns about the Cardmarket expansions the source has no set
+for and `expansions/<slug>.toml` does not name yet (their id and product count): add them there. A game that fails (its source or its index) keeps its previous
 files in `out/`, and the command exits with 1. `upload` refuses to start if a requested game has no catalog or no
 index, or if its index was built from another catalog (run `index`). The TCGdex cards are cached in
 `.cache/tcgdex/`, the card images and their hashes in `.cache/vision/`: keep that folder between runs, without it every

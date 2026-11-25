@@ -10,6 +10,7 @@ import logging
 import os
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 
 from cardledger_vision import Index, InvalidIndex, build_index, index_key
@@ -49,7 +50,21 @@ def generate_game(slug: str, client, cache_dir: Path) -> GameCatalog:
     enrichment, warnings = corrections.apply(corrections.load(slug), products, enrichment)
     for warning in warnings:
         logger.warning("%s: %s", slug, warning)
-    return assemble(GAMES[slug], products, enrichment, singles)
+    catalog = assemble(GAMES[slug], products, enrichment, singles)
+    _log_unnamed_stand_ins(slug, catalog, enrichment)
+    return catalog
+
+
+def _log_unnamed_stand_ins(slug: str, catalog: GameCatalog, enrichment: Enrichment) -> None:
+    """Warns about the stand-in expansions (cmx<idExpansion>) that expansions/<slug>.toml does not name yet."""
+    counts = Counter(p.expansion_code for p in catalog.products)
+    missing = sorted((c for c in counts if c.startswith("cmx") and c not in enrichment.sets), key=lambda c: int(c[3:]))
+    if missing:
+        logger.warning(
+            "%s: %d Cardmarket expansion%s without a name (add to expansions/%s.toml): %s",
+            slug, len(missing), "" if len(missing) == 1 else "s", slug,
+            ", ".join(f"{c[3:]} ({counts[c]} products)" for c in missing),
+        )
 
 
 def _write(path: Path, data: bytes) -> None:

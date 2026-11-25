@@ -299,3 +299,24 @@ def test_ctrl_c_exits_130_without_waiting_for_threads(monkeypatch, capsys):
     cli.run()
     assert exits == [130]
     assert capsys.readouterr().err == "interrupted\n"
+
+
+def test_generate_logs_the_stand_ins_without_a_name(fakes, tmp_path, monkeypatch, caplog):
+    extra = [CmProduct(90 + i, f"Promo {i}", 1, "Singles", 9999, None) for i in range(2)]
+    monkeypatch.setattr(cardmarket, "fetch_products", lambda client, cm_id: (cm_products(4) + extra, {1}))
+    monkeypatch.setattr(cli.corrections, "load", lambda slug: cli.corrections.Corrections())
+    with caplog.at_level("WARNING"):
+        catalog = cli.generate_game("pokemon", None, tmp_path)
+    assert {p.expansion_code for p in catalog.products} == {"pokemon", "cmx9999"}
+    assert "pokemon: 1 Cardmarket expansion without a name" in caplog.text
+    assert "expansions/pokemon.toml" in caplog.text and "9999 (2 products)" in caplog.text
+
+
+def test_generate_does_not_log_named_stand_ins(fakes, tmp_path, monkeypatch, caplog):
+    extra = [CmProduct(90, "Promo", 1, "Singles", 9999, None)]
+    monkeypatch.setattr(cardmarket, "fetch_products", lambda client, cm_id: (cm_products(4) + extra, {1}))
+    named = cli.corrections.Corrections((), ({"id_expansion": 9999, "name": "Promos"},))
+    monkeypatch.setattr(cli.corrections, "load", lambda slug: named)
+    with caplog.at_level("WARNING"):
+        cli.generate_game("pokemon", None, tmp_path)
+    assert "without a name" not in caplog.text
