@@ -11,7 +11,7 @@ user-facing reference (sources and licences, output format, env vars).
 
 ## Commands
 
-Python 3.14, managed with uv. Run from the repository root (`corrections/` is read relative to the working directory).
+Python 3.14, managed with uv. Run from the repository root (`corrections/` and `expansions/` are read relative to the working directory).
 
 ```bash
 uv sync
@@ -40,8 +40,10 @@ Per game, `cli.generate_game` runs a fixed pipeline:
      name plus an expansion→group vote. Its rule: prefer no match over a doubtful one (a wrong match shows the
      wrong image); keep that bias when changing thresholds. yaml-yugi's Japanese sets are groups with
      `language="ja"`; the matcher keeps "(OCG)"/"(Japanese)" Cardmarket expansions to them (see its docstring).
-3. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes applied after the automatic match. Strict
-   schema: unknown keys/wrong types fail the run; stale ids only warn. Format in `corrections/README.md`.
+3. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes products (`[[product]]` only) and
+   `expansions/<slug>.toml` names the `cmx<idExpansion>` stand-ins (`[[expansion]]` only, never moves products), both
+   applied after the automatic match. Strict schema: unknown keys/sections or wrong types fail the run; stale ids only
+   warn. Formats in `corrections/README.md` and `expansions/README.md`.
 4. **Assemble** (`catalog.assemble`): unmatched products get their expansion's majority set code; if none and
    `Game.keep_unmatched` is true they get a stand-in `cmx<idExpansion>` expansion, otherwise they are dropped
    (`skipped`). `catalog.encode` is deterministic (sorted lists and keys): same catalog, same bytes.

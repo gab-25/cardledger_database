@@ -1,0 +1,76 @@
+# Names of every riftbound expansion on Cardmarket that has singles, copied by hand from the expansion filter of
+# https://www.cardmarket.com/en/Riftbound/Products/Singles on 2026-11-25 (see README.md).
+
+[[expansion]]
+id_expansion = 6286
+name = "Origins"
+
+[[expansion]]
+id_expansion = 6289
+name = "Proving Grounds"
+
+[[expansion]]
+id_expansion = 6322
+name = "Origins: Promos"
+
+[[expansion]]
+id_expansion = 6399
+name = "Spiritforged"
+
+[[expansion]]
+id_expansion = 6480
+name = "Project K"
+
+[[expansion]]
+id_expansion = 6483
+name = "Spiritforged: Promos"
+
+[[expansion]]
+id_expansion = 6491
+name = "Unleashed"
+
+[[expansion]]
+id_expansion = 6567
+name = "Unleashed: Promos"
+
+[[expansion]]
+id_expansion = 6587
+name = "Vendetta"
+
+[[expansion]]
+id_expansion = 6588
+name = "Vendetta: Promos"
+
+[[expansion]]
+id_expansion = 6659
+name = "Radiance"
+
+[[expansion]]
+id_expansion = 6681
+name = "Secret Garden Bundle"
+
+[[expansion]]
+id_expansion = 6705
+name = "Riftbound x T1 Worlds 2025"
+
+[[expansion]]
+id_expansion = 6921
+name = "Radiance: Promos"
+
+[[expansion]]
+id_expansion = 6938
+name = "K/DA Couture Collection"
+
+[[expansion]]
+id_expansion = 6947
+name = "Plated Legends - Metal Cards"
+
+[[expansion]]
+id_expansion = 6959
+name = "Worlds 2026 Edition"
+
+# Stand-ins with sealed products only (not in Cardmarket's singles filter), named after those products.
+
+[[expansion]]
+id_expansion = 6924
+name = "Legacy"

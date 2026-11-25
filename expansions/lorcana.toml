@@ -1,0 +1,139 @@
+# Names of every lorcana expansion on Cardmarket that has singles, copied by hand from the expansion filter of
+# https://www.cardmarket.com/en/Lorcana/Products/Singles on 2026-11-25 (see README.md).
+
+[[expansion]]
+id_expansion = 5434
+name = "The First Chapter"
+
+[[expansion]]
+id_expansion = 5435
+name = "Promos Year 1"
+
+[[expansion]]
+id_expansion = 5502
+name = "Rise of the Floodborn"
+
+[[expansion]]
+id_expansion = 5512
+name = "Lorcana Products"
+
+[[expansion]]
+id_expansion = 5567
+name = "Into the Inklands"
+
+[[expansion]]
+id_expansion = 5697
+name = "Ursula's Return"
+
+[[expansion]]
+id_expansion = 5764
+name = "Illumineer's Quest: Deep Trouble"
+
+[[expansion]]
+id_expansion = 5792
+name = "Shimmering Skies"
+
+[[expansion]]
+id_expansion = 5823
+name = "Lorcana Challenge Promos Year 1"
+
+[[expansion]]
+id_expansion = 5844
+name = "Promos Year 2"
+
+[[expansion]]
+id_expansion = 5853
+name = "D23"
+
+[[expansion]]
+id_expansion = 5895
+name = "Azurite Sea"
+
+[[expansion]]
+id_expansion = 6013
+name = "Archazia's Island"
+
+[[expansion]]
+id_expansion = 6086
+name = "Illumineer's Quest: Palace Heist"
+
+[[expansion]]
+id_expansion = 6087
+name = "Reign of Jafar"
+
+[[expansion]]
+id_expansion = 6170
+name = "Fabled"
+
+[[expansion]]
+id_expansion = 6207
+name = "Lorcana Challenge Promos Year 3"
+
+[[expansion]]
+id_expansion = 6208
+name = "Promos Year 3"
+
+[[expansion]]
+id_expansion = 6339
+name = "Whispers in the Well"
+
+[[expansion]]
+id_expansion = 6412
+name = "Winterspell"
+
+[[expansion]]
+id_expansion = 6437
+name = "Discover Promo"
+
+[[expansion]]
+id_expansion = 6551
+name = "Wilds Unknown"
+
+[[expansion]]
+id_expansion = 6586
+name = "Attack of the Vine!"
+
+[[expansion]]
+id_expansion = 6623
+name = "Curator’s Collection: Heroines Edition"
+
+[[expansion]]
+id_expansion = 6662
+name = "Promos Year 4"
+
+[[expansion]]
+id_expansion = 6670
+name = "Hyperia City"
+
+[[expansion]]
+id_expansion = 6688
+name = "Product Year 1"
+
+[[expansion]]
+id_expansion = 6689
+name = "Illumineer's Quest: The Great Hunny Rescue"
+
+[[expansion]]
+id_expansion = 6758
+name = "Lorcana Challenge Promos Year 4"
+
+[[expansion]]
+id_expansion = 6806
+name = "Curator’s Collection: Beauty and the Beast"
+
+[[expansion]]
+id_expansion = 6918
+name = "Ravensburger Play Hub Promo"
+
+[[expansion]]
+id_expansion = 6973
+name = "Promos Year 5"
+
+# Stand-ins with sealed products only (not in Cardmarket's singles filter), named after those products.
+
+[[expansion]]
+id_expansion = 6919
+name = "Into the Inkdark"
+
+# Not named yet (no name on Cardmarket's singles filter, no sealed product); a few of their products:
+# 0 (3 products): Maxi Collection (Up to 1000 cards), Mega Collection (More than 1000 cards), Mini Collection (Up to 100 cards)

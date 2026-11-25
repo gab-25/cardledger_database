@@ -14,7 +14,7 @@ _PRODUCT_KEYS = {
     "image_large_url": str,
     "unmatched": bool,
 }
-_EXPANSION_KEYS = {"id_expansion": int, "code": str, "name": str, "released_at": date}
+_EXPANSION_KEYS = {"id_expansion": int, "name": str, "released_at": date}
 _CARD_FIELDS = ("set_code", "collector_number", "rarity", "image_url", "image_large_url")
 
 
@@ -41,20 +41,25 @@ def _check(entries, schema: dict, section: str, required: str, path: Path) -> tu
     return tuple(dict(e) for e in entries)
 
 
-def load(slug: str, root: Path = Path("corrections")) -> Corrections:
-    path = root / f"{slug}.toml"
+def _read(path: Path, section: str, schema: dict, required: str) -> tuple[dict, ...]:
+    """The checked entries of a file's one allowed section; a missing file has none."""
     if not path.exists():
-        return Corrections()
+        return ()
     try:
         data = tomllib.loads(path.read_text(encoding="utf-8"))
     except (tomllib.TOMLDecodeError, UnicodeDecodeError) as exc:
         raise ValueError(f"{path}: invalid TOML: {exc}") from exc
-    unknown = set(data) - {"product", "expansion"}
+    unknown = set(data) - {section}
     if unknown:
         raise ValueError(f"{path}: unknown section {sorted(unknown)[0]!r}")
+    return _check(data.get(section, []), schema, section, required, path)
+
+
+def load(slug: str, root: Path = Path("corrections"), expansions_root: Path = Path("expansions")) -> Corrections:
+    """The card fixes of corrections/<slug>.toml and the expansion names of expansions/<slug>.toml."""
     return Corrections(
-        _check(data.get("product", []), _PRODUCT_KEYS, "product", "id_product", path),
-        _check(data.get("expansion", []), _EXPANSION_KEYS, "expansion", "id_expansion", path),
+        _read(root / f"{slug}.toml", "product", _PRODUCT_KEYS, "id_product"),
+        _read(expansions_root / f"{slug}.toml", "expansion", _EXPANSION_KEYS, "id_expansion"),
     )
 
 
@@ -66,7 +71,6 @@ def apply(
     expansion_ids = {p.id_expansion for p in products}
     cards = dict(enrichment.cards)
     sets = dict(enrichment.sets)
-    expansions = dict(enrichment.expansions)
 
     for entry in corrections.product:
         pid = entry["id_product"]
@@ -89,17 +93,11 @@ def apply(
         if eid not in expansion_ids:
             warnings.append(f"correction for expansion {eid} skipped: not in the product list")
             continue
-        if "code" not in entry:
-            warnings.append(f"correction for expansion {eid} skipped: no code given")
+        if "name" not in entry:
+            warnings.append(f"correction for expansion {eid} skipped: no name given")
             continue
-        code = entry["code"].lower()
-        old = sets.get(code)
-        sets[code] = SourceSet(
-            code,
-            entry.get("name", old.name if old else code.upper()),
-            entry.get("released_at", old.released_at if old else None),
-            old.language if old else "",
-        )
-        expansions[eid] = code
+        # Names the stand-in only: the expansion's products still follow the vote once the source has the set.
+        code = f"cmx{eid}"
+        sets[code] = SourceSet(code, entry["name"], entry.get("released_at"))
 
-    return Enrichment(cards, sets, expansions), warnings
+    return Enrichment(cards, sets, enrichment.expansions), warnings

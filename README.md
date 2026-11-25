@@ -45,7 +45,9 @@ most 2% `wrong_certain` for it.
 ## Corrections
 
 Wrong or missing images, rarities and set codes are fixed by hand in `corrections/<slug>.toml`, applied on every run.
-See [corrections/README.md](corrections/README.md).
+See [corrections/README.md](corrections/README.md). Expansions the source has no set for are named by hand in
+`expansions/<slug>.toml`: see [expansions/README.md](expansions/README.md). Some of those names are copied by hand from
+Cardmarket's site, which is not an openly licensed source (a deliberate exception for a list of names).
 
 ## Running
 
@@ -60,11 +62,12 @@ uv run cardledger-db upload                  # every catalog and its index to th
 uv run cardledger-db upload --game pokemon   # only some games
 ```
 
-Run it from the repository root (`corrections/` is read relative to the working directory); `--out` and `--cache`
+Run it from the repository root (`corrections/` and `expansions/` are read relative to the working directory); `--out` and `--cache`
 change the output and cache folders.
 
 `generate` logs, per game, the products, the products enriched by the source, the expansions and the share with an
-image: compare them with the previous run before uploading. A game that fails (its source or its index) keeps its previous
+image: compare them with the previous run before uploading. It also warns about the Cardmarket expansions the source has no set
+for and `expansions/<slug>.toml` does not name yet (their id and product count): add them there. A game that fails (its source or its index) keeps its previous
 files in `out/`, and the command exits with 1. `upload` refuses to start if a requested game has no catalog or no
 index, or if its index was built from another catalog (run `index`). The TCGdex cards are cached in
 `.cache/tcgdex/`, the card images and their hashes in `.cache/vision/`: keep that folder between runs, without it every
