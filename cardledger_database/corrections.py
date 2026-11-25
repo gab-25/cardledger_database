@@ -14,7 +14,7 @@ _PRODUCT_KEYS = {
     "image_large_url": str,
     "unmatched": bool,
 }
-_EXPANSION_KEYS = {"id_expansion": int, "code": str, "name": str, "released_at": date}
+_EXPANSION_KEYS = {"id_expansion": int, "name": str, "released_at": date}
 _CARD_FIELDS = ("set_code", "collector_number", "rarity", "image_url", "image_large_url")
 
 
@@ -71,7 +71,6 @@ def apply(
     expansion_ids = {p.id_expansion for p in products}
     cards = dict(enrichment.cards)
     sets = dict(enrichment.sets)
-    expansions = dict(enrichment.expansions)
 
     for entry in corrections.product:
         pid = entry["id_product"]
@@ -94,18 +93,11 @@ def apply(
         if eid not in expansion_ids:
             warnings.append(f"correction for expansion {eid} skipped: not in the product list")
             continue
-        if "code" not in entry:
-            warnings.append(f"correction for expansion {eid} skipped: no code given")
+        if "name" not in entry:
+            warnings.append(f"correction for expansion {eid} skipped: no name given")
             continue
-        code = entry["code"].lower()
-        old = sets.get(code)
-        sets[code] = SourceSet(
-            code,
-            entry.get("name", old.name if old else code.upper()),
-            entry.get("released_at", old.released_at if old else None),
-            old.language if old else "",
-        )
-        if code != f"cmx{eid}":  # a stand-in's name only: its products still follow the vote once the source has them
-            expansions[eid] = code
+        # Names the stand-in only: the expansion's products still follow the vote once the source has the set.
+        code = f"cmx{eid}"
+        sets[code] = SourceSet(code, entry["name"], entry.get("released_at"))
 
-    return Enrichment(cards, sets, expansions), warnings
+    return Enrichment(cards, sets, enrichment.expansions), warnings
