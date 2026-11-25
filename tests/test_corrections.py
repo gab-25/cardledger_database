@@ -115,3 +115,11 @@ def write_inline(text, folder="corrections"):
 
     d = Path(tempfile.mkdtemp())
     return write(d, text, folder=folder)
+
+
+def test_stand_in_code_only_names_the_set_and_leaves_the_vote_alone():
+    c = write_inline('[[expansion]]\nid_expansion = 20\ncode = "cmx20"\nname = "Promos"\n', "expansions")
+    e, warnings = apply(c, [prod(1, id_expansion=20)], base())
+    assert 20 not in e.expansions
+    assert e.sets["cmx20"] == SourceSet("cmx20", "Promos", None)
+    assert warnings == []

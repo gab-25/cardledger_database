@@ -193,3 +193,18 @@ def test_shared_image_only_between_singles():
 def test_other_games_do_not_share_images():
     e = enrich({1: card("lea")})
     assert by_id(assemble(GAMES["mtg"], [prod(1, name="Bolt"), prod(2, name="Bolt")], e, SINGLES))[2].image_url == ""
+
+
+def test_stand_in_takes_its_name_from_the_sets():
+    e = enrich({1: card("sv1")}, {"cmx99": SourceSet("cmx99", "Promos", None)})
+    c = assemble(GAMES["pokemon"], [prod(1), prod(2, id_expansion=99)], e, SINGLES)
+    assert by_id(c)[2].expansion_code == "cmx99"
+    assert {x.code: x.name for x in c.expansions}["cmx99"] == "Promos"
+
+
+def test_named_stand_in_gives_way_to_the_vote_once_the_source_has_the_set():
+    e = enrich({1: card("op19")}, {"cmx10": SourceSet("cmx10", "OP19", None)})
+    products = [prod(1), prod(9, id_category=5, name="OP19 Booster", category_name="Booster")]
+    c = assemble(GAMES["onepiece"], products, e, SINGLES)
+    assert by_id(c)[9].expansion_code == "op19"
+    assert [x.code for x in c.expansions] == ["op19"]

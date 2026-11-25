@@ -59,7 +59,8 @@ def assemble(game: Game, products: list[CmProduct], enrichment: Enrichment,
                     skipped += 1
                     continue
                 code = f"cmx{p.id_expansion}"
-                stand_ins[code] = SourceSet(code, f"Cardmarket expansion #{p.id_expansion}", None)
+                stand_ins[code] = enrichment.sets.get(code) or SourceSet(
+                    code, f"Cardmarket expansion #{p.id_expansion}", None)
         if not image and p.id_category in single_category_ids:
             image, large = shared.get((p.id_expansion, p.name), (image, large))
         rows.append(Product(p.id_product, p.name[:200], code, number[:40], rarity[:40], image[:500], large[:500],

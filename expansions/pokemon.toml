@@ -153,7 +153,7 @@ name = "VMAX Starter Decks"
 [[expansion]]  # 123 products
 id_expansion = 3600
 code = "cmx3600"
-name = "Sword & Shield"
+name = "Sword & Shield Starter Decks"
 
 [[expansion]]  # 8 products
 id_expansion = 3605
@@ -968,7 +968,7 @@ name = "Start Deck 100 CoroCoro Comic Version"
 [[expansion]]  # 108 products
 id_expansion = 4786
 code = "cmx4786"
-name = "Pokémon GO"
+name = "Pokémon GO Enhanced Expansion Pack"
 
 [[expansion]]  # 90 products
 id_expansion = 4973
@@ -1153,7 +1153,7 @@ name = "Starter Deck & Build Set Future Miraidon ex"
 [[expansion]]  # 101 products
 id_expansion = 5621
 code = "cmx5621"
-name = "Scarlet & Violet"
+name = "Scarlet & Violet Battle Academy"
 
 [[expansion]]  # 27 products
 id_expansion = 5681
@@ -1658,7 +1658,7 @@ name = "CS2bC: Vivid Portrayals - Indigo"
 [[expansion]]  # 182 products
 id_expansion = 6287
 code = "cmx6287"
-name = "Black & White"
+name = "Black & White ID/TH"
 
 [[expansion]]  # 98 products
 id_expansion = 6288
@@ -1843,7 +1843,7 @@ name = "MEGA Start Deck 100 Battle Collection Corociao Version"
 [[expansion]]  # 64 products
 id_expansion = 6394
 code = "cmx6394"
-name = "Mega Evolution"
+name = "Mega Evolution ID/TH"
 
 [[expansion]]  # 164 products
 id_expansion = 6397

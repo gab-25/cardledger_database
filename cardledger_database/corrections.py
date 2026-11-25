@@ -105,6 +105,7 @@ def apply(
             entry.get("released_at", old.released_at if old else None),
             old.language if old else "",
         )
-        expansions[eid] = code
+        if code != f"cmx{eid}":  # a stand-in's name only: its products still follow the vote once the source has them
+            expansions[eid] = code
 
     return Enrichment(cards, sets, expansions), warnings
