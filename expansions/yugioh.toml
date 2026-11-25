@@ -1,1397 +1,5083 @@
-# Names for the Cardmarket expansions the yugioh source has no set for (see README.md).
+# Names of every yugioh expansion on Cardmarket that has singles, copied by hand from the expansion filter of
+# https://www.cardmarket.com/en/YuGiOh/Products/Singles on 2026-11-25 (see README.md).
 
-[[expansion]]  # 317 products
+[[expansion]]
+id_expansion = 1011
+name = "Force of the Breaker"
+
+[[expansion]]
+id_expansion = 1012
+name = "Ancient Sanctuary"
+
+[[expansion]]
+id_expansion = 1013
+name = "Dark Revelation 2"
+
+[[expansion]]
+id_expansion = 1014
+name = "Dark Beginning 1"
+
+[[expansion]]
 id_expansion = 1015
 name = "Pharaoh's Servant"
 
-[[expansion]]  # 434 products
+[[expansion]]
 id_expansion = 1016
 name = "Metal Raiders"
 
-[[expansion]]  # 52 products
+[[expansion]]
+id_expansion = 1017
+name = "Structure Deck: Fury From The Deep"
+
+[[expansion]]
 id_expansion = 1018
 name = "Starter Deck: Joey"
 
-[[expansion]]  # 214 products
+[[expansion]]
+id_expansion = 1019
+name = "Pharaonic Guardian"
+
+[[expansion]]
+id_expansion = 1020
+name = "Dark Revelation 1"
+
+[[expansion]]
+id_expansion = 1021
+name = "Gladiator's Assault"
+
+[[expansion]]
+id_expansion = 1022
+name = "Strike of Neos"
+
+[[expansion]]
 id_expansion = 1023
 name = "Dark Crisis"
 
-[[expansion]]  # 231 products
+[[expansion]]
+id_expansion = 1024
+name = "Champion Pack: Game Three"
+
+[[expansion]]
+id_expansion = 1025
+name = "Flaming Eternity"
+
+[[expansion]]
+id_expansion = 1026
+name = "Legacy of Darkness"
+
+[[expansion]]
+id_expansion = 1027
+name = "Duelist Pack: Jaden Yuki"
+
+[[expansion]]
 id_expansion = 1028
 name = "Invasion of Chaos"
 
-[[expansion]]  # 111 products
+[[expansion]]
+id_expansion = 1029
+name = "Dark Beginning 2"
+
+[[expansion]]
+id_expansion = 1030
+name = "Hobby League 1"
+
+[[expansion]]
+id_expansion = 1031
+name = "Cybernetic Revolution"
+
+[[expansion]]
+id_expansion = 1032
+name = "Rise of Destiny"
+
+[[expansion]]
+id_expansion = 1033
+name = "Cyberdark Impact"
+
+[[expansion]]
+id_expansion = 1034
+name = "Soul of the Duelist"
+
+[[expansion]]
+id_expansion = 1035
+name = "Kapselmonster Kolosseum"
+
+[[expansion]]
+id_expansion = 1036
+name = "Champion Pack: Game Two"
+
+[[expansion]]
+id_expansion = 1037
+name = "Tactical Evolution"
+
+[[expansion]]
+id_expansion = 1039
+name = "Dark Duel Stories"
+
+[[expansion]]
+id_expansion = 1040
+name = "Shadow of Infinity"
+
+[[expansion]]
+id_expansion = 1041
+name = "Phantom Darkness"
+
+[[expansion]]
 id_expansion = 1042
 name = "Magician's Force"
 
-[[expansion]]  # 317 products
+[[expansion]]
+id_expansion = 1043
+name = "Tournament Pack 6"
+
+[[expansion]]
+id_expansion = 1044
+name = "Duelist of the Roses"
+
+[[expansion]]
 id_expansion = 1045
 name = "Labyrinth of Nightmare"
 
-[[expansion]]  # 240 products
+[[expansion]]
+id_expansion = 1046
+name = "Sneak Preview 1"
+
+[[expansion]]
+id_expansion = 1047
+name = "Tournament Pack 7"
+
+[[expansion]]
 id_expansion = 1048
 name = "Magic Ruler"
 
-[[expansion]]  # 149 products
+[[expansion]]
+id_expansion = 1049
+name = "McDonald's Promo Pack 2"
+
+[[expansion]]
+id_expansion = 1050
+name = "Duelist Pack: Jesse Anderson"
+
+[[expansion]]
 id_expansion = 1051
 name = "Starter Deck: Yugi"
 
-[[expansion]]  # 148 products
+[[expansion]]
+id_expansion = 1052
+name = "Structure Deck: Machine Re-Volt"
+
+[[expansion]]
+id_expansion = 1053
+name = "The Lost Millennium"
+
+[[expansion]]
+id_expansion = 1054
+name = "Sneak Preview 2"
+
+[[expansion]]
 id_expansion = 1055
 name = "Starter Deck: Kaiba"
 
-[[expansion]]  # 235 products
-id_expansion = 1057
-name = "Light of Destruction (2024 Reprint)"
+[[expansion]]
+id_expansion = 1056
+name = "Exclusive Pack 1"
 
-[[expansion]]  # 483 products
+[[expansion]]
+id_expansion = 1057
+name = "Light of Destruction"
+
+[[expansion]]
+id_expansion = 1058
+name = "Tournament Pack 3"
+
+[[expansion]]
+id_expansion = 1059
+name = "Power of Chaos: Yugi the Destiny"
+
+[[expansion]]
+id_expansion = 1060
+name = "Champion Pack: Game Four"
+
+[[expansion]]
+id_expansion = 1061
+name = "Structure Deck: Spellcaster's Judgment"
+
+[[expansion]]
+id_expansion = 1062
+name = "Power of Chaos: Kaiba the Revenge"
+
+[[expansion]]
+id_expansion = 1063
+name = "Structure Deck: Lord of the Storm"
+
+[[expansion]]
 id_expansion = 1064
 name = "Legend of Blue Eyes White Dragon"
 
-[[expansion]]  # 52 products
+[[expansion]]
 id_expansion = 1065
 name = "Starter Deck: Pegasus"
 
-[[expansion]]  # 12 products
+[[expansion]]
+id_expansion = 1066
+name = "Shonen Jump Magazine"
+
+[[expansion]]
+id_expansion = 1067
+name = "Duelist Pack: Chazz Princeton"
+
+[[expansion]]
+id_expansion = 1068
+name = "Elemental Energy"
+
+[[expansion]]
+id_expansion = 1069
+name = "Structure Deck: Dragon's Roar"
+
+[[expansion]]
+id_expansion = 1070
+name = "Structure Deck: Warrior's Triumph"
+
+[[expansion]]
+id_expansion = 1071
+name = "Duelist Pack: Jaden Yuki 3"
+
+[[expansion]]
+id_expansion = 1072
+name = "Hobby League 4"
+
+[[expansion]]
+id_expansion = 1073
+name = "Duelist Pack: Zane Truesdale"
+
+[[expansion]]
+id_expansion = 1074
+name = "Enemy of Justice"
+
+[[expansion]]
+id_expansion = 1075
+name = "Starter Deck: Yugi Evolution"
+
+[[expansion]]
+id_expansion = 1076
+name = "Tournament Pack 1"
+
+[[expansion]]
+id_expansion = 1077
+name = "Booster Pack Tin"
+
+[[expansion]]
+id_expansion = 1078
+name = "Structure Deck: Dinosaur's Rage"
+
+[[expansion]]
+id_expansion = 1079
+name = "Structure Deck: Blaze of Destruction"
+
+[[expansion]]
+id_expansion = 1080
+name = "Master Collection Vol. 1"
+
+[[expansion]]
+id_expansion = 1081
+name = "Starter Deck: Kaiba Evolution"
+
+[[expansion]]
+id_expansion = 1082
+name = "Tournament Pack 5"
+
+[[expansion]]
+id_expansion = 1083
+name = "Tournament Pack 2"
+
+[[expansion]]
+id_expansion = 1084
+name = "Tournament Pack 8"
+
+[[expansion]]
+id_expansion = 1085
+name = "Champion Pack: Game One"
+
+[[expansion]]
+id_expansion = 1086
+name = "Master Collection Vol. 2"
+
+[[expansion]]
+id_expansion = 1087
+name = "Premium Pack 1"
+
+[[expansion]]
+id_expansion = 1088
+name = "Starter Deck: GX 2006"
+
+[[expansion]]
+id_expansion = 1089
+name = "Collector's Tins 2004"
+
+[[expansion]]
+id_expansion = 1090
+name = "Banzai Promos!"
+
+[[expansion]]
+id_expansion = 1091
+name = "GX Card Almanac"
+
+[[expansion]]
+id_expansion = 1092
+name = "Duelist Pack 1&2 Special Edition"
+
+[[expansion]]
+id_expansion = 1093
+name = "Yu-Gi-Oh! The Movie"
+
+[[expansion]]
+id_expansion = 1094
+name = "Forbidden Legacy 1"
+
+[[expansion]]
+id_expansion = 1095
+name = "Structure Deck: Zombie Madness"
+
+[[expansion]]
+id_expansion = 1096
+name = "Structure Deck: Invincible Fortress"
+
+[[expansion]]
+id_expansion = 1097
+name = "GX Spirit Caller"
+
+[[expansion]]
+id_expansion = 1098
+name = "GX Tag Force Evolution (PS2)"
+
+[[expansion]]
+id_expansion = 1099
+name = "Duelist Pack: Jaden Yuki 2"
+
+[[expansion]]
+id_expansion = 1100
+name = "Tournament Pack 4"
+
+[[expansion]]
+id_expansion = 1101
+name = "GX Tag Force 2"
+
+[[expansion]]
+id_expansion = 1102
+name = "Mattel Action Figure Serie 3"
+
+[[expansion]]
+id_expansion = 1103
+name = "Duelist Pack: Aster Phoenix"
+
+[[expansion]]
+id_expansion = 1104
+name = "McDonald's Promo Pack 1"
+
+[[expansion]]
+id_expansion = 1105
+name = "Hobby League 3"
+
+[[expansion]]
+id_expansion = 1106
+name = "Hobby League 5"
+
+[[expansion]]
 id_expansion = 1107
 name = "Collector's Tins 2006"
 
-[[expansion]]  # 12 products
+[[expansion]]
+id_expansion = 1108
+name = "Mattel Action Figure Serie 2"
+
+[[expansion]]
+id_expansion = 1109
+name = "Hobby League 2"
+
+[[expansion]]
+id_expansion = 1110
+name = "Destiny Board Traveler"
+
+[[expansion]]
+id_expansion = 1111
+name = "Collector's Tins 2005"
+
+[[expansion]]
+id_expansion = 1112
+name = "Duel Master's Guide"
+
+[[expansion]]
+id_expansion = 1113
+name = "Dawn of Destiny"
+
+[[expansion]]
+id_expansion = 1114
+name = "World Championship 2007"
+
+[[expansion]]
 id_expansion = 1115
 name = "Collector's Tins 2007"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 1116
+name = "GX Duel Academy"
+
+[[expansion]]
+id_expansion = 1117
+name = "Mattel Action Figure Serie 1"
+
+[[expansion]]
 id_expansion = 1118
 name = "GX Special Edition"
 
-[[expansion]]  # 49 products
+[[expansion]]
+id_expansion = 1119
+name = "Eternal Duelist's Soul"
+
+[[expansion]]
+id_expansion = 1120
+name = "GX Ultimate Beginner's Pack 1"
+
+[[expansion]]
+id_expansion = 1121
+name = "World Championship 2004"
+
+[[expansion]]
+id_expansion = 1122
+name = "World Championship 2006"
+
+[[expansion]]
+id_expansion = 1123
+name = "Stairway to the Destined Duel"
+
+[[expansion]]
+id_expansion = 1124
+name = "Forbidden Memories"
+
+[[expansion]]
+id_expansion = 1125
+name = "World Championship 2005"
+
+[[expansion]]
 id_expansion = 1126
-name = "YCS 2025 Promo Card Pack"
+name = "World Championship Series Promos"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 1128
+name = "Nightmare Troubadour"
+
+[[expansion]]
+id_expansion = 1129
+name = "The Sacred Cards"
+
+[[expansion]]
+id_expansion = 1130
+name = "GX Tag Force (PSP)"
+
+[[expansion]]
+id_expansion = 1131
+name = "Pharaoh Tour 2006"
+
+[[expansion]]
 id_expansion = 1132
-name = "GX Next Generation: Special Edition"
+name = "GX Next Generation"
 
-[[expansion]]  # 44 products
+[[expansion]]
+id_expansion = 1141
+name = "Gold Series 1"
+
+[[expansion]]
+id_expansion = 1142
+name = "Dark Revelation 3"
+
+[[expansion]]
+id_expansion = 1143
+name = "Dark Revelation 4"
+
+[[expansion]]
+id_expansion = 1144
+name = "Power of the Duelist"
+
+[[expansion]]
+id_expansion = 1145
+name = "Premium Pack 2"
+
+[[expansion]]
+id_expansion = 1146
+name = "The Duelist Genesis"
+
+[[expansion]]
 id_expansion = 1147
-name = "5D's Starter Deck 2008 (OCG)"
+name = "Starter Deck: 2008"
 
-[[expansion]]  # 63 products
+[[expansion]]
+id_expansion = 1148
+name = "Champion Pack: Game Five"
+
+[[expansion]]
+id_expansion = 1149
+name = "Champion Pack: Game Six"
+
+[[expansion]]
+id_expansion = 1150
+name = "Starter Deck: Syrus"
+
+[[expansion]]
+id_expansion = 1154
+name = "Structure Deck: Zombie World"
+
+[[expansion]]
+id_expansion = 1156
+name = "Crossroads of Chaos"
+
+[[expansion]]
+id_expansion = 1157
+name = "Hobby League 6"
+
+[[expansion]]
+id_expansion = 1158
+name = "Hobby League 7"
+
+[[expansion]]
+id_expansion = 1159
+name = "GX Manga Promos"
+
+[[expansion]]
+id_expansion = 1160
+name = "Gameboy Worldwide Edition Promos"
+
+[[expansion]]
+id_expansion = 1161
+name = "Crimson Crisis"
+
+[[expansion]]
+id_expansion = 1163
+name = "Gold Series 2"
+
+[[expansion]]
+id_expansion = 1164
+name = "Raging Battle"
+
+[[expansion]]
 id_expansion = 1169
 name = "Duelist Pack: Yugi"
 
-[[expansion]]  # 207 products
+[[expansion]]
+id_expansion = 1170
+name = "Duelist Pack: Yusei Fudo"
+
+[[expansion]]
+id_expansion = 1171
+name = "Anniversary Pack"
+
+[[expansion]]
+id_expansion = 1172
+name = "Starter Deck: 2009"
+
+[[expansion]]
+id_expansion = 1173
+name = "Starter Deck: Yu-Gi-Oh! 5D's"
+
+[[expansion]]
+id_expansion = 1174
+name = "Ancient Prophecy"
+
+[[expansion]]
 id_expansion = 1175
 name = "Retro Pack 2"
 
-[[expansion]]  # 207 products
+[[expansion]]
 id_expansion = 1176
 name = "Retro Pack"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 1177
+name = "Hidden Arsenal"
+
+[[expansion]]
+id_expansion = 1178
+name = "Stardust Overdrive"
+
+[[expansion]]
+id_expansion = 1179
+name = "Turbo Pack"
+
+[[expansion]]
+id_expansion = 1180
+name = "Structure Deck: Warrior's Strike"
+
+[[expansion]]
+id_expansion = 1181
+name = "Structure Deck: Rise of the Dragon Lords"
+
+[[expansion]]
+id_expansion = 1182
+name = "Structure Deck: The Dark Emperor"
+
+[[expansion]]
+id_expansion = 1183
+name = "Shonen Jump Championship Series"
+
+[[expansion]]
+id_expansion = 1186
+name = "Duelist Pack: Yusei Fudo 2"
+
+[[expansion]]
+id_expansion = 1187
+name = "Absolute Powerforce"
+
+[[expansion]]
+id_expansion = 1188
+name = "Structure Deck: Machina Mayhem"
+
+[[expansion]]
 id_expansion = 1189
 name = "Twilight Edition"
 
-[[expansion]]  # 84 products
+[[expansion]]
+id_expansion = 1190
+name = "Duelist Pack Collection Tin 2010"
+
+[[expansion]]
 id_expansion = 1191
 name = "Duelist Pack: Kaiba"
 
-[[expansion]]  # 341 products
+[[expansion]]
+id_expansion = 1196
+name = "The Shining Darkness"
+
+[[expansion]]
+id_expansion = 1201
+name = "Hidden Arsenal 2"
+
+[[expansion]]
+id_expansion = 1204
+name = "Gold Series 3"
+
+[[expansion]]
+id_expansion = 1205
+name = "Duelist Revolution"
+
+[[expansion]]
+id_expansion = 1207
+name = "Turbo Pack: Booster Two"
+
+[[expansion]]
+id_expansion = 1208
+name = "Turbo Pack: Booster Three"
+
+[[expansion]]
+id_expansion = 1219
+name = "Structure Deck: Spellcaster's Command"
+
+[[expansion]]
+id_expansion = 1220
+name = "Structure Deck: Marik"
+
+[[expansion]]
+id_expansion = 1221
+name = "Collector's Tins 2010"
+
+[[expansion]]
+id_expansion = 1222
+name = "Collector's Tins 2008"
+
+[[expansion]]
+id_expansion = 1223
+name = "Collector's Tins 2009"
+
+[[expansion]]
+id_expansion = 1224
+name = "Starstrike Blast"
+
+[[expansion]]
+id_expansion = 1225
+name = "Legendary Collection"
+
+[[expansion]]
+id_expansion = 1226
+name = "Champion Pack: Game Seven"
+
+[[expansion]]
+id_expansion = 1227
+name = "Champion Pack: Game Eight"
+
+[[expansion]]
+id_expansion = 1236
+name = "Dark Legends"
+
+[[expansion]]
+id_expansion = 1237
+name = "Reshef of Destruction Promos"
+
+[[expansion]]
+id_expansion = 1238
+name = "Ultimate Edition Promotional Cards: Series 2"
+
+[[expansion]]
+id_expansion = 1239
+name = "The Falsebound Kingdom Promos"
+
+[[expansion]]
+id_expansion = 1240
+name = "World Championship 2010 Card Pack"
+
+[[expansion]]
+id_expansion = 1241
+name = "Power of Chaos: Joey the Passion"
+
+[[expansion]]
+id_expansion = 1242
+name = "Pharaoh Tour 2005"
+
+[[expansion]]
+id_expansion = 1243
+name = "Pharaoh Tour 2007"
+
+[[expansion]]
+id_expansion = 1244
+name = "Hidden Arsenal 3"
+
+[[expansion]]
+id_expansion = 1245
+name = "Turbo Pack: Booster Four"
+
+[[expansion]]
 id_expansion = 1250
 name = "Spell Ruler"
 
-[[expansion]]  # 22 products
+[[expansion]]
+id_expansion = 1251
+name = "King of Cities Tour Promos"
+
+[[expansion]]
+id_expansion = 1252
+name = "Yu-Gi-Oh! 5D's Wheelie Breakers Promos"
+
+[[expansion]]
+id_expansion = 1254
+name = "Duelist Pack: Yusei Fudo 3"
+
+[[expansion]]
+id_expansion = 1255
+name = "Token Promos 1"
+
+[[expansion]]
+id_expansion = 1256
+name = "Token Promos 2"
+
+[[expansion]]
+id_expansion = 1257
+name = "Token Promos 3"
+
+[[expansion]]
+id_expansion = 1258
+name = "Storm of Ragnarok"
+
+[[expansion]]
+id_expansion = 1260
+name = "3D Bonds Beyond Time Movie Pack"
+
+[[expansion]]
+id_expansion = 1263
+name = "Hidden Arsenal 4"
+
+[[expansion]]
+id_expansion = 1264
+name = "Extreme Victory"
+
+[[expansion]]
+id_expansion = 1265
+name = "Structure Deck: Dragunity Legion"
+
+[[expansion]]
+id_expansion = 1266
+name = "Turbo Pack: Booster Five"
+
+[[expansion]]
+id_expansion = 1271
+name = "Duelist Pack: Crow"
+
+[[expansion]]
+id_expansion = 1272
+name = "World Championship Qualifier 2011 Promos"
+
+[[expansion]]
+id_expansion = 1274
+name = "5D's Tag Force 5 Promotional Cards"
+
+[[expansion]]
+id_expansion = 1276
+name = "Structure Deck: Lost Sanctuary"
+
+[[expansion]]
+id_expansion = 1277
+name = "Gold Series 4: Pyramids Edition"
+
+[[expansion]]
+id_expansion = 1282
+name = "Starter Deck: Dawn of the Xyz"
+
+[[expansion]]
+id_expansion = 1284
+name = "Hidden Arsenal: Special Edition"
+
+[[expansion]]
+id_expansion = 1285
+name = "Generation Force"
+
+[[expansion]]
+id_expansion = 1287
+name = "Turbo Pack: Booster Six"
+
+[[expansion]]
 id_expansion = 1289
 name = "Collector's Tins 2011"
 
-[[expansion]]  # 25 products
+[[expansion]]
+id_expansion = 1291
+name = "Starter Deck: Duelist Toolbox"
+
+[[expansion]]
+id_expansion = 1322
+name = "5D's Reverse of Arcadia Promotional Cards"
+
+[[expansion]]
+id_expansion = 1323
+name = "5D's Stardust Accelerator Promotional Cards"
+
+[[expansion]]
+id_expansion = 1324
+name = "World Championship 2008"
+
+[[expansion]]
+id_expansion = 1325
+name = "5D's Over the Nexus Promotional Cards"
+
+[[expansion]]
+id_expansion = 1333
+name = "Structure Deck: Gates of the Underworld"
+
+[[expansion]]
 id_expansion = 1334
 name = "Advent Calendar 2011"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 1335
+name = "Legendary Collection 2: Mega Pack"
+
+[[expansion]]
+id_expansion = 1336
+name = "Legendary Collection 2: The Duel Academy Years"
+
+[[expansion]]
+id_expansion = 1338
+name = "Photon Shockwave"
+
+[[expansion]]
 id_expansion = 1340
-name = "Samurai Assault: Special Edition"
+name = "Samurai Assault"
 
-[[expansion]]  # 27 products
+[[expansion]]
+id_expansion = 1341
+name = "Hidden Arsenal 5"
+
+[[expansion]]
+id_expansion = 1346
+name = "Order of Chaos"
+
+[[expansion]]
+id_expansion = 1348
+name = "Structure Deck: Dragons Collide"
+
+[[expansion]]
+id_expansion = 1349
+name = "Turbo Pack: Booster Seven"
+
+[[expansion]]
+id_expansion = 1351
+name = "Ra Yellow Mega Pack"
+
+[[expansion]]
+id_expansion = 1352
+name = "5D's Duel Transer Promotional Cards"
+
+[[expansion]]
+id_expansion = 1353
+name = "Light and Darkness Power Pack"
+
+[[expansion]]
+id_expansion = 1354
+name = "5D's Tag Force 4 Promotional Cards"
+
+[[expansion]]
+id_expansion = 1355
+name = "Duelist Pack Collection Tin 2011"
+
+[[expansion]]
+id_expansion = 1357
+name = "Premium Collection"
+
+[[expansion]]
+id_expansion = 1363
+name = "Starter Deck: Xyz Symphony"
+
+[[expansion]]
+id_expansion = 1364
+name = "Galactic Overlord"
+
+[[expansion]]
 id_expansion = 1365
-name = "Masterpiece Series & Stainless Steel Cards"
+name = "Promos"
 
-[[expansion]]  # 28 products
+[[expansion]]
+id_expansion = 1366
+name = "Starter Deck: Jaden Yuki"
+
+[[expansion]]
+id_expansion = 1368
+name = "World Championship 2011 Card Pack"
+
+[[expansion]]
+id_expansion = 1370
+name = "Token Promos 4"
+
+[[expansion]]
+id_expansion = 1371
+name = "Battle Pack: Epic Dawn"
+
+[[expansion]]
+id_expansion = 1372
+name = "Gold Series 5: Haunted Mine"
+
+[[expansion]]
+id_expansion = 1373
+name = "Structure Deck: Samurai Warlords"
+
+[[expansion]]
+id_expansion = 1375
+name = "Duelist League 09"
+
+[[expansion]]
+id_expansion = 1376
+name = "Duelist League 11"
+
+[[expansion]]
+id_expansion = 1377
+name = "Duelist League 12"
+
+[[expansion]]
+id_expansion = 1378
+name = "Duelist League 13"
+
+[[expansion]]
+id_expansion = 1379
+name = "Duel Terminal Preview"
+
+[[expansion]]
+id_expansion = 1380
+name = "Duel Terminal 1"
+
+[[expansion]]
+id_expansion = 1381
+name = "Duel Terminal 2"
+
+[[expansion]]
+id_expansion = 1382
+name = "Duel Terminal 3"
+
+[[expansion]]
+id_expansion = 1383
+name = "Duel Terminal 4"
+
+[[expansion]]
+id_expansion = 1384
+name = "Duel Terminal 5"
+
+[[expansion]]
+id_expansion = 1385
+name = "Duel Terminal 6"
+
+[[expansion]]
+id_expansion = 1386
+name = "5D's Manga Promos"
+
+[[expansion]]
+id_expansion = 1387
+name = "Duelist League Demo 2010"
+
+[[expansion]]
+id_expansion = 1390
+name = "Turbo Pack: Booster Eight"
+
+[[expansion]]
+id_expansion = 1394
+name = "Hidden Arsenal 6"
+
+[[expansion]]
+id_expansion = 1396
+name = "Duelist League 14"
+
+[[expansion]]
 id_expansion = 1399
 name = "Collector's Tins 2012"
 
-[[expansion]]  # 12 products
-id_expansion = 1402
-name = "Lots & Miscellaneous Products"
+[[expansion]]
+id_expansion = 1403
+name = "Elemental Hero Collection 1"
 
-[[expansion]]  # 22 products
+[[expansion]]
+id_expansion = 1404
+name = "Elemental Hero Collection 2"
+
+[[expansion]]
+id_expansion = 1405
+name = "Return of the Duelist"
+
+[[expansion]]
+id_expansion = 1406
+name = "Oversized Cards"
+
+[[expansion]]
+id_expansion = 1410
+name = "Legendary Collection 3: Yugi's World"
+
+[[expansion]]
+id_expansion = 1411
+name = "Legendary Collection 3: Mega Pack"
+
+[[expansion]]
+id_expansion = 1412
+name = "Structure Deck: Realm of the Sea Emperor"
+
+[[expansion]]
+id_expansion = 1414
+name = "ZEXAL Manga Promos"
+
+[[expansion]]
+id_expansion = 1415
+name = "R Comic Book Promos"
+
+[[expansion]]
+id_expansion = 1416
+name = "GX Tag Force 3"
+
+[[expansion]]
+id_expansion = 1417
+name = "Battle Pack Tournament Prize Cards"
+
+[[expansion]]
+id_expansion = 1419
+name = "Abyss Rising"
+
+[[expansion]]
+id_expansion = 1423
+name = "Astral Pack One"
+
+[[expansion]]
+id_expansion = 1426
+name = "Cosmo Blazer"
+
+[[expansion]]
+id_expansion = 1427
+name = "Duelist League 15"
+
+[[expansion]]
+id_expansion = 1428
+name = "Structure Deck: Onslaught of the Fire Kings"
+
+[[expansion]]
+id_expansion = 1431
+name = "Star Pack 2013"
+
+[[expansion]]
+id_expansion = 1433
+name = "2013 Zexal Collection Tin"
+
+[[expansion]]
+id_expansion = 1436
+name = "Hidden Arsenal 7"
+
+[[expansion]]
+id_expansion = 1439
+name = "Duel Terminal 7"
+
+[[expansion]]
+id_expansion = 1440
+name = "Astral Pack Two"
+
+[[expansion]]
+id_expansion = 1441
+name = "Demo Pack"
+
+[[expansion]]
+id_expansion = 1442
+name = "Yugioh Filler Cards"
+
+[[expansion]]
+id_expansion = 1443
+name = "Lord of the Tachyon Galaxy"
+
+[[expansion]]
+id_expansion = 1445
+name = "Super Starter: V for Victory"
+
+[[expansion]]
+id_expansion = 1446
+name = "Battle Pack 2: War of the Giants"
+
+[[expansion]]
+id_expansion = 1448
+name = "Duel Disk - Yusei Version Promotional Cards"
+
+[[expansion]]
+id_expansion = 1450
+name = "Number Hunters"
+
+[[expansion]]
+id_expansion = 1452
+name = "Judgment of the Light"
+
+[[expansion]]
 id_expansion = 1453
 name = "Collector's Tins 2013"
 
-[[expansion]]  # 10 products
-id_expansion = 1459
-name = "Legendary Collection 4"
+[[expansion]]
+id_expansion = 1458
+name = "Structure Deck: Saga of Blue-Eyes White Dragon"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 1459
+name = "Legendary Collection 4: Joey's World"
+
+[[expansion]]
+id_expansion = 1460
+name = "Legendary Collection 4: Mega Pack"
+
+[[expansion]]
+id_expansion = 1461
+name = "Yu-Gi-Oh! Championship Series"
+
+[[expansion]]
+id_expansion = 1462
+name = "Astral Pack Three"
+
+[[expansion]]
 id_expansion = 1463
 name = "X-Saber Power-Up"
 
-[[expansion]]  # 26 products
+[[expansion]]
+id_expansion = 1465
+name = "Shadow Specters"
+
+[[expansion]]
+id_expansion = 1467
+name = "Starter Deck: Kaiba Reloaded"
+
+[[expansion]]
+id_expansion = 1468
+name = "Starter Deck: Yugi Reloaded"
+
+[[expansion]]
+id_expansion = 1470
+name = "Legacy of the Valiant"
+
+[[expansion]]
+id_expansion = 1471
+name = "Duelist League 16"
+
+[[expansion]]
+id_expansion = 1472
+name = "Battle Pack 2: War of the Giants - Round 2"
+
+[[expansion]]
+id_expansion = 1473
+name = "War of the Giants Reinforcements"
+
+[[expansion]]
+id_expansion = 1474
+name = "Structure Deck: Cyber Dragon Revolution"
+
+[[expansion]]
+id_expansion = 1475
+name = "Astral Pack Four"
+
+[[expansion]]
+id_expansion = 1476
+name = "Star Pack 2014"
+
+[[expansion]]
+id_expansion = 1478
+name = "Premium Gold"
+
+[[expansion]]
+id_expansion = 1479
+name = "Dragons of Legend"
+
+[[expansion]]
+id_expansion = 1480
+name = "Duelist League 17"
+
+[[expansion]]
+id_expansion = 1482
+name = "Primal Origin"
+
+[[expansion]]
+id_expansion = 1486
+name = "Structure Deck: The Realm of Light"
+
+[[expansion]]
+id_expansion = 1487
+name = "Astral Pack Five"
+
+[[expansion]]
+id_expansion = 1488
+name = "Super Starter: Space-Time Showdown"
+
+[[expansion]]
+id_expansion = 1489
+name = "Battle Pack 3: Monster League"
+
+[[expansion]]
+id_expansion = 1492
+name = "ZEXAL World Duel Carnival Promos"
+
+[[expansion]]
+id_expansion = 1493
+name = "Duelist Alliance"
+
+[[expansion]]
+id_expansion = 1497
+name = "2014 Mega-Tins"
+
+[[expansion]]
+id_expansion = 1498
+name = "2014 Mega-Tins Mega-Pack"
+
+[[expansion]]
+id_expansion = 1503
+name = "Duelist League 18"
+
+[[expansion]]
 id_expansion = 1504
 name = "Advent Calendar 2014"
 
-[[expansion]]  # 196 products
+[[expansion]]
+id_expansion = 1505
+name = "The New Challengers"
+
+[[expansion]]
+id_expansion = 1506
+name = "Structure Deck: Geargia Rampage"
+
+[[expansion]]
+id_expansion = 1507
+name = "Legendary Collection 5D's"
+
+[[expansion]]
+id_expansion = 1508
+name = "Legendary Collection 5D's: Mega Pack"
+
+[[expansion]]
+id_expansion = 1510
+name = "Yu-Gi-Oh! The Official Magazine Promos"
+
+[[expansion]]
+id_expansion = 1517
+name = "Noble Knights of the Round Table Box Set"
+
+[[expansion]]
+id_expansion = 1518
+name = "Astral Pack Six"
+
+[[expansion]]
+id_expansion = 1520
+name = "Secrets of Eternity"
+
+[[expansion]]
+id_expansion = 1590
+name = "Structure Deck: HERO Strike"
+
+[[expansion]]
+id_expansion = 1591
+name = "The Secret Forces"
+
+[[expansion]]
+id_expansion = 1598
+name = "Premium Gold 2"
+
+[[expansion]]
+id_expansion = 1640
+name = "World Superstars"
+
+[[expansion]]
+id_expansion = 1644
+name = "Fire Fists Special Edition"
+
+[[expansion]]
+id_expansion = 1647
+name = "Crossed Souls"
+
+[[expansion]]
+id_expansion = 1650
+name = "Star Pack Arc-V"
+
+[[expansion]]
+id_expansion = 1651
+name = "2-Player Starter Deck Yuya & Declan"
+
+[[expansion]]
+id_expansion = 1653
+name = "Astral Pack Seven"
+
+[[expansion]]
+id_expansion = 1656
+name = "Dragons of Legend 2"
+
+[[expansion]]
+id_expansion = 1657
+name = "Clash of Rebellions"
+
+[[expansion]]
+id_expansion = 1664
+name = "Structure Deck: Synchron Extreme"
+
+[[expansion]]
+id_expansion = 1671
+name = "2015 Mega-Tins"
+
+[[expansion]]
+id_expansion = 1672
+name = "2015 Mega-Tin Mega Pack"
+
+[[expansion]]
+id_expansion = 1673
+name = "High-Speed Riders"
+
+[[expansion]]
+id_expansion = 1674
+name = "Yugi's Legendary Decks"
+
+[[expansion]]
+id_expansion = 1677
+name = "Dimension of Chaos"
+
+[[expansion]]
+id_expansion = 1680
+name = "Astral Pack Eight"
+
+[[expansion]]
+id_expansion = 1681
+name = "Duelist Pack: Battle City"
+
+[[expansion]]
+id_expansion = 1682
+name = "Structure Deck: Master of Pendulum"
+
+[[expansion]]
+id_expansion = 1685
+name = "Breakers of Shadow"
+
+[[expansion]]
+id_expansion = 1689
+name = "Structure Deck: Emperor of Darkness"
+
+[[expansion]]
+id_expansion = 1690
+name = "Wing Raiders"
+
+[[expansion]]
+id_expansion = 1698
+name = "Premium Gold: Infinite Gold"
+
+[[expansion]]
+id_expansion = 1699
+name = "OTS Tournament Pack 1"
+
+[[expansion]]
+id_expansion = 1700
+name = "Millennium Pack"
+
+[[expansion]]
+id_expansion = 1701
+name = "Shining Victories"
+
+[[expansion]]
+id_expansion = 1708
+name = "Structure Deck: Rise of the True Dragons"
+
+[[expansion]]
+id_expansion = 1709
+name = "Starter Deck: Yuya"
+
+[[expansion]]
 id_expansion = 1711
-name = "The Dark Side of Dimensions"
+name = "The Dark Side of Dimensions Movie Pack"
 
-[[expansion]]  # 6 products
-id_expansion = 1770
-name = "CCG Grand Open 2017"
+[[expansion]]
+id_expansion = 1712
+name = "The Dark Illusion"
 
-[[expansion]]  # 3 products
+[[expansion]]
+id_expansion = 1713
+name = "Dragons of Legend: Unleashed"
+
+[[expansion]]
+id_expansion = 1714
+name = "2016 Mega-Tins"
+
+[[expansion]]
+id_expansion = 1715
+name = "2016 Mega-Tin Mega Pack"
+
+[[expansion]]
+id_expansion = 1721
+name = "Duelist Pack: Rivals of the Pharaoh"
+
+[[expansion]]
+id_expansion = 1724
+name = "OTS Tournament Pack 2"
+
+[[expansion]]
+id_expansion = 1734
+name = "Legendary Decks II"
+
+[[expansion]]
+id_expansion = 1735
+name = "Structure Deck: Yugi Muto"
+
+[[expansion]]
+id_expansion = 1736
+name = "Structure Deck: Seto Kaiba"
+
+[[expansion]]
+id_expansion = 1737
+name = "Invasion: Vengeance"
+
+[[expansion]]
+id_expansion = 1738
+name = "Destiny Soldiers"
+
+[[expansion]]
+id_expansion = 1739
+name = "Structure Deck: Pendulum Domination"
+
+[[expansion]]
+id_expansion = 1740
+name = "Raging Tempest"
+
+[[expansion]]
+id_expansion = 1743
+name = "Fusion Enforcers"
+
+[[expansion]]
+id_expansion = 1744
+name = "Duelist Saga"
+
+[[expansion]]
+id_expansion = 1746
+name = "OTS Tournament Pack 3"
+
+[[expansion]]
+id_expansion = 1759
+name = "Star Pack Battle Royal"
+
+[[expansion]]
+id_expansion = 1760
+name = "Maximum Crisis"
+
+[[expansion]]
+id_expansion = 1761
+name = "Demo Deck 2015"
+
+[[expansion]]
+id_expansion = 1762
+name = "Demo Deck 2016"
+
+[[expansion]]
+id_expansion = 1763
+name = "Structure Deck: Machine Reactor"
+
+[[expansion]]
+id_expansion = 1764
+name = "Structure Deck: Dinosmasher's Fury"
+
+[[expansion]]
+id_expansion = 1767
+name = "Duelist Pack: Dimensional Guardians"
+
+[[expansion]]
+id_expansion = 1768
+name = "Pendulum Evolution"
+
+[[expansion]]
+id_expansion = 1799
+name = "OTS Tournament Pack 4"
+
+[[expansion]]
+id_expansion = 1804
+name = "Starter Deck: Link Strike"
+
+[[expansion]]
+id_expansion = 1805
+name = "Battles of Legend: Light's Revenge"
+
+[[expansion]]
+id_expansion = 1806
+name = "Code of the Duelist"
+
+[[expansion]]
+id_expansion = 1807
+name = "2017 Mega-Tin Mega Pack"
+
+[[expansion]]
+id_expansion = 1808
+name = "2017 Mega-Tins"
+
+[[expansion]]
+id_expansion = 1810
+name = "ARC-V Manga Promos"
+
+[[expansion]]
+id_expansion = 1817
+name = "Legendary Duelists"
+
+[[expansion]]
+id_expansion = 1823
+name = "Legendary Dragon Decks"
+
+[[expansion]]
+id_expansion = 1826
+name = "OTS Tournament Pack 5"
+
+[[expansion]]
+id_expansion = 1827
+name = "Circuit Break"
+
+[[expansion]]
 id_expansion = 1831
 name = "Kaiba's Collector Box"
 
-[[expansion]]  # 3 products
+[[expansion]]
 id_expansion = 1832
 name = "Yugi's Collector Box"
 
-[[expansion]]  # 2 products
-id_expansion = 2071
-name = "HDK 2018"
+[[expansion]]
+id_expansion = 1839
+name = "Structure Deck: Cyberse Link"
 
-[[expansion]]  # 30 products
+[[expansion]]
+id_expansion = 1840
+name = "Spirit Warriors"
+
+[[expansion]]
+id_expansion = 1846
+name = "Yu-Gi-Oh! The Movie Ani-Manga"
+
+[[expansion]]
+id_expansion = 2024
+name = "Structure Deck: Wave of Light"
+
+[[expansion]]
+id_expansion = 2025
+name = "Extreme Force"
+
+[[expansion]]
+id_expansion = 2048
+name = "Legendary Duelists: Ancient Millennium"
+
+[[expansion]]
+id_expansion = 2050
+name = "OTS Tournament Pack 6"
+
+[[expansion]]
+id_expansion = 2066
+name = "Legendary Collection Kaiba Mega Pack"
+
+[[expansion]]
+id_expansion = 2067
+name = "Legendary Collection Kaiba"
+
+[[expansion]]
+id_expansion = 2069
+name = "Advanced Demo Deck Extra Pack"
+
+[[expansion]]
+id_expansion = 2074
+name = "Lost Art Promos"
+
+[[expansion]]
+id_expansion = 2076
+name = "Flames of Destruction"
+
+[[expansion]]
+id_expansion = 2077
+name = "OTS Tournament Pack 7"
+
+[[expansion]]
+id_expansion = 2078
+name = "Star Pack VRAINS"
+
+[[expansion]]
+id_expansion = 2079
+name = "Structure Deck: Lair of Darkness"
+
+[[expansion]]
+id_expansion = 2106
+name = "Dark Saviors"
+
+[[expansion]]
+id_expansion = 2169
+name = "Battles of Legend: Relentless Revenge"
+
+[[expansion]]
+id_expansion = 2170
+name = "Starter Deck: Codebreaker"
+
+[[expansion]]
+id_expansion = 2171
+name = "Cybernetic Horizon"
+
+[[expansion]]
+id_expansion = 2311
+name = "Advent Calendar 2018"
+
+[[expansion]]
+id_expansion = 2313
+name = "2018 Mega-Tin Mega Pack"
+
+[[expansion]]
+id_expansion = 2314
+name = "2018 Mega-Tins"
+
+[[expansion]]
+id_expansion = 2346
+name = "Shadows in Valhalla"
+
+[[expansion]]
+id_expansion = 2347
+name = "Structure Deck: Powercode Link"
+
+[[expansion]]
+id_expansion = 2354
+name = "Legendary Duelists: White Dragon Abyss"
+
+[[expansion]]
+id_expansion = 2355
+name = "Legendary Hero Decks"
+
+[[expansion]]
+id_expansion = 2359
+name = "OTS Tournament Pack 8"
+
+[[expansion]]
+id_expansion = 2364
+name = "Hidden Summoners"
+
+[[expansion]]
+id_expansion = 2365
+name = "Structure Deck: Zombie Horde"
+
+[[expansion]]
+id_expansion = 2369
+name = "Soul Fusion"
+
+[[expansion]]
+id_expansion = 2390
+name = "Speed Duel Starter Decks: Duelists of Tomorrow"
+
+[[expansion]]
+id_expansion = 2391
+name = "Speed Duel Starter Decks: Destiny Masters"
+
+[[expansion]]
+id_expansion = 2405
+name = "Savage Strike"
+
+[[expansion]]
+id_expansion = 2406
+name = "Legendary Duelists: Sisters of the Rose"
+
+[[expansion]]
+id_expansion = 2414
+name = "OTS Tournament Pack 9"
+
+[[expansion]]
+id_expansion = 2420
+name = "Structure Deck: Soulburner"
+
+[[expansion]]
+id_expansion = 2426
+name = "Speed Duel: Arena of Lost Souls"
+
+[[expansion]]
+id_expansion = 2427
+name = "The Infinity Chasers"
+
+[[expansion]]
+id_expansion = 2429
+name = "Duel Power"
+
+[[expansion]]
+id_expansion = 2435
+name = "Structure Deck: Order of the Spellcasters"
+
+[[expansion]]
+id_expansion = 2436
+name = "Dark Neostorm"
+
+[[expansion]]
+id_expansion = 2449
+name = "Speed Duel: Attack from the Deep"
+
+[[expansion]]
+id_expansion = 2454
+name = "OTS Tournament Pack 10"
+
+[[expansion]]
+id_expansion = 2455
+name = "Speed Duel: Tournament Pack 1"
+
+[[expansion]]
+id_expansion = 2463
+name = "Battles of Legend: Hero's Revenge"
+
+[[expansion]]
+id_expansion = 2466
+name = "Rising Rampage"
+
+[[expansion]]
+id_expansion = 2493
+name = "Speed Duel: Scars of Battle"
+
+[[expansion]]
+id_expansion = 2496
+name = "Speed Duel Starter Decks: Ultimate Predators"
+
+[[expansion]]
+id_expansion = 2542
+name = "OTS Tournament Pack 11"
+
+[[expansion]]
+id_expansion = 2592
+name = "Structure Deck: Rokket Revolt"
+
+[[expansion]]
+id_expansion = 2597
+name = "2019 Gold Sarcophagus Tin"
+
+[[expansion]]
+id_expansion = 2602
+name = "2019 Gold Sarcophagus Tin Mega Pack"
+
+[[expansion]]
+id_expansion = 2607
+name = "Fists of the Gadgets"
+
+[[expansion]]
 id_expansion = 2622
-name = "World Championship Promo Sets"
+name = "World Championship Celebration Promos"
 
-[[expansion]]  # 2 products
-id_expansion = 3224
-name = "2020 Tin of Lost Memories"
+[[expansion]]
+id_expansion = 2632
+name = "Legacy of the Duelist: Link Evolution Promos"
 
-[[expansion]]  # 272 products
+[[expansion]]
+id_expansion = 2654
+name = "Duel Devastator"
+
+[[expansion]]
+id_expansion = 2659
+name = "Chaos Impact"
+
+[[expansion]]
+id_expansion = 2664
+name = "Advent Calendar 2019"
+
+[[expansion]]
+id_expansion = 2669
+name = "Legendary Duelists: Immortal Destiny"
+
+[[expansion]]
+id_expansion = 2704
+name = "Speed Duel: Demo Deck"
+
+[[expansion]]
+id_expansion = 2709
+name = "Speed Duel: Event Pack"
+
+[[expansion]]
+id_expansion = 2734
+name = "Mystic Fighters"
+
+[[expansion]]
+id_expansion = 2759
+name = "Speed Duel: Tournament Pack 2"
+
+[[expansion]]
+id_expansion = 2844
+name = "Speed Duel: Trials of the Kingdom"
+
+[[expansion]]
+id_expansion = 2849
+name = "Legendary Duelists: Magical Hero"
+
+[[expansion]]
+id_expansion = 2854
+name = "Ignition Assault"
+
+[[expansion]]
+id_expansion = 2859
+name = "Structure Deck: Shaddoll Showdown"
+
+[[expansion]]
+id_expansion = 2906
+name = "Duel Overload"
+
+[[expansion]]
+id_expansion = 2951
+name = "OTS Tournament Pack 12"
+
+[[expansion]]
+id_expansion = 3004
+name = "Secret Slayers"
+
+[[expansion]]
+id_expansion = 3009
+name = "Eternity Code"
+
+[[expansion]]
+id_expansion = 3014
+name = "Structure Deck: Mechanized Madness"
+
+[[expansion]]
+id_expansion = 3029
+name = "Speed Duel Starter Decks: Match of the Millennium"
+
+[[expansion]]
+id_expansion = 3034
+name = "Speed Duel Starter Decks: Twisted Nightmares"
+
+[[expansion]]
+id_expansion = 3123
+name = "Legendary Duelists: Season 1"
+
+[[expansion]]
+id_expansion = 3128
+name = "Toon Chaos"
+
+[[expansion]]
+id_expansion = 3133
+name = "Structure Deck: Sacred Beasts"
+
+[[expansion]]
+id_expansion = 3138
+name = "Battles of Legend: Armageddon"
+
+[[expansion]]
+id_expansion = 3148
+name = "Rise of the Duelist"
+
+[[expansion]]
+id_expansion = 3229
+name = "2020 Tin of Lost Memories Mega Pack"
+
+[[expansion]]
 id_expansion = 3234
 name = "Dragons of Legend: The Complete Series"
 
-[[expansion]]  # 224 products
+[[expansion]]
+id_expansion = 3329
+name = "OTS Tournament Pack 13"
+
+[[expansion]]
+id_expansion = 3334
+name = "Legendary Duelists: Rage of Ra"
+
+[[expansion]]
+id_expansion = 3339
+name = "Maximum Gold"
+
+[[expansion]]
+id_expansion = 3359
+name = "Structure Deck: Spirit Charmers"
+
+[[expansion]]
+id_expansion = 3364
+name = "Phantom Rage"
+
+[[expansion]]
+id_expansion = 3439
+name = "Speed Duel: Battle City Box"
+
+[[expansion]]
+id_expansion = 3444
+name = "Genesis Impact"
+
+[[expansion]]
+id_expansion = 3449
+name = "Speed Duel: Trials of the Pharaoh Promos"
+
+[[expansion]]
+id_expansion = 3505
+name = "OTS Tournament Pack 14"
+
+[[expansion]]
 id_expansion = 3535
 name = "Legendary Duelists: Season 2"
 
-[[expansion]]  # 231 products
+[[expansion]]
+id_expansion = 3540
+name = "Blazing Vortex"
+
+[[expansion]]
+id_expansion = 3545
+name = "Structure Deck: Freezing Chains"
+
+[[expansion]]
+id_expansion = 3665
+name = "Ghosts From the Past"
+
+[[expansion]]
+id_expansion = 3670
+name = "Ancient Guardians"
+
+[[expansion]]
+id_expansion = 3728
+name = "OTS Tournament Pack 15"
+
+[[expansion]]
+id_expansion = 3786
+name = "Lightning Overdrive"
+
+[[expansion]]
+id_expansion = 3791
+name = "King's Court"
+
+[[expansion]]
+id_expansion = 4220
+name = "Egyptian God Deck: Obelisk the Tormentor"
+
+[[expansion]]
+id_expansion = 4221
+name = "Egyptian God Deck: Slifer the Sky Dragon"
+
+[[expansion]]
+id_expansion = 4222
+name = "Legendary Duelists: Synchro Storm"
+
+[[expansion]]
+id_expansion = 4223
+name = "Structure Deck: Cyber Strike"
+
+[[expansion]]
+id_expansion = 4224
+name = "Dawn of Majesty"
+
+[[expansion]]
+id_expansion = 4225
+name = "2021 Tin of Ancient Battles"
+
+[[expansion]]
+id_expansion = 4325
+name = "OTS Tournament Pack 16"
+
+[[expansion]]
+id_expansion = 4370
+name = "Burst of Destiny"
+
+[[expansion]]
+id_expansion = 4371
+name = "Maximum Gold: El Dorado"
+
+[[expansion]]
+id_expansion = 4372
+name = "Brothers of Legend"
+
+[[expansion]]
+id_expansion = 4391
+name = "OTS Tournament Pack 17"
+
+[[expansion]]
+id_expansion = 4396
+name = "The Grand Creators"
+
+[[expansion]]
+id_expansion = 4397
+name = "Battle of Chaos"
+
+[[expansion]]
+id_expansion = 4398
+name = "Hidden Arsenal: Chapter 1"
+
+[[expansion]]
+id_expansion = 4399
+name = "Speed Duel GX: Duel Academy Box"
+
+[[expansion]]
+id_expansion = 4402
+name = "Speed Duel: Demo Deck 2020"
+
+[[expansion]]
 id_expansion = 4410
 name = "Legend of Blue Eyes White Dragon (LDD)"
 
-[[expansion]]  # 128 products
+[[expansion]]
 id_expansion = 4411
-name = "Legend of Blue-Eyes White Dragon (LDB)"
+name = "Legend of Blue Eyes White Dragon (LDB)"
 
-[[expansion]]  # 146 products
+[[expansion]]
 id_expansion = 4413
 name = "Metal Raiders (PMT)"
 
-[[expansion]]  # 106 products
+[[expansion]]
+id_expansion = 4415
+name = "Structure Deck: Albaz Strike"
+
+[[expansion]]
 id_expansion = 4416
 name = "Spell Ruler (SDH)"
 
-[[expansion]]  # 133 products
+[[expansion]]
 id_expansion = 4417
 name = "Spell Ruler (SDM)"
 
-[[expansion]]  # 133 products
+[[expansion]]
 id_expansion = 4418
 name = "Spell Ruler (MDM)"
 
-[[expansion]]  # 107 products
+[[expansion]]
 id_expansion = 4419
 name = "Pharaoh's Servant (SDP)"
 
-[[expansion]]  # 107 products
+[[expansion]]
 id_expansion = 4420
 name = "Pharaoh's Servant (SDF)"
 
-[[expansion]]  # 107 products
+[[expansion]]
 id_expansion = 4421
 name = "Labyrinth of Nightmare (LDI)"
 
-[[expansion]]  # 107 products
+[[expansion]]
 id_expansion = 4422
 name = "Labyrinth of Nightmare (LDC)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4424
 name = "Starter Deck: Yugi (DIY)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4425
 name = "Starter Deck: Yugi (BIY)"
 
-[[expansion]]  # 47 products
+[[expansion]]
 id_expansion = 4426
 name = "Starter Deck: Yugi (MIY)"
 
-[[expansion]]  # 97 products
+[[expansion]]
 id_expansion = 4427
 name = "Starter Deck: Yugi (DDY)"
 
-[[expansion]]  # 51 products
+[[expansion]]
+id_expansion = 4428
+name = "OTS Tournament Pack 18"
+
+[[expansion]]
 id_expansion = 4429
 name = "Starter Deck: Kaiba (DIK)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4430
 name = "Starter Deck: Kaiba (BIK)"
 
-[[expansion]]  # 47 products
+[[expansion]]
 id_expansion = 4431
 name = "Starter Deck: Kaiba (MIK)"
 
-[[expansion]]  # 97 products
+[[expansion]]
 id_expansion = 4432
 name = "Starter Deck: Kaiba (DDK)"
 
-[[expansion]]  # 51 products
+[[expansion]]
+id_expansion = 4433
+name = "Ghosts From the Past: The 2nd Haunting"
+
+[[expansion]]
 id_expansion = 4435
 name = "Starter Deck: Joey (MIJ)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4436
 name = "Starter Deck: Joey (DIJ)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4437
 name = "Starter Deck: Joey (DDJ)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4438
 name = "Starter Deck: Joey (BIJ)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4442
 name = "Starter Deck: Pegasus (DDP)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4443
 name = "Starter Deck: Pegasus (MIP)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4444
 name = "Starter Deck: Pegasus (DIP)"
 
-[[expansion]]  # 51 products
+[[expansion]]
 id_expansion = 4445
 name = "Starter Deck: Pegasus (BIP)"
 
-[[expansion]]  # 63 products
+[[expansion]]
+id_expansion = 4446
+name = "Duelist League Series 1"
+
+[[expansion]]
+id_expansion = 4447
+name = "Duelist League Series 2"
+
+[[expansion]]
+id_expansion = 4448
+name = "Duelist League Series 3"
+
+[[expansion]]
+id_expansion = 4449
+name = "Duelist League Series 4"
+
+[[expansion]]
+id_expansion = 4450
+name = "Duelist League Series 5"
+
+[[expansion]]
+id_expansion = 4451
+name = "Duelist League Series 6"
+
+[[expansion]]
+id_expansion = 4452
+name = "Duelist League Series 7"
+
+[[expansion]]
+id_expansion = 4453
+name = "Duelist League Series 8"
+
+[[expansion]]
+id_expansion = 4454
+name = "Duelist League Series 9"
+
+[[expansion]]
+id_expansion = 4455
+name = "Duelist League Series 10"
+
+[[expansion]]
+id_expansion = 4462
+name = "Misprints"
+
+[[expansion]]
+id_expansion = 4470
+name = "Legendary Duelists: Duels From the Deep"
+
+[[expansion]]
+id_expansion = 4471
+name = "Legendary Duelists: Season 3"
+
+[[expansion]]
+id_expansion = 4475
+name = "Dimension Force"
+
+[[expansion]]
+id_expansion = 4519
+name = "Dimension Force (OCG)"
+
+[[expansion]]
 id_expansion = 4520
 name = "Secret Shiny Box"
 
-[[expansion]]  # 66 products
+[[expansion]]
 id_expansion = 4521
 name = "Premium Pack 2022"
 
-[[expansion]]  # 60 products
+[[expansion]]
+id_expansion = 4522
+name = "Structure Deck: Alba Strike (OCG)"
+
+[[expansion]]
 id_expansion = 4523
 name = "Duelist Pack: Duelists of the Abyss"
 
-[[expansion]]  # 80 products
+[[expansion]]
+id_expansion = 4524
+name = "Battle of Chaos (OCG)"
+
+[[expansion]]
+id_expansion = 4525
+name = "World Premiere Pack 2021"
+
+[[expansion]]
 id_expansion = 4526
 name = "Deck Build Pack: Grand Creators"
 
-[[expansion]]  # 1 products
-id_expansion = 4531
-name = "Token Pack Vol.3"
+[[expansion]]
+id_expansion = 4527
+name = "Structure Deck R: Lost Sanctuary"
 
-[[expansion]]  # 100 products
+[[expansion]]
+id_expansion = 4528
+name = "Burst of Destiny (OCG)"
+
+[[expansion]]
+id_expansion = 4529
+name = "Duel Royale Deck Set EX"
+
+[[expansion]]
+id_expansion = 4530
+name = "Structure Deck: Overlay Universe"
+
+[[expansion]]
 id_expansion = 4532
 name = "Animation Chronicle 2021"
 
-[[expansion]]  # 60 products
+[[expansion]]
+id_expansion = 4533
+name = "Legendary Monsters Pack"
+
+[[expansion]]
 id_expansion = 4534
 name = "Duelist Pack: Duelists of Whirlwind"
 
-[[expansion]]  # 55 products
+[[expansion]]
 id_expansion = 4535
 name = "Structure Deck: Cyber Style's Successor"
 
-[[expansion]]  # 80 products
+[[expansion]]
+id_expansion = 4536
+name = "Number Complete File -Piece of Memories-"
+
+[[expansion]]
+id_expansion = 4537
+name = "Dawn of Majesty (OCG)"
+
+[[expansion]]
 id_expansion = 4538
 name = "Deck Build Pack: Ancient Guardians"
 
-[[expansion]]  # 75 products
+[[expansion]]
+id_expansion = 4539
+name = "Prismatic Art Collection"
+
+[[expansion]]
+id_expansion = 4540
+name = "Lightning Overdrive (OCG)"
+
+[[expansion]]
+id_expansion = 4541
+name = "Premium Pack 2021"
+
+[[expansion]]
+id_expansion = 4542
+name = "Prismatic God Box"
+
+[[expansion]]
 id_expansion = 4543
 name = "Selection 10"
 
-[[expansion]]  # 1 products
-id_expansion = 4544
-name = "Token Pack Vol.2"
-
-[[expansion]]  # 56 products
+[[expansion]]
 id_expansion = 4545
 name = "Structure Deck: Ice Barrier of the Frozen Prison"
 
-[[expansion]]  # 78 products
+[[expansion]]
+id_expansion = 4546
+name = "Blazing Vortex (OCG)"
+
+[[expansion]]
+id_expansion = 4547
+name = "World Premiere Pack 2020"
+
+[[expansion]]
 id_expansion = 4548
 name = "Deck Build Pack: Genesis Impactors"
 
-[[expansion]]  # 61 products
+[[expansion]]
+id_expansion = 4549
+name = "Structure Deck R: Dragunity Drive"
+
+[[expansion]]
+id_expansion = 4550
+name = "Phantom Rage (OCG)"
+
+[[expansion]]
 id_expansion = 4551
 name = "Structure Deck: Masters of the Spiritual Arts"
 
-[[expansion]]  # 66 products
+[[expansion]]
 id_expansion = 4552
 name = "Collection Pack 2020"
 
-[[expansion]]  # 1 products
-id_expansion = 4553
-name = "Token Pack"
-
-[[expansion]]  # 61 products
+[[expansion]]
 id_expansion = 4554
 name = "Duelist Pack: Duelists of Gloom"
 
-[[expansion]]  # 55 products
+[[expansion]]
+id_expansion = 4555
+name = "Rise of the Duelist (OCG)"
+
+[[expansion]]
+id_expansion = 4556
+name = "20th Anniversary Legend Selection"
+
+[[expansion]]
 id_expansion = 4557
 name = "Structure Deck: Sacred Beasts of Chaos"
 
-[[expansion]]  # 80 products
+[[expansion]]
 id_expansion = 4558
 name = "Deck Build Pack: Secret Slayers"
 
-[[expansion]]  # 62 products
+[[expansion]]
 id_expansion = 4561
 name = "Premium Pack 2020"
 
-[[expansion]]  # 56 products
+[[expansion]]
+id_expansion = 4562
+name = "Rarity Collection Premium Gold Edition"
+
+[[expansion]]
+id_expansion = 4563
+name = "Eternity Code (OCG)"
+
+[[expansion]]
+id_expansion = 4564
+name = "20th Secret Rare Final Challenge Pack"
+
+[[expansion]]
+id_expansion = 4565
+name = "Tactical Masters"
+
+[[expansion]]
+id_expansion = 4566
+name = "Legendary Gold Box"
+
+[[expansion]]
 id_expansion = 4567
 name = "Structure Deck: Rebirth of Shaddoll"
 
-[[expansion]]  # 58 products
+[[expansion]]
+id_expansion = 4568
+name = "LINK VRAINS Pack 3"
+
+[[expansion]]
 id_expansion = 4569
 name = "Duelist Pack: Legend Duelist 6"
 
-[[expansion]]  # 80 products
+[[expansion]]
+id_expansion = 4570
+name = "Ignition Assault (OCG)"
+
+[[expansion]]
+id_expansion = 4571
+name = "Surpassing 10000 Cards Commemoration Special Pack"
+
+[[expansion]]
+id_expansion = 4572
+name = "Structure Deck R: Warriors' Strike"
+
+[[expansion]]
+id_expansion = 4573
+name = "Extra Pack 2019"
+
+[[expansion]]
+id_expansion = 4574
+name = "LINK VRAINS Duelist Set"
+
+[[expansion]]
 id_expansion = 4575
 name = "Deck Build Pack: Mystic Fighters"
 
-[[expansion]]  # 50 products
+[[expansion]]
+id_expansion = 4576
+name = "20th Anniversary Secret Selection"
+
+[[expansion]]
+id_expansion = 4577
+name = "Chaos Impact (OCG)"
+
+[[expansion]]
+id_expansion = 4578
+name = "Special Pack 20th Anniversary Edition Vol.6"
+
+[[expansion]]
 id_expansion = 4579
 name = "Structure Deck: Revolver"
 
-[[expansion]]  # 58 products
+[[expansion]]
 id_expansion = 4580
 name = "Duelist Pack: Legend Duelist 5"
 
-[[expansion]]  # 57 products
+[[expansion]]
 id_expansion = 4581
 name = "Collection Pack: Duelist of Revolution Version"
 
-[[expansion]]  # 42 products
+[[expansion]]
+id_expansion = 4582
+name = "Promotion Pack 2019"
+
+[[expansion]]
+id_expansion = 4583
+name = "Rising Rampage (OCG)"
+
+[[expansion]]
+id_expansion = 4584
+name = "Special Pack 20th Anniversary Edition Vol.5"
+
+[[expansion]]
+id_expansion = 4585
+name = "Starter Deck 2019"
+
+[[expansion]]
 id_expansion = 4588
 name = "Structure Deck R: Lord of Magician"
 
-[[expansion]]  # 62 products
+[[expansion]]
 id_expansion = 4589
 name = "Premium Pack 2019"
 
-[[expansion]]  # 80 products
+[[expansion]]
 id_expansion = 4590
 name = "Deck Build Pack: Infinity Chasers"
 
-[[expansion]]  # 51 products
+[[expansion]]
+id_expansion = 4591
+name = "20th Secret Rare Challenge Pack"
+
+[[expansion]]
+id_expansion = 4592
+name = "20th Anniversary Legend Collection"
+
+[[expansion]]
+id_expansion = 4593
+name = "20th Secret Rare Special Pack"
+
+[[expansion]]
+id_expansion = 4594
+name = "Dark Neostorm (OCG)"
+
+[[expansion]]
 id_expansion = 4596
 name = "20th Anniversary Duelist Box"
 
-[[expansion]]  # 27 products
+[[expansion]]
 id_expansion = 4597
 name = "Jump Festa Limited Pack 2019"
 
-[[expansion]]  # 58 products
+[[expansion]]
+id_expansion = 4598
+name = "Speed Start Deck Link Edition"
+
+[[expansion]]
+id_expansion = 4599
+name = "Speed Start Deck Synchro Edition"
+
+[[expansion]]
+id_expansion = 4600
+name = "Structure Deck: Soulburner (OCG)"
+
+[[expansion]]
+id_expansion = 4601
+name = "Special Pack 20th Anniversary Edition Vol.4"
+
+[[expansion]]
+id_expansion = 4602
+name = "LINK VRAINS Pack 2"
+
+[[expansion]]
+id_expansion = 4603
+name = "Yu-Gi-Oh! Calbee Chips"
+
+[[expansion]]
 id_expansion = 4604
 name = "Duelist Pack: Legend Duelist 4"
 
-[[expansion]]  # 43 products
+[[expansion]]
+id_expansion = 4605
+name = "Savage Strike (OCG)"
+
+[[expansion]]
 id_expansion = 4607
 name = "Structure Deck R: Undead World"
 
-[[expansion]]  # 80 products
+[[expansion]]
+id_expansion = 4608
+name = "Extra Pack 2018"
+
+[[expansion]]
+id_expansion = 4609
+name = "Special Pack 20th Anniversary Edition Vol.3"
+
+[[expansion]]
 id_expansion = 4610
 name = "Deck Build Pack: Hidden Summoners"
 
-[[expansion]]  # 2 products
-id_expansion = 4612
-name = "Half Deck 2018"
+[[expansion]]
+id_expansion = 4611
+name = "Soul Fusion (OCG)"
 
-[[expansion]]  # 58 products
+[[expansion]]
+id_expansion = 4613
+name = "Structure Deck: Master Link"
+
+[[expansion]]
 id_expansion = 4614
 name = "Duelist Pack: Legend Duelist 3"
 
-[[expansion]]  # 56 products
+[[expansion]]
+id_expansion = 4615
+name = "Special Pack 20th Anniversary Edition Vol.2"
+
+[[expansion]]
+id_expansion = 4616
+name = "Promotion Pack 2018"
+
+[[expansion]]
+id_expansion = 4617
+name = "20th Anniversary Legendary Dragons"
+
+[[expansion]]
 id_expansion = 4618
 name = "Collectors Pack 2018"
 
-[[expansion]]  # 43 products
+[[expansion]]
+id_expansion = 4620
+name = "Cybernetic Horizon (OCG)"
+
+[[expansion]]
+id_expansion = 4621
+name = "Starter Deck 2018"
+
+[[expansion]]
+id_expansion = 4622
+name = "Special Pack 20th Anniversary Edition Vol.1"
+
+[[expansion]]
 id_expansion = 4624
 name = "Structure Deck R: Curse of the Dark"
 
-[[expansion]]  # 80 products
+[[expansion]]
 id_expansion = 4625
 name = "Deck Build Pack: Dark Savers"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4626
+name = "Rarity Collection 20th Anniversary Edition"
+
+[[expansion]]
+id_expansion = 4627
+name = "Flames of Destruction (OCG)"
+
+[[expansion]]
 id_expansion = 4628
 name = "20th Anniversary Set"
 
-[[expansion]]  # 109 products
+[[expansion]]
+id_expansion = 4629
+name = "LINK VRAINS Box"
+
+[[expansion]]
 id_expansion = 4630
 name = "Premium Pack 20"
 
-[[expansion]]  # 53 products
+[[expansion]]
+id_expansion = 4631
+name = "Structure Deck: Powercode Link (OCG)"
+
+[[expansion]]
+id_expansion = 4632
+name = "LINK VRAINS Pack"
+
+[[expansion]]
 id_expansion = 4633
 name = "Duelist Pack: Legend Duelist 2"
 
-[[expansion]]  # 43 products
+[[expansion]]
+id_expansion = 4634
+name = "Extreme Force (OCG)"
+
+[[expansion]]
+id_expansion = 4635
+name = "Promotion Pack 2017"
+
+[[expansion]]
 id_expansion = 4636
 name = "Structure Deck R: Surge of Divine Light"
 
-[[expansion]]  # 80 products
+[[expansion]]
+id_expansion = 4637
+name = "Extra Pack 2017"
+
+[[expansion]]
 id_expansion = 4638
 name = "Deck Build Pack: Spirit Warriors"
 
-[[expansion]]  # 53 products
+[[expansion]]
+id_expansion = 4639
+name = "LINK VRAINS Edition"
+
+[[expansion]]
+id_expansion = 4640
+name = "Circuit Break (OCG)"
+
+[[expansion]]
+id_expansion = 4641
+name = "Structure Deck: Cyberse Link (OCG)"
+
+[[expansion]]
 id_expansion = 4642
 name = "Duelist Pack: Legend Duelist"
 
-[[expansion]]  # 56 products
+[[expansion]]
 id_expansion = 4643
 name = "Collectors Pack 2017"
 
-[[expansion]]  # 44 products
+[[expansion]]
+id_expansion = 4644
+name = "Code of the Duelist (OCG)"
+
+[[expansion]]
 id_expansion = 4645
 name = "Starter Deck 2017"
 
-[[expansion]]  # 41 products
+[[expansion]]
 id_expansion = 4646
 name = "Structure Deck R: Tyranno's Rage"
 
-[[expansion]]  # 53 products
+[[expansion]]
 id_expansion = 4647
 name = "20th Anniversary Pack 2nd Wave"
 
-[[expansion]]  # 44 products
+[[expansion]]
+id_expansion = 4648
+name = "Maximum Crisis (OCG)"
+
+[[expansion]]
 id_expansion = 4649
 name = "Structure Deck: Pendulum Evolution"
 
-[[expansion]]  # 54 products
+[[expansion]]
+id_expansion = 4650
+name = "Premium Pack 19"
+
+[[expansion]]
 id_expansion = 4652
 name = "20th Anniversary Pack 1st Wave"
 
-[[expansion]]  # 77 products
+[[expansion]]
+id_expansion = 4653
+name = "Dimension Box Limited Edition"
+
+[[expansion]]
 id_expansion = 4654
 name = "Booster SP: Fusion Enforcers"
 
-[[expansion]]  # 41 products
+[[expansion]]
+id_expansion = 4655
+name = "Raging Tempest (OCG)"
+
+[[expansion]]
 id_expansion = 4656
 name = "Structure Deck R: Machine Dragon Re-Volt"
 
-[[expansion]]  # 77 products
+[[expansion]]
+id_expansion = 4657
+name = "Extra Pack 2016"
+
+[[expansion]]
 id_expansion = 4658
 name = "Booster SP: Destiny Soldiers"
 
-[[expansion]]  # 48 products
+[[expansion]]
+id_expansion = 4659
+name = "20th Rival Collection"
+
+[[expansion]]
+id_expansion = 4660
+name = "Invasion: Vengeance (OCG)"
+
+[[expansion]]
+id_expansion = 4661
+name = "Structure Deck: Yugi Muto (OCG)"
+
+[[expansion]]
+id_expansion = 4662
+name = "Structure Deck: Seto Kaiba (OCG)"
+
+[[expansion]]
 id_expansion = 4663
 name = "Duelist Pack: Pharaoh's Memories"
 
-[[expansion]]  # 56 products
+[[expansion]]
 id_expansion = 4664
 name = "Collectors Pack: Duelist of Flash Version"
 
-[[expansion]]  # 44 products
+[[expansion]]
+id_expansion = 4665
+name = "Yu-Gi-Oh! The Dark Side of Dimensions Movie Pack (OCG)"
+
+[[expansion]]
+id_expansion = 4666
+name = "The Dark Illusion (OCG)"
+
+[[expansion]]
 id_expansion = 4667
 name = "Starter Deck 2016"
 
-[[expansion]]  # 43 products
+[[expansion]]
+id_expansion = 4668
+name = "Gold Pack 2016"
+
+[[expansion]]
+id_expansion = 4669
+name = "Duelist Festival 2016 - Promotion Pack"
+
+[[expansion]]
 id_expansion = 4670
 name = "Structure Deck R: Revival of the Great Divine Dragon"
 
-[[expansion]]  # 41 products
+[[expansion]]
+id_expansion = 4671
+name = "Shining Victories (OCG)"
+
+[[expansion]]
+id_expansion = 4672
+name = "Millennium Pack (OCG)"
+
+[[expansion]]
 id_expansion = 4673
 name = "Premium Pack 18"
 
-[[expansion]]  # 77 products
+[[expansion]]
+id_expansion = 4674
+name = "Structure Deck: Pendulum Domination (OCG)"
+
+[[expansion]]
+id_expansion = 4675
+name = "Millennium Box Gold Edition"
+
+[[expansion]]
 id_expansion = 4676
 name = "Booster SP: Wing Raiders"
 
-[[expansion]]  # 77 products
+[[expansion]]
+id_expansion = 4677
+name = "Breakers of Shadow (OCG)"
+
+[[expansion]]
+id_expansion = 4678
+name = "Extra Pack 2015"
+
+[[expansion]]
 id_expansion = 4679
 name = "Booster SP: Highspeed Riders"
 
-[[expansion]]  # 56 products
+[[expansion]]
+id_expansion = 4680
+name = "Dimension of Chaos (OCG)"
+
+[[expansion]]
+id_expansion = 4681
+name = "Structure Deck: Master of Pendulum (OCG)"
+
+[[expansion]]
+id_expansion = 4682
+name = "Duelist Pack: Battle City (OCG)"
+
+[[expansion]]
+id_expansion = 4683
+name = "20th Legendary Collection"
+
+[[expansion]]
 id_expansion = 4684
 name = "Collectors Pack: Duelist of Destiny Version"
 
-[[expansion]]  # 43 products
+[[expansion]]
+id_expansion = 4685
+name = "Clash of Rebellions (OCG)"
+
+[[expansion]]
+id_expansion = 4686
+name = "Entry Pack"
+
+[[expansion]]
+id_expansion = 4687
+name = "Duelist Entry Deck VS"
+
+[[expansion]]
+id_expansion = 4688
+name = "Crossed Souls (OCG)"
+
+[[expansion]]
+id_expansion = 4689
+name = "Duelist Road -Piece of Memory- Side: Yami Yugi"
+
+[[expansion]]
+id_expansion = 4690
+name = "Duelist Road -Piece of Memory- Side: Yugi Muto"
+
+[[expansion]]
 id_expansion = 4691
 name = "Structure Deck R: Advent of the True Monarch"
 
-[[expansion]]  # 42 products
+[[expansion]]
+id_expansion = 4692
+name = "Jump Festa 2015 - Promotion Pack"
+
+[[expansion]]
 id_expansion = 4693
 name = "Premium Pack 17"
 
-[[expansion]]  # 104 products
+[[expansion]]
+id_expansion = 4694
+name = "The Rarity Collection"
+
+[[expansion]]
+id_expansion = 4695
+name = "Structure Deck: Synchron Extreme (OCG)"
+
+[[expansion]]
+id_expansion = 4696
+name = "Special Summon Evolution"
+
+[[expansion]]
+id_expansion = 4697
+name = "Secrets of Eternity (OCG)"
+
+[[expansion]]
 id_expansion = 4698
 name = "Booster SP: Tribe Force"
 
-[[expansion]]  # 63 products
+[[expansion]]
+id_expansion = 4699
+name = "Extra Pack: Knights of Order"
+
+[[expansion]]
+id_expansion = 4700
+name = "Memories of the Duel King: Ceremonial Battle"
+
+[[expansion]]
+id_expansion = 4701
+name = "Booster SP: Raging Masters"
+
+[[expansion]]
+id_expansion = 4702
+name = "The New Challengers (OCG)"
+
+[[expansion]]
+id_expansion = 4703
+name = "Memories of the Duel King: Battle City Arc"
+
+[[expansion]]
+id_expansion = 4704
+name = "Structure Deck: HERO's Strike (OCG)"
+
+[[expansion]]
 id_expansion = 4705
 name = "Collectors Pack: Duelist of Legend Version"
 
-[[expansion]]  # 50 products
+[[expansion]]
+id_expansion = 4706
+name = "Deck Custom Pack 01"
+
+[[expansion]]
+id_expansion = 4707
+name = "Duelist Alliance (OCG)"
+
+[[expansion]]
 id_expansion = 4708
 name = "Starter Deck 2014"
 
-[[expansion]]  # 42 products
+[[expansion]]
+id_expansion = 4709
+name = "Primal Origin (OCG)"
+
+[[expansion]]
+id_expansion = 4710
+name = "Gold Series 2014"
+
+[[expansion]]
 id_expansion = 4711
 name = "Structure Deck R: Machiners Command"
 
-[[expansion]]  # 41 products
+[[expansion]]
 id_expansion = 4712
 name = "Premium Pack 16"
 
-[[expansion]]  # 39 products
+[[expansion]]
 id_expansion = 4713
 name = "Structure Deck: Blitzkrieg of the Mechlight Dragons"
 
-[[expansion]]  # 79 products
+[[expansion]]
 id_expansion = 4714
-name = "Duelist Sets: Lightlord Judgment & Machine-Gear Troopers"
+name = "Duelist Sets 2013"
 
-[[expansion]]  # 63 products
+[[expansion]]
+id_expansion = 4715
+name = "Legacy of the Valiant (OCG)"
+
+[[expansion]]
+id_expansion = 4716
+name = "Duelist Pack: Kastle Siblings"
+
+[[expansion]]
+id_expansion = 4717
+name = "Duelist Pack: Yuma 2: Gogogo & Dododo"
+
+[[expansion]]
 id_expansion = 4718
 name = "Collectors Pack: ZEXAL Version"
 
-[[expansion]]  # 42 products
+[[expansion]]
 id_expansion = 4719
 name = "Half Deck 2013"
 
-[[expansion]]  # 41 products
+[[expansion]]
+id_expansion = 4720
+name = "Shadow Specters (OCG)"
+
+[[expansion]]
 id_expansion = 4721
 name = "Structure Deck: The Blue-Eyed Dragon's Thundering Descent"
 
-[[expansion]]  # 59 products
+[[expansion]]
+id_expansion = 4722
+name = "Extra Pack: Sword of Knights"
+
+[[expansion]]
+id_expansion = 4723
+name = "Judgment of the Light (OCG)"
+
+[[expansion]]
 id_expansion = 4724
 name = "Starter Deck 2013"
 
-[[expansion]]  # 87 products
-id_expansion = 4731
-name = "Duelist Sets"
+[[expansion]]
+id_expansion = 4725
+name = "Lord of the Tachyon Galaxy (OCG)"
 
-[[expansion]]  # 32 products
+[[expansion]]
+id_expansion = 4726
+name = "Promotion Pack 3"
+
+[[expansion]]
+id_expansion = 4727
+name = "Gold Series 2013"
+
+[[expansion]]
+id_expansion = 4728
+name = "V Jump Edition 8"
+
+[[expansion]]
+id_expansion = 4729
+name = "Premium Pack 15"
+
+[[expansion]]
+id_expansion = 4730
+name = "Structure Deck: Onslaught of the Fire Kings (OCG)"
+
+[[expansion]]
+id_expansion = 4731
+name = "Duelist Sets 2012"
+
+[[expansion]]
+id_expansion = 4732
+name = "Cosmo Blazer (OCG)"
+
+[[expansion]]
+id_expansion = 4733
+name = "Extra Pack 2012"
+
+[[expansion]]
 id_expansion = 4734
 name = "Duelist Pack: Kite"
 
-[[expansion]]  # 40 products
+[[expansion]]
+id_expansion = 4735
+name = "The Gold Box"
+
+[[expansion]]
+id_expansion = 4736
+name = "Duelist Edition Volume 4"
+
+[[expansion]]
+id_expansion = 4737
+name = "Duelist Edition Volume 3"
+
+[[expansion]]
+id_expansion = 4738
+name = "Abyss Rising (OCG)"
+
+[[expansion]]
 id_expansion = 4739
 name = "Structure Deck: Roar of the Sea Emperor"
 
-[[expansion]]  # 44 products
+[[expansion]]
+id_expansion = 4740
+name = "V Jump Edition 7"
+
+[[expansion]]
+id_expansion = 4741
+name = "Duelist Edition Volume 2"
+
+[[expansion]]
+id_expansion = 4742
+name = "Duelist Edition Volume 1"
+
+[[expansion]]
+id_expansion = 4743
+name = "Return of the Duelist (OCG)"
+
+[[expansion]]
 id_expansion = 4744
 name = "Starter Deck 2012"
 
-[[expansion]]  # 11 products
+[[expansion]]
+id_expansion = 4745
+name = "Galactic Overlord (OCG)"
+
+[[expansion]]
+id_expansion = 4746
+name = "Gold Series 2012"
+
+[[expansion]]
+id_expansion = 4747
+name = "Order of Chaos (OCG)"
+
+[[expansion]]
+id_expansion = 4748
+name = "Jump Festa 2012 - Promotion Packs"
+
+[[expansion]]
 id_expansion = 4749
 name = "Premium Pack 14"
 
-[[expansion]]  # 40 products
+[[expansion]]
 id_expansion = 4750
 name = "Structure Deck: Dragonic Legion"
 
-[[expansion]]  # 212 products
+[[expansion]]
+id_expansion = 4751
+name = "Duelist Box 2012"
+
+[[expansion]]
+id_expansion = 4752
+name = "V Jump Edition 6"
+
+[[expansion]]
+id_expansion = 4753
+name = "Duelist Pack: Yuma"
+
+[[expansion]]
+id_expansion = 4754
+name = "Extra Pack Volume 4"
+
+[[expansion]]
+id_expansion = 4755
+name = "Photon Shockwave (OCG)"
+
+[[expansion]]
 id_expansion = 4756
 name = "Beginner's Edition 2 (2011)"
 
-[[expansion]]  # 39 products
+[[expansion]]
 id_expansion = 4757
 name = "Structure Deck: Devil's Gate"
 
-[[expansion]]  # 212 products
+[[expansion]]
+id_expansion = 4758
+name = "Generation Force (OCG)"
+
+[[expansion]]
+id_expansion = 4759
+name = "V Jump Edition 5"
+
+[[expansion]]
 id_expansion = 4760
 name = "Beginner's Edition 1 (2011)"
 
-[[expansion]]  # 11 products
+[[expansion]]
+id_expansion = 4761
+name = "Extreme Victory (OCG)"
+
+[[expansion]]
 id_expansion = 4762
 name = "Premium Pack 13"
 
-[[expansion]]  # 44 products
+[[expansion]]
 id_expansion = 4763
 name = "Starter Deck 2011"
 
-[[expansion]]  # 11 products
+[[expansion]]
+id_expansion = 4764
+name = "3D Bonds Beyond Time Movie Pack (OCG)"
+
+[[expansion]]
+id_expansion = 4765
+name = "Promotion Pack 2"
+
+[[expansion]]
+id_expansion = 4766
+name = "Gold Series 2011"
+
+[[expansion]]
+id_expansion = 4767
+name = "Storm of Ragnarok (OCG)"
+
+[[expansion]]
+id_expansion = 4768
+name = "Jump Festa 2011 - Promotion Pack"
+
+[[expansion]]
+id_expansion = 4769
+name = "Structure Deck: Lost Sanctuary (OCG)"
+
+[[expansion]]
 id_expansion = 4770
 name = "Promotion Pack"
 
-[[expansion]]  # 40 products
+[[expansion]]
+id_expansion = 4771
+name = "V Jump Edition 4"
+
+[[expansion]]
+id_expansion = 4772
+name = "V Jump Edition 3"
+
+[[expansion]]
+id_expansion = 4774
+name = "Duelist Pack: Crow (OCG)"
+
+[[expansion]]
+id_expansion = 4775
+name = "Duelist Pack: Yusei 3 (OCG)"
+
+[[expansion]]
+id_expansion = 4776
+name = "Extra Pack Volume 3"
+
+[[expansion]]
+id_expansion = 4777
+name = "Starstrike Blast (OCG)"
+
+[[expansion]]
+id_expansion = 4778
+name = "V Jump Edition 2"
+
+[[expansion]]
 id_expansion = 4779
 name = "Structure Deck: Dragunity Drive"
 
-[[expansion]]  # 11 products
+[[expansion]]
+id_expansion = 4780
+name = "Duelist Revolution (OCG)"
+
+[[expansion]]
+id_expansion = 4781
+name = "V Jump Edition"
+
+[[expansion]]
+id_expansion = 4782
+name = "The Shining Darkness (OCG)"
+
+[[expansion]]
 id_expansion = 4783
 name = "Premium Pack 12"
 
-[[expansion]]  # 44 products
+[[expansion]]
 id_expansion = 4784
 name = "Starter Deck 2010"
 
-[[expansion]]  # 39 products
+[[expansion]]
+id_expansion = 4785
+name = "Gold Series 2010"
+
+[[expansion]]
+id_expansion = 4787
+name = "Absolute Powerforce (OCG)"
+
+[[expansion]]
+id_expansion = 4788
+name = "Jump Festa 2010 - Promotion Pack"
+
+[[expansion]]
 id_expansion = 4789
 name = "Structure Deck: Machiners Command"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4790
+name = "Limited Edition 17"
+
+[[expansion]]
+id_expansion = 4791
+name = "Duelist Pack: Yusei 2 (OCG)"
+
+[[expansion]]
+id_expansion = 4792
+name = "Extra Pack Volume 2"
+
+[[expansion]]
+id_expansion = 4793
+name = "Stardust Overdrive (OCG)"
+
+[[expansion]]
+id_expansion = 4794
+name = "Structure Deck: Warrior's Strike (OCG)"
+
+[[expansion]]
+id_expansion = 4795
+name = "Limited Edition 16"
+
+[[expansion]]
+id_expansion = 4796
+name = "Ancient Prophecy (OCG)"
+
+[[expansion]]
+id_expansion = 4797
+name = "Limited Edition 15"
+
+[[expansion]]
+id_expansion = 4798
+name = "Raging Battle (OCG)"
+
+[[expansion]]
+id_expansion = 4799
+name = "Starter Deck 2009 (OCG)"
+
+[[expansion]]
 id_expansion = 4801
 name = "Collectors Tin 2009"
 
-[[expansion]]  # 45 products
+[[expansion]]
+id_expansion = 4802
+name = "Gold Series (OCG)"
+
+[[expansion]]
 id_expansion = 4803
 name = "Structure Deck: Lord of the Magician"
 
-[[expansion]]  # 38 products
+[[expansion]]
+id_expansion = 4804
+name = "Crimson Crisis (OCG)"
+
+[[expansion]]
+id_expansion = 4805
+name = "Jump Festa 2009 - Promotion Pack"
+
+[[expansion]]
+id_expansion = 4806
+name = "Limited Edition 14"
+
+[[expansion]]
+id_expansion = 4807
+name = "Duelist Pack: Yusei (OCG)"
+
+[[expansion]]
+id_expansion = 4808
+name = "Extra Pack"
+
+[[expansion]]
+id_expansion = 4809
+name = "Crossroads of Chaos (OCG)"
+
+[[expansion]]
 id_expansion = 4810
 name = "Structure Deck: Undead World"
 
-[[expansion]]  # 44 products
-id_expansion = 4815
-name = "Starter Deck 2008 (Japanese)"
+[[expansion]]
+id_expansion = 4811
+name = "Limited Edition 13"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4812
+name = "The Duelist Genesis (OCG)"
+
+[[expansion]]
+id_expansion = 4813
+name = "Limited Edition 12"
+
+[[expansion]]
+id_expansion = 4815
+name = "Starter Deck 2008 (OCG)"
+
+[[expansion]]
+id_expansion = 4816
+name = "Light of Destruction (OCG)"
+
+[[expansion]]
 id_expansion = 4817
 name = "Duelist Pack Collection"
 
-[[expansion]]  # 9 products
+[[expansion]]
+id_expansion = 4818
+name = "Phantom Darkness (OCG)"
+
+[[expansion]]
 id_expansion = 4819
 name = "Premium Pack 11"
 
-[[expansion]]  # 38 products
+[[expansion]]
 id_expansion = 4820
 name = "Structure Deck: Advent of the Emperor"
 
-[[expansion]]  # 247 products
+[[expansion]]
+id_expansion = 4821
+name = "Limited Edition 11"
+
+[[expansion]]
+id_expansion = 4822
+name = "Duelist Pack: Jesse Anderson (OCG)"
+
+[[expansion]]
+id_expansion = 4823
+name = "Duelist Pack: Jaden Yuki 3 (OCG)"
+
+[[expansion]]
+id_expansion = 4824
+name = "Gladiator's Assault (OCG)"
+
+[[expansion]]
 id_expansion = 4825
 name = "Expert Edition Volume 4"
 
-[[expansion]]  # 37 products
+[[expansion]]
+id_expansion = 4826
+name = "Tactical Evolution (OCG)"
+
+[[expansion]]
 id_expansion = 4827
 name = "Structure Deck: Revival of the Great Dragon"
 
-[[expansion]]  # 10 products
+[[expansion]]
 id_expansion = 4828
 name = "Limited Edition 10"
 
-[[expansion]]  # 11 products
+[[expansion]]
+id_expansion = 4829
+name = "Force of the Breaker (OCG)"
+
+[[expansion]]
+id_expansion = 4830
+name = "Starter Deck 2007"
+
+[[expansion]]
+id_expansion = 4831
+name = "Structure Deck: Curse of Darkness"
+
+[[expansion]]
 id_expansion = 4832
 name = "Premium Pack 10"
 
-[[expansion]]  # 2 products
+[[expansion]]
 id_expansion = 4833
 name = "Booster Pack Collectors Tin 2007"
 
-[[expansion]]  # 5 products
+[[expansion]]
+id_expansion = 4834
+name = "Strike of Neos (OCG)"
+
+[[expansion]]
+id_expansion = 4835
+name = "Structure Deck: Surge of Radiance"
+
+[[expansion]]
+id_expansion = 4836
+name = "Duelist Pack: Aster Phoenix (OCG)"
+
+[[expansion]]
+id_expansion = 4838
+name = "Duelist Pack: Zane Truesdale (OCG)"
+
+[[expansion]]
+id_expansion = 4839
+name = "Duelist Pack: Jaden Yuki 2 (OCG)"
+
+[[expansion]]
+id_expansion = 4840
+name = "Structure Deck: Dinosaur's Rage (OCG)"
+
+[[expansion]]
+id_expansion = 4841
+name = "Structure Deck: Machine Re-Volt (OCG)"
+
+[[expansion]]
+id_expansion = 4842
+name = "Cyberdark Impact (OCG)"
+
+[[expansion]]
 id_expansion = 4843
 name = "Limited Edition 9"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4844
+name = "Power of the Duelist (OCG)"
+
+[[expansion]]
+id_expansion = 4845
+name = "Starter Deck 2006 (OCG)"
+
+[[expansion]]
+id_expansion = 4846
+name = "Structure Deck: Lord of the Storm (OCG)"
+
+[[expansion]]
+id_expansion = 4847
+name = "Master Collection Volume 2 (OCG)"
+
+[[expansion]]
+id_expansion = 4848
+name = "Enemy of Justice (OCG)"
+
+[[expansion]]
 id_expansion = 4849
 name = "Booster Pack Collectors Tin 2006"
 
-[[expansion]]  # 242 products
+[[expansion]]
+id_expansion = 4850
+name = "Premium Pack 9"
+
+[[expansion]]
 id_expansion = 4851
 name = "Expert Edition Volume 3"
 
-[[expansion]]  # 226 products
+[[expansion]]
+id_expansion = 4853
+name = "Structure Deck: Invincible Fortress (OCG)"
+
+[[expansion]]
+id_expansion = 4854
+name = "Shadow of Infinity (OCG)"
+
+[[expansion]]
+id_expansion = 4855
+name = "Duelist Pack: Jaden Yuki (OCG)"
+
+[[expansion]]
+id_expansion = 4856
+name = "Duelist Pack: Chazz Princeton (OCG)"
+
+[[expansion]]
+id_expansion = 4857
+name = "Structure Deck: Spellcaster's Judgment (OCG)"
+
+[[expansion]]
+id_expansion = 4858
+name = "Movie Pack (OCG)"
+
+[[expansion]]
+id_expansion = 4859
+name = "Elemental Energy (OCG)"
+
+[[expansion]]
+id_expansion = 4860
+name = "Limited Edition 8"
+
+[[expansion]]
+id_expansion = 4861
+name = "Structure Deck: Warrior's Triumph (OCG)"
+
+[[expansion]]
+id_expansion = 4862
+name = "Cybernetic Revolution (OCG)"
+
+[[expansion]]
 id_expansion = 4863
 name = "Expert Edition Volume 2"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4864
+name = "Master Collection Volume 1 (OCG)"
+
+[[expansion]]
+id_expansion = 4865
+name = "The Lost Millennium (OCG)"
+
+[[expansion]]
 id_expansion = 4866
 name = "Booster Pack Collectors Tin 2005"
 
-[[expansion]]  # 6 products
+[[expansion]]
+id_expansion = 4867
+name = "Structure Deck: Fury from the Deep (OCG)"
+
+[[expansion]]
+id_expansion = 4868
+name = "Structure Deck: Blaze of Destruction (OCG)"
+
+[[expansion]]
 id_expansion = 4869
 name = "Premium Pack 8"
 
-[[expansion]]  # 252 products
+[[expansion]]
 id_expansion = 4870
 name = "Beginner's Edition 2"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4871
+name = "Structure Deck: Zombie Madness (OCG)"
+
+[[expansion]]
+id_expansion = 4872
+name = "Structure Deck: Dragon's Roar (OCG)"
+
+[[expansion]]
 id_expansion = 4873
 name = "Structure Deck: Deluxe Set Volume 2"
 
-[[expansion]]  # 269 products
+[[expansion]]
+id_expansion = 4874
+name = "Flaming Eternity (OCG)"
+
+[[expansion]]
+id_expansion = 4875
+name = "Limited Edition 7"
+
+[[expansion]]
 id_expansion = 4876
 name = "Expert Edition Volume 1"
 
-[[expansion]]  # 9 products
+[[expansion]]
+id_expansion = 4877
+name = "Rise of Destiny (OCG)"
+
+[[expansion]]
 id_expansion = 4878
 name = "Premium Pack 7"
 
-[[expansion]]  # 252 products
+[[expansion]]
 id_expansion = 4879
 name = "Beginner's Edition 1"
 
-[[expansion]]  # 13 products
+[[expansion]]
+id_expansion = 4880
+name = "Soul of the Duelist (OCG)"
+
+[[expansion]]
+id_expansion = 4882
+name = "Structure Deck: Marik (OCG)"
+
+[[expansion]]
 id_expansion = 4883
 name = "Premium Pack 6"
 
-[[expansion]]  # 68 products
+[[expansion]]
+id_expansion = 4884
+name = "Limited Edition 6"
+
+[[expansion]]
 id_expansion = 4885
 name = "Pharaoh's Inheritance"
 
-[[expansion]]  # 6 products
+[[expansion]]
 id_expansion = 4886
 name = "Beginners Pack"
 
-[[expansion]]  # 2 products
+[[expansion]]
 id_expansion = 4887
 name = "Booster Pack Collectors Tin 2004"
 
-[[expansion]]  # 2 products
+[[expansion]]
 id_expansion = 4888
 name = "Structure Deck: Deluxe Set"
 
-[[expansion]]  # 58 products
+[[expansion]]
 id_expansion = 4889
 name = "Structure Deck: Kaiba Volume 2"
 
-[[expansion]]  # 63 products
+[[expansion]]
 id_expansion = 4890
 name = "The Sanctuary in the Sky"
 
-[[expansion]]  # 142 products
+[[expansion]]
+id_expansion = 4891
+name = "Structure Deck: Joey Volume 2"
+
+[[expansion]]
+id_expansion = 4892
+name = "Invader of Darkness"
+
+[[expansion]]
+id_expansion = 4893
+name = "Structure Deck: Yugi Volume 2"
+
+[[expansion]]
 id_expansion = 4895
 name = "Duelist Legacy Volume 5"
 
-[[expansion]]  # 12 products
+[[expansion]]
+id_expansion = 4896
+name = "Controller of Chaos"
+
+[[expansion]]
 id_expansion = 4897
 name = "Limited Edition 5"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 4898
+name = "Threat of the Dark Demon World"
+
+[[expansion]]
+id_expansion = 4899
+name = "Duelist Legacy Volume 4"
+
+[[expansion]]
 id_expansion = 4900
 name = "Booster Pack Collectors Tin 2003"
 
-[[expansion]]  # 142 products
+[[expansion]]
 id_expansion = 4901
 name = "Duelist Legacy Volume 3"
 
-[[expansion]]  # 60 products
+[[expansion]]
+id_expansion = 4902
+name = "Power of the Guardian"
+
+[[expansion]]
 id_expansion = 4903
 name = "Champion of Black Magic"
 
-[[expansion]]  # 62 products
+[[expansion]]
+id_expansion = 4904
+name = "Duelist Legacy Volume 2"
+
+[[expansion]]
 id_expansion = 4905
 name = "Advent of Union"
 
-[[expansion]]  # 63 products
+[[expansion]]
+id_expansion = 4906
+name = "Duelist Legacy Volume 1"
+
+[[expansion]]
+id_expansion = 4907
+name = "Limited Edition 4"
+
+[[expansion]]
 id_expansion = 4908
 name = "The New Ruler"
 
-[[expansion]]  # 57 products
+[[expansion]]
+id_expansion = 4909
+name = "Pharaonic Guardian (Japanese)"
+
+[[expansion]]
+id_expansion = 4910
+name = "Structure Deck: Pegasus (Japanese)"
+
+[[expansion]]
+id_expansion = 4911
+name = "Structure Deck: Kaiba (Japanese)"
+
+[[expansion]]
+id_expansion = 4912
+name = "Premium Pack 5"
+
+[[expansion]]
 id_expansion = 4913
 name = "Mythological Age"
 
-[[expansion]]  # 56 products
+[[expansion]]
+id_expansion = 4914
+name = "Structure Deck: Joey (Japanese)"
+
+[[expansion]]
 id_expansion = 4915
 name = "Struggle of Chaos"
 
-[[expansion]]  # 87 products
+[[expansion]]
 id_expansion = 4916
 name = "Booster Chronicle"
 
-[[expansion]]  # 58 products
+[[expansion]]
+id_expansion = 4917
+name = "Labyrinth of Nightmare (Japanese)"
+
+[[expansion]]
+id_expansion = 4918
+name = "Structure Deck: Yugi (Japanese)"
+
+[[expansion]]
 id_expansion = 4919
 name = "Spell of Mask"
 
-[[expansion]]  # 12 products
+[[expansion]]
 id_expansion = 4920
 name = "Limited Edition 3"
 
-[[expansion]]  # 12 products
+[[expansion]]
+id_expansion = 4921
+name = "Metal Raiders (Japanese)"
+
+[[expansion]]
+id_expansion = 4922
+name = "Premium Pack 4"
+
+[[expansion]]
+id_expansion = 4923
+name = "Thousand Eyes Bible"
+
+[[expansion]]
+id_expansion = 4924
+name = "EX-R Starter Box"
+
+[[expansion]]
+id_expansion = 4925
+name = "Revival of Black Demons Dragon"
+
+[[expansion]]
+id_expansion = 4926
+name = "Curse of Anubis"
+
+[[expansion]]
+id_expansion = 4927
+name = "Premium Pack 3"
+
+[[expansion]]
+id_expansion = 4928
+name = "Phantom God"
+
+[[expansion]]
+id_expansion = 4929
+name = "Pharaoh's Servant (Japanese)"
+
+[[expansion]]
+id_expansion = 4930
+name = "Legend of Blue Eyes White Dragon (Japanese)"
+
+[[expansion]]
+id_expansion = 4931
+name = "Magic Ruler (Japanese)"
+
+[[expansion]]
 id_expansion = 4932
 name = "Limited Edition 2"
 
-[[expansion]]  # 12 products
+[[expansion]]
+id_expansion = 4933
+name = "Dark Ceremony Edition"
+
+[[expansion]]
+id_expansion = 4934
+name = "Vol.7"
+
+[[expansion]]
+id_expansion = 4935
+name = "Premium Pack 2 (Japanese)"
+
+[[expansion]]
+id_expansion = 4937
+name = "EX Starter Box"
+
+[[expansion]]
+id_expansion = 4938
+name = "Vol. 6"
+
+[[expansion]]
+id_expansion = 4939
+name = "Vol. 5"
+
+[[expansion]]
+id_expansion = 4940
+name = "Premium Pack (Japanese)"
+
+[[expansion]]
+id_expansion = 4941
+name = "Vol. 4"
+
+[[expansion]]
 id_expansion = 4942
 name = "Limited Edition"
 
-[[expansion]]  # 1 products
-id_expansion = 4948
-name = "Rush Duel: Starter Deck Yuga - Cut Through! Sevens Road!!"
+[[expansion]]
+id_expansion = 4943
+name = "Vol. 3"
 
-[[expansion]]  # 1 products
-id_expansion = 4949
-name = "Rush Duel: Starter Deck Set - Yuga vs. Luke"
+[[expansion]]
+id_expansion = 4944
+name = "Vol. 2"
 
-[[expansion]]  # 1 products
-id_expansion = 4950
-name = "Rush Duel: Starter Deck Luke - Explosive Supremacy! Dragias!!"
+[[expansion]]
+id_expansion = 4945
+name = "Starter Box"
 
-[[expansion]]  # 2 products
-id_expansion = 4951
-name = "Rush Duel: Deck Modification Pack - Hyperspeed Rush Road!!"
+[[expansion]]
+id_expansion = 4946
+name = "Vol. 1"
 
-[[expansion]]  # 2 products
-id_expansion = 4952
-name = "Rush Duel: Deck Modification Pack - Shocking Lightning Attack!!"
+[[expansion]]
+id_expansion = 4967
+name = "Speed Duel GX: Midterm Paradox"
 
-[[expansion]]  # 2 products
-id_expansion = 4953
-name = "Rush Duel: Character Pack - Gavin/Roa/Romin"
+[[expansion]]
+id_expansion = 4969
+name = "2022 Tin of the Pharaoh's Gods"
 
-[[expansion]]  # 2 products
-id_expansion = 4954
-name = "Rush Duel: Deck Modification Pack - Fantastrike Mirage Impact!!"
+[[expansion]]
+id_expansion = 4978
+name = "Speed Duel: Tournament Pack 3"
 
-[[expansion]]  # 2 products
-id_expansion = 4955
-name = "Rush Duel: Maximum Ultra Enhancement Pack"
+[[expansion]]
+id_expansion = 5019
+name = "OTS Tournament Pack 19"
 
-[[expansion]]  # 2 products
-id_expansion = 4956
-name = "Rush Duel: Deck Modification Pack - Destined Power Destruction!!"
+[[expansion]]
+id_expansion = 5020
+name = "Power of the Elements"
 
-[[expansion]]  # 2 products
-id_expansion = 4957
-name = "Rush Duel: Deck Modification Pack - Dynamic Eternal Live!!"
-
-[[expansion]]  # 2 products
-id_expansion = 4958
-name = "Rush Duel: Maximum Ultra Evolution Pack"
-
-[[expansion]]  # 2 products
-id_expansion = 4960
-name = "Rush Duel: Deck Modification Pack - Fierce Thunder Storm!!"
-
-[[expansion]]  # 2 products
-id_expansion = 4961
-name = "Rush Duel: Extra Transcend Enhancement Pack"
-
-[[expansion]]  # 2 products
-id_expansion = 4962
-name = "Rush Duel: Deck Modification Pack - Chaotic Omega Rising!!"
-
-[[expansion]]  # 2 products
-id_expansion = 4963
-name = "Rush Duel: Gold Rush Pack"
-
-[[expansion]]  # 2 products
-id_expansion = 4964
-name = "Rush Duel: Deck Modification Pack - Genesis Master Road!!"
-
-[[expansion]]  # 170 products
+[[expansion]]
 id_expansion = 5036
 name = "History Archive Collection"
 
-[[expansion]]  # 80 products
+[[expansion]]
 id_expansion = 5037
 name = "Deck Build Pack: Tactical Masters"
 
-[[expansion]]  # 2 products
-id_expansion = 5046
-name = "Rush Duel: Deck Modification Pack - Galaxy of Fate!!"
+[[expansion]]
+id_expansion = 5043
+name = "Duel Royale Deck Set EX Round 2"
 
-[[expansion]]  # 2 products
-id_expansion = 5080
-name = "Rush Duel: Megaroad Pack"
+[[expansion]]
+id_expansion = 5044
+name = "Power of the Elements (OCG)"
 
-[[expansion]]  # 100 products
+[[expansion]]
+id_expansion = 5045
+name = "Structure Deck: Legend of the Crystal Beasts"
+
+[[expansion]]
+id_expansion = 5058
+name = "Duelist Pack: Duelists of Pyroxene"
+
+[[expansion]]
+id_expansion = 5066
+name = "Battles of Legend: Crystal Revenge"
+
+[[expansion]]
 id_expansion = 5081
 name = "Animation Chronicle 2022"
 
-[[expansion]]  # 56 products
+[[expansion]]
+id_expansion = 5082
+name = "Pharaonic Legend Pack"
+
+[[expansion]]
+id_expansion = 5083
+name = "Darkwing Blast"
+
+[[expansion]]
+id_expansion = 5085
+name = "Speed Duel: Tournament Pack 4"
+
+[[expansion]]
+id_expansion = 5086
+name = "Magnificent Mavens"
+
+[[expansion]]
 id_expansion = 5087
 name = "Structure Deck: Legend of the Crystals"
 
-[[expansion]]  # 2 products
-id_expansion = 5102
-name = "Rush Duel: Deck Modification Pack - Requiem of Destruction!!"
+[[expansion]]
+id_expansion = 5107
+name = "Darkwing Blast (OCG)"
 
-[[expansion]]  # 51 products
+[[expansion]]
+id_expansion = 5109
+name = "OTS Tournament Pack 20"
+
+[[expansion]]
 id_expansion = 5111
 name = "Structure Deck R: Devil's Gate"
 
-[[expansion]]  # 1 products
-id_expansion = 5112
-name = "Rush Duel: Strongest Battle Deck Yudias - Shining Velgariva"
+[[expansion]]
+id_expansion = 5125
+name = "Structure Deck: Dark World"
 
-[[expansion]]  # 1 products
-id_expansion = 5113
-name = "Rush Duel: Strongest Battle Deck Yuhi - Join and Explode! Join and Intensify!"
-
-[[expansion]]  # 1 products
-id_expansion = 5114
-name = "Rush Duel: Strongest Battle Deck Yuamu - Come Forth! High Tech Dragon!"
-
-[[expansion]]  # 1 products
-id_expansion = 5115
-name = "Rush Duel: Strongest Battle Deck Manabu - Chemist-Meow Draw of Flames!"
-
-[[expansion]]  # 1 products
-id_expansion = 5116
-name = "Rush Duel: Strongest Battle Deck Zuwijo - Voidvelgr of the Empty Sky"
-
-[[expansion]]  # 80 products
+[[expansion]]
 id_expansion = 5136
 name = "Deck Build Pack: Amazing Defenders"
 
-[[expansion]]  # 2 products
-id_expansion = 5206
-name = "Rush Duel: Deck Mod Pack: Fortissimo of the Whirlwinds!!"
+[[expansion]]
+id_expansion = 5145
+name = "Amazing Defenders"
 
-[[expansion]]  # 2 products
-id_expansion = 5209
-name = "Rush Duel: Over Rush Pack"
+[[expansion]]
+id_expansion = 5155
+name = "World Premiere Pack 2022"
 
-[[expansion]]  # 54 products
+[[expansion]]
+id_expansion = 5157
+name = "Photon Hypernova"
+
+[[expansion]]
+id_expansion = 5166
+name = "Photon Hypernova (OCG)"
+
+[[expansion]]
+id_expansion = 5180
+name = "Speed Duel GX: Duelists of Shadows"
+
+[[expansion]]
+id_expansion = 5195
+name = "Structure Deck: Beware of Traptrix"
+
+[[expansion]]
+id_expansion = 5200
+name = "Selection 5"
+
+[[expansion]]
+id_expansion = 5202
+name = "OTS Tournament Pack 21"
+
+[[expansion]]
+id_expansion = 5210
+name = "Maze of Memories"
+
+[[expansion]]
 id_expansion = 5211
 name = "Structure Deck: Forest of the Traptrix"
 
-[[expansion]]  # 127 products
+[[expansion]]
 id_expansion = 5222
 name = "Premium Pack 2023"
 
-[[expansion]]  # 5 products
-id_expansion = 5235
-name = "25th Anniversary Edition Boosters"
+[[expansion]]
+id_expansion = 5233
+name = "Secret Utility Box"
 
-[[expansion]]  # 2 products
-id_expansion = 5243
-name = "Rush Duel: Deck Mod Pack: Double Star of the Assault!!"
+[[expansion]]
+id_expansion = 5234
+name = "Cyberstorm Access"
 
-[[expansion]]  # 488 products
+[[expansion]]
+id_expansion = 5236
+name = "Legendary Collection: 25th Anniversary Edition"
+
+[[expansion]]
+id_expansion = 5242
+name = "Cyberstorm Access (OCG)"
+
+[[expansion]]
+id_expansion = 5247
+name = "Speed Duel: Tournament Pack 5"
+
+[[expansion]]
 id_expansion = 5266
 name = "Rarity Collection Quarter Century Edition"
 
-[[expansion]]  # 2 products
-id_expansion = 5297
-name = "Rush Duel: Legend Awakening Pack"
+[[expansion]]
+id_expansion = 5271
+name = "Wild Survivors"
 
-[[expansion]]  # 80 products
+[[expansion]]
+id_expansion = 5295
+name = "Battles of Legend: Monstrous Revenge"
+
+[[expansion]]
 id_expansion = 5311
 name = "Deck Build Pack: Wild Survivors"
 
-[[expansion]]  # 2 products
-id_expansion = 5325
-name = "Rush Duel: Versus Pack Maximum Force"
+[[expansion]]
+id_expansion = 5316
+name = "Speed Duel: Streets of Battle City"
 
-[[expansion]]  # 2 products
-id_expansion = 5355
-name = "Rush Duel: Oblivion of the Flash"
+[[expansion]]
+id_expansion = 5319
+name = "Duelist Nexus"
 
-[[expansion]]  # 62 products
+[[expansion]]
+id_expansion = 5326
+name = "Duelist Nexus (OCG)"
+
+[[expansion]]
+id_expansion = 5337
+name = "25th Anniversary Tin: Dueling Heroes"
+
+[[expansion]]
+id_expansion = 5338
+name = "Legendary Duelists: Soulburning Volcano"
+
+[[expansion]]
+id_expansion = 5339
+name = "Legend of Blue Eyes White Dragon (25th Anniversary Edition)"
+
+[[expansion]]
+id_expansion = 5340
+name = "Metal Raiders (25th Anniversary Edition)"
+
+[[expansion]]
+id_expansion = 5341
+name = "Spell Ruler (25th Anniversary Edition)"
+
+[[expansion]]
+id_expansion = 5342
+name = "Pharaoh’s Servant (25th Anniversary Edition)"
+
+[[expansion]]
+id_expansion = 5343
+name = "Dark Crisis (25th Anniversary Edition)"
+
+[[expansion]]
+id_expansion = 5344
+name = "Invasion of Chaos (25th Anniversary Edition)"
+
+[[expansion]]
+id_expansion = 5356
+name = "OTS Tournament Pack 22"
+
+[[expansion]]
 id_expansion = 5361
 name = "Duelist Pack: Duelists of Explosion"
 
-[[expansion]]  # 94 products
+[[expansion]]
+id_expansion = 5382
+name = "Structure Deck: The Crimson King"
+
+[[expansion]]
 id_expansion = 5386
 name = "Animation Chronicle 2023"
 
-[[expansion]]  # 1 products
-id_expansion = 5388
-name = "Rush Duel: Strongest Battle Deck Gavin - Demon Commander Three Legions"
-
-[[expansion]]  # 1 products
-id_expansion = 5389
-name = "Rush Duel: Strongest Battle Deck Romin - Psychic Beat"
-
-[[expansion]]  # 1 products
-id_expansion = 5390
-name = "Rush Duel: Strongest Battle Deck Roa - Demon's Rock"
-
-[[expansion]]  # 1 products
-id_expansion = 5391
-name = "Rush Duel: Strongest Battle Deck Nail - Maximum Haven"
-
-[[expansion]]  # 1 products
-id_expansion = 5392
-name = "Rush Duel: Strongest Battle Deck Asana - Pride of the Heavy Cavalry Style"
-
-[[expansion]]  # 9 products
+[[expansion]]
 id_expansion = 5395
 name = "Coco's x Yu-Gi-Oh! Card Game Anniversary Campaign"
 
-[[expansion]]  # 2 products
-id_expansion = 5400
-name = "Rush Duel: Triple Build Pack: Godbreath Wing"
+[[expansion]]
+id_expansion = 5397
+name = "Speed Duel: Tournament Pack 6"
 
-[[expansion]]  # 57 products
+[[expansion]]
+id_expansion = 5398
+name = "Quarter Century Anniversary Selection"
+
+[[expansion]]
 id_expansion = 5401
 name = "Structure Deck: Pulse of the King"
 
-[[expansion]]  # 86 products
+[[expansion]]
+id_expansion = 5403
+name = "Age of Overlord"
+
+[[expansion]]
+id_expansion = 5404
+name = "25th Anniversary Rarity Collection"
+
+[[expansion]]
+id_expansion = 5420
+name = "2-Player Starter Set"
+
+[[expansion]]
+id_expansion = 5421
+name = "Age of Overlord (OCG)"
+
+[[expansion]]
+id_expansion = 5433
+name = "7-Eleven Collaboration Campaign"
+
+[[expansion]]
+id_expansion = 5440
+name = "Valiant Smashers"
+
+[[expansion]]
+id_expansion = 5443
+name = "Battle of Great Duelist"
+
+[[expansion]]
 id_expansion = 5460
 name = "Deck Build Pack: Valiant Smashers"
 
-[[expansion]]  # 55 products
+[[expansion]]
+id_expansion = 5465
+name = "25th Anniversary Tin: Dueling Heroes Mega Pack"
+
+[[expansion]]
 id_expansion = 5475
 name = "Structure Deck R: Onslaught of the Fire Kings"
 
-[[expansion]]  # 1 products
-id_expansion = 5501
-name = "Rush Duel: Structure Deck: The Ultimate Blue-Eyed Legend"
+[[expansion]]
+id_expansion = 5480
+name = "Structure Deck: Fire Kings"
 
-[[expansion]]  # 2 products
-id_expansion = 5517
-name = "Rush Duel: Megaroad Pack 2"
+[[expansion]]
+id_expansion = 5495
+name = "World Premiere Pack 2023"
 
-[[expansion]]  # 126 products
+[[expansion]]
+id_expansion = 5503
+name = "Maze of Millennia"
+
+[[expansion]]
+id_expansion = 5504
+name = "Phantom Nightmare"
+
+[[expansion]]
+id_expansion = 5518
+name = "OTS Tournament Pack 23"
+
+[[expansion]]
+id_expansion = 5533
+name = "Phantom Nightmare (OCG)"
+
+[[expansion]]
+id_expansion = 5543
+name = "The Pot Collection"
+
+[[expansion]]
+id_expansion = 5549
+name = "Speed Duel GX: Midterm Destruction"
+
+[[expansion]]
+id_expansion = 5550
+name = "Terminal World"
+
+[[expansion]]
+id_expansion = 5563
+name = "Battles of Legend: Chapter 1"
+
+[[expansion]]
 id_expansion = 5568
 name = "Premium Pack 2024"
 
-[[expansion]]  # 2 products
-id_expansion = 5569
-name = "Rush Duel: High-Grade Collection"
+[[expansion]]
+id_expansion = 5570
+name = "Quarter Century Duelist Box"
 
-[[expansion]]  # 2 products
-id_expansion = 5582
-name = "Rush Duel: Phoenix of the Roaring Flame"
+[[expansion]]
+id_expansion = 5578
+name = "Legacy of Destruction"
 
-[[expansion]]  # 2 products
-id_expansion = 5583
-name = "Rush Duel: Red Reboot of Darkness"
-
-[[expansion]]  # 46 products
+[[expansion]]
 id_expansion = 5584
 name = "Memories of the Duel King: Duelist Kingdom Arc"
 
-[[expansion]]  # 2 products
-id_expansion = 5628
-name = "Rush Duel: Transamu of Transcendence"
+[[expansion]]
+id_expansion = 5604
+name = "25th Anniversary Rarity Collection II"
 
-[[expansion]]  # 104 products
+[[expansion]]
+id_expansion = 5605
+name = "Booster R1"
+
+[[expansion]]
+id_expansion = 5606
+name = "Booster R2"
+
+[[expansion]]
+id_expansion = 5607
+name = "Booster R3"
+
+[[expansion]]
+id_expansion = 5608
+name = "Legacy of Destruction (OCG)"
+
+[[expansion]]
+id_expansion = 5629
+name = "OTS Tournament Pack 24"
+
+[[expansion]]
+id_expansion = 5649
+name = "Quarter Century Chronicle side:Unity"
+
+[[expansion]]
+id_expansion = 5670
+name = "Battles of Legend: Terminal Revenge"
+
+[[expansion]]
+id_expansion = 5680
+name = "25th Anniversary Ultimate Kaiba Set"
+
+[[expansion]]
+id_expansion = 5687
+name = "The Infinite Forbidden"
+
+[[expansion]]
 id_expansion = 5701
 name = "Premium Pack: The Legend of Duelist Quarter Century Edition"
 
-[[expansion]]  # 2 products
-id_expansion = 5706
-name = "Rush Duel: Over Rush Pack 2"
+[[expansion]]
+id_expansion = 5702
+name = "Quarter Century Chronicle side:Pride"
 
-[[expansion]]  # 1 products
-id_expansion = 5754
-name = "WCQ 2025 Promo Card Pack"
+[[expansion]]
+id_expansion = 5708
+name = "Speed Duel: Tournament Pack 7"
 
-[[expansion]]  # 2 products
-id_expansion = 5758
-name = "Rush Duel: Burst Rex of Awakening"
+[[expansion]]
+id_expansion = 5735
+name = "25th Anniversary Tin: Dueling Mirrors"
 
-[[expansion]]  # 74 products
+[[expansion]]
+id_expansion = 5753
+name = "The Infinite Forbidden (OCG)"
+
+[[expansion]]
 id_expansion = 5768
 name = "Duelist Pack: Duelists of Brilliance"
 
-[[expansion]]  # 110 products
+[[expansion]]
+id_expansion = 5770
+name = "Booster 1"
+
+[[expansion]]
+id_expansion = 5771
+name = "Booster 2"
+
+[[expansion]]
+id_expansion = 5772
+name = "Booster 3"
+
+[[expansion]]
+id_expansion = 5773
+name = "Booster 4"
+
+[[expansion]]
+id_expansion = 5774
+name = "Booster 5"
+
+[[expansion]]
+id_expansion = 5775
+name = "Booster 6"
+
+[[expansion]]
+id_expansion = 5777
+name = "Booster 7"
+
+[[expansion]]
+id_expansion = 5787
+name = "Tactical-Try Decks: Wave 1"
+
+[[expansion]]
+id_expansion = 5788
+name = "OTS Tournament Pack 25"
+
+[[expansion]]
+id_expansion = 5791
+name = "Rage of the Abyss"
+
+[[expansion]]
 id_expansion = 5795
 name = "Animation Chronicle 2024"
 
-[[expansion]]  # 130 products
+[[expansion]]
 id_expansion = 5821
 name = "Legend of Blue Eyes White Dragon (Korean)"
 
-[[expansion]]  # 109 products
+[[expansion]]
 id_expansion = 5822
 name = "Pharaoh's Servant (Korean)"
 
-[[expansion]]  # 109 products
+[[expansion]]
 id_expansion = 5824
 name = "Labyrinth of Nightmare (Korean)"
 
-[[expansion]]  # 1 products
-id_expansion = 5831
-name = "Rush Duel: Structure Deck: Birth of Hero"
+[[expansion]]
+id_expansion = 5833
+name = "Magician's Force (Korean)"
 
-[[expansion]]  # 2 products
-id_expansion = 5856
-name = "Rush Duel: Dark Matter of Phantoms"
+[[expansion]]
+id_expansion = 5836
+name = "Token Promos 5"
 
-[[expansion]]  # 116 products
+[[expansion]]
+id_expansion = 5840
+name = "Rage of the Abyss (OCG)"
+
+[[expansion]]
+id_expansion = 5848
+name = "Quarter Century Bonanza"
+
+[[expansion]]
+id_expansion = 5857
+name = "Crossover Breakers"
+
+[[expansion]]
 id_expansion = 5858
 name = "Invasion of Chaos (Korean)"
 
-[[expansion]]  # 86 products
+[[expansion]]
 id_expansion = 5882
 name = "Deck Build Pack: Crossover Breakers"
 
-[[expansion]]  # 62 products
+[[expansion]]
 id_expansion = 5891
 name = "Structure Deck: Advent of the Eyes of Blue"
 
-[[expansion]]  # 106 products
+[[expansion]]
 id_expansion = 5892
 name = "Spell Ruler (Korean)"
 
-[[expansion]]  # 55 products
+[[expansion]]
 id_expansion = 5893
 name = "Structure Deck: Masters of the Spiritual Arts - The Legend of Duelist Quarter Century Edition"
 
-[[expansion]]  # 47 products
+[[expansion]]
 id_expansion = 5894
 name = "Structure Deck: Forest of the Traptrix - The Legend of Duelist Quarter Century Edition"
 
-[[expansion]]  # 2 products
-id_expansion = 5921
-name = "Rush Duel: Neo Legend Awakening Pack"
+[[expansion]]
+id_expansion = 5902
+name = "Supreme Darkness"
 
-[[expansion]]  # 4 products
+[[expansion]]
+id_expansion = 5907
+name = "Complete File: Story of White"
+
+[[expansion]]
+id_expansion = 5909
+name = "Structure Deck: Blue-Eyes White Destiny"
+
+[[expansion]]
+id_expansion = 5912
+name = "World Premiere Pack 2024"
+
+[[expansion]]
+id_expansion = 5919
+name = "OTS Tournament Pack 26"
+
+[[expansion]]
+id_expansion = 5929
+name = "Supreme Darkness (OCG)"
+
+[[expansion]]
+id_expansion = 5933
+name = "Speed Duel: Battle City Finals"
+
+[[expansion]]
 id_expansion = 5934
 name = "20th Anniversary Duel Set"
 
-[[expansion]]  # 4 products
+[[expansion]]
 id_expansion = 5935
 name = "Quarter Century Duel Set"
 
-[[expansion]]  # 2 products
-id_expansion = 5964
-name = "Rush Duel: Salamandeus of Scorching"
+[[expansion]]
+id_expansion = 5936
+name = "Quarter Century Legendary Selection"
 
-[[expansion]]  # 195 products
+[[expansion]]
+id_expansion = 5961
+name = "Maze of the Master"
+
+[[expansion]]
 id_expansion = 5965
 name = "Terminal World 2"
 
-[[expansion]]  # 146 products
+[[expansion]]
+id_expansion = 5981
+name = "Quarter Century Limited Pack"
+
+[[expansion]]
 id_expansion = 5983
 name = "Metal Raiders (Korean)"
 
-[[expansion]]  # 2 products
-id_expansion = 5984
-name = "Legacy of Darkness (Korean)"
+[[expansion]]
+id_expansion = 5989
+name = "Quarter Century Stampede"
 
-[[expansion]]  # 2 products
-id_expansion = 5985
-name = "Pharaonic Guardian (Korean)"
-
-[[expansion]]  # 2 products
-id_expansion = 5986
-name = "Dark Crisis (Korean)"
-
-[[expansion]]  # 2 products
-id_expansion = 5987
-name = "Ancient Sanctuary (Korean)"
-
-[[expansion]]  # 157 products
+[[expansion]]
 id_expansion = 5994
 name = "Quarter Century Trinity Box"
 
-[[expansion]]  # 126 products
+[[expansion]]
+id_expansion = 6008
+name = "Alliance Insight"
+
+[[expansion]]
+id_expansion = 6019
+name = "Coco's x Yu-Gi-Oh! Card Game Anniversary Campaign 2024"
+
+[[expansion]]
 id_expansion = 6021
 name = "Premium Pack 2025"
 
-[[expansion]]  # 2 products
-id_expansion = 6050
-name = "Rush Duel: Galactica of Eternity"
+[[expansion]]
+id_expansion = 6025
+name = "Alliance Insight (OCG)"
 
-[[expansion]]  # 1 products
-id_expansion = 6077
-name = "Rush Duel: Structure Deck: Chimeratech Cyber"
+[[expansion]]
+id_expansion = 6051
+name = "V Jump Promotional Cards (OCG)"
 
-[[expansion]]  # 1 products
-id_expansion = 6078
-name = "Rush Duel: Structure Deck: Harpie Lady Sisters"
+[[expansion]]
+id_expansion = 6052
+name = "Weekly Shonen Jump Promotional Cards (OCG)"
 
-[[expansion]]  # 2 products
-id_expansion = 6089
-name = "Rush Duel: Triple Build Pack: Evolution Impact"
+[[expansion]]
+id_expansion = 6053
+name = "Jump Ryu Vol.08 Promotional Card"
 
-[[expansion]]  # 86 products
+[[expansion]]
+id_expansion = 6054
+name = "Power Pros Collaboration"
+
+[[expansion]]
+id_expansion = 6061
+name = "Quarter Century Art Collection"
+
+[[expansion]]
+id_expansion = 6067
+name = "OTS Tournament Pack 27"
+
+[[expansion]]
+id_expansion = 6068
+name = "Yu-Gi-Oh! Early Days Collection"
+
+[[expansion]]
+id_expansion = 6069
+name = "Battles of Legend: Monster Mayhem"
+
+[[expansion]]
+id_expansion = 6073
+name = "The Valuable Book Promotional Cards"
+
+[[expansion]]
+id_expansion = 6080
+name = "Yu-Gi-Oh! 3D Bonds Beyond Time Theater Distribution Card"
+
+[[expansion]]
+id_expansion = 6083
+name = "Duelist’s Advance"
+
+[[expansion]]
+id_expansion = 6084
+name = "20th Anniversary Monster Art Box Promotional Card"
+
+[[expansion]]
+id_expansion = 6085
+name = "Duel Art Campaign Promotional Card"
+
+[[expansion]]
 id_expansion = 6093
 name = "Deck Build Pack: Justice Hunters"
 
-[[expansion]]  # 1 products
-id_expansion = 6133
-name = "Rush Duel: Structure Deck: Black Magic Ritual"
+[[expansion]]
+id_expansion = 6108
+name = "Prismatic Special Pack"
 
-[[expansion]]  # 2 products
-id_expansion = 6145
-name = "Rush Duel: 5th Anniversary Pack"
+[[expansion]]
+id_expansion = 6129
+name = "Duelist's Advance (OCG)"
 
-[[expansion]]  # 2 products
+[[expansion]]
+id_expansion = 6144
+name = "Monster Strike Collaboration Campaign"
+
+[[expansion]]
 id_expansion = 6146
 name = "25th Anniversary Ukiyo-e Style Limited OCG Card Set"
 
-[[expansion]]  # 30 products
+[[expansion]]
+id_expansion = 6153
+name = "Ultimate Special Pack"
+
+[[expansion]]
+id_expansion = 6154
+name = "Master Collection Volume 3"
+
+[[expansion]]
 id_expansion = 6155
-name = "Duel Sets & Collectibles"
+name = "Promos (OCG)"
 
-[[expansion]]  # 2 products
-id_expansion = 6167
-name = "Rush Duel: Accel Road of the Attack"
+[[expansion]]
+id_expansion = 6156
+name = "Tactical-Try Deck: Wave 2"
 
-[[expansion]]  # 2 products
-id_expansion = 6210
-name = "Rush Duel: Advance Pack: Devil's Ceremony"
+[[expansion]]
+id_expansion = 6158
+name = "Justice Hunters"
 
-[[expansion]]  # 84 products
+[[expansion]]
+id_expansion = 6159
+name = "2025 Mega-Pack Tin"
+
+[[expansion]]
+id_expansion = 6165
+name = "Yu-Gi-Oh! Championship Prize Cards 2025"
+
+[[expansion]]
+id_expansion = 6172
+name = "OTS Tournament Pack 28"
+
+[[expansion]]
+id_expansion = 6195
+name = "Tactical-Try Pack: Dark Magic / HERO / Mikanko"
+
+[[expansion]]
+id_expansion = 6211
+name = "Doom of Dimensions"
+
+[[expansion]]
 id_expansion = 6212
 name = "Limited Pack World Championship 2025"
 
-[[expansion]]  # 86 products
+[[expansion]]
+id_expansion = 6235
+name = "Doom of Dimensions (OCG)"
+
+[[expansion]]
+id_expansion = 6238
+name = "Duel Academia Selection"
+
+[[expansion]]
 id_expansion = 6278
 name = "Deck Build Pack: Phantom Revengers"
 
-[[expansion]]  # 2 products
-id_expansion = 6304
-name = "Rush Duel: OuTerverSe of Terror"
-
-[[expansion]]  # 61 products
+[[expansion]]
 id_expansion = 6308
 name = "Structure Deck: Power of Fellows"
 
-[[expansion]]  # 1 products
-id_expansion = 6316
-name = "Rush Duel: Structure Deck: Triumphant Return of the Monarchs"
+[[expansion]]
+id_expansion = 6332
+name = "Limited Pack GX: Slifer Red"
 
-[[expansion]]  # 2 products
-id_expansion = 6363
-name = "Rush Duel: Over Rush Pack 3"
+[[expansion]]
+id_expansion = 6336
+name = "THE CHRONICLES DECK: The Fallen & The Virtuous (All-Foil Edition)"
 
-[[expansion]]  # 2 products
-id_expansion = 6428
-name = "Rush Duel: Gias Charge of the Nova"
+[[expansion]]
+id_expansion = 6337
+name = "World Premiere Pack 2025"
 
-[[expansion]]  # 2 products
-id_expansion = 6448
-name = "Rush Duel: Advance Pack: Revenge Hearts"
+[[expansion]]
+id_expansion = 6352
+name = "OTS Tournament Pack 29"
 
-[[expansion]]  # 146 products
+[[expansion]]
+id_expansion = 6365
+name = "Burst Protocol (OCG)"
+
+[[expansion]]
+id_expansion = 6370
+name = "Legendary 5D's Decks"
+
+[[expansion]]
+id_expansion = 6371
+name = "THE CHRONICLES DECK: The Fallen & The Virtuous (OCG)"
+
+[[expansion]]
+id_expansion = 6374
+name = "Phantom Revenge"
+
+[[expansion]]
+id_expansion = 6420
+name = "Terminal World 3"
+
+[[expansion]]
+id_expansion = 6424
+name = "Rarity Collection 5"
+
+[[expansion]]
+id_expansion = 6429
+name = "THE CHRONICLES DECK: Spirit Charmers (All-Foil Edition)"
+
+[[expansion]]
+id_expansion = 6430
+name = "THE CHRONICLES DECK: Spirit Charmers (OCG)"
+
+[[expansion]]
+id_expansion = 6431
+name = "Burst Protocol"
+
+[[expansion]]
+id_expansion = 6433
+name = "Maze of Muertos"
+
+[[expansion]]
+id_expansion = 6450
+name = "Blazing Dominion"
+
+[[expansion]]
+id_expansion = 6458
+name = "Blazing Dominion (OCG)"
+
+[[expansion]]
 id_expansion = 6473
 name = "Limited Pack: Stamp Edition"
 
-[[expansion]]  # 320 products
+[[expansion]]
+id_expansion = 6485
+name = "Special Pack: Stamp Edition"
+
+[[expansion]]
+id_expansion = 6488
+name = "OTS Tournament Pack 30"
+
+[[expansion]]
+id_expansion = 6489
+name = "Legendary Modern Decks 2026"
+
+[[expansion]]
+id_expansion = 6499
+name = "Duel Monsters Expert 2006 Promo Set"
+
+[[expansion]]
+id_expansion = 6500
+name = "Duelist Box: Prismatic Summon"
+
+[[expansion]]
 id_expansion = 6508
 name = "Limit Over Collection: The Heroes"
 
-[[expansion]]  # 320 products
+[[expansion]]
+id_expansion = 6511
+name = "Duel Monsters 5 Expert 1 Promotional Cards"
+
+[[expansion]]
 id_expansion = 6512
 name = "Limit Over Collection: The Rivals"
 
-[[expansion]]  # 1 products
-id_expansion = 6513
-name = "Prismatic Trinity Box"
-
-[[expansion]]  # 126 products
+[[expansion]]
 id_expansion = 6530
 name = "Premium Pack 2026"
 
-[[expansion]]  # 22 products
+[[expansion]]
 id_expansion = 6531
-name = "Limit Over Special Packs"
+name = "Limit Over Special Pack"
 
-[[expansion]]  # 2 products
-id_expansion = 6592
-name = "Rush Duel: Rising of the Aurora"
+[[expansion]]
+id_expansion = 6536
+name = "Chaos Origins"
 
-[[expansion]]  # 131 products
+[[expansion]]
+id_expansion = 6537
+name = "Battles of Legend: Glorious Gallery"
+
+[[expansion]]
+id_expansion = 6566
+name = "Chaos Origins (OCG)"
+
+[[expansion]]
+id_expansion = 6573
+name = "Premium Pack Vol.5"
+
+[[expansion]]
+id_expansion = 6590
+name = "Magnificent Monsters"
+
+[[expansion]]
 id_expansion = 6619
 name = "Revolution Booster: Toon / Witchcrafter / Unchained"
 
-[[expansion]]  # 2 products
-id_expansion = 6624
-name = "Rush Duel: Over Rush Pack 4"
+[[expansion]]
+id_expansion = 6621
+name = "Ultimate Tournament Pack 1"
 
-[[expansion]]  # 123 products
+[[expansion]]
+id_expansion = 6622
+name = "30th Anniversary Demon's Pack"
+
+[[expansion]]
+id_expansion = 6641
+name = "World Premiere Pack 2026"
+
+[[expansion]]
+id_expansion = 6656
+name = "The Legend of Duelist Promotion Pack"
+
+[[expansion]]
+id_expansion = 6660
+name = "Legendary Arc-V Decks"
+
+[[expansion]]
+id_expansion = 6666
+name = "Beyond the Brave (OCG)"
+
+[[expansion]]
+id_expansion = 6667
+name = "Limited Pack GX: Ra Yellow"
+
+[[expansion]]
 id_expansion = 6668
 name = "Winner's Pack 2026-2027"
 
-[[expansion]]  # 89 products
+[[expansion]]
+id_expansion = 6680
+name = "Magnificent Maestros"
+
+[[expansion]]
+id_expansion = 6690
+name = "Utility Selection"
+
+[[expansion]]
+id_expansion = 6693
+name = "Genesys Pack 2026 Vol. 1"
+
+[[expansion]]
+id_expansion = 6695
+name = "Beyond the Brave"
+
+[[expansion]]
 id_expansion = 6706
 name = "Limited Pack World Championship 2026"
 
-[[expansion]]  # 2 products
-id_expansion = 6756
-name = "Rush Duel: Advance Pack: Union Base"
+[[expansion]]
+id_expansion = 6760
+name = "Deck Build Pack: Glorious Victors"
 
-[[expansion]]  # 2 products
-id_expansion = 6936
-name = "Rush Duel: Limited Pack Remaster Edition"
+[[expansion]]
+id_expansion = 6783
+name = "Yu-Gi-Oh! Championship Prize Cards 2026"
 
-[[expansion]]  # 2 products
-id_expansion = 6937
-name = "Rush Duel: CROSS ART COLLECTION"
+[[expansion]]
+id_expansion = 6786
+name = "Original Artwork Collection (OCG)"
 
-[[expansion]]  # 3 products
-id_expansion = 6948
-name = "Glorious Victors"
+[[expansion]]
+id_expansion = 6942
+name = "Ultimate Tournament Pack 2"
 
-[[expansion]]  # 6 products
+[[expansion]]
+id_expansion = 6960
+name = "Immortal Phoenix (OCG)"
+
+[[expansion]]
 id_expansion = 6971
 name = "Promotion Pack 2026"
 
-# Not named yet (no sealed product to name them from); a few of their products:
+[[expansion]]
+id_expansion = 6979
+name = "Dark Duel Stories 2"
+
+[[expansion]]
+id_expansion = 6980
+name = "Revolution Booster: Cubic / Marincess / Ghostrick"
+
+# Stand-ins with sealed products only (not in Cardmarket's singles filter), named after those products.
+
+[[expansion]]
+id_expansion = 1402
+name = "Lots & Miscellaneous Products"
+
+[[expansion]]
+id_expansion = 1770
+name = "CCG Grand Open 2017"
+
+[[expansion]]
+id_expansion = 2071
+name = "HDK 2018"
+
+[[expansion]]
+id_expansion = 3224
+name = "2020 Tin of Lost Memories"
+
+[[expansion]]
+id_expansion = 4531
+name = "Token Pack Vol.3"
+
+[[expansion]]
+id_expansion = 4544
+name = "Token Pack Vol.2"
+
+[[expansion]]
+id_expansion = 4553
+name = "Token Pack"
+
+[[expansion]]
+id_expansion = 4612
+name = "Half Deck 2018"
+
+[[expansion]]
+id_expansion = 4948
+name = "Rush Duel: Starter Deck Yuga - Cut Through! Sevens Road!!"
+
+[[expansion]]
+id_expansion = 4949
+name = "Rush Duel: Starter Deck Set - Yuga vs. Luke"
+
+[[expansion]]
+id_expansion = 4950
+name = "Rush Duel: Starter Deck Luke - Explosive Supremacy! Dragias!!"
+
+[[expansion]]
+id_expansion = 4951
+name = "Rush Duel: Deck Modification Pack - Hyperspeed Rush Road!!"
+
+[[expansion]]
+id_expansion = 4952
+name = "Rush Duel: Deck Modification Pack - Shocking Lightning Attack!!"
+
+[[expansion]]
+id_expansion = 4953
+name = "Rush Duel: Character Pack - Gavin/Roa/Romin"
+
+[[expansion]]
+id_expansion = 4954
+name = "Rush Duel: Deck Modification Pack - Fantastrike Mirage Impact!!"
+
+[[expansion]]
+id_expansion = 4955
+name = "Rush Duel: Maximum Ultra Enhancement Pack"
+
+[[expansion]]
+id_expansion = 4956
+name = "Rush Duel: Deck Modification Pack - Destined Power Destruction!!"
+
+[[expansion]]
+id_expansion = 4957
+name = "Rush Duel: Deck Modification Pack - Dynamic Eternal Live!!"
+
+[[expansion]]
+id_expansion = 4958
+name = "Rush Duel: Maximum Ultra Evolution Pack"
+
+[[expansion]]
+id_expansion = 4960
+name = "Rush Duel: Deck Modification Pack - Fierce Thunder Storm!!"
+
+[[expansion]]
+id_expansion = 4961
+name = "Rush Duel: Extra Transcend Enhancement Pack"
+
+[[expansion]]
+id_expansion = 4962
+name = "Rush Duel: Deck Modification Pack - Chaotic Omega Rising!!"
+
+[[expansion]]
+id_expansion = 4963
+name = "Rush Duel: Gold Rush Pack"
+
+[[expansion]]
+id_expansion = 4964
+name = "Rush Duel: Deck Modification Pack - Genesis Master Road!!"
+
+[[expansion]]
+id_expansion = 5046
+name = "Rush Duel: Deck Modification Pack - Galaxy of Fate!!"
+
+[[expansion]]
+id_expansion = 5080
+name = "Rush Duel: Megaroad Pack"
+
+[[expansion]]
+id_expansion = 5102
+name = "Rush Duel: Deck Modification Pack - Requiem of Destruction!!"
+
+[[expansion]]
+id_expansion = 5112
+name = "Rush Duel: Strongest Battle Deck Yudias - Shining Velgariva"
+
+[[expansion]]
+id_expansion = 5113
+name = "Rush Duel: Strongest Battle Deck Yuhi - Join and Explode! Join and Intensify!"
+
+[[expansion]]
+id_expansion = 5114
+name = "Rush Duel: Strongest Battle Deck Yuamu - Come Forth! High Tech Dragon!"
+
+[[expansion]]
+id_expansion = 5115
+name = "Rush Duel: Strongest Battle Deck Manabu - Chemist-Meow Draw of Flames!"
+
+[[expansion]]
+id_expansion = 5116
+name = "Rush Duel: Strongest Battle Deck Zuwijo - Voidvelgr of the Empty Sky"
+
+[[expansion]]
+id_expansion = 5206
+name = "Rush Duel: Deck Mod Pack: Fortissimo of the Whirlwinds!!"
+
+[[expansion]]
+id_expansion = 5209
+name = "Rush Duel: Over Rush Pack"
+
+[[expansion]]
+id_expansion = 5235
+name = "25th Anniversary Edition Boosters"
+
+[[expansion]]
+id_expansion = 5243
+name = "Rush Duel: Deck Mod Pack: Double Star of the Assault!!"
+
+[[expansion]]
+id_expansion = 5297
+name = "Rush Duel: Legend Awakening Pack"
+
+[[expansion]]
+id_expansion = 5325
+name = "Rush Duel: Versus Pack Maximum Force"
+
+[[expansion]]
+id_expansion = 5355
+name = "Rush Duel: Oblivion of the Flash"
+
+[[expansion]]
+id_expansion = 5388
+name = "Rush Duel: Strongest Battle Deck Gavin - Demon Commander Three Legions"
+
+[[expansion]]
+id_expansion = 5389
+name = "Rush Duel: Strongest Battle Deck Romin - Psychic Beat"
+
+[[expansion]]
+id_expansion = 5390
+name = "Rush Duel: Strongest Battle Deck Roa - Demon's Rock"
+
+[[expansion]]
+id_expansion = 5391
+name = "Rush Duel: Strongest Battle Deck Nail - Maximum Haven"
+
+[[expansion]]
+id_expansion = 5392
+name = "Rush Duel: Strongest Battle Deck Asana - Pride of the Heavy Cavalry Style"
+
+[[expansion]]
+id_expansion = 5400
+name = "Rush Duel: Triple Build Pack: Godbreath Wing"
+
+[[expansion]]
+id_expansion = 5501
+name = "Rush Duel: Structure Deck: The Ultimate Blue-Eyed Legend"
+
+[[expansion]]
+id_expansion = 5517
+name = "Rush Duel: Megaroad Pack 2"
+
+[[expansion]]
+id_expansion = 5569
+name = "Rush Duel: High-Grade Collection"
+
+[[expansion]]
+id_expansion = 5582
+name = "Rush Duel: Phoenix of the Roaring Flame"
+
+[[expansion]]
+id_expansion = 5583
+name = "Rush Duel: Red Reboot of Darkness"
+
+[[expansion]]
+id_expansion = 5628
+name = "Rush Duel: Transamu of Transcendence"
+
+[[expansion]]
+id_expansion = 5706
+name = "Rush Duel: Over Rush Pack 2"
+
+[[expansion]]
+id_expansion = 5754
+name = "WCQ 2025 Promo Card Pack"
+
+[[expansion]]
+id_expansion = 5758
+name = "Rush Duel: Burst Rex of Awakening"
+
+[[expansion]]
+id_expansion = 5831
+name = "Rush Duel: Structure Deck: Birth of Hero"
+
+[[expansion]]
+id_expansion = 5856
+name = "Rush Duel: Dark Matter of Phantoms"
+
+[[expansion]]
+id_expansion = 5921
+name = "Rush Duel: Neo Legend Awakening Pack"
+
+[[expansion]]
+id_expansion = 5964
+name = "Rush Duel: Salamandeus of Scorching"
+
+[[expansion]]
+id_expansion = 5984
+name = "Legacy of Darkness (Korean)"
+
+[[expansion]]
+id_expansion = 5985
+name = "Pharaonic Guardian (Korean)"
+
+[[expansion]]
+id_expansion = 5986
+name = "Dark Crisis (Korean)"
+
+[[expansion]]
+id_expansion = 5987
+name = "Ancient Sanctuary (Korean)"
+
+[[expansion]]
+id_expansion = 6050
+name = "Rush Duel: Galactica of Eternity"
+
+[[expansion]]
+id_expansion = 6077
+name = "Rush Duel: Structure Deck: Chimeratech Cyber"
+
+[[expansion]]
+id_expansion = 6078
+name = "Rush Duel: Structure Deck: Harpie Lady Sisters"
+
+[[expansion]]
+id_expansion = 6089
+name = "Rush Duel: Triple Build Pack: Evolution Impact"
+
+[[expansion]]
+id_expansion = 6133
+name = "Rush Duel: Structure Deck: Black Magic Ritual"
+
+[[expansion]]
+id_expansion = 6145
+name = "Rush Duel: 5th Anniversary Pack"
+
+[[expansion]]
+id_expansion = 6167
+name = "Rush Duel: Accel Road of the Attack"
+
+[[expansion]]
+id_expansion = 6210
+name = "Rush Duel: Advance Pack: Devil's Ceremony"
+
+[[expansion]]
+id_expansion = 6304
+name = "Rush Duel: OuTerverSe of Terror"
+
+[[expansion]]
+id_expansion = 6316
+name = "Rush Duel: Structure Deck: Triumphant Return of the Monarchs"
+
+[[expansion]]
+id_expansion = 6363
+name = "Rush Duel: Over Rush Pack 3"
+
+[[expansion]]
+id_expansion = 6428
+name = "Rush Duel: Gias Charge of the Nova"
+
+[[expansion]]
+id_expansion = 6448
+name = "Rush Duel: Advance Pack: Revenge Hearts"
+
+[[expansion]]
+id_expansion = 6513
+name = "Prismatic Trinity Box"
+
+[[expansion]]
+id_expansion = 6592
+name = "Rush Duel: Rising of the Aurora"
+
+[[expansion]]
+id_expansion = 6624
+name = "Rush Duel: Over Rush Pack 4"
+
+[[expansion]]
+id_expansion = 6756
+name = "Rush Duel: Advance Pack: Union Base"
+
+[[expansion]]
+id_expansion = 6936
+name = "Rush Duel: Limited Pack Remaster Edition"
+
+[[expansion]]
+id_expansion = 6937
+name = "Rush Duel: CROSS ART COLLECTION"
+
+[[expansion]]
+id_expansion = 6948
+name = "Glorious Victors"
+
+# Not named yet (no name on Cardmarket's singles filter, no sealed product); a few of their products:
 # 0 (2 products): #LocExpName Booster, #LocExpName Booster Box
-# 1030 (6 products): A Legendary Ocean, Fusion Gate, Greenkappa
-# 1046 (4 products): Amazoness Chain Master, Cyber Harpie Lady, Embodiment of Apophis
-# 1054 (4 products): Ancient Lamp, Hidden Soldiers, Justi-Break
-# 1066 (102 products): Apprentice Illusion Magician, Arcana Force EX - The Light Ruler, Archfiend Commander
-# 1072 (6 products): Asura Priest, Exiled Force, Graceful Charity
-# 1105 (7 products): Creature Swap, Dark Balter the Terrible, Giant Rat
-# 1106 (6 products): Crystal Beacon, Crystal Beast Ruby Carbuncle, Dekoichi the Battlechanted Locomotive
-# 1109 (6 products): Cyber Jar, Fissure, Heavy Storm
-# 1112 (1 products): Dark Paladin
-# 1117 (1 products): Elemental HERO Thunder Giant
-# 1120 (5 products): Exodia the Forbidden One, Left Arm of the Forbidden One, Left Leg of the Forbidden One
-# 1131 (2 products): Shrink, Toon Dark Magician Girl
-# 1157 (6 products): Call of the Haunted, D.D. Warrior Lady, Limiter Removal
-# 1158 (6 products): Card of Safe Return, Dark Dust Spirit, Monster Reborn
-# 1159 (9 products): Barbaroid, the Ultimate Battle Machine, Blizzard Princess, Darklord Desire
-# 1160 (6 products): Obelisk the Tormentor, Slifer the Sky Dragon, The Winged Dragon of Ra
-# 1183 (7 products): Crush Card Virus, Cyber-Stein, Dark End Dragon
-# 1238 (1 products): Dragon Master Knight
-# 1251 (1 products): Machine King
-# 1255 (4 products): Sheep Token
-# 1256 (3 products): Ojama Token
-# 1257 (9 products): Double Dude Token, Grinder Token, Lamb Token
-# 1352 (6 products): Ape Fighter, Closed Forest, Roaring Earth
-# 1353 (1 products): Light and Darkness Dragon
-# 1370 (36 products): Battle City Token, Cossy Duelist Token, Dark Side of Dimensions Yugi Token
-# 1375 (80 products): Big Shield Gardna, Blackwing - Bora the Spear, Blade Knight
-# 1376 (80 products): Blackwing - Kalut the Moon Shadow, Dark Magician, Exodia the Forbidden One
-# 1377 (80 products): Call of the Haunted, Dangerous Machine Type-6, Elemental HERO Neos
-# 1378 (80 products): Ancient Rules, Armed Ninja, Babycerasaurus
-# 1384 (100 products): Aquamirror Meditation, Armed Dragon LV10, Aussa the Earth Charmer
-# 1385 (100 products): Abyss Soldier, Advanced Ritual Art, Aquamirror Illusion
-# 1386 (9 products): Beelzeus of the Diabolic Dragons, Black Rose Moonlight Dragon, Blackwing - Gram the Shining Star
-# 1396 (80 products): Arcane Barrier, Arcanite Magician, Armed Samurai - Ben Kei
-# 1406 (1 products): T.G. Halberd Cannon
-# 1414 (9 products): Gagaga Head, Kachi Kochi Dragon, Number 22: Zombiestein
-# 1415 (4 products): Alector, Sovereign of Birds, Angel O7, Gorz the Emissary of Darkness
-# 1427 (80 products): Black Whirlwind, Caius the Shadow Monarch, Disturbance Strategy
-# 1439 (100 products): Amazoness Chain Master, Aye-Iron, Beast-Warrior Puma
-# 1442 (2 products): Generic Filler Test Print Card, Rainbow Front Filler Card CMYK Test Print
-# 1461 (30 products): Anotherverse Dragon, Anotherverse Gluttonia, Anotherverse Solaria
-# 1471 (80 products): Beast Soul Swap, Darkfall, Doomkaiser Dragon
-# 1480 (80 products): Blackwing - Sirocco the Dawn, Book of Life, Call of the Mummy
-# 1503 (80 products): Ancient Gear Golem, Brotherhood of the Fire Fist - Dragon, Brotherhood of the Fire Fist - Snake
-# 1510 (2 products): Dark End Dragon, The Winged Dragon of Ra
-# 1644 (1 products): Fire Formation - Tenki
-# 1810 (7 products): Clear Wing Fast Dragon, D/D/D Destiny King Zero Laplace, Go! - D/D/D Divine Zero King Rage
-# 1846 (2 products): Slifer the Sky Dragon, Theinen the Great Sphinx
-# 2074 (80 products): Alluring Mirror Split, Arrivalrivals, Axe of Despair
-# 4448 (1 products): Necrovalley
-# 4449 (1 products): Machine King
-# 4450 (1 products): Restructer Revolution
-# 4451 (1 products): Toon Gemini Elf
-# 4452 (1 products): Toon Goblin Attack Force
-# 4453 (1 products): Acid Rain
-# 4454 (1 products): Last Day of Witch
-# 4455 (1 products): Breath of Light
-# 4462 (56 products): Ancient Sacred Wyvern, Axe of Despair, Battle Survivor
-# 5433 (13 products): Blue-Eyes Ultimate Dragon, Blue-Eyes White Dragon, Buster Blader
-# 5443 (24 products): Alligator's Sword Dragon, Anti-Spell Fragrance, Aqua Chorus
-# 5605 (50 products): Alinsection, Aqua Madoor, Battle Warrior
-# 5771 (40 products): Abyss Flower, Akihiron, Alinsection
-# 5836 (56 products): Token, Token (Ai and The Arrival Cyberse @Ignister), Token (Alexis and Cyber Angel Dakini)
-# 6019 (8 products): Dark Magician Girl, Decode Talker, Elemental HERO Flame Wingman
-# 6051 (290 products): Adularia of the June Moon, Aileron, All-Eyes Phantom Dragon
-# 6052 (29 products): Amazoness Chain Master, Archfiend of Gilfer, Black Luster Soldier - Sacred Soldier
-# 6053 (1 products): Blue-Eyes White Dragon
-# 6054 (8 products): Dark Magician, Power Pro Knight Sisters, Power Pro Lady Sisters
-# 6073 (57 products): Archfiend's Advent, Ascension Sky Dragon, Black Illusion Ritual
-# 6080 (2 products): Malefic Red-Eyes Black Dragon
-# 6084 (1 products): True Exodia
-# 6085 (1 products): Holactie the Creator of Light
-# 6499 (4 products): Infernal Flame Emperor, Ocean Dragon Lord - Neo-Daedalus, Red-Eyes Darkness Dragon
-# 6511 (5 products): Big Shield Gardna, Dark Sage, Exchange
