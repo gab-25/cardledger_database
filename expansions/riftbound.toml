@@ -1,0 +1,19 @@
+# Names for the Cardmarket expansions the riftbound source has no set for (see README.md).
+
+[[expansion]]  # 4 products
+id_expansion = 6924
+code = "cmx6924"
+name = "Legacy"
+
+[[expansion]]  # 6 products
+id_expansion = 6938
+code = "cmx6938"
+name = "K/DA Couture Collection Box"
+
+[[expansion]]  # 5 products
+id_expansion = 6959
+code = "cmx6959"
+name = "Worlds Bundle 2026"
+
+# Not named yet (no sealed product to name them from); a few of their products:
+# 6947 (116 products): Ahri, Nine-Tailed Fox, Akali, Rogue Assassin, Ambessa, Matriarch of War

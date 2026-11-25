@@ -1,0 +1,1727 @@
+# Names for the Cardmarket expansions the yugioh source has no set for (see README.md).
+
+[[expansion]]  # 317 products
+id_expansion = 1015
+code = "cmx1015"
+name = "Pharaoh's Servant"
+
+[[expansion]]  # 434 products
+id_expansion = 1016
+code = "cmx1016"
+name = "Metal Raiders"
+
+[[expansion]]  # 52 products
+id_expansion = 1018
+code = "cmx1018"
+name = "Starter Deck: Joey"
+
+[[expansion]]  # 214 products
+id_expansion = 1023
+code = "cmx1023"
+name = "Dark Crisis"
+
+[[expansion]]  # 231 products
+id_expansion = 1028
+code = "cmx1028"
+name = "Invasion of Chaos"
+
+[[expansion]]  # 111 products
+id_expansion = 1042
+code = "cmx1042"
+name = "Magician's Force"
+
+[[expansion]]  # 317 products
+id_expansion = 1045
+code = "cmx1045"
+name = "Labyrinth of Nightmare"
+
+[[expansion]]  # 240 products
+id_expansion = 1048
+code = "cmx1048"
+name = "Magic Ruler"
+
+[[expansion]]  # 149 products
+id_expansion = 1051
+code = "cmx1051"
+name = "Starter Deck: Yugi"
+
+[[expansion]]  # 148 products
+id_expansion = 1055
+code = "cmx1055"
+name = "Starter Deck: Kaiba"
+
+[[expansion]]  # 235 products
+id_expansion = 1057
+code = "cmx1057"
+name = "Light of Destruction"
+
+[[expansion]]  # 483 products
+id_expansion = 1064
+code = "cmx1064"
+name = "Legend of Blue Eyes White Dragon"
+
+[[expansion]]  # 52 products
+id_expansion = 1065
+code = "cmx1065"
+name = "Starter Deck: Pegasus"
+
+[[expansion]]  # 12 products
+id_expansion = 1107
+code = "cmx1107"
+name = "Collector's Tins 2006"
+
+[[expansion]]  # 12 products
+id_expansion = 1115
+code = "cmx1115"
+name = "Collector's Tins 2007"
+
+[[expansion]]  # 2 products
+id_expansion = 1118
+code = "cmx1118"
+name = "GX Special Edition"
+
+[[expansion]]  # 49 products
+id_expansion = 1126
+code = "cmx1126"
+name = "YCS 2025 Promo Card Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 1132
+code = "cmx1132"
+name = "GX Next Generation: Special Edition"
+
+[[expansion]]  # 44 products
+id_expansion = 1147
+code = "cmx1147"
+name = "5D's Starter Deck 2008 (OCG)"
+
+[[expansion]]  # 63 products
+id_expansion = 1169
+code = "cmx1169"
+name = "Duelist Pack: Yugi"
+
+[[expansion]]  # 207 products
+id_expansion = 1175
+code = "cmx1175"
+name = "Retro Pack 2"
+
+[[expansion]]  # 207 products
+id_expansion = 1176
+code = "cmx1176"
+name = "Retro Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 1189
+code = "cmx1189"
+name = "Twilight Edition"
+
+[[expansion]]  # 84 products
+id_expansion = 1191
+code = "cmx1191"
+name = "Duelist Pack: Kaiba"
+
+[[expansion]]  # 341 products
+id_expansion = 1250
+code = "cmx1250"
+name = "Spell Ruler"
+
+[[expansion]]  # 22 products
+id_expansion = 1289
+code = "cmx1289"
+name = "Collector's Tins 2011"
+
+[[expansion]]  # 25 products
+id_expansion = 1334
+code = "cmx1334"
+name = "Advent Calendar 2011"
+
+[[expansion]]  # 2 products
+id_expansion = 1340
+code = "cmx1340"
+name = "Samurai Assault: Special Edition"
+
+[[expansion]]  # 27 products
+id_expansion = 1365
+code = "cmx1365"
+name = "Masterpiece Series & Stainless Steel Cards"
+
+[[expansion]]  # 28 products
+id_expansion = 1399
+code = "cmx1399"
+name = "Collector's Tins 2012"
+
+[[expansion]]  # 12 products
+id_expansion = 1402
+code = "cmx1402"
+name = "Lots & Miscellaneous Products"
+
+[[expansion]]  # 22 products
+id_expansion = 1453
+code = "cmx1453"
+name = "Collector's Tins 2013"
+
+[[expansion]]  # 10 products
+id_expansion = 1459
+code = "cmx1459"
+name = "Legendary Collection 4"
+
+[[expansion]]  # 2 products
+id_expansion = 1463
+code = "cmx1463"
+name = "X-Saber Power-Up"
+
+[[expansion]]  # 26 products
+id_expansion = 1504
+code = "cmx1504"
+name = "Advent Calendar 2014"
+
+[[expansion]]  # 196 products
+id_expansion = 1711
+code = "cmx1711"
+name = "The Dark Side of Dimensions"
+
+[[expansion]]  # 6 products
+id_expansion = 1770
+code = "cmx1770"
+name = "CCG Grand Open 2017"
+
+[[expansion]]  # 3 products
+id_expansion = 1831
+code = "cmx1831"
+name = "Kaiba's Collector Box"
+
+[[expansion]]  # 3 products
+id_expansion = 1832
+code = "cmx1832"
+name = "Yugi's Collector Box"
+
+[[expansion]]  # 2 products
+id_expansion = 2071
+code = "cmx2071"
+name = "HDK 2018"
+
+[[expansion]]  # 30 products
+id_expansion = 2622
+code = "cmx2622"
+name = "World Championship Promo Sets"
+
+[[expansion]]  # 2 products
+id_expansion = 3224
+code = "cmx3224"
+name = "2020 Tin of Lost Memories"
+
+[[expansion]]  # 272 products
+id_expansion = 3234
+code = "cmx3234"
+name = "Dragons of Legend: The Complete Series"
+
+[[expansion]]  # 224 products
+id_expansion = 3535
+code = "cmx3535"
+name = "Legendary Duelists: Season 2"
+
+[[expansion]]  # 231 products
+id_expansion = 4410
+code = "cmx4410"
+name = "Legend of Blue Eyes White Dragon (LDD)"
+
+[[expansion]]  # 128 products
+id_expansion = 4411
+code = "cmx4411"
+name = "Legend of Blue-Eyes White Dragon (LDB)"
+
+[[expansion]]  # 146 products
+id_expansion = 4413
+code = "cmx4413"
+name = "Metal Raiders (PMT)"
+
+[[expansion]]  # 106 products
+id_expansion = 4416
+code = "cmx4416"
+name = "Spell Ruler (SDH)"
+
+[[expansion]]  # 133 products
+id_expansion = 4417
+code = "cmx4417"
+name = "Spell Ruler (SDM)"
+
+[[expansion]]  # 133 products
+id_expansion = 4418
+code = "cmx4418"
+name = "Spell Ruler (MDM)"
+
+[[expansion]]  # 107 products
+id_expansion = 4419
+code = "cmx4419"
+name = "Pharaoh's Servant (SDP)"
+
+[[expansion]]  # 107 products
+id_expansion = 4420
+code = "cmx4420"
+name = "Pharaoh's Servant (SDF)"
+
+[[expansion]]  # 107 products
+id_expansion = 4421
+code = "cmx4421"
+name = "Labyrinth of Nightmare (LDI)"
+
+[[expansion]]  # 107 products
+id_expansion = 4422
+code = "cmx4422"
+name = "Labyrinth of Nightmare (LDC)"
+
+[[expansion]]  # 51 products
+id_expansion = 4424
+code = "cmx4424"
+name = "Starter Deck: Yugi (DIY)"
+
+[[expansion]]  # 51 products
+id_expansion = 4425
+code = "cmx4425"
+name = "Starter Deck: Yugi (BIY)"
+
+[[expansion]]  # 47 products
+id_expansion = 4426
+code = "cmx4426"
+name = "Starter Deck: Yugi (MIY)"
+
+[[expansion]]  # 97 products
+id_expansion = 4427
+code = "cmx4427"
+name = "Starter Deck: Yugi (DDY)"
+
+[[expansion]]  # 51 products
+id_expansion = 4429
+code = "cmx4429"
+name = "Starter Deck: Kaiba (DIK)"
+
+[[expansion]]  # 51 products
+id_expansion = 4430
+code = "cmx4430"
+name = "Starter Deck: Kaiba (BIK)"
+
+[[expansion]]  # 47 products
+id_expansion = 4431
+code = "cmx4431"
+name = "Starter Deck: Kaiba (MIK)"
+
+[[expansion]]  # 97 products
+id_expansion = 4432
+code = "cmx4432"
+name = "Starter Deck: Kaiba (DDK)"
+
+[[expansion]]  # 51 products
+id_expansion = 4435
+code = "cmx4435"
+name = "Starter Deck: Joey (MIJ)"
+
+[[expansion]]  # 51 products
+id_expansion = 4436
+code = "cmx4436"
+name = "Starter Deck: Joey (DIJ)"
+
+[[expansion]]  # 51 products
+id_expansion = 4437
+code = "cmx4437"
+name = "Starter Deck: Joey (DDJ)"
+
+[[expansion]]  # 51 products
+id_expansion = 4438
+code = "cmx4438"
+name = "Starter Deck: Joey (BIJ)"
+
+[[expansion]]  # 51 products
+id_expansion = 4442
+code = "cmx4442"
+name = "Starter Deck: Pegasus (DDP)"
+
+[[expansion]]  # 51 products
+id_expansion = 4443
+code = "cmx4443"
+name = "Starter Deck: Pegasus (MIP)"
+
+[[expansion]]  # 51 products
+id_expansion = 4444
+code = "cmx4444"
+name = "Starter Deck: Pegasus (DIP)"
+
+[[expansion]]  # 51 products
+id_expansion = 4445
+code = "cmx4445"
+name = "Starter Deck: Pegasus (BIP)"
+
+[[expansion]]  # 63 products
+id_expansion = 4520
+code = "cmx4520"
+name = "Secret Shiny Box"
+
+[[expansion]]  # 66 products
+id_expansion = 4521
+code = "cmx4521"
+name = "Premium Pack 2022"
+
+[[expansion]]  # 60 products
+id_expansion = 4523
+code = "cmx4523"
+name = "Duelist Pack: Duelists of the Abyss"
+
+[[expansion]]  # 80 products
+id_expansion = 4526
+code = "cmx4526"
+name = "Deck Build Pack: Grand Creators"
+
+[[expansion]]  # 1 products
+id_expansion = 4531
+code = "cmx4531"
+name = "Token Pack Vol.3"
+
+[[expansion]]  # 100 products
+id_expansion = 4532
+code = "cmx4532"
+name = "Animation Chronicle 2021"
+
+[[expansion]]  # 60 products
+id_expansion = 4534
+code = "cmx4534"
+name = "Duelist Pack: Duelists of Whirlwind"
+
+[[expansion]]  # 55 products
+id_expansion = 4535
+code = "cmx4535"
+name = "Structure Deck: Cyber Style's Successor"
+
+[[expansion]]  # 80 products
+id_expansion = 4538
+code = "cmx4538"
+name = "Deck Build Pack: Ancient Guardians"
+
+[[expansion]]  # 75 products
+id_expansion = 4543
+code = "cmx4543"
+name = "Selection 10"
+
+[[expansion]]  # 1 products
+id_expansion = 4544
+code = "cmx4544"
+name = "Token Pack Vol.2"
+
+[[expansion]]  # 56 products
+id_expansion = 4545
+code = "cmx4545"
+name = "Structure Deck: Ice Barrier of the Frozen Prison"
+
+[[expansion]]  # 78 products
+id_expansion = 4548
+code = "cmx4548"
+name = "Deck Build Pack: Genesis Impactors"
+
+[[expansion]]  # 61 products
+id_expansion = 4551
+code = "cmx4551"
+name = "Structure Deck: Masters of the Spiritual Arts"
+
+[[expansion]]  # 66 products
+id_expansion = 4552
+code = "cmx4552"
+name = "Collection Pack 2020"
+
+[[expansion]]  # 1 products
+id_expansion = 4553
+code = "cmx4553"
+name = "Token Pack"
+
+[[expansion]]  # 61 products
+id_expansion = 4554
+code = "cmx4554"
+name = "Duelist Pack: Duelists of Gloom"
+
+[[expansion]]  # 55 products
+id_expansion = 4557
+code = "cmx4557"
+name = "Structure Deck: Sacred Beasts of Chaos"
+
+[[expansion]]  # 80 products
+id_expansion = 4558
+code = "cmx4558"
+name = "Deck Build Pack: Secret Slayers"
+
+[[expansion]]  # 62 products
+id_expansion = 4561
+code = "cmx4561"
+name = "Premium Pack 2020"
+
+[[expansion]]  # 56 products
+id_expansion = 4567
+code = "cmx4567"
+name = "Structure Deck: Rebirth of Shaddoll"
+
+[[expansion]]  # 58 products
+id_expansion = 4569
+code = "cmx4569"
+name = "Duelist Pack: Legend Duelist 6"
+
+[[expansion]]  # 80 products
+id_expansion = 4575
+code = "cmx4575"
+name = "Deck Build Pack: Mystic Fighters"
+
+[[expansion]]  # 50 products
+id_expansion = 4579
+code = "cmx4579"
+name = "Structure Deck: Revolver"
+
+[[expansion]]  # 58 products
+id_expansion = 4580
+code = "cmx4580"
+name = "Duelist Pack: Legend Duelist 5"
+
+[[expansion]]  # 57 products
+id_expansion = 4581
+code = "cmx4581"
+name = "Collection Pack: Duelist of Revolution Version"
+
+[[expansion]]  # 42 products
+id_expansion = 4588
+code = "cmx4588"
+name = "Structure Deck R: Lord of Magician"
+
+[[expansion]]  # 62 products
+id_expansion = 4589
+code = "cmx4589"
+name = "Premium Pack 2019"
+
+[[expansion]]  # 80 products
+id_expansion = 4590
+code = "cmx4590"
+name = "Deck Build Pack: Infinity Chasers"
+
+[[expansion]]  # 51 products
+id_expansion = 4596
+code = "cmx4596"
+name = "20th Anniversary Duelist Box"
+
+[[expansion]]  # 27 products
+id_expansion = 4597
+code = "cmx4597"
+name = "Jump Festa Limited Pack 2019"
+
+[[expansion]]  # 58 products
+id_expansion = 4604
+code = "cmx4604"
+name = "Duelist Pack: Legend Duelist 4"
+
+[[expansion]]  # 43 products
+id_expansion = 4607
+code = "cmx4607"
+name = "Structure Deck R: Undead World"
+
+[[expansion]]  # 80 products
+id_expansion = 4610
+code = "cmx4610"
+name = "Deck Build Pack: Hidden Summoners"
+
+[[expansion]]  # 2 products
+id_expansion = 4612
+code = "cmx4612"
+name = "Half Deck 2018"
+
+[[expansion]]  # 58 products
+id_expansion = 4614
+code = "cmx4614"
+name = "Duelist Pack: Legend Duelist 3"
+
+[[expansion]]  # 56 products
+id_expansion = 4618
+code = "cmx4618"
+name = "Collectors Pack 2018"
+
+[[expansion]]  # 43 products
+id_expansion = 4624
+code = "cmx4624"
+name = "Structure Deck R: Curse of the Dark"
+
+[[expansion]]  # 80 products
+id_expansion = 4625
+code = "cmx4625"
+name = "Deck Build Pack: Dark Savers"
+
+[[expansion]]  # 2 products
+id_expansion = 4628
+code = "cmx4628"
+name = "20th Anniversary Set"
+
+[[expansion]]  # 109 products
+id_expansion = 4630
+code = "cmx4630"
+name = "Premium Pack 20"
+
+[[expansion]]  # 53 products
+id_expansion = 4633
+code = "cmx4633"
+name = "Duelist Pack: Legend Duelist 2"
+
+[[expansion]]  # 43 products
+id_expansion = 4636
+code = "cmx4636"
+name = "Structure Deck R: Surge of Divine Light"
+
+[[expansion]]  # 80 products
+id_expansion = 4638
+code = "cmx4638"
+name = "Deck Build Pack: Spirit Warriors"
+
+[[expansion]]  # 53 products
+id_expansion = 4642
+code = "cmx4642"
+name = "Duelist Pack: Legend Duelist"
+
+[[expansion]]  # 56 products
+id_expansion = 4643
+code = "cmx4643"
+name = "Collectors Pack 2017"
+
+[[expansion]]  # 44 products
+id_expansion = 4645
+code = "cmx4645"
+name = "Starter Deck 2017"
+
+[[expansion]]  # 41 products
+id_expansion = 4646
+code = "cmx4646"
+name = "Structure Deck R: Tyranno's Rage"
+
+[[expansion]]  # 53 products
+id_expansion = 4647
+code = "cmx4647"
+name = "20th Anniversary Pack 2nd Wave"
+
+[[expansion]]  # 44 products
+id_expansion = 4649
+code = "cmx4649"
+name = "Structure Deck: Pendulum Evolution"
+
+[[expansion]]  # 54 products
+id_expansion = 4652
+code = "cmx4652"
+name = "20th Anniversary Pack 1st Wave"
+
+[[expansion]]  # 77 products
+id_expansion = 4654
+code = "cmx4654"
+name = "Booster SP: Fusion Enforcers"
+
+[[expansion]]  # 41 products
+id_expansion = 4656
+code = "cmx4656"
+name = "Structure Deck R: Machine Dragon Re-Volt"
+
+[[expansion]]  # 77 products
+id_expansion = 4658
+code = "cmx4658"
+name = "Booster SP: Destiny Soldiers"
+
+[[expansion]]  # 48 products
+id_expansion = 4663
+code = "cmx4663"
+name = "Duelist Pack: Pharaoh's Memories"
+
+[[expansion]]  # 56 products
+id_expansion = 4664
+code = "cmx4664"
+name = "Collectors Pack: Duelist of Flash Version"
+
+[[expansion]]  # 44 products
+id_expansion = 4667
+code = "cmx4667"
+name = "Starter Deck 2016"
+
+[[expansion]]  # 43 products
+id_expansion = 4670
+code = "cmx4670"
+name = "Structure Deck R: Revival of the Great Divine Dragon"
+
+[[expansion]]  # 41 products
+id_expansion = 4673
+code = "cmx4673"
+name = "Premium Pack 18"
+
+[[expansion]]  # 77 products
+id_expansion = 4676
+code = "cmx4676"
+name = "Booster SP: Wing Raiders"
+
+[[expansion]]  # 77 products
+id_expansion = 4679
+code = "cmx4679"
+name = "Booster SP: Highspeed Riders"
+
+[[expansion]]  # 56 products
+id_expansion = 4684
+code = "cmx4684"
+name = "Collectors Pack: Duelist of Destiny Version"
+
+[[expansion]]  # 43 products
+id_expansion = 4691
+code = "cmx4691"
+name = "Structure Deck R: Advent of the True Monarch"
+
+[[expansion]]  # 42 products
+id_expansion = 4693
+code = "cmx4693"
+name = "Premium Pack 17"
+
+[[expansion]]  # 104 products
+id_expansion = 4698
+code = "cmx4698"
+name = "Booster SP: Tribe Force"
+
+[[expansion]]  # 63 products
+id_expansion = 4705
+code = "cmx4705"
+name = "Collectors Pack: Duelist of Legend Version"
+
+[[expansion]]  # 50 products
+id_expansion = 4708
+code = "cmx4708"
+name = "Starter Deck 2014"
+
+[[expansion]]  # 42 products
+id_expansion = 4711
+code = "cmx4711"
+name = "Structure Deck R: Machiners Command"
+
+[[expansion]]  # 41 products
+id_expansion = 4712
+code = "cmx4712"
+name = "Premium Pack 16"
+
+[[expansion]]  # 39 products
+id_expansion = 4713
+code = "cmx4713"
+name = "Structure Deck: Blitzkrieg of the Mechlight Dragons"
+
+[[expansion]]  # 79 products
+id_expansion = 4714
+code = "cmx4714"
+name = "Duelist Sets: Lightlord Judgment & Machine-Gear Troopers"
+
+[[expansion]]  # 63 products
+id_expansion = 4718
+code = "cmx4718"
+name = "Collectors Pack: ZEXAL Version"
+
+[[expansion]]  # 42 products
+id_expansion = 4719
+code = "cmx4719"
+name = "Half Deck 2013"
+
+[[expansion]]  # 41 products
+id_expansion = 4721
+code = "cmx4721"
+name = "Structure Deck: The Blue-Eyed Dragon's Thundering Descent"
+
+[[expansion]]  # 59 products
+id_expansion = 4724
+code = "cmx4724"
+name = "Starter Deck 2013"
+
+[[expansion]]  # 87 products
+id_expansion = 4731
+code = "cmx4731"
+name = "Duelist Sets"
+
+[[expansion]]  # 32 products
+id_expansion = 4734
+code = "cmx4734"
+name = "Duelist Pack: Kite"
+
+[[expansion]]  # 40 products
+id_expansion = 4739
+code = "cmx4739"
+name = "Structure Deck: Roar of the Sea Emperor"
+
+[[expansion]]  # 44 products
+id_expansion = 4744
+code = "cmx4744"
+name = "Starter Deck 2012"
+
+[[expansion]]  # 11 products
+id_expansion = 4749
+code = "cmx4749"
+name = "Premium Pack 14"
+
+[[expansion]]  # 40 products
+id_expansion = 4750
+code = "cmx4750"
+name = "Structure Deck: Dragonic Legion"
+
+[[expansion]]  # 212 products
+id_expansion = 4756
+code = "cmx4756"
+name = "Beginner's Edition 2 (2011)"
+
+[[expansion]]  # 39 products
+id_expansion = 4757
+code = "cmx4757"
+name = "Structure Deck: Devil's Gate"
+
+[[expansion]]  # 212 products
+id_expansion = 4760
+code = "cmx4760"
+name = "Beginner's Edition 1 (2011)"
+
+[[expansion]]  # 11 products
+id_expansion = 4762
+code = "cmx4762"
+name = "Premium Pack 13"
+
+[[expansion]]  # 44 products
+id_expansion = 4763
+code = "cmx4763"
+name = "Starter Deck 2011"
+
+[[expansion]]  # 11 products
+id_expansion = 4770
+code = "cmx4770"
+name = "Promotion Pack"
+
+[[expansion]]  # 40 products
+id_expansion = 4779
+code = "cmx4779"
+name = "Structure Deck: Dragunity Drive"
+
+[[expansion]]  # 11 products
+id_expansion = 4783
+code = "cmx4783"
+name = "Premium Pack 12"
+
+[[expansion]]  # 44 products
+id_expansion = 4784
+code = "cmx4784"
+name = "Starter Deck 2010"
+
+[[expansion]]  # 39 products
+id_expansion = 4789
+code = "cmx4789"
+name = "Structure Deck: Machiners Command"
+
+[[expansion]]  # 2 products
+id_expansion = 4801
+code = "cmx4801"
+name = "Collectors Tin 2009"
+
+[[expansion]]  # 45 products
+id_expansion = 4803
+code = "cmx4803"
+name = "Structure Deck: Lord of the Magician"
+
+[[expansion]]  # 38 products
+id_expansion = 4810
+code = "cmx4810"
+name = "Structure Deck: Undead World"
+
+[[expansion]]  # 44 products
+id_expansion = 4815
+code = "cmx4815"
+name = "Starter Deck 2008 (Japanese)"
+
+[[expansion]]  # 2 products
+id_expansion = 4817
+code = "cmx4817"
+name = "Duelist Pack Collection"
+
+[[expansion]]  # 9 products
+id_expansion = 4819
+code = "cmx4819"
+name = "Premium Pack 11"
+
+[[expansion]]  # 38 products
+id_expansion = 4820
+code = "cmx4820"
+name = "Structure Deck: Advent of the Emperor"
+
+[[expansion]]  # 247 products
+id_expansion = 4825
+code = "cmx4825"
+name = "Expert Edition Volume 4"
+
+[[expansion]]  # 37 products
+id_expansion = 4827
+code = "cmx4827"
+name = "Structure Deck: Revival of the Great Dragon"
+
+[[expansion]]  # 10 products
+id_expansion = 4828
+code = "cmx4828"
+name = "Limited Edition 10"
+
+[[expansion]]  # 11 products
+id_expansion = 4832
+code = "cmx4832"
+name = "Premium Pack 10"
+
+[[expansion]]  # 2 products
+id_expansion = 4833
+code = "cmx4833"
+name = "Booster Pack Collectors Tin 2007"
+
+[[expansion]]  # 5 products
+id_expansion = 4843
+code = "cmx4843"
+name = "Limited Edition 9"
+
+[[expansion]]  # 2 products
+id_expansion = 4849
+code = "cmx4849"
+name = "Booster Pack Collectors Tin 2006"
+
+[[expansion]]  # 242 products
+id_expansion = 4851
+code = "cmx4851"
+name = "Expert Edition Volume 3"
+
+[[expansion]]  # 226 products
+id_expansion = 4863
+code = "cmx4863"
+name = "Expert Edition Volume 2"
+
+[[expansion]]  # 2 products
+id_expansion = 4866
+code = "cmx4866"
+name = "Booster Pack Collectors Tin 2005"
+
+[[expansion]]  # 6 products
+id_expansion = 4869
+code = "cmx4869"
+name = "Premium Pack 8"
+
+[[expansion]]  # 252 products
+id_expansion = 4870
+code = "cmx4870"
+name = "Beginner's Edition 2"
+
+[[expansion]]  # 2 products
+id_expansion = 4873
+code = "cmx4873"
+name = "Structure Deck: Deluxe Set Volume 2"
+
+[[expansion]]  # 269 products
+id_expansion = 4876
+code = "cmx4876"
+name = "Expert Edition Volume 1"
+
+[[expansion]]  # 9 products
+id_expansion = 4878
+code = "cmx4878"
+name = "Premium Pack 7"
+
+[[expansion]]  # 252 products
+id_expansion = 4879
+code = "cmx4879"
+name = "Beginner's Edition 1"
+
+[[expansion]]  # 13 products
+id_expansion = 4883
+code = "cmx4883"
+name = "Premium Pack 6"
+
+[[expansion]]  # 68 products
+id_expansion = 4885
+code = "cmx4885"
+name = "Pharaoh's Inheritance"
+
+[[expansion]]  # 6 products
+id_expansion = 4886
+code = "cmx4886"
+name = "Beginners Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 4887
+code = "cmx4887"
+name = "Booster Pack Collectors Tin 2004"
+
+[[expansion]]  # 2 products
+id_expansion = 4888
+code = "cmx4888"
+name = "Structure Deck: Deluxe Set"
+
+[[expansion]]  # 58 products
+id_expansion = 4889
+code = "cmx4889"
+name = "Structure Deck: Kaiba Volume 2"
+
+[[expansion]]  # 63 products
+id_expansion = 4890
+code = "cmx4890"
+name = "The Sanctuary in the Sky"
+
+[[expansion]]  # 142 products
+id_expansion = 4895
+code = "cmx4895"
+name = "Duelist Legacy Volume 5"
+
+[[expansion]]  # 12 products
+id_expansion = 4897
+code = "cmx4897"
+name = "Limited Edition 5"
+
+[[expansion]]  # 2 products
+id_expansion = 4900
+code = "cmx4900"
+name = "Booster Pack Collectors Tin 2003"
+
+[[expansion]]  # 142 products
+id_expansion = 4901
+code = "cmx4901"
+name = "Duelist Legacy Volume 3"
+
+[[expansion]]  # 60 products
+id_expansion = 4903
+code = "cmx4903"
+name = "Champion of Black Magic"
+
+[[expansion]]  # 62 products
+id_expansion = 4905
+code = "cmx4905"
+name = "Advent of Union"
+
+[[expansion]]  # 63 products
+id_expansion = 4908
+code = "cmx4908"
+name = "The New Ruler"
+
+[[expansion]]  # 57 products
+id_expansion = 4913
+code = "cmx4913"
+name = "Mythological Age"
+
+[[expansion]]  # 56 products
+id_expansion = 4915
+code = "cmx4915"
+name = "Struggle of Chaos"
+
+[[expansion]]  # 87 products
+id_expansion = 4916
+code = "cmx4916"
+name = "Booster Chronicle"
+
+[[expansion]]  # 58 products
+id_expansion = 4919
+code = "cmx4919"
+name = "Spell of Mask"
+
+[[expansion]]  # 12 products
+id_expansion = 4920
+code = "cmx4920"
+name = "Limited Edition 3"
+
+[[expansion]]  # 12 products
+id_expansion = 4932
+code = "cmx4932"
+name = "Limited Edition 2"
+
+[[expansion]]  # 12 products
+id_expansion = 4942
+code = "cmx4942"
+name = "Limited Edition"
+
+[[expansion]]  # 1 products
+id_expansion = 4948
+code = "cmx4948"
+name = "Rush Duel: Starter Deck Yuga - Cut Through! Sevens Road!!"
+
+[[expansion]]  # 1 products
+id_expansion = 4949
+code = "cmx4949"
+name = "Rush Duel: Starter Deck Set - Yuga vs. Luke"
+
+[[expansion]]  # 1 products
+id_expansion = 4950
+code = "cmx4950"
+name = "Rush Duel: Starter Deck Luke - Explosive Supremacy! Dragias!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4951
+code = "cmx4951"
+name = "Rush Duel: Deck Modification Pack - Hyperspeed Rush Road!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4952
+code = "cmx4952"
+name = "Rush Duel: Deck Modification Pack - Shocking Lightning Attack!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4953
+code = "cmx4953"
+name = "Rush Duel: Character Pack - Gavin/Roa/Romin"
+
+[[expansion]]  # 2 products
+id_expansion = 4954
+code = "cmx4954"
+name = "Rush Duel: Deck Modification Pack - Fantastrike Mirage Impact!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4955
+code = "cmx4955"
+name = "Rush Duel: Maximum Ultra Enhancement Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 4956
+code = "cmx4956"
+name = "Rush Duel: Deck Modification Pack - Destined Power Destruction!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4957
+code = "cmx4957"
+name = "Rush Duel: Deck Modification Pack - Dynamic Eternal Live!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4958
+code = "cmx4958"
+name = "Rush Duel: Maximum Ultra Evolution Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 4960
+code = "cmx4960"
+name = "Rush Duel: Deck Modification Pack - Fierce Thunder Storm!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4961
+code = "cmx4961"
+name = "Rush Duel: Extra Transcend Enhancement Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 4962
+code = "cmx4962"
+name = "Rush Duel: Deck Modification Pack - Chaotic Omega Rising!!"
+
+[[expansion]]  # 2 products
+id_expansion = 4963
+code = "cmx4963"
+name = "Rush Duel: Gold Rush Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 4964
+code = "cmx4964"
+name = "Rush Duel: Deck Modification Pack - Genesis Master Road!!"
+
+[[expansion]]  # 170 products
+id_expansion = 5036
+code = "cmx5036"
+name = "History Archive Collection"
+
+[[expansion]]  # 80 products
+id_expansion = 5037
+code = "cmx5037"
+name = "Deck Build Pack: Tactical Masters"
+
+[[expansion]]  # 2 products
+id_expansion = 5046
+code = "cmx5046"
+name = "Rush Duel: Deck Modification Pack - Galaxy of Fate!!"
+
+[[expansion]]  # 2 products
+id_expansion = 5080
+code = "cmx5080"
+name = "Rush Duel: Megaroad Pack"
+
+[[expansion]]  # 100 products
+id_expansion = 5081
+code = "cmx5081"
+name = "Animation Chronicle 2022"
+
+[[expansion]]  # 56 products
+id_expansion = 5087
+code = "cmx5087"
+name = "Structure Deck: Legend of the Crystals"
+
+[[expansion]]  # 2 products
+id_expansion = 5102
+code = "cmx5102"
+name = "Rush Duel: Deck Modification Pack - Requiem of Destruction!!"
+
+[[expansion]]  # 51 products
+id_expansion = 5111
+code = "cmx5111"
+name = "Structure Deck R: Devil's Gate"
+
+[[expansion]]  # 1 products
+id_expansion = 5112
+code = "cmx5112"
+name = "Rush Duel: Strongest Battle Deck Yudias - Shining Velgariva"
+
+[[expansion]]  # 1 products
+id_expansion = 5113
+code = "cmx5113"
+name = "Rush Duel: Strongest Battle Deck Yuhi - Join and Explode! Join and Intensify!"
+
+[[expansion]]  # 1 products
+id_expansion = 5114
+code = "cmx5114"
+name = "Rush Duel: Strongest Battle Deck Yuamu - Come Forth! High Tech Dragon!"
+
+[[expansion]]  # 1 products
+id_expansion = 5115
+code = "cmx5115"
+name = "Rush Duel: Strongest Battle Deck Manabu - Chemist-Meow Draw of Flames!"
+
+[[expansion]]  # 1 products
+id_expansion = 5116
+code = "cmx5116"
+name = "Rush Duel: Strongest Battle Deck Zuwijo - Voidvelgr of the Empty Sky"
+
+[[expansion]]  # 80 products
+id_expansion = 5136
+code = "cmx5136"
+name = "Deck Build Pack: Amazing Defenders"
+
+[[expansion]]  # 2 products
+id_expansion = 5206
+code = "cmx5206"
+name = "Rush Duel: Deck Mod Pack: Fortissimo of the Whirlwinds!!"
+
+[[expansion]]  # 2 products
+id_expansion = 5209
+code = "cmx5209"
+name = "Rush Duel: Over Rush Pack"
+
+[[expansion]]  # 54 products
+id_expansion = 5211
+code = "cmx5211"
+name = "Structure Deck: Forest of the Traptrix"
+
+[[expansion]]  # 127 products
+id_expansion = 5222
+code = "cmx5222"
+name = "Premium Pack 2023"
+
+[[expansion]]  # 5 products
+id_expansion = 5235
+code = "cmx5235"
+name = "25th Anniversary Edition Boosters"
+
+[[expansion]]  # 2 products
+id_expansion = 5243
+code = "cmx5243"
+name = "Rush Duel: Deck Mod Pack: Double Star of the Assault!!"
+
+[[expansion]]  # 488 products
+id_expansion = 5266
+code = "cmx5266"
+name = "Rarity Collection Quarter Century Edition"
+
+[[expansion]]  # 2 products
+id_expansion = 5297
+code = "cmx5297"
+name = "Rush Duel: Legend Awakening Pack"
+
+[[expansion]]  # 80 products
+id_expansion = 5311
+code = "cmx5311"
+name = "Deck Build Pack: Wild Survivors"
+
+[[expansion]]  # 2 products
+id_expansion = 5325
+code = "cmx5325"
+name = "Rush Duel: Versus Pack Maximum Force"
+
+[[expansion]]  # 2 products
+id_expansion = 5355
+code = "cmx5355"
+name = "Rush Duel: Oblivion of the Flash"
+
+[[expansion]]  # 62 products
+id_expansion = 5361
+code = "cmx5361"
+name = "Duelist Pack: Duelists of Explosion"
+
+[[expansion]]  # 94 products
+id_expansion = 5386
+code = "cmx5386"
+name = "Animation Chronicle 2023"
+
+[[expansion]]  # 1 products
+id_expansion = 5388
+code = "cmx5388"
+name = "Rush Duel: Strongest Battle Deck Gavin - Demon Commander Three Legions"
+
+[[expansion]]  # 1 products
+id_expansion = 5389
+code = "cmx5389"
+name = "Rush Duel: Strongest Battle Deck Romin - Psychic Beat"
+
+[[expansion]]  # 1 products
+id_expansion = 5390
+code = "cmx5390"
+name = "Rush Duel: Strongest Battle Deck Roa - Demon's Rock"
+
+[[expansion]]  # 1 products
+id_expansion = 5391
+code = "cmx5391"
+name = "Rush Duel: Strongest Battle Deck Nail - Maximum Haven"
+
+[[expansion]]  # 1 products
+id_expansion = 5392
+code = "cmx5392"
+name = "Rush Duel: Strongest Battle Deck Asana - Pride of the Heavy Cavalry Style"
+
+[[expansion]]  # 9 products
+id_expansion = 5395
+code = "cmx5395"
+name = "Coco's x Yu-Gi-Oh! Card Game Anniversary Campaign"
+
+[[expansion]]  # 2 products
+id_expansion = 5400
+code = "cmx5400"
+name = "Rush Duel: Triple Build Pack: Godbreath Wing"
+
+[[expansion]]  # 57 products
+id_expansion = 5401
+code = "cmx5401"
+name = "Structure Deck: Pulse of the King"
+
+[[expansion]]  # 86 products
+id_expansion = 5460
+code = "cmx5460"
+name = "Deck Build Pack: Valiant Smashers"
+
+[[expansion]]  # 55 products
+id_expansion = 5475
+code = "cmx5475"
+name = "Structure Deck R: Onslaught of the Fire Kings"
+
+[[expansion]]  # 1 products
+id_expansion = 5501
+code = "cmx5501"
+name = "Rush Duel: Structure Deck: The Ultimate Blue-Eyed Legend"
+
+[[expansion]]  # 2 products
+id_expansion = 5517
+code = "cmx5517"
+name = "Rush Duel: Megaroad Pack 2"
+
+[[expansion]]  # 126 products
+id_expansion = 5568
+code = "cmx5568"
+name = "Premium Pack 2024"
+
+[[expansion]]  # 2 products
+id_expansion = 5569
+code = "cmx5569"
+name = "Rush Duel: High-Grade Collection"
+
+[[expansion]]  # 2 products
+id_expansion = 5582
+code = "cmx5582"
+name = "Rush Duel: Phoenix of the Roaring Flame"
+
+[[expansion]]  # 2 products
+id_expansion = 5583
+code = "cmx5583"
+name = "Rush Duel: Red Reboot of Darkness"
+
+[[expansion]]  # 46 products
+id_expansion = 5584
+code = "cmx5584"
+name = "Memories of the Duel King: Duelist Kingdom Arc"
+
+[[expansion]]  # 2 products
+id_expansion = 5628
+code = "cmx5628"
+name = "Rush Duel: Transamu of Transcendence"
+
+[[expansion]]  # 104 products
+id_expansion = 5701
+code = "cmx5701"
+name = "Premium Pack: The Legend of Duelist Quarter Century Edition"
+
+[[expansion]]  # 2 products
+id_expansion = 5706
+code = "cmx5706"
+name = "Rush Duel: Over Rush Pack 2"
+
+[[expansion]]  # 1 products
+id_expansion = 5754
+code = "cmx5754"
+name = "WCQ 2025 Promo Card Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 5758
+code = "cmx5758"
+name = "Rush Duel: Burst Rex of Awakening"
+
+[[expansion]]  # 74 products
+id_expansion = 5768
+code = "cmx5768"
+name = "Duelist Pack: Duelists of Brilliance"
+
+[[expansion]]  # 110 products
+id_expansion = 5795
+code = "cmx5795"
+name = "Animation Chronicle 2024"
+
+[[expansion]]  # 130 products
+id_expansion = 5821
+code = "cmx5821"
+name = "Legend of Blue Eyes White Dragon (Korean)"
+
+[[expansion]]  # 109 products
+id_expansion = 5822
+code = "cmx5822"
+name = "Pharaoh's Servant (Korean)"
+
+[[expansion]]  # 109 products
+id_expansion = 5824
+code = "cmx5824"
+name = "Labyrinth of Nightmare (Korean)"
+
+[[expansion]]  # 1 products
+id_expansion = 5831
+code = "cmx5831"
+name = "Rush Duel: Structure Deck: Birth of Hero"
+
+[[expansion]]  # 2 products
+id_expansion = 5856
+code = "cmx5856"
+name = "Rush Duel: Dark Matter of Phantoms"
+
+[[expansion]]  # 116 products
+id_expansion = 5858
+code = "cmx5858"
+name = "Invasion of Chaos (Korean)"
+
+[[expansion]]  # 86 products
+id_expansion = 5882
+code = "cmx5882"
+name = "Deck Build Pack: Crossover Breakers"
+
+[[expansion]]  # 62 products
+id_expansion = 5891
+code = "cmx5891"
+name = "Structure Deck: Advent of the Eyes of Blue"
+
+[[expansion]]  # 106 products
+id_expansion = 5892
+code = "cmx5892"
+name = "Spell Ruler (Korean)"
+
+[[expansion]]  # 55 products
+id_expansion = 5893
+code = "cmx5893"
+name = "Structure Deck: Masters of the Spiritual Arts - The Legend of Duelist Quarter Century Edition"
+
+[[expansion]]  # 47 products
+id_expansion = 5894
+code = "cmx5894"
+name = "Structure Deck: Forest of the Traptrix - The Legend of Duelist Quarter Century Edition"
+
+[[expansion]]  # 2 products
+id_expansion = 5921
+code = "cmx5921"
+name = "Rush Duel: Neo Legend Awakening Pack"
+
+[[expansion]]  # 4 products
+id_expansion = 5934
+code = "cmx5934"
+name = "20th Anniversary Duel Set"
+
+[[expansion]]  # 4 products
+id_expansion = 5935
+code = "cmx5935"
+name = "Quarter Century Duel Set"
+
+[[expansion]]  # 2 products
+id_expansion = 5964
+code = "cmx5964"
+name = "Rush Duel: Salamandeus of Scorching"
+
+[[expansion]]  # 195 products
+id_expansion = 5965
+code = "cmx5965"
+name = "Terminal World 2"
+
+[[expansion]]  # 146 products
+id_expansion = 5983
+code = "cmx5983"
+name = "Metal Raiders (Korean)"
+
+[[expansion]]  # 2 products
+id_expansion = 5984
+code = "cmx5984"
+name = "Legacy of Darkness (Korean)"
+
+[[expansion]]  # 2 products
+id_expansion = 5985
+code = "cmx5985"
+name = "Pharaonic Guardian (Korean)"
+
+[[expansion]]  # 2 products
+id_expansion = 5986
+code = "cmx5986"
+name = "Dark Crisis (Korean)"
+
+[[expansion]]  # 2 products
+id_expansion = 5987
+code = "cmx5987"
+name = "Ancient Sanctuary (Korean)"
+
+[[expansion]]  # 157 products
+id_expansion = 5994
+code = "cmx5994"
+name = "Quarter Century Trinity Box"
+
+[[expansion]]  # 126 products
+id_expansion = 6021
+code = "cmx6021"
+name = "Premium Pack 2025"
+
+[[expansion]]  # 2 products
+id_expansion = 6050
+code = "cmx6050"
+name = "Rush Duel: Galactica of Eternity"
+
+[[expansion]]  # 1 products
+id_expansion = 6077
+code = "cmx6077"
+name = "Rush Duel: Structure Deck: Chimeratech Cyber"
+
+[[expansion]]  # 1 products
+id_expansion = 6078
+code = "cmx6078"
+name = "Rush Duel: Structure Deck: Harpie Lady Sisters"
+
+[[expansion]]  # 2 products
+id_expansion = 6089
+code = "cmx6089"
+name = "Rush Duel: Triple Build Pack: Evolution Impact"
+
+[[expansion]]  # 86 products
+id_expansion = 6093
+code = "cmx6093"
+name = "Deck Build Pack: Justice Hunters"
+
+[[expansion]]  # 1 products
+id_expansion = 6133
+code = "cmx6133"
+name = "Rush Duel: Structure Deck: Black Magic Ritual"
+
+[[expansion]]  # 2 products
+id_expansion = 6145
+code = "cmx6145"
+name = "Rush Duel: 5th Anniversary Pack"
+
+[[expansion]]  # 2 products
+id_expansion = 6146
+code = "cmx6146"
+name = "25th Anniversary Ukiyo-e Style Limited OCG Card Set"
+
+[[expansion]]  # 30 products
+id_expansion = 6155
+code = "cmx6155"
+name = "Duel Sets & Collectibles"
+
+[[expansion]]  # 2 products
+id_expansion = 6167
+code = "cmx6167"
+name = "Rush Duel: Accel Road of the Attack"
+
+[[expansion]]  # 2 products
+id_expansion = 6210
+code = "cmx6210"
+name = "Rush Duel: Advance Pack: Devil's Ceremony"
+
+[[expansion]]  # 84 products
+id_expansion = 6212
+code = "cmx6212"
+name = "Limited Pack World Championship 2025"
+
+[[expansion]]  # 86 products
+id_expansion = 6278
+code = "cmx6278"
+name = "Deck Build Pack: Phantom Revengers"
+
+[[expansion]]  # 2 products
+id_expansion = 6304
+code = "cmx6304"
+name = "Rush Duel: OuTerverSe of Terror"
+
+[[expansion]]  # 61 products
+id_expansion = 6308
+code = "cmx6308"
+name = "Structure Deck: Power of Fellows"
+
+[[expansion]]  # 1 products
+id_expansion = 6316
+code = "cmx6316"
+name = "Rush Duel: Structure Deck: Triumphant Return of the Monarchs"
+
+[[expansion]]  # 2 products
+id_expansion = 6363
+code = "cmx6363"
+name = "Rush Duel: Over Rush Pack 3"
+
+[[expansion]]  # 2 products
+id_expansion = 6428
+code = "cmx6428"
+name = "Rush Duel: Gias Charge of the Nova"
+
+[[expansion]]  # 2 products
+id_expansion = 6448
+code = "cmx6448"
+name = "Rush Duel: Advance Pack: Revenge Hearts"
+
+[[expansion]]  # 146 products
+id_expansion = 6473
+code = "cmx6473"
+name = "Limited Pack: Stamp Edition"
+
+[[expansion]]  # 320 products
+id_expansion = 6508
+code = "cmx6508"
+name = "Limit Over Collection: The Heroes"
+
+[[expansion]]  # 320 products
+id_expansion = 6512
+code = "cmx6512"
+name = "Limit Over Collection: The Rivals"
+
+[[expansion]]  # 1 products
+id_expansion = 6513
+code = "cmx6513"
+name = "Prismatic Trinity Box"
+
+[[expansion]]  # 126 products
+id_expansion = 6530
+code = "cmx6530"
+name = "Premium Pack 2026"
+
+[[expansion]]  # 22 products
+id_expansion = 6531
+code = "cmx6531"
+name = "Limit Over Special Packs"
+
+[[expansion]]  # 2 products
+id_expansion = 6592
+code = "cmx6592"
+name = "Rush Duel: Rising of the Aurora"
+
+[[expansion]]  # 131 products
+id_expansion = 6619
+code = "cmx6619"
+name = "Revolution Booster: Toon / Witchcrafter / Unchained"
+
+[[expansion]]  # 2 products
+id_expansion = 6624
+code = "cmx6624"
+name = "Rush Duel: Over Rush Pack 4"
+
+[[expansion]]  # 123 products
+id_expansion = 6668
+code = "cmx6668"
+name = "Winner's Pack 2026-2027"
+
+[[expansion]]  # 89 products
+id_expansion = 6706
+code = "cmx6706"
+name = "Limited Pack World Championship 2026"
+
+[[expansion]]  # 2 products
+id_expansion = 6756
+code = "cmx6756"
+name = "Rush Duel: Advance Pack: Union Base"
+
+[[expansion]]  # 2 products
+id_expansion = 6936
+code = "cmx6936"
+name = "Rush Duel: Limited Pack Remaster Edition"
+
+[[expansion]]  # 2 products
+id_expansion = 6937
+code = "cmx6937"
+name = "Rush Duel: CROSS ART COLLECTION"
+
+[[expansion]]  # 3 products
+id_expansion = 6948
+code = "cmx6948"
+name = "Glorious Victors"
+
+[[expansion]]  # 6 products
+id_expansion = 6971
+code = "cmx6971"
+name = "Promotion Pack 2026"
+
+# Not named yet (no sealed product to name them from); a few of their products:
+# 0 (2 products): #LocExpName Booster, #LocExpName Booster Box
+# 1030 (6 products): A Legendary Ocean, Fusion Gate, Greenkappa
+# 1046 (4 products): Amazoness Chain Master, Cyber Harpie Lady, Embodiment of Apophis
+# 1054 (4 products): Ancient Lamp, Hidden Soldiers, Justi-Break
+# 1066 (102 products): Apprentice Illusion Magician, Arcana Force EX - The Light Ruler, Archfiend Commander
+# 1072 (6 products): Asura Priest, Exiled Force, Graceful Charity
+# 1105 (7 products): Creature Swap, Dark Balter the Terrible, Giant Rat
+# 1106 (6 products): Crystal Beacon, Crystal Beast Ruby Carbuncle, Dekoichi the Battlechanted Locomotive
+# 1109 (6 products): Cyber Jar, Fissure, Heavy Storm
+# 1112 (1 products): Dark Paladin
+# 1117 (1 products): Elemental HERO Thunder Giant
+# 1120 (5 products): Exodia the Forbidden One, Left Arm of the Forbidden One, Left Leg of the Forbidden One
+# 1131 (2 products): Shrink, Toon Dark Magician Girl
+# 1157 (6 products): Call of the Haunted, D.D. Warrior Lady, Limiter Removal
+# 1158 (6 products): Card of Safe Return, Dark Dust Spirit, Monster Reborn
+# 1159 (9 products): Barbaroid, the Ultimate Battle Machine, Blizzard Princess, Darklord Desire
+# 1160 (6 products): Obelisk the Tormentor, Slifer the Sky Dragon, The Winged Dragon of Ra
+# 1183 (7 products): Crush Card Virus, Cyber-Stein, Dark End Dragon
+# 1238 (1 products): Dragon Master Knight
+# 1251 (1 products): Machine King
+# 1255 (4 products): Sheep Token
+# 1256 (3 products): Ojama Token
+# 1257 (9 products): Double Dude Token, Grinder Token, Lamb Token
+# 1352 (6 products): Ape Fighter, Closed Forest, Roaring Earth
+# 1353 (1 products): Light and Darkness Dragon
+# 1370 (36 products): Battle City Token, Cossy Duelist Token, Dark Side of Dimensions Yugi Token
+# 1375 (80 products): Big Shield Gardna, Blackwing - Bora the Spear, Blade Knight
+# 1376 (80 products): Blackwing - Kalut the Moon Shadow, Dark Magician, Exodia the Forbidden One
+# 1377 (80 products): Call of the Haunted, Dangerous Machine Type-6, Elemental HERO Neos
+# 1378 (80 products): Ancient Rules, Armed Ninja, Babycerasaurus
+# 1384 (100 products): Aquamirror Meditation, Armed Dragon LV10, Aussa the Earth Charmer
+# 1385 (100 products): Abyss Soldier, Advanced Ritual Art, Aquamirror Illusion
+# 1386 (9 products): Beelzeus of the Diabolic Dragons, Black Rose Moonlight Dragon, Blackwing - Gram the Shining Star
+# 1396 (80 products): Arcane Barrier, Arcanite Magician, Armed Samurai - Ben Kei
+# 1406 (1 products): T.G. Halberd Cannon
+# 1414 (9 products): Gagaga Head, Kachi Kochi Dragon, Number 22: Zombiestein
+# 1415 (4 products): Alector, Sovereign of Birds, Angel O7, Gorz the Emissary of Darkness
+# 1427 (80 products): Black Whirlwind, Caius the Shadow Monarch, Disturbance Strategy
+# 1439 (100 products): Amazoness Chain Master, Aye-Iron, Beast-Warrior Puma
+# 1442 (2 products): Generic Filler Test Print Card, Rainbow Front Filler Card CMYK Test Print
+# 1461 (30 products): Anotherverse Dragon, Anotherverse Gluttonia, Anotherverse Solaria
+# 1471 (80 products): Beast Soul Swap, Darkfall, Doomkaiser Dragon
+# 1480 (80 products): Blackwing - Sirocco the Dawn, Book of Life, Call of the Mummy
+# 1503 (80 products): Ancient Gear Golem, Brotherhood of the Fire Fist - Dragon, Brotherhood of the Fire Fist - Snake
+# 1510 (2 products): Dark End Dragon, The Winged Dragon of Ra
+# 1644 (1 products): Fire Formation - Tenki
+# 1810 (7 products): Clear Wing Fast Dragon, D/D/D Destiny King Zero Laplace, Go! - D/D/D Divine Zero King Rage
+# 1846 (2 products): Slifer the Sky Dragon, Theinen the Great Sphinx
+# 2074 (80 products): Alluring Mirror Split, Arrivalrivals, Axe of Despair
+# 4448 (1 products): Necrovalley
+# 4449 (1 products): Machine King
+# 4450 (1 products): Restructer Revolution
+# 4451 (1 products): Toon Gemini Elf
+# 4452 (1 products): Toon Goblin Attack Force
+# 4453 (1 products): Acid Rain
+# 4454 (1 products): Last Day of Witch
+# 4455 (1 products): Breath of Light
+# 4462 (56 products): Ancient Sacred Wyvern, Axe of Despair, Battle Survivor
+# 5433 (13 products): Blue-Eyes Ultimate Dragon, Blue-Eyes White Dragon, Buster Blader
+# 5443 (24 products): Alligator's Sword Dragon, Anti-Spell Fragrance, Aqua Chorus
+# 5605 (50 products): Alinsection, Aqua Madoor, Battle Warrior
+# 5771 (40 products): Abyss Flower, Akihiron, Alinsection
+# 5836 (56 products): Token, Token (Ai and The Arrival Cyberse @Ignister), Token (Alexis and Cyber Angel Dakini)
+# 6019 (8 products): Dark Magician Girl, Decode Talker, Elemental HERO Flame Wingman
+# 6051 (290 products): Adularia of the June Moon, Aileron, All-Eyes Phantom Dragon
+# 6052 (29 products): Amazoness Chain Master, Archfiend of Gilfer, Black Luster Soldier - Sacred Soldier
+# 6053 (1 products): Blue-Eyes White Dragon
+# 6054 (8 products): Dark Magician, Power Pro Knight Sisters, Power Pro Lady Sisters
+# 6073 (57 products): Archfiend's Advent, Ascension Sky Dragon, Black Illusion Ritual
+# 6080 (2 products): Malefic Red-Eyes Black Dragon
+# 6084 (1 products): True Exodia
+# 6085 (1 products): Holactie the Creator of Light
+# 6499 (4 products): Infernal Flame Emperor, Ocean Dragon Lord - Neo-Daedalus, Red-Eyes Darkness Dragon
+# 6511 (5 products): Big Shield Gardna, Dark Sage, Exchange

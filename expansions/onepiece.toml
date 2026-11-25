@@ -1,0 +1,6 @@
+# Names for the Cardmarket expansions the onepiece source has no set for (see README.md).
+
+[[expansion]]  # 3 products
+id_expansion = 6773
+code = "cmx6773"
+name = "OP19"

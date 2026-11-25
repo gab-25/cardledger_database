@@ -1,0 +1,21 @@
+# Names for the Cardmarket expansions the lorcana source has no set for (see README.md).
+
+[[expansion]]  # 7 products
+id_expansion = 5512
+code = "cmx5512"
+name = "Disney Lorcana TCG Gateway"
+
+[[expansion]]  # 7 products
+id_expansion = 6806
+code = "cmx6806"
+name = "Curator’s Collection: Beauty and the Beast Box Set"
+
+[[expansion]]  # 8 products
+id_expansion = 6919
+code = "cmx6919"
+name = "Into the Inkdark"
+
+# Not named yet (no sealed product to name them from); a few of their products:
+# 0 (3 products): Maxi Collection (Up to 1000 cards), Mega Collection (More than 1000 cards), Mini Collection (Up to 100 cards)
+# 6758 (17 products): Be Prepared, Gaston - Superior Archer, Hades - Dark Usurper
+# 6973 (1 products): Mickey Mouse - Brave Little Prince

@@ -1,0 +1,2193 @@
+# Names for the Cardmarket expansions the pokemon source has no set for (see README.md).
+
+[[expansion]]  # 64 products
+id_expansion = 1631
+code = "cmx1631"
+name = "XY Trainer Kit"
+
+[[expansion]]  # 62 products
+id_expansion = 1632
+code = "cmx1632"
+name = "XY Trainer Kit: Bisharp and Wigglytuff"
+
+[[expansion]]  # 1456 products
+id_expansion = 1645
+code = "cmx1645"
+name = "Pokémon Products"
+
+[[expansion]]  # 64 products
+id_expansion = 1683
+code = "cmx1683"
+name = "XY Trainer Kit: Latias and Latios"
+
+[[expansion]]  # 64 products
+id_expansion = 1707
+code = "cmx1707"
+name = "XY Trainer Kit: Pikachu Libre & Suicune"
+
+[[expansion]]  # 98 products
+id_expansion = 2029
+code = "cmx2029"
+name = "WCD 2015"
+
+[[expansion]]  # 63 products
+id_expansion = 2070
+code = "cmx2070"
+name = "SM Trainer Kit: Alolan Sandslash & Alolan Ninetales"
+
+[[expansion]]  # 41 products
+id_expansion = 2361
+code = "cmx2361"
+name = "McDonald's Collection 2018 FR"
+
+[[expansion]]  # 100 products
+id_expansion = 2393
+code = "cmx2393"
+name = "WCD 2017"
+
+[[expansion]]  # 97 products
+id_expansion = 2394
+code = "cmx2394"
+name = "WCD 2016"
+
+[[expansion]]  # 102 products
+id_expansion = 2396
+code = "cmx2396"
+name = "WCD 2018"
+
+[[expansion]]  # 96 products
+id_expansion = 2739
+code = "cmx2739"
+name = "WCD 2019"
+
+[[expansion]]  # 92 products
+id_expansion = 2744
+code = "cmx2744"
+name = "WCD 2013"
+
+[[expansion]]  # 103 products
+id_expansion = 2754
+code = "cmx2754"
+name = "WCD 2014"
+
+[[expansion]]  # 373 products
+id_expansion = 3214
+code = "cmx3214"
+name = "Pokémon Card Gym Promo Sword & Shield"
+
+[[expansion]]  # 88 products
+id_expansion = 3219
+code = "cmx3219"
+name = "Explosive Flame Walker"
+
+[[expansion]]  # 122 products
+id_expansion = 3274
+code = "cmx3274"
+name = "Infinity Zone"
+
+[[expansion]]  # 119 products
+id_expansion = 3279
+code = "cmx3279"
+name = "Rebellion Crash"
+
+[[expansion]]  # 88 products
+id_expansion = 3284
+code = "cmx3284"
+name = "VMAX Rising"
+
+[[expansion]]  # 77 products
+id_expansion = 3289
+code = "cmx3289"
+name = "Sword"
+
+[[expansion]]  # 77 products
+id_expansion = 3294
+code = "cmx3294"
+name = "Shield"
+
+[[expansion]]  # 444 products
+id_expansion = 3324
+code = "cmx3324"
+name = "Pokémon Card Gym Promo Sun & Moon"
+
+[[expansion]]  # 81 products
+id_expansion = 3354
+code = "cmx3354"
+name = "McDonald's Collection 2019 FR"
+
+[[expansion]]  # 98 products
+id_expansion = 3384
+code = "cmx3384"
+name = "Legendary Heartbeat"
+
+[[expansion]]  # 136 products
+id_expansion = 3389
+code = "cmx3389"
+name = "V Starter Decks"
+
+[[expansion]]  # 124 products
+id_expansion = 3479
+code = "cmx3479"
+name = "Shocking Volt Tackle"
+
+[[expansion]]  # 336 products
+id_expansion = 3580
+code = "cmx3580"
+name = "Shiny Star V"
+
+[[expansion]]  # 22 products
+id_expansion = 3585
+code = "cmx3585"
+name = "VMAX Starter Deck: Venusaur VMAX"
+
+[[expansion]]  # 21 products
+id_expansion = 3590
+code = "cmx3590"
+name = "VMAX Starter Deck: Blastoise VMAX"
+
+[[expansion]]  # 63 products
+id_expansion = 3595
+code = "cmx3595"
+name = "VMAX Starter Decks"
+
+[[expansion]]  # 123 products
+id_expansion = 3600
+code = "cmx3600"
+name = "Sword & Shield"
+
+[[expansion]]  # 8 products
+id_expansion = 3605
+code = "cmx3605"
+name = "Zacian + Zamazenta BOX"
+
+[[expansion]]  # 9 products
+id_expansion = 3610
+code = "cmx3610"
+name = "VMAX Special Set"
+
+[[expansion]]  # 25 products
+id_expansion = 3615
+code = "cmx3615"
+name = "Sword & Shield Premium Trainer Box"
+
+[[expansion]]  # 35 products
+id_expansion = 3717
+code = "cmx3717"
+name = "Rapid Strike & Single Strike Premium Trainer Box"
+
+[[expansion]]  # 99 products
+id_expansion = 3751
+code = "cmx3751"
+name = "Matchless Fighters"
+
+[[expansion]]  # 180 products
+id_expansion = 3781
+code = "cmx3781"
+name = "Expansion Sheet Series 1"
+
+[[expansion]]  # 29 products
+id_expansion = 3826
+code = "cmx3826"
+name = "Great Detective Pikachu"
+
+[[expansion]]  # 33 products
+id_expansion = 3974
+code = "cmx3974"
+name = "Ash vs Team Rocket Deck Kit"
+
+[[expansion]]  # 190 products
+id_expansion = 3984
+code = "cmx3984"
+name = "The Best of XY"
+
+[[expansion]]  # 106 products
+id_expansion = 3989
+code = "cmx3989"
+name = "Expansion Pack 20th Anniversary"
+
+[[expansion]]  # 61 products
+id_expansion = 3994
+code = "cmx3994"
+name = "Cruel Traitor"
+
+[[expansion]]  # 61 products
+id_expansion = 3999
+code = "cmx3999"
+name = "Fever-Burst Fighter"
+
+[[expansion]]  # 90 products
+id_expansion = 4004
+code = "cmx4004"
+name = "Awakening Psychic King"
+
+[[expansion]]  # 91 products
+id_expansion = 4009
+code = "cmx4009"
+name = "Rage of the Broken Heavens"
+
+[[expansion]]  # 67 products
+id_expansion = 4014
+code = "cmx4014"
+name = "Blue Shock"
+
+[[expansion]]  # 67 products
+id_expansion = 4019
+code = "cmx4019"
+name = "Red Flash"
+
+[[expansion]]  # 100 products
+id_expansion = 4024
+code = "cmx4024"
+name = "Bandit Ring"
+
+[[expansion]]  # 93 products
+id_expansion = 4029
+code = "cmx4029"
+name = "Emerald Break"
+
+[[expansion]]  # 82 products
+id_expansion = 4034
+code = "cmx4034"
+name = "Tidal Storm"
+
+[[expansion]]  # 82 products
+id_expansion = 4039
+code = "cmx4039"
+name = "Gaia Volcano"
+
+[[expansion]]  # 99 products
+id_expansion = 4044
+code = "cmx4044"
+name = "Phantom Gate"
+
+[[expansion]]  # 107 products
+id_expansion = 4049
+code = "cmx4049"
+name = "Rising Fist"
+
+[[expansion]]  # 92 products
+id_expansion = 4054
+code = "cmx4054"
+name = "Wild Blaze"
+
+[[expansion]]  # 65 products
+id_expansion = 4059
+code = "cmx4059"
+name = "Collection Y"
+
+[[expansion]]  # 66 products
+id_expansion = 4064
+code = "cmx4064"
+name = "Collection X"
+
+[[expansion]]  # 40 products
+id_expansion = 4069
+code = "cmx4069"
+name = "Mythical & Legendary Dream Shine Collection"
+
+[[expansion]]  # 142 products
+id_expansion = 4074
+code = "cmx4074"
+name = "Premium Champion Pack"
+
+[[expansion]]  # 28 products
+id_expansion = 4079
+code = "cmx4079"
+name = "MAudino EX Mega Battle Deck"
+
+[[expansion]]  # 21 products
+id_expansion = 4084
+code = "cmx4084"
+name = "Zygarde EX Perfect Battle Deck"
+
+[[expansion]]  # 85 products
+id_expansion = 4089
+code = "cmx4089"
+name = "BREAK Starter Pack: 20th Anniversary"
+
+[[expansion]]  # 34 products
+id_expansion = 4094
+code = "cmx4094"
+name = "PokéKyun Collection"
+
+[[expansion]]  # 18 products
+id_expansion = 4099
+code = "cmx4099"
+name = "Golduck BREAK + Palkia EX Combo Deck"
+
+[[expansion]]  # 11 products
+id_expansion = 4104
+code = "cmx4104"
+name = "Noivern BREAK Evolution Pack"
+
+[[expansion]]  # 11 products
+id_expansion = 4109
+code = "cmx4109"
+name = "Raichu BREAK Evolution Pack"
+
+[[expansion]]  # 21 products
+id_expansion = 4119
+code = "cmx4119"
+name = "MRayquaza EX Mega Battle Deck"
+
+[[expansion]]  # 26 products
+id_expansion = 4129
+code = "cmx4129"
+name = "Super Legend Set: Xerneas EX & Yveltal EX"
+
+[[expansion]]  # 21 products
+id_expansion = 4134
+code = "cmx4134"
+name = "Hyper Metal Chain Deck"
+
+[[expansion]]  # 24 products
+id_expansion = 4139
+code = "cmx4139"
+name = "MCharizard EX Mega Battle Deck"
+
+[[expansion]]  # 16 products
+id_expansion = 4144
+code = "cmx4144"
+name = "Yveltal Half Deck"
+
+[[expansion]]  # 16 products
+id_expansion = 4149
+code = "cmx4149"
+name = "Xerneas Half Deck"
+
+[[expansion]]  # 53 products
+id_expansion = 4154
+code = "cmx4154"
+name = "XY Beginning Set"
+
+[[expansion]]  # 154 products
+id_expansion = 4168
+code = "cmx4168"
+name = "Pokémon Card VS"
+
+[[expansion]]  # 105 products
+id_expansion = 4169
+code = "cmx4169"
+name = "Expansion Pack"
+
+[[expansion]]  # 7 products
+id_expansion = 4173
+code = "cmx4173"
+name = "Silver Lance & Jet Black Spirit Jumbo Pack Set"
+
+[[expansion]]  # 25 products
+id_expansion = 4178
+code = "cmx4178"
+name = "McDonald's Pokémon-e Minimum Pack"
+
+[[expansion]]  # 35 products
+id_expansion = 4179
+code = "cmx4179"
+name = "Mewtwo vs Genesect Deck Kit"
+
+[[expansion]]  # 101 products
+id_expansion = 4180
+code = "cmx4180"
+name = "EX Battle Boost"
+
+[[expansion]]  # 20 products
+id_expansion = 4181
+code = "cmx4181"
+name = "Blastoise + Kyurem EX Combo Deck"
+
+[[expansion]]  # 88 products
+id_expansion = 4182
+code = "cmx4182"
+name = "Megalo Cannon"
+
+[[expansion]]  # 26 products
+id_expansion = 4184
+code = "cmx4184"
+name = "Shiny Collection"
+
+[[expansion]]  # 60 products
+id_expansion = 4185
+code = "cmx4185"
+name = "Thunder Knuckle"
+
+[[expansion]]  # 73 products
+id_expansion = 4187
+code = "cmx4187"
+name = "Everyone's Exciting Battle Box"
+
+[[expansion]]  # 19 products
+id_expansion = 4188
+code = "cmx4188"
+name = "Team Plasma Battle Gift Set"
+
+[[expansion]]  # 21 products
+id_expansion = 4189
+code = "cmx4189"
+name = "White Kyurem EX Battle Strength Deck"
+
+[[expansion]]  # 21 products
+id_expansion = 4190
+code = "cmx4190"
+name = "Black Kyurem EX Battle Strength Deck"
+
+[[expansion]]  # 47 products
+id_expansion = 4191
+code = "cmx4191"
+name = "Master Deck Build Box EX"
+
+[[expansion]]  # 20 products
+id_expansion = 4192
+code = "cmx4192"
+name = "Team Plasma's Powered Half Deck"
+
+[[expansion]]  # 81 products
+id_expansion = 4193
+code = "cmx4193"
+name = "Plasma Gale"
+
+[[expansion]]  # 67 products
+id_expansion = 4194
+code = "cmx4194"
+name = "Cold Flare"
+
+[[expansion]]  # 67 products
+id_expansion = 4195
+code = "cmx4195"
+name = "Freeze Bolt"
+
+[[expansion]]  # 49 products
+id_expansion = 4196
+code = "cmx4196"
+name = "National Pokédex Beginning Set"
+
+[[expansion]]  # 19 products
+id_expansion = 4197
+code = "cmx4197"
+name = "Keldeo Battle Strength Deck"
+
+[[expansion]]  # 19 products
+id_expansion = 4198
+code = "cmx4198"
+name = "Garchomp Half Deck"
+
+[[expansion]]  # 19 products
+id_expansion = 4199
+code = "cmx4199"
+name = "Hydreigon Half Deck"
+
+[[expansion]]  # 57 products
+id_expansion = 4200
+code = "cmx4200"
+name = "Dragon Blade"
+
+[[expansion]]  # 57 products
+id_expansion = 4201
+code = "cmx4201"
+name = "Dragon Blast"
+
+[[expansion]]  # 22 products
+id_expansion = 4203
+code = "cmx4203"
+name = "Dragon Selection"
+
+[[expansion]]  # 78 products
+id_expansion = 4204
+code = "cmx4204"
+name = "Dark Rush"
+
+[[expansion]]  # 33 products
+id_expansion = 4205
+code = "cmx4205"
+name = "Battle Gift Set: Thundurus vs Tornadus"
+
+[[expansion]]  # 21 products
+id_expansion = 4206
+code = "cmx4206"
+name = "Zekrom EX Battle Strength Deck"
+
+[[expansion]]  # 21 products
+id_expansion = 4207
+code = "cmx4207"
+name = "Reshiram EX Battle Strength Deck"
+
+[[expansion]]  # 59 products
+id_expansion = 4208
+code = "cmx4208"
+name = "Hail Blizzard"
+
+[[expansion]]  # 59 products
+id_expansion = 4209
+code = "cmx4209"
+name = "Psycho Drive"
+
+[[expansion]]  # 74 products
+id_expansion = 4210
+code = "cmx4210"
+name = "Red Collection"
+
+[[expansion]]  # 27 products
+id_expansion = 4211
+code = "cmx4211"
+name = "Battle Theme Deck: Victini"
+
+[[expansion]]  # 45 products
+id_expansion = 4212
+code = "cmx4212"
+name = "Battle Strength Decks: Cobalion, Terrakion & Virizion"
+
+[[expansion]]  # 58 products
+id_expansion = 4213
+code = "cmx4213"
+name = "White Collection"
+
+[[expansion]]  # 60 products
+id_expansion = 4214
+code = "cmx4214"
+name = "Black Collection"
+
+[[expansion]]  # 61 products
+id_expansion = 4216
+code = "cmx4216"
+name = "Beginning Set"
+
+[[expansion]]  # 12 products
+id_expansion = 4217
+code = "cmx4217"
+name = "Collection Sheets: Oshawott, Snivy & Tepig"
+
+[[expansion]]  # 34 products
+id_expansion = 4238
+code = "cmx4238"
+name = "Emboar EX vs Togekiss EX Deck Kit"
+
+[[expansion]]  # 105 products
+id_expansion = 4239
+code = "cmx4239"
+name = "Eevee Heroes"
+
+[[expansion]]  # 10 products
+id_expansion = 4240
+code = "cmx4240"
+name = "Eevee Heroes VMAX Special Set"
+
+[[expansion]]  # 23 products
+id_expansion = 4241
+code = "cmx4241"
+name = "Gengar VMAX High-Class Deck"
+
+[[expansion]]  # 26 products
+id_expansion = 4242
+code = "cmx4242"
+name = "Inteleon VMAX High-Class Deck"
+
+[[expansion]]  # 80 products
+id_expansion = 4243
+code = "cmx4243"
+name = "Family Pokémon Card Game"
+
+[[expansion]]  # 33 products
+id_expansion = 4245
+code = "cmx4245"
+name = "Tag Team GX Starter Sets: Espeon & Deoxys, Umbreon & Darkrai"
+
+[[expansion]]  # 52 products
+id_expansion = 4246
+code = "cmx4246"
+name = "Sun & Moon Family Pokémon Card Game"
+
+[[expansion]]  # 30 products
+id_expansion = 4247
+code = "cmx4247"
+name = "Tag Team GX Deck Build Box"
+
+[[expansion]]  # 33 products
+id_expansion = 4248
+code = "cmx4248"
+name = "Gym Trainer Battle Decks: Brock & Misty"
+
+[[expansion]]  # 36 products
+id_expansion = 4249
+code = "cmx4249"
+name = "Tag Team GX Premium Trainer Box"
+
+[[expansion]]  # 41 products
+id_expansion = 4250
+code = "cmx4250"
+name = "GX Starter Sets: Flareon, Jolteon & Vaporeon"
+
+[[expansion]]  # 140 products
+id_expansion = 4251
+code = "cmx4251"
+name = "GX Starter Decks"
+
+[[expansion]]  # 43 products
+id_expansion = 4252
+code = "cmx4252"
+name = "Ultra Sun & Ultra Moon Deck Build Box"
+
+[[expansion]]  # 21 products
+id_expansion = 4253
+code = "cmx4253"
+name = "Ultra Sun & Ultra Moon Premium Trainer Box"
+
+[[expansion]]  # 22 products
+id_expansion = 4254
+code = "cmx4254"
+name = "Solgaleo GX & Lunala GX Legendary Starter Set"
+
+[[expansion]]  # 22 products
+id_expansion = 4255
+code = "cmx4255"
+name = "Tapu Bulu GX Enhanced Starter Set"
+
+[[expansion]]  # 14 products
+id_expansion = 4256
+code = "cmx4256"
+name = "Rockruff Full Power Deck"
+
+[[expansion]]  # 19 products
+id_expansion = 4257
+code = "cmx4257"
+name = "Premium Trainer Box"
+
+[[expansion]]  # 63 products
+id_expansion = 4258
+code = "cmx4258"
+name = "Sun & Moon GX Starter Sets"
+
+[[expansion]]  # 83 products
+id_expansion = 4261
+code = "cmx4261"
+name = "Clash at the Summit"
+
+[[expansion]]  # 42 products
+id_expansion = 4262
+code = "cmx4262"
+name = "Lost Link"
+
+[[expansion]]  # 20 products
+id_expansion = 4263
+code = "cmx4263"
+name = "Tyranitar Constructed Standard Deck"
+
+[[expansion]]  # 20 products
+id_expansion = 4264
+code = "cmx4264"
+name = "Steelix Constructed Standard Deck"
+
+[[expansion]]  # 83 products
+id_expansion = 4265
+code = "cmx4265"
+name = "Reviving Legends"
+
+[[expansion]]  # 11 products
+id_expansion = 4268
+code = "cmx4268"
+name = "Torterra Battle Starter Deck"
+
+[[expansion]]  # 10 products
+id_expansion = 4269
+code = "cmx4269"
+name = "Magmortar Battle Starter Deck"
+
+[[expansion]]  # 11 products
+id_expansion = 4270
+code = "cmx4270"
+name = "Blastoise Battle Starter Deck"
+
+[[expansion]]  # 12 products
+id_expansion = 4271
+code = "cmx4271"
+name = "Raichu Battle Starter Deck"
+
+[[expansion]]  # 73 products
+id_expansion = 4272
+code = "cmx4272"
+name = "SoulSilver Collection"
+
+[[expansion]]  # 81 products
+id_expansion = 4273
+code = "cmx4273"
+name = "HeartGold Collection"
+
+[[expansion]]  # 24 products
+id_expansion = 4276
+code = "cmx4276"
+name = "Movie Commemoration Random Pack"
+
+[[expansion]]  # 19 products
+id_expansion = 4278
+code = "cmx4278"
+name = "Arceus LV.X Deck: Lightning & Psychic"
+
+[[expansion]]  # 19 products
+id_expansion = 4279
+code = "cmx4279"
+name = "Arceus LV.X Deck: Grass & Fire"
+
+[[expansion]]  # 92 products
+id_expansion = 4280
+code = "cmx4280"
+name = "Advent of Arceus"
+
+[[expansion]]  # 13 products
+id_expansion = 4281
+code = "cmx4281"
+name = "Regigigas LV.X Collection Pack"
+
+[[expansion]]  # 13 products
+id_expansion = 4282
+code = "cmx4282"
+name = "Mewtwo LV.X Collection Pack"
+
+[[expansion]]  # 13 products
+id_expansion = 4283
+code = "cmx4283"
+name = "Shaymin LV.X Collection Pack"
+
+[[expansion]]  # 102 products
+id_expansion = 4286
+code = "cmx4286"
+name = "Beat of the Frontier"
+
+[[expansion]]  # 92 products
+id_expansion = 4289
+code = "cmx4289"
+name = "Bonds to the End of Time"
+
+[[expansion]]  # 98 products
+id_expansion = 4297
+code = "cmx4297"
+name = "Galactic's Conquest"
+
+[[expansion]]  # 10 products
+id_expansion = 4299
+code = "cmx4299"
+name = "Pokémon Movie: Premium Cards Collection 2008"
+
+[[expansion]]  # 94 products
+id_expansion = 4302
+code = "cmx4302"
+name = "Intense Fight in the Destroyed Sky"
+
+[[expansion]]  # 25 products
+id_expansion = 4303
+code = "cmx4303"
+name = "Heatran vs Regigigas Deck Kit"
+
+[[expansion]]  # 67 products
+id_expansion = 4304
+code = "cmx4304"
+name = "Temple of Anger"
+
+[[expansion]]  # 67 products
+id_expansion = 4305
+code = "cmx4305"
+name = "Cry from the Mysterious"
+
+[[expansion]]  # 44 products
+id_expansion = 4306
+code = "cmx4306"
+name = "Entry Pack '08"
+
+[[expansion]]  # 29 products
+id_expansion = 4307
+code = "cmx4307"
+name = "Magmortar vs Electivire Deck Kit"
+
+[[expansion]]  # 72 products
+id_expansion = 4308
+code = "cmx4308"
+name = "Dawn Dash"
+
+[[expansion]]  # 72 products
+id_expansion = 4309
+code = "cmx4309"
+name = "Moonlit Pursuit"
+
+[[expansion]]  # 12 products
+id_expansion = 4310
+code = "cmx4310"
+name = "10th Movie Commemoration Set"
+
+[[expansion]]  # 20 products
+id_expansion = 4311
+code = "cmx4311"
+name = "Palkia LV.X Constructed Standard Deck"
+
+[[expansion]]  # 20 products
+id_expansion = 4312
+code = "cmx4312"
+name = "Dialga LV.X Constructed Standard Deck"
+
+[[expansion]]  # 121 products
+id_expansion = 4313
+code = "cmx4313"
+name = "Shining Darkness"
+
+[[expansion]]  # 17 products
+id_expansion = 4315
+code = "cmx4315"
+name = "Rampardos the Attacker"
+
+[[expansion]]  # 17 products
+id_expansion = 4316
+code = "cmx4316"
+name = "Bastiodon the Defender"
+
+[[expansion]]  # 125 products
+id_expansion = 4317
+code = "cmx4317"
+name = "Secret of the Lakes"
+
+[[expansion]]  # 127 products
+id_expansion = 4318
+code = "cmx4318"
+name = "Diamond & Pearl Collection"
+
+[[expansion]]  # 93 products
+id_expansion = 4330
+code = "cmx4330"
+name = "Blue Sky Stream"
+
+[[expansion]]  # 51 products
+id_expansion = 4345
+code = "cmx4345"
+name = "25th Anniversary Collection"
+
+[[expansion]]  # 26 products
+id_expansion = 4346
+code = "cmx4346"
+name = "25th Anniversary Edition"
+
+[[expansion]]  # 24 products
+id_expansion = 4357
+code = "cmx4357"
+name = "Rainbow Island & Tropical Island Sets"
+
+[[expansion]]  # 64 products
+id_expansion = 4361
+code = "cmx4361"
+name = "Gift Box Mew • Lucario"
+
+[[expansion]]  # 16 products
+id_expansion = 4381
+code = "cmx4381"
+name = "V-UNION Special Card Sets"
+
+[[expansion]]  # 31 products
+id_expansion = 4385
+code = "cmx4385"
+name = "Special Deck Set Zacian Zamazenta vs Eternatus"
+
+[[expansion]]  # 431 products
+id_expansion = 4388
+code = "cmx4388"
+name = "Start Deck 100 Deck"
+
+[[expansion]]  # 18 products
+id_expansion = 4389
+code = "cmx4389"
+name = "25th Anniversary Golden Box"
+
+[[expansion]]  # 22 products
+id_expansion = 4392
+code = "cmx4392"
+name = "Pikachu World Collection"
+
+[[expansion]]  # 50 products
+id_expansion = 4463
+code = "cmx4463"
+name = "Pokémon Jungle"
+
+[[expansion]]  # 50 products
+id_expansion = 4464
+code = "cmx4464"
+name = "Mystery of the Fossils"
+
+[[expansion]]  # 67 products
+id_expansion = 4465
+code = "cmx4465"
+name = "Rocket Gang"
+
+[[expansion]]  # 98 products
+id_expansion = 4466
+code = "cmx4466"
+name = "Leaders' Stadium"
+
+[[expansion]]  # 100 products
+id_expansion = 4467
+code = "cmx4467"
+name = "Challenge from the Darkness"
+
+[[expansion]]  # 49 products
+id_expansion = 4490
+code = "cmx4490"
+name = "Extra Regulation Box"
+
+[[expansion]]  # 100 products
+id_expansion = 4506
+code = "cmx4506"
+name = "Gold, Silver, to a New World..."
+
+[[expansion]]  # 60 products
+id_expansion = 4507
+code = "cmx4507"
+name = "Crossing the Ruins..."
+
+[[expansion]]  # 60 products
+id_expansion = 4508
+code = "cmx4508"
+name = "Awakening Legends"
+
+[[expansion]]  # 115 products
+id_expansion = 4509
+code = "cmx4509"
+name = "Darkness, and to Light..."
+
+[[expansion]]  # 40 products
+id_expansion = 4515
+code = "cmx4515"
+name = "Premium Trainer Box VSTAR"
+
+[[expansion]]  # 24 products
+id_expansion = 4516
+code = "cmx4516"
+name = "Sword & Shield Starter Set Lucario VSTAR"
+
+[[expansion]]  # 23 products
+id_expansion = 4517
+code = "cmx4517"
+name = "Sword & Shield Starter Set Darkrai VSTAR"
+
+[[expansion]]  # 27 products
+id_expansion = 4518
+code = "cmx4518"
+name = "Start Deck 100 CoroCoro Comic Version"
+
+[[expansion]]  # 108 products
+id_expansion = 4786
+code = "cmx4786"
+name = "Pokémon GO"
+
+[[expansion]]  # 90 products
+id_expansion = 4973
+code = "cmx4973"
+name = "Time Gazer"
+
+[[expansion]]  # 160 products
+id_expansion = 5021
+code = "cmx5021"
+name = "Base Expansion Pack"
+
+[[expansion]]  # 95 products
+id_expansion = 5022
+code = "cmx5022"
+name = "The Town on No Map"
+
+[[expansion]]  # 93 products
+id_expansion = 5023
+code = "cmx5023"
+name = "Wind from the Sea"
+
+[[expansion]]  # 93 products
+id_expansion = 5024
+code = "cmx5024"
+name = "Split Earth"
+
+[[expansion]]  # 93 products
+id_expansion = 5025
+code = "cmx5025"
+name = "Mysterious Mountains"
+
+[[expansion]]  # 42 products
+id_expansion = 5059
+code = "cmx5059"
+name = "Intro Pack Box"
+
+[[expansion]]  # 41 products
+id_expansion = 5061
+code = "cmx5061"
+name = "Intro Pack Neo Box"
+
+[[expansion]]  # 23 products
+id_expansion = 5096
+code = "cmx5096"
+name = "VSTAR & VMAX High Class Deck Zeraora"
+
+[[expansion]]  # 23 products
+id_expansion = 5097
+code = "cmx5097"
+name = "VSTAR & VMAX High Class Deck Deoxys"
+
+[[expansion]]  # 8 products
+id_expansion = 5098
+code = "cmx5098"
+name = "VSTAR Special Set"
+
+[[expansion]]  # 33 products
+id_expansion = 5138
+code = "cmx5138"
+name = "Trick or Trade"
+
+[[expansion]]  # 35 products
+id_expansion = 5179
+code = "cmx5179"
+name = "Special Battle Set Charizard VSTAR vs Rayquaza VMAX"
+
+[[expansion]]  # 29 products
+id_expansion = 5218
+code = "cmx5218"
+name = "ex Starter Set Sprigatito & Lucario ex"
+
+[[expansion]]  # 27 products
+id_expansion = 5219
+code = "cmx5219"
+name = "ex Starter Set Fuecoco & Ampharos ex"
+
+[[expansion]]  # 29 products
+id_expansion = 5220
+code = "cmx5220"
+name = "ex Starter Set Quaxly & Mimikyu ex"
+
+[[expansion]]  # 29 products
+id_expansion = 5221
+code = "cmx5221"
+name = "Premium Trainer Box ex"
+
+[[expansion]]  # 28 products
+id_expansion = 5299
+code = "cmx5299"
+name = "ex Starter Set Pikachu ex"
+
+[[expansion]]  # 380 products
+id_expansion = 5335
+code = "cmx5335"
+name = "Scarlet & Violet Collections, Boxes & Tins"
+
+[[expansion]]  # 9 products
+id_expansion = 5351
+code = "cmx5351"
+name = "Scarlet & Violet ex Special Set"
+
+[[expansion]]  # 150 products
+id_expansion = 5362
+code = "cmx5362"
+name = "Scarlet & Violet ex Start Decks"
+
+[[expansion]]  # 33 products
+id_expansion = 5405
+code = "cmx5405"
+name = "Trick or Trade 2023"
+
+[[expansion]]  # 34 products
+id_expansion = 5410
+code = "cmx5410"
+name = "World Championships 2023 Yokohama Deck -Pikachu"
+
+[[expansion]]  # 17 products
+id_expansion = 5415
+code = "cmx5415"
+name = "Sun & Moon Collections & Boxes"
+
+[[expansion]]  # 39 products
+id_expansion = 5422
+code = "cmx5422"
+name = "Ruler of the Black Flame Deck Build Box"
+
+[[expansion]]  # 24 products
+id_expansion = 5476
+code = "cmx5476"
+name = "Terastal Starter Set Skeledirge ex"
+
+[[expansion]]  # 24 products
+id_expansion = 5477
+code = "cmx5477"
+name = "Terastal Starter Set Mewtwo ex"
+
+[[expansion]]  # 56 products
+id_expansion = 5525
+code = "cmx5525"
+name = "Venusaur & Charizard & Blastoise Special Deck Set ex"
+
+[[expansion]]  # 35 products
+id_expansion = 5527
+code = "cmx5527"
+name = "Pokémon Card Game Classic: Venusaur & Lugia ex Deck"
+
+[[expansion]]  # 35 products
+id_expansion = 5528
+code = "cmx5528"
+name = "Pokémon Card Game Classic: Charizard & Ho-Oh ex Deck"
+
+[[expansion]]  # 35 products
+id_expansion = 5529
+code = "cmx5529"
+name = "Pokémon Card Game Classic: Blastoise & Suicune ex Deck"
+
+[[expansion]]  # 36 products
+id_expansion = 5530
+code = "cmx5530"
+name = "Pokémon Trading Card Game Classic: Venusaur & Lugia ex Deck"
+
+[[expansion]]  # 35 products
+id_expansion = 5531
+code = "cmx5531"
+name = "Pokémon Trading Card Game Classic: Charizard & Ho-Oh ex Deck"
+
+[[expansion]]  # 35 products
+id_expansion = 5532
+code = "cmx5532"
+name = "Pokémon Trading Card Game Classic: Blastoise & Suicune ex Deck"
+
+[[expansion]]  # 54 products
+id_expansion = 5575
+code = "cmx5575"
+name = "Starter Deck & Build Set Ancient Koraidon ex"
+
+[[expansion]]  # 54 products
+id_expansion = 5576
+code = "cmx5576"
+name = "Starter Deck & Build Set Future Miraidon ex"
+
+[[expansion]]  # 101 products
+id_expansion = 5621
+code = "cmx5621"
+name = "Scarlet & Violet"
+
+[[expansion]]  # 27 products
+id_expansion = 5681
+code = "cmx5681"
+name = "Nivi City Gym Takeshi"
+
+[[expansion]]  # 24 products
+id_expansion = 5682
+code = "cmx5682"
+name = "Hanada City Gym Kasumi"
+
+[[expansion]]  # 21 products
+id_expansion = 5683
+code = "cmx5683"
+name = "Kuchiba City Gym Matis"
+
+[[expansion]]  # 24 products
+id_expansion = 5684
+code = "cmx5684"
+name = "Tamamushi City Gym Erika"
+
+[[expansion]]  # 21 products
+id_expansion = 5685
+code = "cmx5685"
+name = "Yamabuki City Gym Natsume"
+
+[[expansion]]  # 22 products
+id_expansion = 5686
+code = "cmx5686"
+name = "Guren Town Gym Katsura"
+
+[[expansion]]  # 70 products
+id_expansion = 5693
+code = "cmx5693"
+name = "Offense and Defense of the Furthest Ends"
+
+[[expansion]]  # 25 products
+id_expansion = 5694
+code = "cmx5694"
+name = "Shockwave! Tyranitar ex Constructed Standard Deck"
+
+[[expansion]]  # 25 products
+id_expansion = 5695
+code = "cmx5695"
+name = "Imprison! Gardevoir ex Constructed Standard Deck"
+
+[[expansion]]  # 17 products
+id_expansion = 5698
+code = "cmx5698"
+name = "Earth's Groudon ex Constructed Starter Deck"
+
+[[expansion]]  # 17 products
+id_expansion = 5699
+code = "cmx5699"
+name = "Ocean's Kyogre ex Constructed Starter Deck"
+
+[[expansion]]  # 77 products
+id_expansion = 5700
+code = "cmx5700"
+name = "Miracle Crystal"
+
+[[expansion]]  # 54 products
+id_expansion = 5703
+code = "cmx5703"
+name = "Holon Phantom"
+
+[[expansion]]  # 88 products
+id_expansion = 5709
+code = "cmx5709"
+name = "Holon Research Tower"
+
+[[expansion]]  # 88 products
+id_expansion = 5710
+code = "cmx5710"
+name = "Mirage Forest"
+
+[[expansion]]  # 108 products
+id_expansion = 5711
+code = "cmx5711"
+name = "Golden Sky, Silvery Ocean"
+
+[[expansion]]  # 87 products
+id_expansion = 5712
+code = "cmx5712"
+name = "Rocket Gang Strikes Back"
+
+[[expansion]]  # 84 products
+id_expansion = 5713
+code = "cmx5713"
+name = "Clash of the Blue Sky"
+
+[[expansion]]  # 84 products
+id_expansion = 5714
+code = "cmx5714"
+name = "Flight of Legends"
+
+[[expansion]]  # 16 products
+id_expansion = 5715
+code = "cmx5715"
+name = "Holon Research Tower Lightning Quarter Deck"
+
+[[expansion]]  # 16 products
+id_expansion = 5716
+code = "cmx5716"
+name = "Holon Research Tower Water Quarter Deck"
+
+[[expansion]]  # 16 products
+id_expansion = 5717
+code = "cmx5717"
+name = "Holon Research Tower Fire Quarter Deck"
+
+[[expansion]]  # 43 products
+id_expansion = 5718
+code = "cmx5718"
+name = "Master Kit"
+
+[[expansion]]  # 17 products
+id_expansion = 5719
+code = "cmx5719"
+name = "Mirage's Mew Constructed Starter Deck"
+
+[[expansion]]  # 17 products
+id_expansion = 5720
+code = "cmx5720"
+name = "Feraligatr Constructed Starter Deck"
+
+[[expansion]]  # 17 products
+id_expansion = 5721
+code = "cmx5721"
+name = "Typhlosion Constructed Starter Deck"
+
+[[expansion]]  # 17 products
+id_expansion = 5722
+code = "cmx5722"
+name = "Meganium Constructed Starter Deck"
+
+[[expansion]]  # 97 products
+id_expansion = 5723
+code = "cmx5723"
+name = "Quick Construction Packs"
+
+[[expansion]]  # 39 products
+id_expansion = 5724
+code = "cmx5724"
+name = "Gift Box Emerald"
+
+[[expansion]]  # 21 products
+id_expansion = 5725
+code = "cmx5725"
+name = "Silver Deck Kit"
+
+[[expansion]]  # 21 products
+id_expansion = 5726
+code = "cmx5726"
+name = "Black Deck Kit"
+
+[[expansion]]  # 16 products
+id_expansion = 5727
+code = "cmx5727"
+name = "Rayquaza Constructed Starter Deck"
+
+[[expansion]]  # 16 products
+id_expansion = 5728
+code = "cmx5728"
+name = "Deoxys Constructed Starter Deck"
+
+[[expansion]]  # 55 products
+id_expansion = 5729
+code = "cmx5729"
+name = "Random Constructed Starter Decks"
+
+[[expansion]]  # 24 products
+id_expansion = 5737
+code = "cmx5737"
+name = "Battle Master Deck Tera Charizard ex"
+
+[[expansion]]  # 22 products
+id_expansion = 5738
+code = "cmx5738"
+name = "Battle Master Deck Chien-Pao ex"
+
+[[expansion]]  # 34 products
+id_expansion = 5798
+code = "cmx5798"
+name = "Sword & Shield Collections & Boxes"
+
+[[expansion]]  # 53 products
+id_expansion = 5835
+code = "cmx5835"
+name = "Stellar Miracle Deck Build Box"
+
+[[expansion]]  # 73 products
+id_expansion = 5838
+code = "cmx5838"
+name = "Simplified Chinese Gift Boxes"
+
+[[expansion]]  # 26 products
+id_expansion = 5841
+code = "cmx5841"
+name = "Stellar Tera Type Starter Set Sylveon ex"
+
+[[expansion]]  # 26 products
+id_expansion = 5842
+code = "cmx5842"
+name = "Stellar Tera Type Starter Set Ceruledge ex"
+
+[[expansion]]  # 20 products
+id_expansion = 5863
+code = "cmx5863"
+name = "Metagross Constructed Starter Deck"
+
+[[expansion]]  # 85 products
+id_expansion = 5864
+code = "cmx5864"
+name = "Undone Seal"
+
+[[expansion]]  # 19 products
+id_expansion = 5866
+code = "cmx5866"
+name = "Gift Box Latias & Latios ex"
+
+[[expansion]]  # 34 products
+id_expansion = 5867
+code = "cmx5867"
+name = "Aqua Deck Kit"
+
+[[expansion]]  # 34 products
+id_expansion = 5868
+code = "cmx5868"
+name = "Magma Deck Kit"
+
+[[expansion]]  # 82 products
+id_expansion = 5869
+code = "cmx5869"
+name = "Magma VS Aqua: Two Ambitions"
+
+[[expansion]]  # 20 products
+id_expansion = 5870
+code = "cmx5870"
+name = "Salamence Constructed Starter Deck"
+
+[[expansion]]  # 20 products
+id_expansion = 5871
+code = "cmx5871"
+name = "Flygon Constructed Starter Deck"
+
+[[expansion]]  # 56 products
+id_expansion = 5872
+code = "cmx5872"
+name = "Rulers of the Heavens"
+
+[[expansion]]  # 55 products
+id_expansion = 5873
+code = "cmx5873"
+name = "Miracle of the Desert"
+
+[[expansion]]  # 20 products
+id_expansion = 5874
+code = "cmx5874"
+name = "Mudkip Constructed Starter Deck"
+
+[[expansion]]  # 20 products
+id_expansion = 5875
+code = "cmx5875"
+name = "Torchic Constructed Starter Deck"
+
+[[expansion]]  # 20 products
+id_expansion = 5876
+code = "cmx5876"
+name = "Treecko Constructed Starter Deck"
+
+[[expansion]]  # 57 products
+id_expansion = 5877
+code = "cmx5877"
+name = "ADV Expansion Pack"
+
+[[expansion]]  # 142 products
+id_expansion = 5890
+code = "cmx5890"
+name = "Battle Academy 2024"
+
+[[expansion]]  # 50 products
+id_expansion = 5914
+code = "cmx5914"
+name = "M Master Deck Build Box Speed Style"
+
+[[expansion]]  # 50 products
+id_expansion = 5915
+code = "cmx5915"
+name = "M Master Deck Build Box Power Style"
+
+[[expansion]]  # 186 products
+id_expansion = 5927
+code = "cmx5927"
+name = "Generations Start Decks"
+
+[[expansion]]  # 62 products
+id_expansion = 5960
+code = "cmx5960"
+name = "Chinese Promo Packs & Sets"
+
+[[expansion]]  # 54 products
+id_expansion = 5997
+code = "cmx5997"
+name = "Battle Partners Deck Build Box"
+
+[[expansion]]  # 118 products
+id_expansion = 6001
+code = "cmx6001"
+name = "CBB1C: Gem Pack Vol. 1"
+
+[[expansion]]  # 23 products
+id_expansion = 6016
+code = "cmx6016"
+name = "Starter Set ex Marnie's Morpeko & Grimmsnarl ex"
+
+[[expansion]]  # 23 products
+id_expansion = 6017
+code = "cmx6017"
+name = "Starter Set ex Steven's Beldum & Metagross ex"
+
+[[expansion]]  # 95 products
+id_expansion = 6037
+code = "cmx6037"
+name = "Heat Wave Arena"
+
+[[expansion]]  # 222 products
+id_expansion = 6099
+code = "cmx6099"
+name = "151C: Collect 151 Gathering"
+
+[[expansion]]  # 169 products
+id_expansion = 6110
+code = "cmx6110"
+name = "CSV3C: Fearless Terastal"
+
+[[expansion]]  # 142 products
+id_expansion = 6111
+code = "cmx6111"
+name = "CBB2C: Gem Pack Vol. 2"
+
+[[expansion]]  # 167 products
+id_expansion = 6121
+code = "cmx6121"
+name = "CSV2C: Miracle Journey"
+
+[[expansion]]  # 148 products
+id_expansion = 6168
+code = "cmx6168"
+name = "CSVL1C: Adventure Collection"
+
+[[expansion]]  # 169 products
+id_expansion = 6169
+code = "cmx6169"
+name = "CSV4C: Bonus Round"
+
+[[expansion]]  # 171 products
+id_expansion = 6193
+code = "cmx6193"
+name = "CSV1C: Eternal Birth"
+
+[[expansion]]  # 141 products
+id_expansion = 6199
+code = "cmx6199"
+name = "Battle Academy 2022"
+
+[[expansion]]  # 140 products
+id_expansion = 6200
+code = "cmx6200"
+name = "Battle Academy"
+
+[[expansion]]  # 114 products
+id_expansion = 6203
+code = "cmx6203"
+name = "WCD 2022"
+
+[[expansion]]  # 188 products
+id_expansion = 6204
+code = "cmx6204"
+name = "CS4aC: Nine Colors Gathering - Friends"
+
+[[expansion]]  # 181 products
+id_expansion = 6205
+code = "cmx6205"
+name = "CS4bC: Nine Colors Gathering - Origin"
+
+[[expansion]]  # 120 products
+id_expansion = 6214
+code = "cmx6214"
+name = "Play! Pokémon Prize Pack Series Seven"
+
+[[expansion]]  # 75 products
+id_expansion = 6231
+code = "cmx6231"
+name = "Collections & Boxes (2025)"
+
+[[expansion]]  # 168 products
+id_expansion = 6237
+code = "cmx6237"
+name = "CSV5C: Dark Crystal Blaze"
+
+[[expansion]]  # 52 products
+id_expansion = 6239
+code = "cmx6239"
+name = "Premium Trainer Box MEGA"
+
+[[expansion]]  # 98 products
+id_expansion = 6247
+code = "cmx6247"
+name = "CS6.5C: Victory Star Guide"
+
+[[expansion]]  # 91 products
+id_expansion = 6248
+code = "cmx6248"
+name = "CS5.5C: Shadow of Glory"
+
+[[expansion]]  # 173 products
+id_expansion = 6249
+code = "cmx6249"
+name = "CS6aC: Azure Shadow - Roar"
+
+[[expansion]]  # 176 products
+id_expansion = 6250
+code = "cmx6250"
+name = "CS6bC: Azure Shadow - Pursuit"
+
+[[expansion]]  # 85 products
+id_expansion = 6252
+code = "cmx6252"
+name = "CS4.5C: Final Flame Dance"
+
+[[expansion]]  # 180 products
+id_expansion = 6257
+code = "cmx6257"
+name = "CS5aC: Brave Stars - Charm"
+
+[[expansion]]  # 182 products
+id_expansion = 6258
+code = "cmx6258"
+name = "CS5bC: Brave Stars - Brave"
+
+[[expansion]]  # 25 products
+id_expansion = 6259
+code = "cmx6259"
+name = "MEGA Starter Set Mega Gengar ex"
+
+[[expansion]]  # 25 products
+id_expansion = 6260
+code = "cmx6260"
+name = "MEGA Starter Set Mega Diancie ex"
+
+[[expansion]]  # 92 products
+id_expansion = 6265
+code = "cmx6265"
+name = "CS3.5C: Scorching Skies"
+
+[[expansion]]  # 188 products
+id_expansion = 6266
+code = "cmx6266"
+name = "CS3aC: Primordial Arts - Overgrow"
+
+[[expansion]]  # 183 products
+id_expansion = 6267
+code = "cmx6267"
+name = "CS3bC: Primordial Arts - Torrent"
+
+[[expansion]]  # 24 products
+id_expansion = 6272
+code = "cmx6272"
+name = "CS4.1C: Radiant Energy Vol.1"
+
+[[expansion]]  # 24 products
+id_expansion = 6273
+code = "cmx6273"
+name = "CS5.1C: Radiant Energy Vol. 2"
+
+[[expansion]]  # 25 products
+id_expansion = 6274
+code = "cmx6274"
+name = "CS6.1C: Radiant Energy Vol. 3"
+
+[[expansion]]  # 27 products
+id_expansion = 6275
+code = "cmx6275"
+name = "CSFC: Return of the Dragon"
+
+[[expansion]]  # 81 products
+id_expansion = 6276
+code = "cmx6276"
+name = "CS2.5C: Brilliant Counterattack"
+
+[[expansion]]  # 147 products
+id_expansion = 6279
+code = "cmx6279"
+name = "CS2aC: Vivid Portrayals - Obsidian"
+
+[[expansion]]  # 147 products
+id_expansion = 6281
+code = "cmx6281"
+name = "CS2bC: Vivid Portrayals - Indigo"
+
+[[expansion]]  # 182 products
+id_expansion = 6287
+code = "cmx6287"
+name = "Black & White"
+
+[[expansion]]  # 98 products
+id_expansion = 6288
+code = "cmx6288"
+name = "CS1.5C: Dynamax Tactics"
+
+[[expansion]]  # 138 products
+id_expansion = 6292
+code = "cmx6292"
+name = "CBB3C: Gem Pack Vol. 3"
+
+[[expansion]]  # 221 products
+id_expansion = 6297
+code = "cmx6297"
+name = "CS1aC: Dynamax Clash - Thunder"
+
+[[expansion]]  # 203 products
+id_expansion = 6298
+code = "cmx6298"
+name = "CS1bC: Dynamax Clash - Flame"
+
+[[expansion]]  # 21 products
+id_expansion = 6301
+code = "cmx6301"
+name = "Giratina VSTAR Deck Building Advanced Gift Box"
+
+[[expansion]]  # 18 products
+id_expansion = 6302
+code = "cmx6302"
+name = "Pokémon Art Illustration Celebration Gift Boxes"
+
+[[expansion]]  # 5 products
+id_expansion = 6303
+code = "cmx6303"
+name = "Pikachu & Eevee Quicksand Card Display Pendant Gift Box"
+
+[[expansion]]  # 105 products
+id_expansion = 6309
+code = "cmx6309"
+name = "CSVH3C: Happy Set Vol. 3"
+
+[[expansion]]  # 235 products
+id_expansion = 6310
+code = "cmx6310"
+name = "CSVE2C: Battle Party Shining Dream"
+
+[[expansion]]  # 205 products
+id_expansion = 6311
+code = "cmx6311"
+name = "CSVE1C: Battle Party Dream Together"
+
+[[expansion]]  # 101 products
+id_expansion = 6313
+code = "cmx6313"
+name = "CSM2.5C: Striking Competition"
+
+[[expansion]]  # 90 products
+id_expansion = 6314
+code = "cmx6314"
+name = "CSM1.5C: Battle Elite"
+
+[[expansion]]  # 198 products
+id_expansion = 6319
+code = "cmx6319"
+name = "CSM2aC: Shining Synergy - Shower"
+
+[[expansion]]  # 197 products
+id_expansion = 6320
+code = "cmx6320"
+name = "CSM2bC: Shining Synergy - Supreme"
+
+[[expansion]]  # 196 products
+id_expansion = 6321
+code = "cmx6321"
+name = "CSM2cC: Shining Synergy - Summon"
+
+[[expansion]]  # 495 products
+id_expansion = 6328
+code = "cmx6328"
+name = "Mission Reward & Energy Packs"
+
+[[expansion]]  # 122 products
+id_expansion = 6334
+code = "cmx6334"
+name = "CSVH2C: Happy Set Vol. 2"
+
+[[expansion]]  # 96 products
+id_expansion = 6335
+code = "cmx6335"
+name = "CSVH1C: Happy Set"
+
+[[expansion]]  # 215 products
+id_expansion = 6341
+code = "cmx6341"
+name = "CSM1aC: Storming Emergence - Radiant"
+
+[[expansion]]  # 208 products
+id_expansion = 6342
+code = "cmx6342"
+name = "CSM1bC: Storming Emergence - Verdant"
+
+[[expansion]]  # 216 products
+id_expansion = 6343
+code = "cmx6343"
+name = "CSM1cC: Storming Emergence - Abundant"
+
+[[expansion]]  # 24 products
+id_expansion = 6347
+code = "cmx6347"
+name = "V-UNION Binder Collections & Gift Box"
+
+[[expansion]]  # 29 products
+id_expansion = 6348
+code = "cmx6348"
+name = "Pikachu Legendary Celebration"
+
+[[expansion]]  # 20 products
+id_expansion = 6349
+code = "cmx6349"
+name = "Art Illustration Celebration"
+
+[[expansion]]  # 15 products
+id_expansion = 6350
+code = "cmx6350"
+name = "Pokémon Card Display Set Gift Box Gengar"
+
+[[expansion]]  # 10 products
+id_expansion = 6354
+code = "cmx6354"
+name = "Sword & Shield Trainer Collection Gift Box"
+
+[[expansion]]  # 69 products
+id_expansion = 6355
+code = "cmx6355"
+name = "Variety Treasure Box"
+
+[[expansion]]  # 10 products
+id_expansion = 6356
+code = "cmx6356"
+name = "Pokémon Card Display Set Gift Box Eevee"
+
+[[expansion]]  # 15 products
+id_expansion = 6357
+code = "cmx6357"
+name = "Pokémon Card Display Set Gift Box Charizard"
+
+[[expansion]]  # 146 products
+id_expansion = 6361
+code = "cmx6361"
+name = "CSVL2C: Travel Collection"
+
+[[expansion]]  # 167 products
+id_expansion = 6362
+code = "cmx6362"
+name = "CSV6C: True Mystery"
+
+[[expansion]]  # 6 products
+id_expansion = 6366
+code = "cmx6366"
+name = "Lillie's Support Gift Box"
+
+[[expansion]]  # 13 products
+id_expansion = 6367
+code = "cmx6367"
+name = "Eeveelution GX Gift Boxes"
+
+[[expansion]]  # 20 products
+id_expansion = 6368
+code = "cmx6368"
+name = "CSMAC: Arceus & Dialga & Palkia GX Premium Deck Building Box"
+
+[[expansion]]  # 16 products
+id_expansion = 6369
+code = "cmx6369"
+name = "Shining Pokémon Poké Ball Gift Box"
+
+[[expansion]]  # 24 products
+id_expansion = 6382
+code = "cmx6382"
+name = "MEGA Start Deck 100 Battle Collection Corociao Version"
+
+[[expansion]]  # 64 products
+id_expansion = 6394
+code = "cmx6394"
+name = "Mega Evolution"
+
+[[expansion]]  # 164 products
+id_expansion = 6397
+code = "cmx6397"
+name = "CS5DC: Brave Stars V Starter Deck"
+
+[[expansion]]  # 25 products
+id_expansion = 6398
+code = "cmx6398"
+name = "CSNC: Brave Stars Deck Building Gift Box"
+
+[[expansion]]  # 12 products
+id_expansion = 6401
+code = "cmx6401"
+name = "Eeveelution VMAX Advanced Gift Boxes"
+
+[[expansion]]  # 20 products
+id_expansion = 6402
+code = "cmx6402"
+name = "Mew Confluence Deck Building Advanced Gift Box"
+
+[[expansion]]  # 184 products
+id_expansion = 6403
+code = "cmx6403"
+name = "CS3DC: Primordial Arts V Starter Deck"
+
+[[expansion]]  # 20 products
+id_expansion = 6404
+code = "cmx6404"
+name = "CSBC: Primordial Arts Deck Building Gift Box Venusaur"
+
+[[expansion]]  # 20 products
+id_expansion = 6405
+code = "cmx6405"
+name = "CSCC: Primordial Arts Deck Building Gift Box Blastoise"
+
+[[expansion]]  # 11 products
+id_expansion = 6406
+code = "cmx6406"
+name = "Meowth's Little Tricks"
+
+[[expansion]]  # 25 products
+id_expansion = 6407
+code = "cmx6407"
+name = "CSAC: Dynamax Clash Deck Building Box"
+
+[[expansion]]  # 223 products
+id_expansion = 6408
+code = "cmx6408"
+name = "CS1DC: Dynamax Clash V Starter Deck"
+
+[[expansion]]  # 57 products
+id_expansion = 6413
+code = "cmx6413"
+name = "Presence of Champions"
+
+[[expansion]]  # 52 products
+id_expansion = 6415
+code = "cmx6415"
+name = "Bonds of Destiny"
+
+[[expansion]]  # 265 products
+id_expansion = 6416
+code = "cmx6416"
+name = "CSV7C: Blade Awakening"
+
+[[expansion]]  # 46 products
+id_expansion = 6417
+code = "cmx6417"
+name = "Indigo Flame"
+
+[[expansion]]  # 68 products
+id_expansion = 6419
+code = "cmx6419"
+name = "Stellar Lightning"
+
+[[expansion]]  # 101 products
+id_expansion = 6442
+code = "cmx6442"
+name = "CSVM1C: Master Strategy Deck Building Set"
+
+[[expansion]]  # 198 products
+id_expansion = 6447
+code = "cmx6447"
+name = "CBB4C: Gem Pack Vol. 4"
+
+[[expansion]]  # 272 products
+id_expansion = 6495
+code = "cmx6495"
+name = "CSV8C: Brilliant Fantasy"
+
+[[expansion]]  # 49 products
+id_expansion = 6509
+code = "cmx6509"
+name = "Beginning Set Plus"
+
+[[expansion]]  # 49 products
+id_expansion = 6510
+code = "cmx6510"
+name = "Beginning Set Pikachu"
+
+[[expansion]]  # 40 products
+id_expansion = 6514
+code = "cmx6514"
+name = "30th Anniversary Celebration Simplified Chinese: Original Partner Card Set"
+
+[[expansion]]  # 64 products
+id_expansion = 6519
+code = "cmx6519"
+name = "Void Blast"
+
+[[expansion]]  # 156 products
+id_expansion = 6543
+code = "cmx6543"
+name = "CSVH4C: Happy Set Vol. 4"
+
+[[expansion]]  # 198 products
+id_expansion = 6544
+code = "cmx6544"
+name = "CBB5C: Gem Pack Vol. 5"
+
+[[expansion]]  # 60 products
+id_expansion = 6548
+code = "cmx6548"
+name = "CSM2.1C: Golden Energy"
+
+[[expansion]]  # 316 products
+id_expansion = 6549
+code = "cmx6549"
+name = "Simplified Chinese Battle Party Set"
+
+[[expansion]]  # 271 products
+id_expansion = 6568
+code = "cmx6568"
+name = "CSV9C: Stellar Crystal"
+
+[[expansion]]  # 49 products
+id_expansion = 6579
+code = "cmx6579"
+name = "CSVNC: Land of Kitakami"
+
+[[expansion]]  # 337 products
+id_expansion = 6581
+code = "cmx6581"
+name = "CSM1DC: Storming Emergence GX Starter Deck"
+
+[[expansion]]  # 358 products
+id_expansion = 6582
+code = "cmx6582"
+name = "CSM2DC: Shining Synergy GX Starter Deck"
+
+[[expansion]]  # 293 products
+id_expansion = 6595
+code = "cmx6595"
+name = "CSV9.5C: Terastal Gathering"
+
+[[expansion]]  # 80 products
+id_expansion = 6596
+code = "cmx6596"
+name = "Shadow Threat"
+
+[[expansion]]  # 64 products
+id_expansion = 6597
+code = "cmx6597"
+name = "Transfiguration Mask"
+
+[[expansion]]  # 60 products
+id_expansion = 6598
+code = "cmx6598"
+name = "Ace Paradox"
+
+[[expansion]]  # 60 products
+id_expansion = 6599
+code = "cmx6599"
+name = "Paradox Encounters"
+
+[[expansion]]  # 65 products
+id_expansion = 6600
+code = "cmx6600"
+name = "Black Sparkle"
+
+[[expansion]]  # 189 products
+id_expansion = 6602
+code = "cmx6602"
+name = "30th Celebration JP"
+
+[[expansion]]  # 212 products
+id_expansion = 6604
+code = "cmx6604"
+name = "30th Celebration Indonesian & Thai"
+
+[[expansion]]  # 65 products
+id_expansion = 6605
+code = "cmx6605"
+name = "Stellar Guidance"
+
+[[expansion]]  # 294 products
+id_expansion = 6633
+code = "cmx6633"
+name = "CSV10C: Chasing Glory Together"
+
+[[expansion]]  # 143 products
+id_expansion = 6634
+code = "cmx6634"
+name = "CSVH5C: Happy Set Mewtwo & Dragonite & Camerupt & Sinistcha"
+
+[[expansion]]  # 100 products
+id_expansion = 6635
+code = "cmx6635"
+name = "CSVM2C: Master Strategy Deck Building Set"
+
+[[expansion]]  # 22 products
+id_expansion = 6637
+code = "cmx6637"
+name = "MEGA Starter Set Eevee ex"
+
+[[expansion]]  # 22 products
+id_expansion = 6638
+code = "cmx6638"
+name = "MEGA Starter Set Zorua & Zoroark ex"
+
+[[expansion]]  # 20 products
+id_expansion = 6639
+code = "cmx6639"
+name = "MEGA Starter Set Sprigatito & Meowscarada ex"
+
+[[expansion]]  # 198 products
+id_expansion = 6669
+code = "cmx6669"
+name = "CBB6C: Gem Pack Vol. 6"
+
+[[expansion]]  # 47 products
+id_expansion = 6774
+code = "cmx6774"
+name = "30th Celebration Simplified Chinese"
+
+[[expansion]]  # 109 products
+id_expansion = 6922
+code = "cmx6922"
+name = "CSVH6C: Happy Set"
+
+[[expansion]]  # 199 products
+id_expansion = 6925
+code = "cmx6925"
+name = "CBB7C: Gem Pack Vol. 7"
+
+[[expansion]]  # 181 products
+id_expansion = 6928
+code = "cmx6928"
+name = "CSV10.5C: Black Bolt S-Ch"
+
+[[expansion]]  # 180 products
+id_expansion = 6929
+code = "cmx6929"
+name = "CSV10.6C: White Flare S-Ch"
+
+[[expansion]]  # 81 products
+id_expansion = 6932
+code = "cmx6932"
+name = "Aura Seeker"
+
+[[expansion]]  # 42 products
+id_expansion = 6963
+code = "cmx6963"
+name = "Mega Gengar ex, Mega Dragonite ex & Mega Feraligatr ex Special Deck Set"
+
+[[expansion]]  # 2 products
+id_expansion = 6968
+code = "cmx6968"
+name = "Pokémon TCG Valentine's"
+
+[[expansion]]  # 19 products
+id_expansion = 6974
+code = "cmx6974"
+name = "Flowing Fists"
+
+# Not named yet (no sealed product to name them from); a few of their products:
+# 1606 (7 products): Brock's Vulpix [Hypnotic Gaze | Fire Ring], Dark Arbok [Stare | Poison Vapor], Dark Charmeleon [Tail Slap | Fireball]
+# 1608 (47 products): Articuno ex [Synchronized Lift | Ice Gift | Freezing Wing], Beldum [Magnetic Call | Metal Charge], Celebi [Leaf Slice]
+# 1611 (106 products): Altaria [Fight Song | Glide], Ampharos [Random Spark | Electricannon], Axew [Big Bite]
+# 1622 (12 products): Chimchar Lv.8 [Scratch | Ember], Grotle Lv.21 [Synthesis | Cut], Happiny Lv.8 [Baby Evolution | Lively]
+# 2352 (12 products): Eevee [Surprise Attack], Espeon [Solar Revelation | Psy Report], Flareon [Sand-Attack | Fire Slash]
+# 3979 (4 products): Litten [Combustion], Pikachu [Thunder Wave | Electro Ball], Popplio [Sing]
+# 4170 (214 products): Alakazam [Psycho Panic | Trance Damage], Ancient Mew [Psyche], Arcanine [Quick Attack | Flames of Rage]
+# 4218 (248 products): Altaria [Fight Song | Glide], Ampharos [Random Spark | Electricannon], Aron [Tackle | Iron Defense]
+# 4266 (15 products): Carnivine [Drawup Power | Split Up], Cheerleader's Cheer, Dual Ball
+# 4267 (14 products): Beldum [Reaction], Dual Ball, Dunsparce [Return]
+# 4274 (82 products): Burned Tower, Chikorita [Nap | Reckless Charge], Chikorita [Tackle | Razor Leaf]
+# 4277 (19 products): Bastiodon Lv.49 [Strength], Bibarel Lv.22 [Rollout], Cherrim Lv.28 [Solarbeam]
+# 4284 (16 products): Arcanine [G] Lv.60 [Extreme Speed | Overrun], Camerupt [G] Lv.57 [Searing Flame | Earth Power], Charizard [G] LV.X [Call for Power | Malevolent Fire]
+# 4285 (16 products): Altaria [C] Lv.59 [Sing | Sonic Wing], Buffer Piece, Cynthia's Guidance
+# 4287 (18 products): Aaron's Collection, Bronzong [4] Lv.54 [Hand Refresh | Payback], Drapion [4] Lv.53 [Body Slam | Mega Impact]
+# 4288 (18 products): Bertha's Warmth, Energy Search, Flareon [4] Lv.55 [Tackle | Fire Tail Slap]
+# 4290 (16 products): Buneary Lv.9 [Bounce | Mini Drain], Carnivine Lv.34 [Vine Whip | Swallow], Chatot Lv.28 [Call for Family | Nosedive]
+# 4291 (15 products): Articuno Lv.41 [Sharp Beak | Ice Beam], Corphish Lv.11 [Crabhammer | Sharp Pincers], Double Full Heal
+# 4292 (14 products): Arcanine Lv.32 [Overrun | Combustion], Bibarel Lv.20 [Rolling Tackle | Tail Rap], Bidoof Lv.12 [Whimsy Tackle]
+# 4293 (13 products): Chimchar Lv.11 [Chop | Jump On], Croagunk Lv.10 [Hook | Corkscrew Punch], Geodude Lv.9 [Knuckle Punch | Focus Fist]
+# 4294 (13 products): Empoleon Lv.47 [Knock Off | Jet Smash], Energy Search, Energy Switch
+# 4295 (13 products): Chimchar Lv.10 [Bite | Fire Punch], Dialga Lv.73 [Energy Stream | Diamond Blow], Dunsparce Lv.17 [Call for Family | Spring Out]
+# 4296 (13 products): Carnivine Lv.39 [Poison Breath | Sweet Saliva], Combee Lv.19 [Collect | Shoot Through], Giratina Lv.70 [Dragon Claw | Dragonbreath]
+# 4298 (51 products): Alakazam [4] Lv.56 [Recover | Mysterious Beam], Arceus Lv.100 [Judgment], Arceus Lv.100 [Ripple Swell | Sky Spear]
+# 4300 (14 products): Conductive Quarry, Dialga Lv.70 [Time Aura | Metal Burn], Double Full Heal
+# 4301 (14 products): Double Full Heal, Dusclops Lv.40 [Confuse Ray | Trick Room], Dusknoir Lv.47 [Spirit Pulse | Darkness Mist]
+# 4314 (108 products): Absol ex [Cursed Eyes | Psychic Pulse], Aggron [Terraforming | Metal Claw | Mix-Up], Altaria [Synergy Effect | Surprise | Gust]
+# 4319 (19 products): Ash's Aipom [Collect | Snap Tail], Brock's Marshtomp [Aqua Sonic | Muddy Water], Energy Restore
+# 4321 (7 products): Chimchar Lv.7 [Cheri Berry | Fury Swipes], Darkrai Lv.48 [Darkness Shade | Dark Slumber | Dark Resolve], Dialga Lv.63 [Adamant Orb | Time Shift | Diamond Blast]
+# 4322 (127 products): Aipom Lv.17 [Tail Whap | Throw Off], Bidoof Lv.10 [Amnesia | Scavenge], Bronzong Lv.44 [Cursed Alloy | Pain Amplifier | Coating]
+# 4339 (20 products): Aaron's Aura, Aaron's Pidgeot [Whirlwind | Gust], Ash's Grovyle [Quick Attack | SonicBoom]
+# 4340 (20 products): Ash's Torkoal [Singe | Firebreathing], Audrey's Masquerain [Whirlwind | Swift], Energy Search
+# 4341 (154 products): Aura's Lucario [Detect | Quick Attack], Aura's Lucario [Focus Energy | High Jump Kick], Aura's Lucario [Intimidation Wave | Bite]
+# 4342 (9 products): Entei [Stomp | Fire Spin], Groudon [Slash | Eruption], Ho-Oh [Gust | Sacred Fire]
+# 4343 (9 products): PokéPark's Celebi [Natural Cure | Psyshock], PokéPark's Jirachi [Future Sight | Swift], PokéPark's Latias [Psywave | Mist Ball]
+# 4348 (19 products): Butler's Dusclops [Psypunch | Night Shade], Butler's Kirlia [Hypnosis | Nightmare Dance], Butler's Magic Trick
+# 4349 (32 products): Articuno ex [Synchronized Lift | Ice Gift | Freezing Wing], Boost Energy, Celebi ex [Spiral Leaf | Time Trap]
+# 4350 (63 products): Absol [Quick Attack | Feint Attack], Armaldo ex [Twin-blade | Supersonic Claws], Ash's Treecko [Quick Attack | Tail Whap]
+# 4351 (18 products): Alto Mare Cube, Alto Mare's Aerodactyl [Claw | Hyper Beam], Alto Mare's Kabutops [Scratch | Razor Wind]
+# 4352 (2 products): Latias and Latios [Light's Guidance], Timeless Celebi [Reviving Light]
+# 4353 (47 products): Bill, Blastoise [Bubble | Double Cannon], Boost Energy
+# 4354 (24 products): Articuno [Water Immunity | Energy Share | Para-Freeze], Bayleef [Miracle Powder | Double Razor Leaf], Charmeleon [Singe | Flame Tail]
+# 4355 (48 products): Arcanine [Take Down], Articuno [Diamond Dust], Bill's Teleporter
+# 5034 (12 products): Chimchar Lv.6 [Flare | Lunge], Dialga Lv.68 [Time Bellow | Flash Cannon], Eevee Lv.14 [Call for Family | Lunge]
+# 5060 (41 products): Arcanine [Take Down], Bill's Teleporter, Blastoise [Rain Dance | Hydro Pump]
+# 5062 (40 products): Abra [Pound | Destructive Beam], Berry, Bill
+# 5861 (9 products): Alcremie VMAX [Aromatherapy | Draining Kiss | Dazzling Gleam], Drednaw VMAX [Bite | Jaw Lock | Hydro Pump], Pikachu VMAX [Quick Attack | Discharge | Volt Tackle]
+# 5865 (18 products): Aron [Steel Headbutt], Breloom [Super Poison Breath | Sky Uppercut], Double Full Heal
+# 6127 (302 products): Air Balloon, Alolan Diglett [Surprise Attack], Alolan Dugtrio [Trio-Cheehoo]
+# 6128 (212 products): Ampharos ex [Electro Ball | Thunderstrike Tail], Arcanine [Crunch | Fire Mane], Arctibax [Sharp Fin | Frost Smash]
+# 6220 (245 products): Abra [Teleporter | Beam], Aegislash [Mysterious Shield | Hard Bashing], Alakazam [Strange Hacking | Psychic]
+# 6222 (152 products): Air Balloon, Alomomola [Gentle Fin | Waterfall], Amoonguss [Dangerous Reaction | Seed Bomb]
+# 6223 (152 products): Accelgor [Acid Spray], Antique Plume Fossil, Archen [Acrobatics]
+# 6329 (220 products): Absol [Slash | Lost Claw], Adaman, Aerodactyl [Linear Attack | Jet Dive]
+# 6330 (50 products): Alolan Geodude [Rock Polish | Rollout], Alolan Golem GX [Hammer In | Super Electromagnetic Tackle | Heavy Rock GX], Alolan Graveler [Thunder Punch | Electrobullet]
+# 6391 (200 products): Abra [Teleportation Attack], Acerola's Mischief, Adversity Policy
+# 6392 (136 products): Adversity Policy, Air Balloon, Azumarill ex [Bubble Gathering | Energized Balloon]
+# 6393 (167 products): Abra [Teleportation Attack], Adversity Policy, Air Balloon
+# 6672 (146 products): Aerodactyl [Linear Attack | Jet Dive], Alolan Exeggutor V [Growing Tall | Head Swing], Arceus V [Trinity Charge | Power Edge]
+# 6673 (380 products): Absol [Slash | Lost Claw], Aerodactyl V [Bite | Rock Crush], Aerodactyl [Linear Attack | Jet Dive]
+# 6683 (2 products): Paradise Resort, Pikachu [Scrappy Spark]
+# 6694 (187 products): Acerola, Acro Bike, Aipom [Scampering Tail | Tail Smack]
+# 6699 (266 products): Aerodactyl GX [Primal Winds | Boulder Crush | Wild Dive GX], Aether Paradise Conservation Area, Alolan Persian GX [Smug Face | Claw Slash | Stalking Claws GX]
+# 6700 (122 products): Acro Bike, Adventure Bag, Alolan Marowak GX [Cursed Body | Fiery Bone | Lost Boomerang GX]
+# 6701 (125 products): Aether Foundation Employee, Ampharos GX [Power Recharge | Impact Bolt | Electrical GX], Beast Energy ◇ [Prism]
+# 6702 (84 products): Aqua Patch, Bodybuilding Dumbbells, Charizard GX [Wing Attack | Crimson Storm | Raging Out GX]
+# 6703 (136 products): Acerola, Alolan Exeggutor GX [Tropical Head | Dragon Hammer | Tower-Go-Round GX], Alolan Golem GX [Hammer In | Super Electromagnetic Tackle | Heavy Rock GX]
+# 6767 (20 products): 30th Celebration Live Code Card: Booster, 30th Celebration Live Code Card: Ditto Premium Collection, 30th Celebration Live Code Card: Elite Trainer Box
+# 6933 (10 products): Delta Reign Live Code Card: Booster, Delta Reign Live Code Card: Build & Battle Box, Delta Reign Live Code Card: Elite Trainer Box
+# 6940 (15 products): Absol [Darkfall], Chandelure [Combustion Chain | Heat Blast], Decidueye [Stock Up on Feathers | Power Shot]
