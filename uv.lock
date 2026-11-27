@@ -51,6 +51,7 @@ dependencies = [
     { name = "boto3" },
     { name = "cardledger-vision" },
     { name = "httpx" },
+    { name = "opencv-python-headless" },
     { name = "python-dotenv" },
 ]
 
@@ -64,6 +65,7 @@ requires-dist = [
     { name = "boto3" },
     { name = "cardledger-vision", git = "https://github.com/gab-25/cardledger_vision.git?tag=v0.1.0" },
     { name = "httpx" },
+    { name = "opencv-python-headless", specifier = ">=5.1.0.95" },
     { name = "python-dotenv" },
 ]
 
