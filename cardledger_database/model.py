@@ -87,8 +87,10 @@ def sealed_id(game: str, key: str) -> str:
 
 
 def slug(value: str) -> str:
-    """Accents folded, lower case, runs of anything but [a-z0-9] become "-", trimmed: "Ultra Rare" -> "ultra-rare",
-    "Pokémon Center" -> "pokemon-center". What does not fold to ASCII (Japanese) is dropped."""
+    """Apostrophes dropped, accents folded, lower case, runs of anything but [a-z0-9] become "-", trimmed:
+    "Ultra Rare" -> "ultra-rare", "Collector's Rare" -> "collectors-rare", "Pokémon Center" -> "pokemon-center".
+    What does not fold to ASCII (Japanese) is dropped."""
+    value = value.replace("'", "").replace("\u2019", "")
     folded = "".join(c for c in unicodedata.normalize("NFKD", value) if not unicodedata.combining(c))
     return re.sub(r"[^a-z0-9]+", "-", folded.lower()).strip("-")
 
