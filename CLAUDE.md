@@ -15,7 +15,7 @@ Python 3.14, managed with uv. Run from the repository root (`corrections/` and `
 
 ```bash
 uv sync
-uv run pytest -q                                   # all tests (what CI runs)
+uv run pytest -q                                   # all tests
 uv run pytest tests/test_catalog.py -q             # one file
 uv run pytest tests/test_catalog.py::test_name -q  # one test
 uv run cardledger-db generate --game pokemon       # real network run; --out / --cache change folders

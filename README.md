@@ -48,6 +48,9 @@ is breaking. Rows of the source with the same id are merged into one (languages 
 them. `image` and `image_large` are paths relative to the bucket root (`""` when the row has no image); the base URL
 is configured in cardledger_core.
 
+One Piece packs without a code in their title get the set code `pk<id>` from Bandai's pack id. If a source later
+changes a set code, a `[[set]]` `source_code` pin in corrections keeps the old ids.
+
 ### Images
 
 Every source image is downloaded once (8 at once, a pause between requests to a host, retries on 5xx/429) into
@@ -118,7 +121,3 @@ Only `upload` uses them:
 
 The credentials need `s3:PutObject` and `s3:ListBucket` on the bucket. `upload` reads them from the environment or from
 the `.env` file in the working directory (the environment wins).
-
-## CI
-
-`tests.yml` runs the tests on every push to `main`.
