@@ -67,14 +67,13 @@ def test_base_and_parallel_rows(tmp_path):
     assert rows["onepiece:eb02:OP01-001:p2"].rarity == "SR"  # same number, other set: its own row
 
 
-def test_only_english_is_requested_and_sets_have_no_region(tmp_path):
+def test_only_english_is_requested(tmp_path):
     requested.clear()
     data = punkrecords.fetch(client(), tmp_path)
     assert requested and not any("japanese" in u for u in requested)
     assert {r.languages for r in data.rows} == {("en",)}
     assert not any(r.set_code.endswith("-jp") for r in data.rows)
-    assert CardSet("op01", "ROMANCE DAWN", None, "") in data.sets
-    assert {s.region for s in data.sets} == {""}
+    assert CardSet("op01", "ROMANCE DAWN", None) in data.sets
 
 
 def test_empty_packs_uses_the_cached_copy(tmp_path, caplog):

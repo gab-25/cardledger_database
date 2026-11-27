@@ -38,7 +38,6 @@ class CardSet:
     code: str
     name: str
     released_at: date | None
-    region: str = ""  # "ja" for Japanese sets, otherwise ""
 
 
 @dataclass(frozen=True)

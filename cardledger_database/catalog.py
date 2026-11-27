@@ -55,7 +55,6 @@ def encode(catalog: GameCatalog) -> bytes:
         "code": s.code,
         "name": s.name,
         "released_at": s.released_at.isoformat() if s.released_at else None,
-        "region": s.region,
     } for s in sorted(catalog.sets, key=lambda s: s.code)]
     rows = [{
         "id": r.id,

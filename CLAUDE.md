@@ -29,9 +29,10 @@ There is no linter or formatter configured.
 
 Per game, `cli.generate_game` runs a fixed pipeline:
 
-1. **Source** (`Game.source` in `model.GAMES` selects it in `cli._source`): scryfall (MTG), tcgdex (Pokémon),
-   lorcanajson, punkrecords (One Piece), ygoprodeck (Yu-Gi-Oh!), openrift (Riftbound). Each returns `SourceData`:
-   one `Row` per printing (set + number + variant; languages and finishes are attributes) and the `CardSet`s. Row ids
+1. **Source** (`Game.source` in `model.GAMES` selects it in `cli._source`): scryfall (MTG, `default_cards`),
+   tcgdex (Pokémon), lorcanajson, punkrecords (One Piece, `english`), ygoprodeck (Yu-Gi-Oh!), openrift (Riftbound).
+   English only: each reads English printings alone, card rows have `languages=("en",)`; non-English data is skipped.
+   Each returns `SourceData`: one `Row` per printing (set + number + variant; finishes are attributes) and the `CardSet`s. Row ids
    (`model.row_id`: `<game>:<set code>:<number>[:<variant>]`) are built here from the source's own data, never from
    source-internal ids, and set codes are a pure function of the set's own data. Each row carries `image_source`.
 2. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes `[[card]]` by id (never changes the id) and

@@ -8,8 +8,9 @@ code is.
 
 ## Sources and licences
 
-Each game is built from one dataset: one row per printing (set + collector number + variant), with the languages and
-finishes it exists in as attributes. The catalog holds no market ids and no prices.
+Each game is built from one dataset: one row per printing (set + collector number + variant), with the finishes it
+exists in as attributes. The catalog is English only: English printings with English images, every card row has
+`languages` `["en"]`, cards printed only in another language are not in it. It holds no market ids and no prices.
 
 | Game | Source | Terms |
 | --- | --- | --- |
@@ -38,10 +39,9 @@ OpenRift.
 the same path in the output folder and in the bucket: one uncompressed JSON object, `{"rows": [...], "sets": [...]}`,
 keys and lists sorted (the same catalog always gives the same bytes).
 
-- set: `code`, `name`, `released_at` (ISO date or null), `region` (`""`, or `"ja"` for a Japanese set).
-- row: `id`, `kind` (`"card"` or `"sealed"`), `name`, `set_code`, `number`, `variant`, `rarity`, `languages` (ISO
-  codes, BCP-47 `zh-hans`/`zh-hant`, Phyrexian `x-phyrexian`; empty when unknown), `finishes`, `category` (`""`
-  for cards; the sealed category), `image`, `image_large`.
+- set: `code`, `name`, `released_at` (ISO date or null).
+- row: `id`, `kind` (`"card"` or `"sealed"`), `name`, `set_code`, `number`, `variant`, `rarity`, `languages` (`["en"]`
+  for cards), `finishes`, `category` (`""` for cards; the sealed category), `image`, `image_large`.
 
 A row's `id` is `<game>:<set code>:<number>[:<variant>]` (`mtg:lea:161`, `onepiece:op01:OP01-001:p1`), sealed products
 `<game>:sealed:<key>`. It is built from the source before corrections and is the key the CardLedger app uses: a change

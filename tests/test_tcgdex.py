@@ -83,7 +83,7 @@ def write_cache(cache_dir, lang, cache):
 def test_set_code_is_tcgdex_id_and_rows_are_english(tmp_path):
     data = tcgdex.fetch(make(full_routes())[0], tmp_path, now=NOW)
     sets = {s.code: s for s in data.sets}
-    assert set(sets) == {"sv01"} and sets["sv01"].region == ""
+    assert set(sets) == {"sv01"}
     assert sets["sv01"].released_at.isoformat() == "2023-03-31" and sets["sv01"].name == "Scarlet & Violet"
     assert {r.languages for r in data.rows} == {("en",)}
 

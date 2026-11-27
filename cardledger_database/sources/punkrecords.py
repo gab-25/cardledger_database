@@ -10,8 +10,8 @@ import httpx
 
 from ..model import CardSet, Row, SourceData, SourceError, row_id
 
-BASE_URL = "https://raw.githubusercontent.com/buhbbl/punk-records/main/{region}"
-REGION = "english"  # punk-records folder
+BASE_URL = "https://raw.githubusercontent.com/buhbbl/punk-records/main/{folder}"
+FOLDER = "english"  # punk-records folder
 
 RARITIES = {
     "Common": "C", "Uncommon": "UC", "Rare": "R", "SuperRare": "SR", "SecretRare": "SEC", "Leader": "L",
@@ -23,12 +23,12 @@ _SIMPLE_LABEL = re.compile(r"^([A-Za-z]+)-(\d+)$")
 logger = logging.getLogger(__name__)
 
 
-def packs_url(region: str) -> str:
-    return f"{BASE_URL.format(region=region)}/packs.json"
+def packs_url(folder: str) -> str:
+    return f"{BASE_URL.format(folder=folder)}/packs.json"
 
 
-def cards_url(region: str) -> str:
-    return f"{BASE_URL.format(region=region)}/index/cards_by_id.json"
+def cards_url(folder: str) -> str:
+    return f"{BASE_URL.format(folder=folder)}/index/cards_by_id.json"
 
 
 def set_code(pack_id: str, label: str | None) -> str:
@@ -46,10 +46,10 @@ def _get_json(client: httpx.Client, url: str):
     return response.json()
 
 
-def _packs(client: httpx.Client, region: str, cache: Path) -> dict:
-    """The region's packs.json; a non-empty one refreshes the cache, an empty or invalid one falls back to it."""
+def _packs(client: httpx.Client, folder: str, cache: Path) -> dict:
+    """The folder's packs.json; a non-empty one refreshes the cache, an empty or invalid one falls back to it."""
     try:
-        packs = _get_json(client, packs_url(region))
+        packs = _get_json(client, packs_url(folder))
     except ValueError:
         packs = None
     if isinstance(packs, dict) and packs:
@@ -61,7 +61,7 @@ def _packs(client: httpx.Client, region: str, cache: Path) -> dict:
     except (OSError, ValueError):
         cached = None
     cached = cached if isinstance(cached, dict) else {}
-    logger.warning("punk-records %s packs.json is empty or invalid: using %s", region,
+    logger.warning("punk-records %s packs.json is empty or invalid: using %s", folder,
                    "the cached copy" if cached else "set codes as names (no cached copy)")
     return cached
 
@@ -77,10 +77,10 @@ def _pack_info(pack_id: str, pack: dict | None) -> tuple[str, str]:
 def fetch(client: httpx.Client, cache_dir: Path) -> SourceData:
     rows: dict[str, Row] = {}
     try:
-        packs = _packs(client, REGION, Path(cache_dir) / "punkrecords" / f"{REGION}-packs.json")
-        cards = _get_json(client, cards_url(REGION))
+        packs = _packs(client, FOLDER, Path(cache_dir) / "punkrecords" / f"{FOLDER}-packs.json")
+        cards = _get_json(client, cards_url(FOLDER))
         if not isinstance(cards, dict):
-            raise TypeError(f"{REGION} cards_by_id.json is not an object")
+            raise TypeError(f"{FOLDER} cards_by_id.json is not an object")
         infos = {str(pid): _pack_info(str(pid), pack) for pid, pack in packs.items()}
         for key, c in cards.items():
             pack_id = str(c["pack_id"])
@@ -93,7 +93,7 @@ def fetch(client: httpx.Client, cache_dir: Path) -> SourceData:
                 id=row_id("onepiece", code, number, variant), kind="card", name=c["name"], set_code=code,
                 number=number, variant=variant, rarity=RARITIES.get(c.get("rarity") or "", c.get("rarity") or ""),
                 languages=("en",), finishes=(), category="", image_source=(c.get("img_url") or "")[:500],
-                source_key=f"{REGION}:{key}")
+                source_key=f"{FOLDER}:{key}")
         sets: dict[str, CardSet] = {}
         for code, name in infos.values():
             sets.setdefault(code, CardSet(code, name, None))

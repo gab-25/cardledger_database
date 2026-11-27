@@ -67,7 +67,7 @@ def test_no_market_ids_and_promo_set_is_its_own_set():
     assert "lorcana:q1:2" in by_id(data) and by_id(data)["lorcana:q1:2"].set_code == "q1"
     assert {s.code for s in data.sets} >= {"1", "q1"}
     first = next(s for s in data.sets if s.code == "1")
-    assert first.name == "The First Chapter" and str(first.released_at) == "2023-09-01" and first.region == ""
+    assert first.name == "The First Chapter" and str(first.released_at) == "2023-09-01"
     assert not any("999" in str(r) for r in data.rows)
 
 

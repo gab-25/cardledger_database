@@ -42,13 +42,13 @@ def test_assemble_adds_sealed():
 
 def test_encode_is_deterministic_and_well_shaped():
     cat, _ = assemble("x", SourceData([card("x:s:2"), card("x:s:1", image_source="http://src")],
-                                      [CardSet("s", "S", date(2020, 1, 2), "ja")]), [])
+                                      [CardSet("s", "S", date(2020, 1, 2))]), [])
     doc = json.loads(encode(cat))
     assert list(doc) == ["rows", "sets"]
     assert [r["id"] for r in doc["rows"]] == ["x:s:1", "x:s:2"]
     assert set(doc["rows"][0]) == {"id", "kind", "name", "set_code", "number", "variant", "rarity", "languages",
                                    "finishes", "category", "image", "image_large"}   # no image_source, no source_key
-    assert doc["sets"] == [{"code": "s", "name": "S", "released_at": "2020-01-02", "region": "ja"}]
+    assert doc["sets"] == [{"code": "s", "name": "S", "released_at": "2020-01-02"}]  # no region
     assert encode(cat) == encode(cat)
 
 
