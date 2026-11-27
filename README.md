@@ -40,7 +40,7 @@ keys and lists sorted (the same catalog always gives the same bytes).
 
 - set: `code`, `name`, `released_at` (ISO date or null), `region` (`""`, or `"ja"` for a Japanese set).
 - row: `id`, `kind` (`"card"` or `"sealed"`), `name`, `set_code`, `number`, `variant`, `rarity`, `languages` (ISO
-  codes, or the source's own such as Scryfall's `zhs`, `zht`, `ph`; empty when unknown), `finishes`, `category` (`""`
+  codes, BCP-47 `zh-hans`/`zh-hant`, Phyrexian `x-phyrexian`; empty when unknown), `finishes`, `category` (`""`
   for cards; the sealed category), `image`, `image_large`.
 
 A row's `id` is `<game>:<set code>:<number>[:<variant>]` (`mtg:lea:161`, `onepiece:op01:OP01-001:p1`), sealed products

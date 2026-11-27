@@ -22,7 +22,16 @@ API_HEADERS = {"Accept": "application/json"}  # Scryfall's API requires it; the 
 # Layouts that are not game cards: art series cards and the Jumpstart theme ("front") cards.
 EXCLUDED_LAYOUTS = frozenset({"art_series", "front_card"})
 
+# Scryfall's language codes that are not ISO/BCP-47; the others are ISO 639 already. Phyrexian has no ISO code.
+LANGS = {"zhs": "zh-hans", "zht": "zh-hant", "ph": "x-phyrexian"}
+
 logger = logging.getLogger(__name__)
+
+
+def iso_lang(lang: str) -> str:
+    """Scryfall's `lang` as an ISO/BCP-47 code: the few Scryfall-only codes mapped, the rest lower-cased."""
+    lang = lang.lower()
+    return LANGS.get(lang, lang)
 
 
 def _api(client: httpx.Client, url: str) -> dict:
@@ -93,7 +102,7 @@ def _rows(path: Path, digital_sets: set[str], skipped: Counter) -> list[Row]:
             entry = printings.get(key)
             if entry is None:
                 entry = printings[key] = [None, None, set(), set()]
-            entry[2].add(card["lang"])
+            entry[2].add(iso_lang(card["lang"]))
             entry[3].update(finish(f) for f in card.get("finishes") or [])
             if entry[0] is None or rank < entry[0]:
                 entry[0] = rank

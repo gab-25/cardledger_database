@@ -252,3 +252,17 @@ def test_image_prefers_large_then_png_then_normal(uris, expected):
     assert scryfall._image({"image_uris": uris}) == expected
     assert scryfall._image({"image_uris": None, "card_faces": [{"image_uris": uris}, {"image_uris": {"large": "B"}}]}) \
         == expected
+
+
+@pytest.mark.parametrize("lang, expected", [
+    ("zhs", "zh-hans"), ("zht", "zh-hant"), ("ph", "x-phyrexian"), ("en", "en"), ("qya", "qya"), ("XX", "xx"),
+])
+def test_scryfall_lang_is_mapped_to_iso(lang, expected):
+    assert scryfall.iso_lang(lang) == expected
+
+
+def test_row_languages_are_iso_and_english_still_wins(tmp_path):
+    body = jsonl_gz([card("lea", "161", "z", name="黑莲花", lang="zhs"), card("lea", "161", "y", lang="zht"),
+                     card("lea", "161", "x", lang="ph"), card("lea", "161", "w", name="Black Lotus")])
+    r = scryfall.fetch(client(body=body), tmp_path).rows[0]
+    assert r.languages == ("en", "x-phyrexian", "zh-hans", "zh-hant") and r.source_key == "w"
