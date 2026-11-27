@@ -77,7 +77,7 @@ def test_http_error_is_source_error():
 
 def test_english_card_missing_fields_is_source_error():
     with pytest.raises(SourceError):
-        lorcanajson.fetch(client({**ALL, "en": {"sets": {}, "cards": [{"id": 1}]}}))
+        lorcanajson.fetch(client({**ALL, "en": {"sets": {}, "cards": [{"id": 1, "number": 1}]}}))
 
 
 def test_promo_grouping_is_its_own_set_and_variant_is_in_the_id():
