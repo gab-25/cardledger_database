@@ -35,11 +35,13 @@ def fetch(client: httpx.Client) -> SourceData:
             sets.append(CardSet(str(code).lower(), s["name"], released))
         rows = []
         for card in english["cards"]:
-            set_code = str(card["setCode"]).lower()
+            # Promos keep their base setCode but carry a promoGrouping (P1, D23, ...): that is their own set.
+            set_code = str(card.get("promoGrouping") or card["setCode"]).lower()
             number = normalize_number(str(card["number"]))
+            variant = str(card.get("variant") or "").lower()
             rows.append(Row(
-                id=row_id("lorcana", set_code, number), kind="card", name=card["fullName"], set_code=set_code,
-                number=number, variant="", rarity=card.get("rarity") or "",
+                id=row_id("lorcana", set_code, number, variant), kind="card", name=card["fullName"], set_code=set_code,
+                number=number, variant=variant, rarity=card.get("rarity") or "",
                 languages=tuple(sorted(lang for lang in LANGUAGES if card["id"] in ids[lang])),
                 finishes=_finishes(card), category="",
                 image_source=((card.get("images") or {}).get("full") or "")[:500], source_key=str(card["id"]),

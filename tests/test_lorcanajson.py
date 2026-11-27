@@ -78,3 +78,16 @@ def test_http_error_is_source_error():
 def test_english_card_missing_fields_is_source_error():
     with pytest.raises(SourceError):
         lorcanajson.fetch(client({**ALL, "en": {"sets": {}, "cards": [{"id": 1}]}}))
+
+
+def test_promo_grouping_is_its_own_set_and_variant_is_in_the_id():
+    base = card(20, "1", 20)
+    promo = {**card(678, "1", 20, "Promo"), "promoGrouping": "P1"}
+    varied = {**card(30, "1", 7), "variant": "A"}
+    payload = {"sets": SETS, "cards": [base, promo, varied]}
+    data = lorcanajson.fetch(client({**ALL, "en": payload}))
+    rows = by_id(data)
+    assert set(rows) == {"lorcana:1:20", "lorcana:p1:20", "lorcana:1:7:a"}
+    assert rows["lorcana:p1:20"].set_code == "p1" and rows["lorcana:p1:20"].source_key == "678"
+    assert rows["lorcana:1:7:a"].variant == "a" and rows["lorcana:1:20"].variant == ""
+    assert {s.code for s in data.sets} == {"1", "q1"}
