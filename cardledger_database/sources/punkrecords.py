@@ -1,6 +1,5 @@
-"""punk-records' One Piece card data (from the official Bandai card lists): one row per printing, English and
-Japanese, a parallel (`OP01-001_p1`) being a row of its own. Both regions share one layout: `<region>/packs.json` and
-`<region>/index/cards_by_id.json`."""
+"""punk-records' One Piece card data (from the official Bandai card lists), English only: one row per printing, a
+parallel (`OP01-001_p1`) being a row of its own. Read from `english/packs.json` and `english/index/cards_by_id.json`."""
 
 import json
 import logging
@@ -12,7 +11,7 @@ import httpx
 from ..model import CardSet, Row, SourceData, SourceError, row_id
 
 BASE_URL = "https://raw.githubusercontent.com/buhbbl/punk-records/main/{region}"
-REGIONS = {"english": ("", "en"), "japanese": ("jp", "ja")}  # folder -> (set-code suffix, language)
+REGION = "english"  # punk-records folder
 
 RARITIES = {
     "Common": "C", "Uncommon": "UC", "Rare": "R", "SuperRare": "SR", "SecretRare": "SEC", "Leader": "L",
@@ -20,7 +19,6 @@ RARITIES = {
 }
 
 _SIMPLE_LABEL = re.compile(r"^([A-Za-z]+)-(\d+)$")
-_BRACKET_LABEL = re.compile(r"【([A-Za-z0-9-]+)】")
 
 logger = logging.getLogger(__name__)
 
@@ -68,42 +66,37 @@ def _packs(client: httpx.Client, region: str, cache: Path) -> dict:
     return cached
 
 
-def _pack_info(pack_id: str, pack: dict | None, suffix: str) -> tuple[str, str]:
-    """(set code, set name) of a pack. The Japanese packs have no label: the code is in 【】 in the title."""
+def _pack_info(pack_id: str, pack: dict | None) -> tuple[str, str]:
+    """(set code, set name) of a pack."""
     parts = (pack or {}).get("title_parts") or {}
     title = parts.get("title") or (pack or {}).get("raw_title") or ""
-    label = parts.get("label") or (m.group(1) if (m := _BRACKET_LABEL.search(title)) else None)
-    code = set_code(pack_id, label)
-    if suffix:
-        code = f"{code}-{suffix}"
-    name = _BRACKET_LABEL.sub("", title).strip() if label and not parts.get("label") else title
-    return code, name or code.upper()
+    code = set_code(pack_id, parts.get("label"))
+    return code, title or code.upper()
 
 
 def fetch(client: httpx.Client, cache_dir: Path) -> SourceData:
     rows: dict[str, Row] = {}
-    sets: dict[str, CardSet] = {}
     try:
-        for region, (suffix, lang) in REGIONS.items():
-            packs = _packs(client, region, Path(cache_dir) / "punkrecords" / f"{region}-packs.json")
-            cards = _get_json(client, cards_url(region))
-            if not isinstance(cards, dict):
-                raise TypeError(f"{region} cards_by_id.json is not an object")
-            infos = {str(pid): _pack_info(str(pid), pack, suffix) for pid, pack in packs.items()}
-            for key, c in cards.items():
-                pack_id = str(c["pack_id"])
-                if pack_id not in infos:
-                    infos[pack_id] = _pack_info(pack_id, None, suffix)
-                code = infos[pack_id][0]
-                number, _, variant = key.partition("_")
-                variant = variant.lower()
-                rows[row_id("onepiece", code, number, variant)] = Row(
-                    id=row_id("onepiece", code, number, variant), kind="card", name=c["name"], set_code=code,
-                    number=number, variant=variant, rarity=RARITIES.get(c.get("rarity") or "", c.get("rarity") or ""),
-                    languages=(lang,), finishes=(), category="", image_source=(c.get("img_url") or "")[:500],
-                    source_key=f"{region}:{key}")
-            for code, name in infos.values():
-                sets.setdefault(code, CardSet(code, name, None, lang if suffix else ""))
+        packs = _packs(client, REGION, Path(cache_dir) / "punkrecords" / f"{REGION}-packs.json")
+        cards = _get_json(client, cards_url(REGION))
+        if not isinstance(cards, dict):
+            raise TypeError(f"{REGION} cards_by_id.json is not an object")
+        infos = {str(pid): _pack_info(str(pid), pack) for pid, pack in packs.items()}
+        for key, c in cards.items():
+            pack_id = str(c["pack_id"])
+            if pack_id not in infos:
+                infos[pack_id] = _pack_info(pack_id, None)
+            code = infos[pack_id][0]
+            number, _, variant = key.partition("_")
+            variant = variant.lower()
+            rows[row_id("onepiece", code, number, variant)] = Row(
+                id=row_id("onepiece", code, number, variant), kind="card", name=c["name"], set_code=code,
+                number=number, variant=variant, rarity=RARITIES.get(c.get("rarity") or "", c.get("rarity") or ""),
+                languages=("en",), finishes=(), category="", image_source=(c.get("img_url") or "")[:500],
+                source_key=f"{REGION}:{key}")
+        sets: dict[str, CardSet] = {}
+        for code, name in infos.values():
+            sets.setdefault(code, CardSet(code, name, None))
     except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"punk-records: {type(exc).__name__}: {exc}") from exc
     return SourceData(rows=list(rows.values()), sets=list(sets.values()))
