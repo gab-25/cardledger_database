@@ -75,3 +75,10 @@ def test_load_reads_card_and_set(tmp_path):
 
 def test_missing_file_means_nothing(tmp_path):
     assert load("x", tmp_path) == Corrections((), ())
+
+
+@pytest.mark.parametrize("value", ["2020-01-02T03:04:05", "2020-01-02T03:04:05Z", '"2020-01-02"'])
+def test_released_at_must_be_a_date(tmp_path, value):
+    (tmp_path / "x.toml").write_text(f'[[set]]\ncode = "s"\nreleased_at = {value}\n')
+    with pytest.raises(ValueError, match=r"x\.toml: 'released_at' in \[\[set\]\] must be"):
+        load("x", tmp_path)

@@ -31,6 +31,8 @@ def _check(entries, schema: dict, section: str, required: str, path: Path) -> tu
             expected = schema[key]
             if not isinstance(value, expected) or (expected is int and isinstance(value, bool)):
                 raise ValueError(f"{path}: {key!r} in [[{section}]] must be {expected.__name__}")
+            if expected is date and type(value) is not date:  # a TOML datetime is a date subclass
+                raise ValueError(f"{path}: {key!r} in [[{section}]] must be a date, not a date and time")
     return tuple(dict(e) for e in entries)
 
 
