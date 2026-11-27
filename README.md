@@ -13,7 +13,7 @@ finishes it exists in as attributes. The catalog holds no market ids and no pric
 
 | Game | Source | Terms |
 | --- | --- | --- |
-| Magic | [Scryfall](https://scryfall.com) `default_cards` bulk file and sets | Not openly licensed: accepted exception (below) |
+| Magic | [Scryfall](https://scryfall.com) `all_cards` bulk file and sets (every language of a printing is one row, `languages` lists them) | Not openly licensed: accepted exception (below) |
 | Pokémon | [TCGdex](https://tcgdex.dev) (EN + JA) | MIT |
 | Lorcana | [LorcanaJSON](https://lorcanajson.org) (EN, FR, DE, IT) | Open fan project over Ravensburger's data, used under its Community Code Policy |
 | One Piece | [punk-records](https://github.com/buhbbl/punk-records) (EN + JA, from the official card lists) | Pipeline AGPL-3.0; card data © Bandai/Shueisha |
@@ -40,7 +40,8 @@ keys and lists sorted (the same catalog always gives the same bytes).
 
 - set: `code`, `name`, `released_at` (ISO date or null), `region` (`""`, or `"ja"` for a Japanese set).
 - row: `id`, `kind` (`"card"` or `"sealed"`), `name`, `set_code`, `number`, `variant`, `rarity`, `languages` (ISO
-  codes, empty when unknown), `finishes`, `category` (`""` for cards; the sealed category), `image`, `image_large`.
+  codes, or the source's own such as Scryfall's `zhs`, `zht`, `ph`; empty when unknown), `finishes`, `category` (`""`
+  for cards; the sealed category), `image`, `image_large`.
 
 A row's `id` is `<game>:<set code>:<number>[:<variant>]` (`mtg:lea:161`, `onepiece:op01:OP01-001:p1`), sealed products
 `<game>:sealed:<key>`. It is built from the source before corrections and is the key the CardLedger app uses: a change

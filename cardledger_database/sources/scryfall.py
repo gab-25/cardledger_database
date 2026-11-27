@@ -1,5 +1,5 @@
-"""Scryfall's default cards bulk file for Magic: one row per printing (English, or the printed language of cards
-printed in one language only). Not openly licensed: Scryfall asks for its bulk files instead of per-card calls and
+"""Scryfall's all cards bulk file for Magic: one object per card per language, folded into one row per printing
+(set + collector number) listing its languages. Not openly licensed: Scryfall asks for its bulk files instead of per-card calls and
 for its images not to be altered."""
 
 import gzip
@@ -32,11 +32,11 @@ def _api(client: httpx.Client, url: str) -> dict:
 
 
 def _bulk_file(client: httpx.Client, cache_dir: Path) -> Path:
-    """The default cards file, downloaded unless the cached copy has the index's `updated_at`."""
-    entry = next(d for d in _api(client, BULK_URL)["data"] if d["type"] == "default_cards")
+    """The all cards file, downloaded unless the cached copy has the index's `updated_at`."""
+    entry = next(d for d in _api(client, BULK_URL)["data"] if d["type"] == "all_cards")
     url = entry["jsonl_download_uri"]
     folder = Path(cache_dir) / "scryfall"
-    path = folder / f"default_cards-{re.sub(r'[^0-9A-Za-z.-]', '-', entry['updated_at'])}.jsonl.gz"
+    path = folder / f"all_cards-{re.sub(r'[^0-9A-Za-z.-]', '-', entry['updated_at'])}.jsonl.gz"
     if path.exists():
         return path
     folder.mkdir(parents=True, exist_ok=True)
@@ -49,7 +49,7 @@ def _bulk_file(client: httpx.Client, cache_dir: Path) -> Path:
         os.replace(tmp, path)
     finally:
         tmp.unlink(missing_ok=True)
-    for old in folder.glob("default_cards-*"):
+    for old in (*folder.glob("all_cards-*"), *folder.glob("default_cards-*")):
         if old != path:
             old.unlink()
     return path
@@ -65,8 +65,15 @@ def _image(card: dict) -> str:
     return ""
 
 
+def _rank(card: dict) -> tuple:
+    """Which language object of a printing gives the row its fields: English, else the first by lang then id."""
+    return (card["lang"] != "en", card["lang"], card["id"])
+
+
 def _rows(path: Path, digital_sets: set[str], skipped: Counter) -> list[Row]:
-    rows = []
+    """One row per printing. Per printing only the representative's few fields and the sets of languages and
+    finishes are kept, not whole objects: the file holds over half a million of them."""
+    printings: dict[tuple[str, str], list] = {}  # (set, number) -> [rank, fields, langs, finishes]
     with gzip.open(path, "rt", encoding="utf-8") as lines:
         for line in lines:
             if not line.strip():
@@ -81,12 +88,23 @@ def _rows(path: Path, digital_sets: set[str], skipped: Counter) -> list[Row]:
             if card.get("layout") in EXCLUDED_LAYOUTS:
                 skipped[card["layout"]] += 1
                 continue
-            rows.append(Row(
-                id=row_id("mtg", card["set"], card["collector_number"]), kind="card", name=card["name"],
-                set_code=card["set"], number=card["collector_number"], variant="", rarity=card.get("rarity") or "",
-                languages=(card["lang"],), finishes=tuple(sorted(finish(f) for f in card.get("finishes") or [])),
-                category="", image_source=_image(card), source_key=card["id"],
-            ))
+            key = (card["set"], card["collector_number"])
+            rank = _rank(card)
+            entry = printings.get(key)
+            if entry is None:
+                entry = printings[key] = [None, None, set(), set()]
+            entry[2].add(card["lang"])
+            entry[3].update(finish(f) for f in card.get("finishes") or [])
+            if entry[0] is None or rank < entry[0]:
+                entry[0] = rank
+                entry[1] = (card["name"], card.get("rarity") or "", _image(card), card["id"])
+    rows = []
+    for (set_code, number), (_, (name, rarity, image, source_key), langs, finishes) in printings.items():
+        rows.append(Row(
+            id=row_id("mtg", set_code, number), kind="card", name=name, set_code=set_code, number=number,
+            variant="", rarity=rarity, languages=tuple(sorted(langs)), finishes=tuple(sorted(finishes)),
+            category="", image_source=image, source_key=source_key,
+        ))
     return rows
 
 
