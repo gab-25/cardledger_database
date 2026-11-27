@@ -141,19 +141,23 @@ def _download(url: str, client: httpx.Client) -> bytes | None:
 
 
 def _decode(data: bytes) -> np.ndarray | None:
-    """The 8-bit BGR image in the bytes, transparent pixels laid on white; None if they don't decode."""
-    buf = np.frombuffer(data, np.uint8)
-    image = cv2.imdecode(buf, cv2.IMREAD_UNCHANGED)
+    """The 8-bit BGR image in the bytes, decoded once with IMREAD_UNCHANGED (grey made BGR, 16-bit scaled to 8-bit,
+    transparent pixels laid on white); None if they don't decode. EXIF orientation is not applied."""
+    image = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_UNCHANGED)
     if image is None:
         return None
-    if image.ndim == 3 and image.shape[2] == 4:
-        if image.dtype == np.uint16:
-            image = (image / 257).round().astype(np.uint8)
-        elif image.dtype != np.uint8:
-            return None
+    if image.dtype == np.uint16:
+        image = (image / 257).round().astype(np.uint8)
+    elif image.dtype != np.uint8:
+        return None
+    if image.ndim == 2:
+        return cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    if image.shape[2] == 4:
         alpha = image[..., 3:].astype(np.float32) / 255
         return (image[..., :3].astype(np.float32) * alpha + WHITE * (1 - alpha)).round().astype(np.uint8)
-    return cv2.imdecode(buf, cv2.IMREAD_COLOR)  # grey, 16-bit and EXIF orientation handled by OpenCV
+    if image.shape[2] == 3:
+        return image
+    return None
 
 
 def _resize(image: np.ndarray, width: int) -> np.ndarray:
@@ -172,28 +176,40 @@ def _webp(image: np.ndarray) -> bytes:
     return buf.tobytes()
 
 
-def _renditions(slug: str, data: bytes, image: np.ndarray, cache_dir: Path) -> tuple[str, str]:
-    """The bucket keys of the small and large renditions of the original, written if missing. The small one is
-    SMALL_WIDTH wide, or as wide as the original when that is narrower (never upscaled); the large one is the
-    original's width capped at LARGE_MAX_WIDTH. Both keep the aspect ratio and are never cropped."""
+def _keys(slug: str, data: bytes) -> tuple[str, str]:
+    """The bucket keys of the small and large renditions, named after the sha256 of the original's bytes."""
     digest = hashlib.sha256(data).hexdigest()
-    keys = (f"{image_prefix(slug)}{digest}-s.webp", f"{image_prefix(slug)}{digest}-l.webp")
+    return f"{image_prefix(slug)}{digest}-s.webp", f"{image_prefix(slug)}{digest}-l.webp"
+
+
+def _missing(keys: tuple[str, str], cache_dir: Path) -> bool:
+    return not all((bucket_dir(cache_dir) / key).is_file() for key in keys)
+
+
+def _write_renditions(keys: tuple[str, str], image: np.ndarray, cache_dir: Path) -> None:
+    """Writes the renditions that are missing. The small one is SMALL_WIDTH wide, or as wide as the original when
+    that is narrower (never upscaled); the large one is the original's width capped at LARGE_MAX_WIDTH. Both keep
+    the aspect ratio and are never cropped."""
     for key, width in zip(keys, (SMALL_WIDTH, LARGE_MAX_WIDTH)):
         path = bucket_dir(cache_dir) / key
         if not path.is_file():
             _write(path, _webp(_resize(image, width)))
-    return keys
 
 
 def _one(slug: str, url: str, client: httpx.Client, cache_dir: Path) -> tuple[tuple[str, str] | None, bool]:
     """The rendition keys of the URL's image (None if it can't be had) and whether the original came from the
-    cache. Only an original that decodes is kept in the cache."""
+    cache. A cached original whose two renditions exist is not decoded at all; one that must be decoded (a rendition
+    is missing) and fails to is deleted and downloaded again. Only an original that decodes is kept in the cache."""
     path = _source_path(cache_dir, url)
     if path.is_file():
         data = path.read_bytes()
+        keys = _keys(slug, data)
+        if not _missing(keys, cache_dir):
+            return keys, True
         image = _decode(data)
         if image is not None:
-            return _renditions(slug, data, image, cache_dir), True
+            _write_renditions(keys, image, cache_dir)
+            return keys, True
         path.unlink(missing_ok=True)  # corrupt: download it again
     data = _download(url, client)
     if data is None:
@@ -203,7 +219,9 @@ def _one(slug: str, url: str, client: httpx.Client, cache_dir: Path) -> tuple[tu
         logger.debug("%s: not an image", url)
         return None, False
     _write(path, data)
-    return _renditions(slug, data, image, cache_dir), False
+    keys = _keys(slug, data)
+    _write_renditions(keys, image, cache_dir)
+    return keys, False
 
 
 def _safe(slug: str, url: str, client: httpx.Client, cache_dir: Path) -> tuple[tuple[str, str] | None, bool]:

@@ -65,6 +65,7 @@ def no_waits(monkeypatch):
     requested_urls.clear()
     waits: list[float] = []
     monkeypatch.setattr(images, "sleep", waits.append)
+    monkeypatch.setattr(images, "_next_slot", {})
     return waits
 
 
@@ -208,3 +209,60 @@ def test_referenced_lists_both_sizes():
                        card("x:s:3"))
     assert images.referenced(encode(cat)) == {"images/v1/x/a-s.webp", "images/v1/x/a-l.webp"}
     assert images.referenced(json.dumps({"rows": [], "sets": []}).encode()) == set()
+
+
+def test_rerun_leaves_renditions_untouched_and_does_not_decode(tmp_path, monkeypatch):
+    cat = catalog_with(card("x:s:1", image_source="http://h/a.png"))
+    first, _ = images.host("x", cat, client(), tmp_path)
+    paths = [tmp_path / "bucket" / first.rows[0].image, tmp_path / "bucket" / first.rows[0].image_large]
+    stamps = [p.stat().st_mtime_ns for p in paths]
+
+    def no_decode(*args):
+        raise AssertionError("decoded on a rerun")
+
+    monkeypatch.setattr(images.cv2, "imdecode", no_decode)
+    second, stats = images.host("x", cat, client(), tmp_path)
+    assert second == first and stats == images.ImageStats(downloaded=0, cached=1, failed=0)
+    assert [p.stat().st_mtime_ns for p in paths] == stamps
+
+
+def test_missing_rendition_is_written_again_from_the_cached_original(tmp_path):
+    cat = catalog_with(card("x:s:1", image_source="http://h/a.png"))
+    first, _ = images.host("x", cat, client(), tmp_path)
+    (tmp_path / "bucket" / first.rows[0].image).unlink()
+    second, stats = images.host("x", cat, client(), tmp_path)
+    assert second == first and (tmp_path / "bucket" / first.rows[0].image).is_file()
+    assert requested_urls.count("http://h/a.png") == 1 and stats.cached == 1
+
+
+def test_corrupt_cached_original_is_downloaded_again(tmp_path):
+    cat = catalog_with(card("x:s:1", image_source="http://h/a.png"))
+    original = tmp_path / "images" / "src" / hashlib.sha1(b"http://h/a.png").hexdigest()
+    original.parent.mkdir(parents=True)
+    original.write_bytes(b"corrupt")
+    got, stats = images.host("x", cat, client(), tmp_path)
+    assert got.rows[0].image != "" and stats.downloaded == 1
+    assert original.read_bytes() == PNG_A
+
+
+def test_requests_to_one_host_are_spaced(tmp_path, monkeypatch, no_waits):
+    monkeypatch.setattr(images, "clock", lambda: 1000.0)  # no time passes: the second request must wait
+    images.host("x", catalog_with(card("x:s:1", image_source="http://h/a.png"),
+                                  card("x:s:2", image_source="http://h/b.jpg")), client(), tmp_path)
+    assert no_waits == [pytest.approx(images.MIN_INTERVAL)]
+
+
+def test_cancel_drops_the_queued_downloads(tmp_path):
+    def handler(request):
+        url = str(request.url)
+        requested_urls.append(url)
+        if url.endswith("/0.png"):
+            raise KeyboardInterrupt
+        assert images._cancel.wait(5), "the pool was not cancelled"
+        return httpx.Response(503)  # would be retried, were it not cancelled
+
+    rows = [card(f"x:s:{i}", image_source=f"http://cancel.test/{i}.png") for i in range(200)]
+    with httpx.Client(transport=httpx.MockTransport(handler)) as c, pytest.raises(KeyboardInterrupt):
+        images.host("x", catalog_with(*rows), c, tmp_path)
+    assert len(requested_urls) <= images.MAX_PARALLEL + 1  # each busy worker made one attempt, the queue none
+    assert not images._cancel.is_set()  # the next run works again
