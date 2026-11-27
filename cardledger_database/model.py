@@ -1,7 +1,8 @@
-"""The data model: the games, the Cardmarket products, what a source adds to them and the assembled catalog."""
+"""The data model: the games, the printings a source returns and the assembled catalog."""
 
 import re
-from dataclasses import dataclass, field
+import unicodedata
+from dataclasses import dataclass
 from datetime import date
 
 
@@ -12,11 +13,8 @@ class SourceError(Exception):
 @dataclass(frozen=True)
 class Game:
     slug: str
-    cm_id: int  # Cardmarket idGame
     name: str
-    keep_unmatched: bool  # keep Cardmarket products the source has no card for
-    source: str  # mtgjson, tcgdex, lorcanajson, punkrecords, yamlyugi or openrift
-    share_images: bool = False  # a single without image takes the one image of same-name singles in its expansion
+    source: str  # scryfall, tcgdex, lorcanajson, punkrecords, ygoprodeck or openrift
     # The game's recognition index never accepts a card without confirmation. Every game is confirm-only for now: set
     # it to False for a game once cardledger_vision's bench finds at most 2% wrong_certain for it.
     confirm_only: bool = True
@@ -25,80 +23,84 @@ class Game:
 GAMES: dict[str, Game] = {
     g.slug: g
     for g in (
-        Game("mtg", 1, "Magic: The Gathering", False, "mtgjson"),
-        Game("pokemon", 6, "Pokémon", True, "tcgdex", share_images=True),
-        Game("lorcana", 19, "Disney Lorcana", True, "lorcanajson"),
-        Game("onepiece", 18, "One Piece Card Game", True, "punkrecords"),
-        Game("yugioh", 3, "Yu-Gi-Oh!", True, "yamlyugi"),
-        Game("riftbound", 22, "Riftbound", True, "openrift"),
+        Game("mtg", "Magic: The Gathering", "scryfall"),
+        Game("pokemon", "Pokémon", "tcgdex"),
+        Game("lorcana", "Disney Lorcana", "lorcanajson"),
+        Game("onepiece", "One Piece Card Game", "punkrecords"),
+        Game("yugioh", "Yu-Gi-Oh!", "ygoprodeck"),
+        Game("riftbound", "Riftbound", "openrift"),
     )
 }
 
 
 @dataclass(frozen=True)
-class CmProduct:
-    id_product: int
-    name: str
-    id_category: int
-    category_name: str
-    id_expansion: int
-    id_metacard: int | None
-
-
-@dataclass(frozen=True)
-class SourceCard:
-    set_code: str
-    collector_number: str
-    rarity: str
-    image_url: str
-    image_large_url: str
-
-
-@dataclass(frozen=True)
-class SourceSet:
+class CardSet:
     code: str
     name: str
     released_at: date | None
-    language: str = ""  # "ja" for Japanese Pokémon sets, otherwise ""
 
 
 @dataclass(frozen=True)
-class Enrichment:
-    cards: dict[int, SourceCard]
-    sets: dict[str, SourceSet]
-    expansions: dict[int, str] = field(default_factory=dict)  # Cardmarket idExpansion -> set code
-
-
-@dataclass(frozen=True)
-class Product:
-    id_product: int
+class Row:
+    """One printing (or sealed product) of the game's own dataset."""
+    id: str
+    kind: str
     name: str
-    expansion_code: str
+    set_code: str
     number: str
+    variant: str
     rarity: str
-    image_url: str
-    image_large_url: str
-    category_id: int
-    category_name: str
+    languages: tuple[str, ...]
+    finishes: tuple[str, ...]
+    category: str
+    image_source: str = ""  # source URL of the largest image; not written
+    image: str = ""  # bucket-relative path, filled by images.host
+    image_large: str = ""
+    source_key: str = ""  # the source's own key for the row; orders merges; not written
+
+
+@dataclass(frozen=True)
+class SourceData:
+    rows: list[Row]
+    sets: list[CardSet]
 
 
 @dataclass(frozen=True)
 class GameCatalog:
     game: str
-    expansions: list[SourceSet]
-    products: list[Product]
-    skipped: int
-    enriched: int = 0  # products that got a source card (their id is in the corrected enrichment's cards)
+    sets: list[CardSet]
+    rows: list[Row]
+    merged: int = 0  # rows folded into another with the same id
+
+
+def row_id(game: str, set_code: str, number: str, variant: str = "") -> str:
+    """The id of a printing: "mtg:lea:161", with the variant appended when there is one."""
+    parts = [game, set_code.lower(), number]
+    if variant:
+        parts.append(variant)
+    return ":".join(parts)
+
+
+def sealed_id(game: str, key: str) -> str:
+    return f"{game}:sealed:{key}"
+
+
+def slug(value: str) -> str:
+    """Apostrophes dropped, accents folded, lower case, runs of anything but [a-z0-9] become "-", trimmed:
+    "Ultra Rare" -> "ultra-rare", "Collector's Rare" -> "collectors-rare", "Pokémon Center" -> "pokemon-center".
+    What does not fold to ASCII (Japanese) is dropped."""
+    value = value.replace("'", "").replace("\u2019", "")
+    folded = "".join(c for c in unicodedata.normalize("NFKD", value) if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", "-", folded.lower()).strip("-")
+
+
+def finish(value: str) -> str:
+    """Lower case with "_" between words: "firstEdition" -> "first_edition", "Non Foil" -> "non_foil"."""
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", value.strip())
+    return re.sub(r"[\s_-]+", "_", spaced).lower()
 
 
 _NUMBER = re.compile(r"^0*(\d+)(.*)$")
-CODE = re.compile(r"\(([A-Z0-9]{1,6}-(?:[A-Z]{2})?\d{1,4}[A-Z]?)\)")
-
-
-def code_of(name: str) -> str | None:
-    """The card code printed in a Cardmarket name ("Luffy (OP01-001)" -> "OP01-001"), if any."""
-    m = CODE.search(name)
-    return m.group(1) if m else None
 
 
 def normalize_number(value: str | None) -> str:
@@ -108,16 +110,3 @@ def normalize_number(value: str | None) -> str:
     if m:
         return (m.group(1) or "0") + m.group(2)
     return value
-
-
-def cardmarket_id(value) -> int | None:
-    """A Cardmarket id from a source as an int (also from "123" or 123.0); None when missing or not an integer."""
-    if isinstance(value, bool):
-        return None
-    if isinstance(value, int):
-        return value
-    if isinstance(value, float) and value.is_integer():
-        return int(value)
-    if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
-    return None

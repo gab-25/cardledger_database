@@ -1,208 +1,101 @@
+import json
+import logging
+
 import httpx
 import pytest
 
-from cardledger_database.model import CmProduct, SourceCard, SourceError, SourceSet
-from cardledger_database.sources import cardmarket, punkrecords
+from cardledger_database.model import CardSet, SourceError
+from cardledger_database.sources import punkrecords
 
-PACKS = {
-    "569105": {"id": "569105", "raw_title": "BOOSTER PACK -AWAKENING OF THE NEW ERA- [OP-05]",
-               "title_parts": {"label": "OP-05", "prefix": "BOOSTER PACK", "title": "Awakening of the New Era"}},
+EN_PACKS = {
+    "569101": {"id": "569101", "raw_title": "BOOSTER PACK -ROMANCE DAWN- [OP-01]",
+               "title_parts": {"label": "OP-01", "prefix": "BOOSTER PACK", "title": "ROMANCE DAWN"}},
     "569202": {"id": "569202", "raw_title": "EXTRA BOOSTER -Anime 25th Collection- [EB-02]",
                "title_parts": {"label": "EB-02", "prefix": "EXTRA BOOSTER", "title": "Anime 25th Collection"}},
 }
+def card(key, pack, rarity="Common", host="en"):
+    return {"card_id": key.split("_")[0], "pack_id": pack, "rarity": rarity, "name": f"Name {key}",
+            "img_url": f"https://img/{key}.png"}
 
 
-def card(code, pack, rarity):
-    return {"card_id": code.split("_")[0], "pack_id": pack, "rarity": rarity,
-            "img_url": f"https://en.onepiece-cardgame.com/images/{code}.png?1"}
-
-
-CARDS = {
-    "OP05-001": card("OP05-001", "569105", "Common"),
-    "OP05-098": card("OP05-098", "569105", "Leader"),
-    "OP05-098_p1": card("OP05-098_p1", "569105", "Leader"),
-    "OP05-098_p2": card("OP05-098_p2", "569202", "Leader"),
-    "OP05-060": card("OP05-060", "569105", "Rare"),
-    "OP05-060_p1": card("OP05-060_p1", "569202", "SuperRare"),
+EN_CARDS = {
+    "OP01-001": card("OP01-001", "569101", "Leader"),
+    "OP01-001_p1": card("OP01-001_p1", "569101", "Leader"),
+    "OP01-002": card("OP01-002", "569101", "Mystery"),
+    "OP01-001_p2": card("OP01-001_p2", "569202", "SuperRare"),  # a parallel reprinted in another pack
+    "EB02-001": card("EB02-001", "569202"),
 }
+requested: list[str] = []
 
 
-def prod(id_product, name, id_expansion, id_category=1):
-    return CmProduct(id_product, name, id_category, "One Piece Single", id_expansion, None)
+def client(packs=None, en_cards=None):
+    data = {
+        punkrecords.packs_url("english"): EN_PACKS if packs is None else packs,
+        punkrecords.cards_url("english"): EN_CARDS if en_cards is None else en_cards,
+        punkrecords.packs_url("japanese"): {"1": {"id": "1", "raw_title": "x"}},
+        punkrecords.cards_url("japanese"): {"OP01-001": card("OP01-001", "1")},
+    }
+
+    def handler(request):
+        requested.append(str(request.url))
+        if str(request.url) in data:
+            return httpx.Response(200, json=data[str(request.url)])
+        return httpx.Response(404)
+
+    return httpx.Client(transport=httpx.MockTransport(handler))
 
 
-PRODUCTS = [
-    prod(1, "A (OP05-001)", 10),
-    prod(2, "Enel (OP05-098)", 10),
-    prod(3, "Enel (OP05-098)", 10),
-    prod(4, "B (OP05-060)", 10),
-    prod(5, "Promo (P-001)", 10),
-    prod(6, "DON!!", 10),
-    prod(7, "Enel (OP05-098)", 20),
-    prod(9, "B (OP05-060)", 20),
-    prod(8, "Box (OP05-001)", 10, id_category=2),
-]
-SINGLES = {1}
-
-
-def build(cards=CARDS, packs=PACKS, products=PRODUCTS, trends=None):
-    return punkrecords.build(packs, cards, products, SINGLES, trends)
+def by_id(data):
+    return {r.id: r for r in data.rows}
 
 
 def test_set_code():
     assert punkrecords.set_code("569105", "OP-05") == "op05"
-    assert punkrecords.set_code("x", "PRB-01") == "prb01"
     assert punkrecords.set_code("x", "OP14-EB04") == "op14-eb04"
     assert punkrecords.set_code("569901", None) == "pk569901"
-    assert punkrecords.set_code("569901", "") == "pk569901"
 
 
-def test_expansion_vote():
-    assert build().expansions == {10: "op05"}
+def test_base_and_parallel_rows(tmp_path):
+    rows = by_id(punkrecords.fetch(client(), tmp_path))
+    base = rows["onepiece:op01:OP01-001"]
+    assert (base.variant, base.number, base.set_code, base.kind) == ("", "OP01-001", "op01", "card")
+    assert (base.rarity, base.languages, base.finishes, base.category) == ("L", ("en",), (), "")
+    assert (base.name, base.source_key) == ("Name OP01-001", "english:OP01-001")
+    p1 = rows["onepiece:op01:OP01-001:p1"]
+    assert p1.variant == "p1" and p1.image_source == "https://img/OP01-001_p1.png"
+    assert rows["onepiece:op01:OP01-002"].rarity == "Mystery"  # unknown rarity passes through
+    assert rows["onepiece:eb02:OP01-001:p2"].rarity == "SR"  # same number, other set: its own row
 
 
-def test_unique_variant_gets_image():
-    e = build()
-    url = CARDS["OP05-001"]["img_url"]
-    assert e.cards[1] == SourceCard("op05", "OP05-001", "C", url, url)
-    assert e.cards[4].rarity == "R" and e.cards[4].image_url == CARDS["OP05-060"]["img_url"]
+def test_only_english_is_requested(tmp_path):
+    requested.clear()
+    data = punkrecords.fetch(client(), tmp_path)
+    assert requested and not any("japanese" in u for u in requested)
+    assert {r.languages for r in data.rows} == {("en",)}
+    assert not any(r.set_code.endswith("-jp") for r in data.rows)
+    assert CardSet("op01", "ROMANCE DAWN", None) in data.sets
 
 
-def test_same_code_twice_in_expansion_has_no_image():
-    e = build()
-    assert e.cards[2] == e.cards[3] == SourceCard("op05", "OP05-098", "L", "", "")
+def test_empty_packs_uses_the_cached_copy(tmp_path, caplog):
+    first = punkrecords.fetch(client(), tmp_path)
+    assert json.loads((tmp_path / "punkrecords" / "english-packs.json").read_text()) == EN_PACKS
+    with caplog.at_level(logging.WARNING):
+        second = punkrecords.fetch(client(packs={}), tmp_path)
+    assert sorted(second.sets, key=lambda s: s.code) == sorted(first.sets, key=lambda s: s.code)
+    assert len([r for r in caplog.records if r.levelno == logging.WARNING]) == 1
+    assert json.loads((tmp_path / "punkrecords" / "english-packs.json").read_text()) == EN_PACKS
 
 
-def test_unmapped_expansion():
-    e = build()
-    assert e.cards[7] == SourceCard("op05", "OP05-098", "L", "", "")
-    assert 9 not in e.cards
+def test_empty_packs_without_cache_names_sets_by_code(tmp_path):
+    data = punkrecords.fetch(client(packs={}), tmp_path)
+    names = {s.code: s.name for s in data.sets}
+    assert names["pk569101"] == "PK569101" and names["pk569202"] == "PK569202"
+    assert not (tmp_path / "punkrecords" / "english-packs.json").exists()
 
 
-def test_unknown_code_dons_and_non_singles_skipped():
-    e = build()
-    assert 5 not in e.cards and 6 not in e.cards and 8 not in e.cards
-
-
-def test_sets():
-    e = build()
-    assert e.sets["op05"] == SourceSet("op05", "Awakening of the New Era", None)
-    assert e.sets["eb02"] == SourceSet("eb02", "Anime 25th Collection", None)
-
-
-def test_set_name_falls_back_to_raw_title():
-    packs = {"1": {"id": "1", "raw_title": "Promotion card", "title_parts": {}}}
-    assert build(cards={}, packs=packs).sets == {"pk1": SourceSet("pk1", "Promotion card", None)}
-
-
-def test_rarity_passthrough():
-    e = build(cards={"OP05-001": card("OP05-001", "569105", "Mystery")})
-    assert e.cards[1].rarity == "Mystery"
-
-
-def test_missing_rarity_is_its_own_value():
-    cards = {"OP05-060": {**card("OP05-060", "569105", "Rare"), "rarity": None},
-             "OP05-060_p1": card("OP05-060_p1", "569202", "Rare")}
-    products = [prod(9, "B (OP05-060)", 20)]
-    assert build(cards=cards, products=products).cards == {}
-
-
-def test_empty_files():
-    assert build(cards={}, packs={}).cards == {}
-    e = build(cards=[], packs=[])
-    assert e.cards == {} and e.sets == {} and e.expansions == {}
-
-
-def client(status=200, content=None):
-    seen = []
-
-    def handler(request):
-        seen.append(str(request.url))
-        if content is not None:
-            return httpx.Response(status, content=content)
-        if str(request.url) == punkrecords.PACKS_URL:
-            return httpx.Response(status, json=PACKS)
-        if str(request.url) == punkrecords.CARDS_URL:
-            return httpx.Response(status, json=CARDS)
-        if str(request.url) == cardmarket.PRICE_GUIDE_URL.format(game=18):
-            guide = [{"idProduct": 2, "trend": 1.5}, {"idProduct": 3, "trend": 30}]
-            return httpx.Response(status, json={"priceGuides": guide})
-        return httpx.Response(404)
-
-    return httpx.Client(transport=httpx.MockTransport(handler)), seen
-
-
-def test_fetch_urls():
-    c, seen = client()
-    e = punkrecords.fetch(c, PRODUCTS, SINGLES)
-    assert sorted(seen) == sorted([punkrecords.PACKS_URL, punkrecords.CARDS_URL,
-                                   cardmarket.PRICE_GUIDE_URL.format(game=18)])
-    assert e.expansions == {10: "op05"}
-    assert e.cards[3].image_url == CARDS["OP05-098_p1"]["img_url"]  # paired with the Cardmarket trends
-
-
-def test_http_error():
-    c, _ = client(status=500)
+def test_http_error_and_bad_cards(tmp_path):
+    bad = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500)))
     with pytest.raises(SourceError, match="punk-records"):
-        punkrecords.fetch(c, PRODUCTS, SINGLES)
-
-
-def test_bad_json():
-    c, _ = client(content=b"not json")
+        punkrecords.fetch(bad, tmp_path)
     with pytest.raises(SourceError, match="punk-records"):
-        punkrecords.fetch(c, PRODUCTS, SINGLES)
-
-
-def test_secondary_expansion_of_a_pack_gets_its_own_code_and_the_image():
-    products = PRODUCTS + [prod(11, "A (OP05-001)", 30), prod(12, "Enel (OP05-098)", 30)]
-    e = build(products=products)
-    assert e.expansions == {10: "op05", 30: "op05-cm30"}
-    assert e.sets["op05-cm30"] == SourceSet("op05-cm30", "Awakening of the New Era (Cardmarket #30)", None)
-    url = CARDS["OP05-001"]["img_url"]
-    assert e.cards[1] == SourceCard("op05", "OP05-001", "C", url, url)
-    assert e.cards[11] == SourceCard("op05-cm30", "OP05-001", "C", url, url)  # same artwork (Non-English, Pre-Errata)
-    assert e.cards[12] == SourceCard("op05-cm30", "OP05-098", "L", "", "")  # two OP05-098 variants in the pack
-
-
-def image(key):
-    return CARDS[key]["img_url"]
-
-
-def test_base_and_parallel_paired_by_id_and_price():
-    e = build(trends={2: 1.5, 3: 30.0})
-    assert e.cards[2] == SourceCard("op05", "OP05-098", "L", image("OP05-098"), image("OP05-098"))
-    assert e.cards[3] == SourceCard("op05", "OP05-098", "L", image("OP05-098_p1"), image("OP05-098_p1"))
-
-
-@pytest.mark.parametrize("trends", [
-    {2: 30.0, 3: 1.5},  # the older product is the dearer one: order not trusted
-    {2: 5.0, 3: 5.0},
-    {2: 1.5},  # a price is missing
-    {2: 0, 3: 30.0},
-    None,
-])
-def test_no_pairing_without_a_clear_price_order(trends):
-    e = build(trends=trends)
-    assert e.cards[2].image_url == e.cards[3].image_url == ""
-
-
-def test_three_printings_only_the_base_is_paired():
-    cards = {**CARDS, "OP05-098_p3": card("OP05-098_p3", "569105", "Leader")}
-    products = PRODUCTS + [prod(13, "Enel (OP05-098)", 10)]
-    e = build(cards=cards, products=products, trends={2: 1.0, 3: 20.0, 13: 300.0})
-    assert e.cards[2].image_url == image("OP05-098")
-    assert e.cards[3].image_url == e.cards[13].image_url == ""
-
-
-def test_no_pairing_when_the_counts_differ():
-    products = PRODUCTS + [prod(13, "Enel (OP05-098)", 10)]
-    e = build(products=products, trends={2: 1.0, 3: 20.0, 13: 300.0})
-    assert e.cards[2].image_url == e.cards[3].image_url == e.cards[13].image_url == ""
-
-
-def test_no_pairing_without_the_base_printing_in_the_pack():
-    cards = {"OP05-001": CARDS["OP05-001"], "OP05-098": card("OP05-098", "569202", "Leader"),
-             "OP05-098_p1": card("OP05-098_p1", "569105", "Leader"),
-             "OP05-098_p2": card("OP05-098_p2", "569105", "Leader")}
-    e = build(cards=cards, trends={2: 1.5, 3: 30.0})
-    assert e.cards[2].image_url == e.cards[3].image_url == ""
+        punkrecords.fetch(client(en_cards=[1]), tmp_path)

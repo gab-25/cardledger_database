@@ -1,24 +1,17 @@
-"""punk-records' One Piece card data (from the official Bandai card list), joined to Cardmarket on the card code printed
-in the product name. Images only where the variant is unambiguous: a wrong image is worse than none.
+"""punk-records' One Piece card data (from the official Bandai card lists), English only: one row per printing, a
+parallel (`OP01-001_p1`) being a row of its own. Read from `english/packs.json` and `english/index/cards_by_id.json`."""
 
-One code often has several printings (base, parallels) that Cardmarket sells as products with the same name. Those
-are told apart by `_paired`, with Cardmarket's own product order and trend prices."""
-
+import json
+import logging
 import re
-from collections import Counter, defaultdict
-from dataclasses import dataclass
+from pathlib import Path
 
 import httpx
 
-from ..model import CmProduct, Enrichment, SourceCard, SourceError, SourceSet, code_of
-from . import cardmarket
+from ..model import CardSet, Row, SourceData, SourceError, row_id
 
-BASE_URL = "https://raw.githubusercontent.com/buhbbl/punk-records/main/english"
-PACKS_URL = f"{BASE_URL}/packs.json"
-CARDS_URL = f"{BASE_URL}/index/cards_by_id.json"
-
-CARDMARKET_GAME = 18
-MIN_SHARE = 0.8  # share of an expansion's coded singles its pack must have
+BASE_URL = "https://raw.githubusercontent.com/buhbbl/punk-records/main/{folder}"
+FOLDER = "english"  # punk-records folder
 
 RARITIES = {
     "Common": "C", "Uncommon": "UC", "Rare": "R", "SuperRare": "SR", "SecretRare": "SEC", "Leader": "L",
@@ -27,13 +20,15 @@ RARITIES = {
 
 _SIMPLE_LABEL = re.compile(r"^([A-Za-z]+)-(\d+)$")
 
+logger = logging.getLogger(__name__)
 
-@dataclass(frozen=True)
-class _Variant:
-    key: str
-    pack_id: str
-    rarity: str
-    image: str
+
+def packs_url(folder: str) -> str:
+    return f"{BASE_URL.format(folder=folder)}/packs.json"
+
+
+def cards_url(folder: str) -> str:
+    return f"{BASE_URL.format(folder=folder)}/index/cards_by_id.json"
 
 
 def set_code(pack_id: str, label: str | None) -> str:
@@ -45,142 +40,63 @@ def set_code(pack_id: str, label: str | None) -> str:
     return (m.group(1) + m.group(2)).lower() if m else label.lower()
 
 
-def _sets(packs: dict) -> tuple[dict[str, str], dict[str, SourceSet]]:
-    """({pack id: set code}, {set code: set})."""
-    codes: dict[str, str] = {}
-    sets: dict[str, SourceSet] = {}
-    for pack_id, pack in packs.items():
-        parts = pack.get("title_parts") or {}
-        code = set_code(str(pack_id), parts.get("label"))
-        codes[str(pack_id)] = code
-        sets[code] = SourceSet(code, parts.get("title") or pack.get("raw_title") or code.upper(), None)
-    return codes, sets
+def _get_json(client: httpx.Client, url: str):
+    response = client.get(url)
+    response.raise_for_status()
+    return response.json()
 
 
-def _variants(cards: dict) -> dict[str, list[_Variant]]:
-    """{base code: its variants}, the base code first when present."""
-    by_code: dict[str, list[_Variant]] = defaultdict(list)
-    for key, c in cards.items():
-        by_code[key.split("_")[0]].append(
-            _Variant(key, str(c["pack_id"]), c.get("rarity") or "", (c.get("img_url") or "")[:500]))
-    for code, variants in by_code.items():
-        variants.sort(key=lambda v: (v.key != code, v.key))
-    return by_code
-
-
-def _expansion_packs(coded: list[tuple[CmProduct, str]], variants: dict[str, list[_Variant]]) -> dict[int, str]:
-    """{Cardmarket expansion id: pack id} when one pack has at least MIN_SHARE of the expansion's coded singles and
-    strictly more than the second."""
-    votes: dict[int, Counter] = defaultdict(Counter)
-    totals: Counter = Counter()
-    for p, code in coded:
-        totals[p.id_expansion] += 1
-        for pack_id in {v.pack_id for v in variants[code]}:
-            votes[p.id_expansion][pack_id] += 1
-    mapped = {}
-    for exp, counter in votes.items():
-        (pack_id, n), *rest = counter.most_common(2)
-        if n / totals[exp] >= MIN_SHARE and (not rest or n > rest[0][1]):
-            mapped[exp] = pack_id
-    return mapped
-
-
-def _paired(coded: list[tuple[CmProduct, str]], variants: dict[str, list[_Variant]], exp_packs: dict[int, str],
-            trends: dict[int, float]) -> dict[int, _Variant]:
-    """{idProduct: variant} for the products sharing a code within an expansion, where the order is safe to trust.
-
-    Cardmarket adds a set's base printing before its parallels, so the lowest idProduct is the base, and the base is
-    the cheapest printing. Trusted only when both agree: the pack has the base and as many printings as there are
-    products, every product has a trend price and the lowest idProduct is strictly the cheapest. With two products
-    the other one is the parallel; with more only the base is taken (the parallels' order does not follow their
-    numbers). Checked against an independent mapping of 1,060 products: no wrong pair."""
-    groups: dict[tuple[int, str], list[CmProduct]] = defaultdict(list)
-    for p, code in coded:
-        groups[(p.id_expansion, code)].append(p)
-    paired: dict[int, _Variant] = {}
-    for (exp, code), group in groups.items():
-        pack_id = exp_packs.get(exp)
-        if pack_id is None or len(group) < 2:
-            continue
-        in_pack = [v for v in variants[code] if v.pack_id == pack_id]  # the base first, see _variants
-        if len(in_pack) != len(group) or in_pack[0].key != code:
-            continue
-        group = sorted(group, key=lambda p: p.id_product)
-        prices = [trends.get(p.id_product) or 0 for p in group]
-        if not all(prices) or any(prices[0] >= price for price in prices[1:]):
-            continue
-        paired[group[0].id_product] = in_pack[0]
-        if len(group) == 2:
-            paired[group[1].id_product] = in_pack[1]
-    return paired
-
-
-def build(packs: dict, cards: dict, products: list[CmProduct], singles: set[int],
-          trends: dict[int, float] | None = None) -> Enrichment:
-    """The One Piece enrichment from the two punk-records files, the Cardmarket products and their trend prices."""
-    packs = packs if isinstance(packs, dict) else {}
-    cards = cards if isinstance(cards, dict) else {}
-    pack_codes, sets = _sets(packs)
-    variants = _variants(cards)
-    coded = [(p, code) for p in products
-             if p.id_category in singles and (code := code_of(p.name)) is not None and code in variants]
-    exp_packs = _expansion_packs(coded, variants)
-    per_expansion = Counter((code, p.id_expansion) for p, code in coded)
-
-    def code_of_pack(pack_id: str) -> str:
-        return pack_codes.get(pack_id) or set_code(pack_id, None)
-
-    # Several Cardmarket expansions (booster, pre-release, reprint) can map to one pack. The one with the most coded
-    # singles is the pack's main expansion and takes its code; the others get their own code so their rows stay apart.
-    # They share the pack's artwork (checked on Cardmarket: same images), so they get images under the same rule.
-    coded_per_expansion = Counter(p.id_expansion for p, _ in coded)
-    main_expansion: dict[str, int] = {}
-    for exp, pack_id in sorted(exp_packs.items()):
-        best = main_expansion.get(pack_id)
-        if best is None or coded_per_expansion[exp] > coded_per_expansion[best]:
-            main_expansion[pack_id] = exp
-    expansions: dict[int, str] = {}
-    for exp, pack_id in exp_packs.items():
-        code = code_of_pack(pack_id)
-        if main_expansion[pack_id] != exp:
-            base = sets.get(code)
-            name = f"{base.name if base else code.upper()} (Cardmarket #{exp})"
-            code = f"{code}-cm{exp}"
-            sets[code] = SourceSet(code, name, None)
-        expansions[exp] = code
-
-    paired = _paired(coded, variants, exp_packs, trends or {})
-    result: dict[int, SourceCard] = {}
-    for p, code in coded:
-        pack_id = exp_packs.get(p.id_expansion)
-        if pack_id is not None:
-            in_pack = [v for v in variants[code] if v.pack_id == pack_id]
-            v = paired.get(p.id_product)
-            if v is None and len(in_pack) == 1 and per_expansion[(code, p.id_expansion)] == 1:
-                v = in_pack[0]
-            if v is not None:
-                result[p.id_product] = SourceCard(
-                    expansions[p.id_expansion], code, RARITIES.get(v.rarity, v.rarity), v.image, v.image)
-                continue
-        rarities = {v.rarity for v in variants[code]}
-        if len(rarities) == 1:
-            rarity = rarities.pop()
-            set_code_ = expansions.get(p.id_expansion) or code_of_pack(variants[code][0].pack_id)
-            result[p.id_product] = SourceCard(set_code_, code, RARITIES.get(rarity, rarity), "", "")
-    return Enrichment(cards=result, sets=sets, expansions=expansions)
-
-
-def fetch(client: httpx.Client, products: list[CmProduct], singles: set[int]) -> Enrichment:
-    data = {}
-    for name, url in (("packs.json", PACKS_URL), ("cards_by_id.json", CARDS_URL)):
-        try:
-            response = client.get(url)
-            response.raise_for_status()
-            data[name] = response.json()
-        except (httpx.HTTPError, ValueError) as exc:
-            raise SourceError(f"punk-records {name}: {type(exc).__name__}: {exc}") from exc
-    trends = cardmarket.fetch_trends(client, CARDMARKET_GAME)
+def _packs(client: httpx.Client, folder: str, cache: Path) -> dict:
+    """The folder's packs.json; a non-empty one refreshes the cache, an empty or invalid one falls back to it."""
     try:
-        return build(data["packs.json"], data["cards_by_id.json"], products, singles, trends)
-    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        packs = _get_json(client, packs_url(folder))
+    except ValueError:
+        packs = None
+    if isinstance(packs, dict) and packs:
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_text(json.dumps(packs, ensure_ascii=False), encoding="utf-8")
+        return packs
+    try:
+        cached = json.loads(cache.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        cached = None
+    cached = cached if isinstance(cached, dict) else {}
+    logger.warning("punk-records %s packs.json is empty or invalid: using %s", folder,
+                   "the cached copy" if cached else "set codes as names (no cached copy)")
+    return cached
+
+
+def _pack_info(pack_id: str, pack: dict | None) -> tuple[str, str]:
+    """(set code, set name) of a pack."""
+    parts = (pack or {}).get("title_parts") or {}
+    title = parts.get("title") or (pack or {}).get("raw_title") or ""
+    code = set_code(pack_id, parts.get("label"))
+    return code, title or code.upper()
+
+
+def fetch(client: httpx.Client, cache_dir: Path) -> SourceData:
+    rows: dict[str, Row] = {}
+    try:
+        packs = _packs(client, FOLDER, Path(cache_dir) / "punkrecords" / f"{FOLDER}-packs.json")
+        cards = _get_json(client, cards_url(FOLDER))
+        if not isinstance(cards, dict):
+            raise TypeError(f"{FOLDER} cards_by_id.json is not an object")
+        infos = {str(pid): _pack_info(str(pid), pack) for pid, pack in packs.items()}
+        for key, c in cards.items():
+            pack_id = str(c["pack_id"])
+            if pack_id not in infos:
+                infos[pack_id] = _pack_info(pack_id, None)
+            code = infos[pack_id][0]
+            number, _, variant = key.partition("_")
+            variant = variant.lower()
+            rows[row_id("onepiece", code, number, variant)] = Row(
+                id=row_id("onepiece", code, number, variant), kind="card", name=c["name"], set_code=code,
+                number=number, variant=variant, rarity=RARITIES.get(c.get("rarity") or "", c.get("rarity") or ""),
+                languages=("en",), finishes=(), category="", image_source=(c.get("img_url") or "")[:500],
+                source_key=f"{FOLDER}:{key}")
+        sets: dict[str, CardSet] = {}
+        for code, name in infos.values():
+            sets.setdefault(code, CardSet(code, name, None))
+    except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"punk-records: {type(exc).__name__}: {exc}") from exc
+    return SourceData(rows=list(rows.values()), sets=list(sets.values()))

@@ -2,209 +2,56 @@ import json
 from datetime import date
 
 from cardledger_database.catalog import assemble, catalog_key, encode
-from cardledger_database.model import GAMES, CmProduct, Enrichment, GameCatalog, Product, SourceCard, SourceSet
-
-SINGLES = {1}
+from cardledger_database.model import CardSet, GameCatalog, Row, SourceData
 
 
-def prod(id_product, id_expansion=10, id_category=1, name="Card", category_name="Magic Single"):
-    return CmProduct(id_product, name, id_category, category_name, id_expansion, None)
+def card(id, set_code="s", **kw):
+    fields = dict(kind="card", name="Card", number="1", variant="", rarity="rare", languages=("en",),
+                  finishes=("normal",), category="")
+    return Row(id, set_code=set_code, **{**fields, **kw})
 
 
-def card(set_code, number="1", rarity="rare"):
-    return SourceCard(set_code, number, rarity, "small", "large")
-
-
-def enrich(cards=None, sets=None, expansions=None):
-    return Enrichment(cards or {}, sets or {}, expansions or {})
-
-
-def by_id(catalog):
-    return {p.id_product: p for p in catalog.products}
-
-
-def test_matched_product_takes_source_data():
-    e = enrich({1: card("lea", "012a", "common")})
-    c = assemble(GAMES["mtg"], [prod(1, name="Bolt")], e, SINGLES)
-    p = c.products[0]
-    assert (p.name, p.expansion_code, p.number, p.rarity) == ("Bolt", "lea", "12A", "common")
-    assert (p.image_url, p.image_large_url, p.category_id, p.category_name) == ("small", "large", 1, "Magic Single")
-    assert c.game == "mtg" and c.skipped == 0
-
-
-def test_product_goes_to_the_main_set_of_its_expansion():
-    e = enrich({1: card("lea", "1"), 2: card("lea", "2"), 3: card("leb", "3")})
-    products = [prod(1), prod(2), prod(3), prod(9, id_category=5, name="Booster", category_name="Booster")]
-    p = by_id(assemble(GAMES["mtg"], products, e, SINGLES))[9]
-    assert (p.expansion_code, p.number, p.rarity, p.image_url, p.image_large_url) == ("lea", "", "", "", "")
-
-
-def test_single_without_source_card_goes_to_the_main_set():
-    e = enrich({1: card("lea", "1")})
-    p = by_id(assemble(GAMES["mtg"], [prod(1), prod(2)], e, SINGLES))[2]
-    assert (p.expansion_code, p.number) == ("lea", "")
-
-
-def test_only_singles_vote_for_the_main_set():
-    e = enrich({1: card("lea"), 2: card("tok"), 3: card("tok")})
-    products = [prod(1), prod(2, id_category=5), prod(3, id_category=5), prod(9, id_category=5)]
-    assert by_id(assemble(GAMES["mtg"], products, e, SINGLES))[9].expansion_code == "lea"
-
-
-def test_orphan_product_is_skipped_and_counted():
-    e = enrich({1: card("lea")})
-    c = assemble(GAMES["mtg"], [prod(1), prod(2, id_expansion=99)], e, SINGLES)
-    assert [p.id_product for p in c.products] == [1]
-    assert c.skipped == 1
-
-
-def test_orphan_product_gets_stand_in_expansion_when_kept():
-    c = assemble(GAMES["yugioh"], [prod(2, id_expansion=77)], enrich(), SINGLES)
-    assert c.skipped == 0
-    assert c.products[0].expansion_code == "cmx77"
-    (exp,) = c.expansions
-    assert (exp.code, exp.name, exp.released_at) == ("cmx77", "Cardmarket expansion #77", None)
-
-
-def test_known_expansion_mapping_wins_over_vote():
-    e = enrich({1: card("lea"), 2: card("lea")}, expansions={10: "xyz"})
-    c = assemble(GAMES["pokemon"], [prod(1), prod(2), prod(3)], e, SINGLES)
-    assert by_id(c)[3].expansion_code == "xyz"
-
-
-def test_main_set_tie_prefers_shorter_code():
-    e = enrich({1: card("abcd"), 2: card("ab"), 3: card("abc")})
-    c = assemble(GAMES["mtg"], [prod(1), prod(2), prod(3), prod(4, id_category=5)], e, SINGLES)
-    assert by_id(c)[4].expansion_code == "ab"
-
-
-def test_main_set_tie_same_length_is_alphabetical():
-    e = enrich({1: card("bb"), 2: card("aa")})
-    c = assemble(GAMES["mtg"], [prod(1), prod(2), prod(4, id_category=5)], e, SINGLES)
-    assert by_id(c)[4].expansion_code == "aa"
-
-
-def test_expansions_are_those_used_with_name_and_date_from_sets():
-    sets = {"lea": SourceSet("lea", "Alpha", date(1993, 8, 5)), "unused": SourceSet("unused", "U", None)}
-    e = enrich({1: card("lea"), 2: card("zzz")}, sets=sets)
-    c = assemble(GAMES["mtg"], [prod(1), prod(2)], e, SINGLES)
-    got = {x.code: x for x in c.expansions}
-    assert set(got) == {"lea", "zzz"}
-    assert (got["lea"].name, got["lea"].released_at) == ("Alpha", date(1993, 8, 5))
-    assert (got["zzz"].name, got["zzz"].released_at) == ("ZZZ", None)
-
-
-def test_input_order_is_kept_and_fields_truncated():
-    e = enrich({1: card("lea", "9" * 50, "r" * 50)})
-    e.cards[1] = SourceCard("lea", "9" * 50, "r" * 50, "i" * 600, "j" * 600)
-    c = assemble(GAMES["mtg"], [prod(2, name="n" * 300), prod(1, name="n" * 300)], e, SINGLES)
-    assert [p.id_product for p in c.products] == [2, 1]
-    p = by_id(c)[1]
-    assert len(p.name) == 200 and len(p.number) == 40 and len(p.rarity) == 40
-    assert len(p.image_url) == 500 and len(p.image_large_url) == 500
-
-
-def test_unmatched_product_takes_the_code_in_its_name_as_number():
-    e = enrich({1: card("op13", "OP13-001")}, expansions={10: "op13"})
-    products = [prod(1, name="Luffy (OP13-001)"), prod(2, name="Sabo (OP13-004)"), prod(3, name="Sabo")]
-    c = by_id(assemble(GAMES["onepiece"], products, e, SINGLES))
-    assert (c[2].expansion_code, c[2].number) == ("op13", "OP13-004")
-    assert c[3].number == ""
-
-
-def test_stand_in_product_takes_the_code_in_its_name_as_number():
-    c = assemble(GAMES["onepiece"], [prod(2, id_expansion=77, name="Sabo (OP13-004) (Parallel)")], enrich(), SINGLES)
-    assert (c.products[0].expansion_code, c.products[0].number) == ("cmx77", "OP13-004")
-
-
-def test_enriched_counts_the_products_with_a_source_card():
-    e = enrich({1: card("lea"), 2: card("lea"), 99: card("lea")})
-    c = assemble(GAMES["pokemon"], [prod(1), prod(2), prod(3), prod(4, id_expansion=77)], e, SINGLES)
-    assert c.enriched == 2
-
-
-def _catalog():
-    exps = [
-        SourceSet("zzz", "Zed", None),
-        SourceSet("aaa", "Alpha é", date(1993, 8, 5), "ja"),
-    ]
-    prods = [
-        Product(20, "B", "zzz", "2", "rare", "u", "ul", 1, "Singles"),
-        Product(10, "A é", "aaa", "1", "common", "u2", "ul2", 1, "Singles"),
-        Product(5, "C", "aaa", "", "", "", "", 5, "Boosters"),
-    ]
-    return GameCatalog("mtg", exps, prods, 3)
-
-
-
-
-def test_encoding_is_deterministic():
-    a = _catalog()
-    b = GameCatalog("mtg", list(reversed(a.expansions)), list(reversed(a.products)), 0)
-    assert encode(a) == encode(b)
-    assert encode(a) == encode(a)
-
-
-def test_encoding_is_one_sorted_document():
-    doc = json.loads(encode(_catalog()).decode("utf-8"))
-    assert list(doc) == ["expansions", "products"]
-    exps, prods = doc["expansions"], doc["products"]
-    assert len(exps) == 2
-    assert exps[0] == {"code": "aaa", "name": "Alpha é", "released_at": "1993-08-05",
-                        "language": "ja"}
-    assert exps[1]["released_at"] is None
-    assert [p["id_product"] for p in prods] == [5, 10, 20]
-    assert prods[1] == {"id_product": 10, "name": "A é", "expansion_code": "aaa", "number": "1",
-                        "rarity": "common", "image_url": "u2", "image_large_url": "ul2", "category_id": 1,
-                        "category_name": "Singles"}
+def sealed_row(id, set_code="s", **kw):
+    return card(id, set_code, kind="sealed", name="Booster Box", number="", languages=(), finishes=(),
+                category="booster_box", **kw)
 
 
 def test_catalog_key():
     assert catalog_key("mtg") == "catalog/v1/mtg.json"
 
 
-def test_pokemon_version_without_image_takes_the_image_of_its_card():
-    e = enrich({1: card("base", "4")})
-    products = [prod(1, name="Charizard"), prod(2, name="Charizard")]
-    p = by_id(assemble(GAMES["pokemon"], products, e, SINGLES))[2]
-    assert (p.expansion_code, p.image_url, p.image_large_url) == ("base", "small", "large")
-    assert (p.number, p.rarity) == ("", "")
+def test_assemble_merges_duplicates_deterministically():
+    a = card("x:s:1", languages=("de",), finishes=("foil",), image_source="b", source_key="2")
+    b = card("x:s:1", languages=("en",), finishes=("normal",), image_source="a", source_key="1")
+    cat, warnings = assemble("x", SourceData([a, b], [CardSet("s", "S", None)]), [])
+    (row,) = cat.rows
+    assert row.image_source == "a"                   # first by source_key
+    assert row.languages == ("de", "en") and row.finishes == ("foil", "normal")
+    assert cat.merged == 1 and len(warnings) == 1 and "x:s:1" in warnings[0]
 
 
-def test_shared_image_needs_same_expansion_and_name():
-    e = enrich({1: card("base")})
-    products = [prod(1, name="Charizard"), prod(2, name="Blastoise"), prod(3, id_expansion=11, name="Charizard")]
-    c = by_id(assemble(GAMES["pokemon"], products, e, SINGLES))
-    assert c[2].image_url == "" and c[3].image_url == ""
+def test_assemble_drops_empty_sets_and_invents_missing_ones():
+    cat, _ = assemble("x", SourceData([card("x:t:1", set_code="t")], [CardSet("s", "S", None)]), [])
+    assert cat.sets == [CardSet("t", "T", None)]
 
 
-def test_shared_image_is_skipped_when_versions_disagree():
-    e = enrich({1: SourceCard("base", "4", "", "a", "A"), 2: SourceCard("base", "5", "", "b", "B")})
-    products = [prod(1, name="Pikachu"), prod(2, name="Pikachu"), prod(3, name="Pikachu")]
-    assert by_id(assemble(GAMES["pokemon"], products, e, SINGLES))[3].image_url == ""
+def test_assemble_adds_sealed():
+    cat, _ = assemble("x", SourceData([], []), [sealed_row("x:sealed:k", set_code="s")])
+    assert [r.kind for r in cat.rows] == ["sealed"]
 
 
-def test_shared_image_only_between_singles():
-    e = enrich({1: card("base")})
-    products = [prod(1, name="Charizard"), prod(2, id_category=5, name="Charizard")]
-    assert by_id(assemble(GAMES["pokemon"], products, e, SINGLES))[2].image_url == ""
+def test_encode_is_deterministic_and_well_shaped():
+    cat, _ = assemble("x", SourceData([card("x:s:2"), card("x:s:1", image_source="http://src")],
+                                      [CardSet("s", "S", date(2020, 1, 2))]), [])
+    doc = json.loads(encode(cat))
+    assert list(doc) == ["rows", "sets"]
+    assert [r["id"] for r in doc["rows"]] == ["x:s:1", "x:s:2"]
+    assert set(doc["rows"][0]) == {"id", "kind", "name", "set_code", "number", "variant", "rarity", "languages",
+                                   "finishes", "category", "image", "image_large"}   # no image_source, no source_key
+    assert doc["sets"] == [{"code": "s", "name": "S", "released_at": "2020-01-02"}]  # no region
+    assert encode(cat) == encode(cat)
 
 
-def test_other_games_do_not_share_images():
-    e = enrich({1: card("lea")})
-    assert by_id(assemble(GAMES["mtg"], [prod(1, name="Bolt"), prod(2, name="Bolt")], e, SINGLES))[2].image_url == ""
-
-
-def test_stand_in_takes_its_name_from_the_sets():
-    e = enrich({1: card("sv1")}, {"cmx99": SourceSet("cmx99", "Promos", None)})
-    c = assemble(GAMES["pokemon"], [prod(1), prod(2, id_expansion=99)], e, SINGLES)
-    assert by_id(c)[2].expansion_code == "cmx99"
-    assert {x.code: x.name for x in c.expansions}["cmx99"] == "Promos"
-
-
-def test_named_stand_in_gives_way_to_the_vote_once_the_source_has_the_set():
-    e = enrich({1: card("op19")}, {"cmx10": SourceSet("cmx10", "OP19", None)})
-    products = [prod(1), prod(9, id_category=5, name="OP19 Booster", category_name="Booster")]
-    c = assemble(GAMES["onepiece"], products, e, SINGLES)
-    assert by_id(c)[9].expansion_code == "op19"
-    assert [x.code for x in c.expansions] == ["op19"]
+def test_encode_caps_lengths():
+    doc = json.loads(encode(GameCatalog("x", [], [card("x:s:1", name="n" * 300, rarity="r" * 60)])))
+    assert len(doc["rows"][0]["name"]) == 200 and len(doc["rows"][0]["rarity"]) == 40

@@ -8,15 +8,21 @@ from cardledger_database.model import SourceError
 from cardledger_database.sources import tcgdex
 
 NOW = datetime(2026, 11, 16, tzinfo=UTC)
-IMG = "https://assets.tcgdex.net/en/sv/sv08/001"
+OLD = (NOW - timedelta(days=1)).isoformat()
+IMG = "https://assets.tcgdex.net/en/sv/sv01/001"
+STAMP_LABEL = "set-logo"
 
 
-def card(cid, local, cm=100, image=IMG):
-    c = {"id": cid, "localId": local, "name": "N", "rarity": "Common", "set": {"id": cid.split("-")[0]}}
+def card(cid, local, name="Pineco", image=IMG, variants=None, detailed=None, rarity="Common"):
+    c = {"id": cid, "localId": local, "name": name, "set": {"id": cid.rsplit("-", 1)[0]}}
+    if rarity:
+        c["rarity"] = rarity
     if image:
         c["image"] = image
-    if cm:
-        c["pricing"] = {"cardmarket": {"idProduct": cm}}
+    c["variants"] = variants if variants is not None else {
+        "firstEdition": False, "holo": False, "normal": True, "reverse": False, "wPromo": False}
+    if detailed is not None:
+        c["variants_detailed"] = detailed
     return c
 
 
@@ -35,167 +41,258 @@ def make(routes):
 
 def en_routes(**extra):
     routes = {
-        "/en/sets": [{"id": "sv08", "name": "Surging Sparks"}],
-        "/en/sets/sv08": {
-            "id": "sv08", "name": "Surging Sparks", "releaseDate": "2024-11-08",
-            "abbreviation": {"official": "SSP"}, "cards": [{"id": "sv08-001", "localId": "001"}],
+        "/en/sets": [{"id": "sv01", "name": "Scarlet & Violet"}],
+        "/en/sets/sv01": {
+            "id": "sv01", "name": "Scarlet & Violet", "releaseDate": "2023-03-31",
+            "serie": {"id": "sv", "name": "Scarlet & Violet"},
+            "cards": [{"id": "sv01-001", "localId": "001"}],
         },
-        "/en/cards/sv08-001": card("sv08-001", "001", cm=794256),
+        "/en/cards/sv01-001": card(
+            "sv01-001", "001",
+            variants={"firstEdition": True, "holo": True, "normal": False, "reverse": True, "wPromo": False},
+            detailed=[
+                {"type": "holo", "size": "standard"},
+                {"type": "normal", "size": "standard", "stamp": ["set-logo"]},
+            ],
+        ),
     }
     routes.update(extra)
     return routes
 
 
-def test_cards_get_cardmarket_id_and_images(tmp_path):
-    client, _ = make(en_routes())
-    result = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
-    c = result.cards[794256]
-    assert (c.set_code, c.collector_number, c.rarity) == ("ssp", "1", "Common")
-    assert c.image_url == IMG + "/low.webp" and c.image_large_url == IMG + "/high.webp"
-    assert result.sets["ssp"].released_at.isoformat() == "2024-11-08"
+def full_routes(**extra):
+    routes = en_routes(**{
+        "/ja/sets": [{"id": "SV1a"}],
+        "/ja/sets/SV1a": {"id": "SV1a", "name": "トリプレットビート", "releaseDate": "2023-03-10",
+                          "serie": {"id": "SV", "name": "SV"}, "cards": [{"id": "SV1a-001", "localId": "001"}]},
+        "/ja/cards/SV1a-001": card("SV1a-001", "001", name="トロピウス",
+                                   image="https://assets.tcgdex.net/ja/SV/SV1a/001"),
+    })
+    routes.update(extra)
+    return routes
 
 
-def test_card_without_image_has_empty_urls(tmp_path):
-    routes = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", image=None)})
-    client, _ = make(routes)
-    c = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW).cards[100]
-    assert c.image_url == "" and c.image_large_url == ""
+def by_id(data):
+    return {r.id: r for r in data.rows}
+
+
+def write_cache(cache_dir, lang, cache):
+    tcgdex._save_cache(cache_dir, lang, cache)
+
+
+def test_set_code_is_tcgdex_id_and_rows_are_english(tmp_path):
+    data = tcgdex.fetch(make(full_routes())[0], tmp_path, now=NOW)
+    sets = {s.code: s for s in data.sets}
+    assert set(sets) == {"sv01"}
+    assert sets["sv01"].released_at.isoformat() == "2023-03-31" and sets["sv01"].name == "Scarlet & Violet"
+    assert {r.languages for r in data.rows} == {("en",)}
+
+
+def test_only_english_is_requested(tmp_path):
+    routes = full_routes(**{"/fr/sets": [{"id": "sv01"}],
+                            "/fr/sets/sv01": {"id": "sv01", "cards": [{"id": "sv01-001"}]}})
+    client, calls = make(routes)
+    tcgdex.fetch(client, tmp_path, now=NOW)
+    assert calls and all(p.startswith("/en/") for p in calls)
+
+
+def test_existing_english_cache_is_used(tmp_path):
+    tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
+    write_cache(tmp_path, "ja", {"x": {}})
+    client, calls = make(en_routes())
+    data = tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=1))
+    assert not [p for p in calls if "/cards/" in p] and "pokemon:sv01:1" in by_id(data)
+
+
+def test_row_fields(tmp_path):
+    r = by_id(tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW))["pokemon:sv01:1"]
+    assert (r.kind, r.name, r.set_code, r.number, r.variant, r.rarity, r.category) == (
+        "card", "Pineco", "sv01", "1", "", "Common", "")
+    assert r.source_key == "en:sv01-001"
+
+
+def test_missing_rarity_is_empty(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", rarity=None)})
+    assert by_id(tcgdex.fetch(make(routes)[0], tmp_path, now=NOW))["pokemon:sv01:1"].rarity == ""
+
+
+def test_pocket_sets_are_excluded(tmp_path):
+    routes = en_routes(**{
+        "/en/sets": [{"id": "sv01"}, {"id": "A1"}],
+        "/en/sets/A1": {"id": "A1", "name": "Genetic Apex", "serie": {"id": "tcgp", "name": "Pokémon TCG Pocket"},
+                        "cards": [{"id": "A1-001", "localId": "001"}]},
+        "/en/cards/A1-001": card("A1-001", "001", name="Bulbasaur"),
+    })
+    client, calls = make(routes)
+    data = tcgdex.fetch(client, tmp_path, now=NOW)
+    assert {s.code for s in data.sets} == {"sv01"}
+    assert all(r.set_code != "a1" for r in data.rows)
+    assert "/en/cards/A1-001" not in calls
+
+
+def test_finishes_from_variant_flags(tmp_path):
+    data = tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
+    assert by_id(data)["pokemon:sv01:1"].finishes == ("first_edition", "holo", "reverse")
+
+
+def test_unstamped_variant_entry_adds_its_finish(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"type": "reverse", "size": "standard"}])})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
+    assert data.rows[0].finishes == ("normal", "reverse")
+
+
+def test_image_source_is_high_webp(tmp_path):
+    data = tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
+    assert by_id(data)["pokemon:sv01:1"].image_source == "https://assets.tcgdex.net/en/sv/sv01/001/high.webp"
+
+
+def test_card_without_image_has_empty_image_source(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", image=None)})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert by_id(data)["pokemon:sv01:1"].image_source == ""
+
+
+def test_stamped_variant_is_its_own_row_with_the_card_image(tmp_path):
+    data = tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
+    base = by_id(data)["pokemon:sv01:1"]
+    r = by_id(data)["pokemon:sv01:1:" + STAMP_LABEL]
+    assert r.variant == STAMP_LABEL and r.image_source == base.image_source
+    assert r.finishes == ("normal",)
+    assert r.source_key == "en:sv01-001:" + STAMP_LABEL
+    assert (r.name, r.set_code, r.number, r.rarity, r.languages) == (
+        base.name, base.set_code, base.number, base.rarity, base.languages)
+
+
+def test_stamp_label_joins_stamp_names_and_falls_back_to_base_finishes(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"stamp": ["Pokémon Center", "staff"]}])})
+    rows = by_id(tcgdex.fetch(make(routes)[0], tmp_path, now=NOW))
+    r = rows["pokemon:sv01:1:pokemon-center-staff"]
+    assert r.finishes == rows["pokemon:sv01:1"].finishes == ("normal",)
+
+
+def test_first_edition_stamp_is_a_finish_not_a_row(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"type": "holo", "subtype": "shadowless", "stamp": ["1st-edition"]}])})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
+    assert data.rows[0].finishes == ("first_edition", "holo", "normal")
+
+
+def test_stamp_that_slugs_to_nothing_only_adds_its_finish(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"type": "reverse", "stamp": ["スタッフ"]}])})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
+    assert data.rows[0].finishes == ("normal", "reverse")
+
+
+def test_same_stamp_on_two_finishes_is_one_row(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"type": "normal", "stamp": ["set-logo"]}, {"type": "reverse", "stamp": ["set-logo"]}])})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert sorted(r.id for r in data.rows) == ["pokemon:sv01:1", "pokemon:sv01:1:set-logo"]
+    assert by_id(data)["pokemon:sv01:1:set-logo"].finishes == ("normal", "reverse")
+
+
+def test_cache_entry_fields(tmp_path):
+    tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
+    entry = json.loads((tmp_path / "tcgdex" / "en.json").read_text())["sv01-001"]
+    assert entry["rarity"] == "Common" and entry["local_id"] == "001" and entry["image"] == IMG
+    assert entry["name"] == "Pineco" and entry["set"] == "sv01" and entry["fetched_at"] == NOW.isoformat()
+    assert entry["finishes"] == ["first_edition", "holo", "reverse"] and entry["stamps"] == ["set-logo"]
+    assert "cm" not in entry and "variant_cms" not in entry
+
+
+def test_v1_cache_entries_are_refetched(tmp_path):
+    write_cache(tmp_path, "en", {"sv01-001": {"cm": 5, "variant_cms": [], "image": "i", "fetched_at": OLD}})
+    client, requested_urls = make(en_routes())
+    data = tcgdex.fetch(client, tmp_path, now=NOW)
+    assert "/en/cards/sv01-001" in requested_urls
+    assert by_id(data)["pokemon:sv01:1"].image_source == IMG + "/high.webp"
 
 
 def test_cached_cards_are_not_refetched(tmp_path):
-    cache = tmp_path
-    tcgdex.fetch(make(en_routes())[0], cache, langs=("en",), now=NOW)
+    tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
     client, calls = make(en_routes())
-    result = tcgdex.fetch(client, cache, langs=("en",), now=NOW + timedelta(days=30))
-    assert "/en/cards/sv08-001" not in calls
-    assert 794256 in result.cards
+    data = tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=30))
+    assert "/en/cards/sv01-001" not in calls
+    assert set(by_id(data)) == {"pokemon:sv01:1", "pokemon:sv01:1:set-logo"}
+    assert by_id(data)["pokemon:sv01:1:set-logo"].finishes == ("normal",)
 
 
-def test_cached_card_without_id_is_refetched_after_7_days(tmp_path):
-    cache = tmp_path
-    no_id = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=None)})
-    assert tcgdex.fetch(make(no_id)[0], cache, langs=("en",), now=NOW).cards == {}
+def test_cached_card_without_image_is_refetched_after_7_days(tmp_path):
+    no_image = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", image=None)})
+    tcgdex.fetch(make(no_image)[0], tmp_path, now=NOW)
     client, calls = make(en_routes())
-    tcgdex.fetch(client, cache, langs=("en",), now=NOW + timedelta(days=3))
-    assert "/en/cards/sv08-001" not in calls
-    result = tcgdex.fetch(client, cache, langs=("en",), now=NOW + timedelta(days=8))
-    assert "/en/cards/sv08-001" in calls and 794256 in result.cards
+    tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=3))
+    assert "/en/cards/sv01-001" not in calls
+    data = tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=8))
+    assert "/en/cards/sv01-001" in calls
+    assert by_id(data)["pokemon:sv01:1"].image_source == IMG + "/high.webp"
 
 
-def test_set_code_is_official_abbreviation(tmp_path):
-    routes = en_routes(**{"/en/sets/sv08": {"id": "sv08", "name": "S", "cards": []}})
-    sets = tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW).sets
-    assert set(sets) == {"ssp"}
-    sets = tcgdex.fetch(make(routes)[0], tmp_path / "x", langs=("en",), now=NOW).sets
-    assert set(sets) == {"sv08"} and sets["sv08"].released_at is None
-
-
-def test_colliding_codes_fall_back_to_tcgdex_id(tmp_path):
-    routes = {
-        "/en/sets": [{"id": "a1"}, {"id": "b1"}],
-        "/en/sets/a1": {"id": "a1", "name": "A", "abbreviation": {"official": "XX"}, "cards": []},
-        "/en/sets/b1": {"id": "b1", "name": "B", "abbreviation": {"official": "xx"}, "cards": []},
-    }
-    sets = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).sets
-    assert set(sets) == {"a1", "b1"}
-
-
-def test_japanese_sets_are_marked_ja(tmp_path):
-    routes = en_routes(**{
-        "/ja/sets": [{"id": "SV8"}],
-        "/ja/sets/SV8": {"id": "SV8", "name": "超電ブレイカー", "cards": [{"id": "SV8-001", "localId": "001"}]},
-        "/ja/cards/SV8-001": card("SV8-001", "001", cm=555),
-    })
-    result = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
-    assert result.sets["ssp"].language == "" and result.sets["sv8"].language == "ja"
-    assert result.cards[555].set_code == "sv8"
-
-
-def test_ja_id_colliding_with_en_gets_suffix(tmp_path):
-    routes = {
-        "/en/sets": [{"id": "sv8"}], "/en/sets/sv8": {"id": "sv8", "name": "E", "cards": []},
-        "/ja/sets": [{"id": "SV8"}], "/ja/sets/SV8": {"id": "SV8", "name": "J", "cards": []},
-    }
-    sets = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW).sets
-    assert set(sets) == {"sv8", "sv8-ja"} and sets["sv8-ja"].language == "ja"
+def test_set_without_release_date(tmp_path):
+    routes = en_routes(**{"/en/sets/sv01": {"id": "sv01", "name": "S", "cards": []}})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert [(s.code, s.released_at) for s in data.sets] == [("sv01", None)]
 
 
 def test_card_404_is_skipped(tmp_path):
     routes = en_routes()
-    del routes["/en/cards/sv08-001"]
-    assert tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards == {}
+    del routes["/en/cards/sv01-001"]
+    assert tcgdex.fetch(make(routes)[0], tmp_path, now=NOW).rows == []
 
 
 def test_other_errors_raise_source_error(tmp_path):
     client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500)))
     with pytest.raises(SourceError):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
 
 
 def test_failed_card_keeps_the_cards_fetched_in_the_cache(tmp_path):
     routes = en_routes(**{
-        "/en/sets/sv08": {"id": "sv08", "name": "S", "cards": [
-            {"id": "sv08-001", "localId": "001"}, {"id": "sv08-002", "localId": "002"},
-            {"id": "sv08-003", "localId": "003"}]},
-        "/en/cards/sv08-002": card("sv08-002", "002", cm=2),
-        "/en/cards/sv08-003": card("sv08-003", "003", cm=3),
+        "/en/sets/sv01": {"id": "sv01", "name": "S", "cards": [
+            {"id": "sv01-001", "localId": "001"}, {"id": "sv01-002", "localId": "002"},
+            {"id": "sv01-003", "localId": "003"}]},
+        "/en/cards/sv01-002": card("sv01-002", "002"),
+        "/en/cards/sv01-003": card("sv01-003", "003"),
     })
 
     def handler(request):
         path = request.url.path.removeprefix("/v2")
-        if path == "/en/cards/sv08-002":
+        if path == "/en/cards/sv01-002":
             return httpx.Response(500)
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
-    cache = tmp_path
     client = httpx.Client(transport=httpx.MockTransport(handler))
     with pytest.raises(SourceError):
-        tcgdex.fetch(client, cache, langs=("en",), now=NOW)
-    cached = json.loads((cache / "tcgdex" / "en.json").read_text())
-    assert set(cached) == {"sv08-001", "sv08-003"}
-
-
-def test_shared_abbreviation_across_languages_uses_tcgdex_ids(tmp_path):
-    routes = {
-        "/en/sets": [{"id": "sv08"}],
-        "/en/sets/sv08": {"id": "sv08", "name": "E", "abbreviation": {"official": "SSP"}, "cards": []},
-        "/ja/sets": [{"id": "SV8"}],
-        "/ja/sets/SV8": {"id": "SV8", "name": "J", "abbreviation": {"official": "SSP"}, "cards": []},
-    }
-    sets = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW).sets
-    assert set(sets) == {"sv08", "sv8"}
+        tcgdex.fetch(client, tmp_path, now=NOW)
+    cached = json.loads((tmp_path / "tcgdex" / "en.json").read_text())
+    assert set(cached) == {"sv01-001", "sv01-003"}
 
 
 def test_ids_with_reserved_characters_are_escaped_in_urls(tmp_path):
     def handler(request):
         routes = {
-            "/v2/ja/sets": [{"id": "SM1+"}],
-            "/v2/ja/sets/SM1%2B": {"id": "SM1+", "name": "J", "cards": [{"id": "SM1+-001", "localId": "001"}]},
-            "/v2/ja/cards/SM1%2B-001": card("SM1+-001", "001", cm=777),
+            "/v2/en/sets": [{"id": "SM1+"}],
+            "/v2/en/sets/SM1%2B": {"id": "SM1+", "name": "J", "cards": [{"id": "SM1+-001", "localId": "001"}]},
+            "/v2/en/cards/SM1%2B-001": card("SM1+-001", "001"),
         }
         path = request.url.raw_path.decode()
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
-    result = tcgdex.fetch(client, tmp_path, langs=("ja",), now=NOW)
-    assert result.cards[777].set_code == "sm1+"
-
-
-def test_cached_card_without_image_is_refetched_after_7_days(tmp_path):
-    cache = tmp_path
-    no_image = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=794256, image=None)})
-    assert tcgdex.fetch(make(no_image)[0], cache, langs=("en",), now=NOW).cards[794256].image_url == ""
-    client, calls = make(en_routes())
-    tcgdex.fetch(client, cache, langs=("en",), now=NOW + timedelta(days=3))
-    assert "/en/cards/sv08-001" not in calls
-    result = tcgdex.fetch(client, cache, langs=("en",), now=NOW + timedelta(days=8))
-    assert "/en/cards/sv08-001" in calls and result.cards[794256].image_url == IMG + "/low.webp"
+    data = tcgdex.fetch(client, tmp_path, now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sm1+:1"]
 
 
 def test_set_detail_404_skips_the_set(tmp_path, caplog):
-    routes = en_routes(**{"/en/sets": [{"id": "gone"}, {"id": "sv08"}]})
-    result = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
-    assert set(result.sets) == {"ssp"} and 794256 in result.cards
+    routes = en_routes(**{"/en/sets": [{"id": "gone"}, {"id": "sv01"}]})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
+    assert {s.code for s in data.sets} == {"sv01"} and "pokemon:sv01:1" in by_id(data)
     assert "gone" in caplog.text
 
 
@@ -204,26 +301,12 @@ def test_set_detail_500_raises_source_error(tmp_path):
 
     def handler(request):
         path = request.url.path.removeprefix("/v2")
-        if path == "/en/sets/sv08":
+        if path == "/en/sets/sv01":
             return httpx.Response(500)
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
     with pytest.raises(SourceError):
-        tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, langs=("en",), now=NOW)
-
-
-@pytest.mark.parametrize("raw, expected", [("794256", 794256), (794256.0, 794256)])
-def test_cardmarket_id_is_coerced_to_int(tmp_path, raw, expected):
-    routes = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=raw)})
-    assert set(tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards) == {expected}
-
-
-@pytest.mark.parametrize("raw", ["abc", "12.5", True, [1]])
-def test_non_integer_cardmarket_id_counts_as_none(tmp_path, raw):
-    routes = en_routes(**{"/en/cards/sv08-001": card("sv08-001", "001", cm=raw)})
-    cache = tmp_path
-    assert tcgdex.fetch(make(routes)[0], cache, langs=("en",), now=NOW).cards == {}
-    assert json.loads((cache / "tcgdex" / "en.json").read_text())["sv08-001"]["cm"] is None
+        tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, now=NOW)
 
 
 def test_transient_errors_are_retried(tmp_path):
@@ -237,79 +320,37 @@ def test_transient_errors_are_retried(tmp_path):
             return httpx.Response(503)
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
-    result = tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, langs=("en",),
-                          now=NOW)
-    assert 794256 in result.cards
+    data = tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, now=NOW)
+    assert "pokemon:sv01:1" in by_id(data)
 
 
 def test_interrupt_saves_fetched_cards_and_cancels_the_rest(tmp_path, monkeypatch):
-    ids = [f"sv08-{n:03}" for n in range(1, 41)]
-    routes = en_routes(**{"/en/sets/sv08": {"id": "sv08", "name": "S", "cards": [{"id": i} for i in ids]}})
-    routes.update({f"/en/cards/{i}": card(i, i[-3:], cm=n) for n, i in enumerate(ids, 1)})
+    ids = [f"sv01-{n:03}" for n in range(1, 41)]
+    routes = en_routes(**{"/en/sets/sv01": {"id": "sv01", "name": "S", "cards": [{"id": i} for i in ids]}})
+    routes.update({f"/en/cards/{i}": card(i, i[-3:]) for i in ids})
     client, calls = make(routes)
     read_card = tcgdex._read_card
 
     def interrupted(client, lang, card_id, set_id, now):
-        if card_id == "sv08-003":
+        if card_id == "sv01-003":
             raise KeyboardInterrupt
         return read_card(client, lang, card_id, set_id, now)
 
     monkeypatch.setattr(tcgdex, "_read_card", interrupted)
     monkeypatch.setattr(tcgdex, "MAX_WORKERS", 1)
     with pytest.raises(KeyboardInterrupt):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
     cached = json.loads((tmp_path / "tcgdex" / "en.json").read_text())
-    assert set(cached) == {"sv08-001", "sv08-002"}
+    assert set(cached) == {"sv01-001", "sv01-002"}
     assert sum(p.startswith("/en/cards/") for p in calls) < len(ids)
 
 
 def test_progress_is_saved_every_save_every_cards(tmp_path, monkeypatch, caplog):
-    ids = [f"sv08-{n:03}" for n in range(1, 6)]
-    routes = en_routes(**{"/en/sets/sv08": {"id": "sv08", "name": "S", "cards": [{"id": i} for i in ids]}})
-    routes.update({f"/en/cards/{i}": card(i, i[-3:], cm=n) for n, i in enumerate(ids, 1)})
+    ids = [f"sv01-{n:03}" for n in range(1, 6)]
+    routes = en_routes(**{"/en/sets/sv01": {"id": "sv01", "name": "S", "cards": [{"id": i} for i in ids]}})
+    routes.update({f"/en/cards/{i}": card(i, i[-3:]) for i in ids})
     client, _ = make(routes)
     monkeypatch.setattr(tcgdex, "SAVE_EVERY", 2)
     with caplog.at_level("INFO"):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
     assert "en 2/5 cards fetched" in caplog.text and "en 4/5 cards fetched" in caplog.text
-
-
-def with_variants(c, *cms):
-    c["variants_detailed"] = [{"type": "normal", "thirdParty": {"cardmarket": cm}} for cm in cms]
-    return c
-
-
-def test_variant_cardmarket_ids_get_the_card(tmp_path):
-    routes = en_routes(**{"/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=794256),
-                                                               794256, 720365, "794908", "x", None)})
-    cards = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards
-    assert set(cards) == {794256, 720365, 794908}
-    assert cards[720365] == cards[794256]
-
-
-def test_variant_id_without_card_level_id(tmp_path):
-    routes = en_routes(**{"/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=None), 720365)})
-    assert set(tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards) == {720365}
-
-
-def test_card_level_ids_win_over_variant_ids(tmp_path):
-    routes = en_routes(**{
-        "/en/sets/sv08": {
-            "id": "sv08", "name": "Surging Sparks", "abbreviation": {"official": "SSP"},
-            "cards": [{"id": "sv08-001", "localId": "001"}, {"id": "sv08-002", "localId": "002"}],
-        },
-        "/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=1), 2),  # TCGdex error: 2 is card 002
-        "/en/cards/sv08-002": card("sv08-002", "002", cm=2),
-    })
-    cards = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).cards
-    assert cards[2].collector_number == "2"
-
-
-def test_cache_entry_without_variant_ids_is_refetched(tmp_path):
-    tcgdex._save_cache(tmp_path, "en", {"sv08-001": {
-        "cm": 794256, "rarity": "Common", "local_id": "001", "image": IMG, "set": "sv08",
-        "fetched_at": NOW.isoformat()}})
-    routes = en_routes(**{"/en/cards/sv08-001": with_variants(card("sv08-001", "001", cm=794256), 720365)})
-    client, calls = make(routes)
-    cards = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
-    assert "/en/cards/sv08-001" in calls and 720365 in cards.cards

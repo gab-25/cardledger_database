@@ -5,22 +5,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A CLI (`cardledger-db`) that builds the CardLedger card catalog for six games (mtg, pokemon, lorcana, onepiece,
-yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.json` and its recognition index
-`out/vision/v1/<slug>.bin`, a human checks the logged counts, `upload` copies the files to S3. Generated files are never committed. README.md is the
+yugioh, riftbound) from public sources. It is run by hand: `generate` writes `out/catalog/v1/<slug>.json`, its recognition index
+`out/vision/v1/<slug>.bin` and its images under `.cache/bucket/`, a human checks the logged counts, `upload` copies the files to S3. Generated files are never committed. README.md is the
 user-facing reference (sources and licences, output format, env vars).
 
 ## Commands
 
-Python 3.14, managed with uv. Run from the repository root (`corrections/` and `expansions/` are read relative to the working directory).
+Python 3.14, managed with uv. Run from the repository root (`corrections/` and `sealed/` are read relative to the working directory).
 
 ```bash
 uv sync
-uv run pytest -q                                   # all tests (what CI runs)
-uv run pytest tests/test_matcher.py -q             # one file
-uv run pytest tests/test_matcher.py::test_name -q  # one test
+uv run pytest -q                                   # all tests
+uv run pytest tests/test_catalog.py -q             # one file
+uv run pytest tests/test_catalog.py::test_name -q  # one test
 uv run cardledger-db generate --game pokemon       # real network run; --out / --cache change folders
 uv run cardledger-db index --game pokemon          # only the index, from the catalog already in out/
-uv run cardledger-db upload --game pokemon         # needs CARDLEDGER_S3_* (env or .env)
+uv run cardledger-db upload --game pokemon         # needs CARDLEDGER_S3_* (env or .env); --cache as generate
 ```
 
 There is no linter or formatter configured.
@@ -29,40 +29,40 @@ There is no linter or formatter configured.
 
 Per game, `cli.generate_game` runs a fixed pipeline:
 
-1. **Cardmarket** (`sources/cardmarket.py`): the public product lists (singles + nonsingles) are the backbone.
-   Every catalog row is a Cardmarket product and keeps its `id_product`.
-2. **Enrichment** from the game's source (`Game.source` in `model.GAMES` selects it in `cli._enrichment`). Every
-   source returns an `Enrichment`: `cards` keyed by Cardmarket `id_product`, `sets` keyed by set code, and optionally
-   `expansions` (Cardmarket idExpansion → set code). Sources join to Cardmarket differently:
-   - mtgjson, tcgdex, lorcanajson, openrift (Riftbound): the source carries Cardmarket ids directly.
-   - punkrecords (One Piece): joined on the card code printed in the Cardmarket name (`model.code_of`).
-   - yamlyugi: returns `Group`/`Printing` lists and goes through `matcher.match`, which links by normalized
-     name plus an expansion→group vote. Its rule: prefer no match over a doubtful one (a wrong match shows the
-     wrong image); keep that bias when changing thresholds. yaml-yugi's Japanese sets are groups with
-     `language="ja"`; the matcher keeps "(OCG)"/"(Japanese)" Cardmarket expansions to them (see its docstring).
-3. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes products (`[[product]]` only) and
-   `expansions/<slug>.toml` names the `cmx<idExpansion>` stand-ins (`[[expansion]]` only, never moves products), both
-   applied after the automatic match. Strict schema: unknown keys/sections or wrong types fail the run; stale ids only
-   warn. Formats in `corrections/README.md` and `expansions/README.md`.
-4. **Assemble** (`catalog.assemble`): unmatched products get their expansion's majority set code; if none and
-   `Game.keep_unmatched` is true they get a stand-in `cmx<idExpansion>` expansion, otherwise they are dropped
-   (`skipped`). `catalog.encode` is deterministic (sorted lists and keys): same catalog, same bytes.
+1. **Source** (`Game.source` in `model.GAMES` selects it in `cli._source`): scryfall (MTG, `default_cards`),
+   tcgdex (Pokémon), lorcanajson, punkrecords (One Piece, `english`), ygoprodeck (Yu-Gi-Oh!), openrift (Riftbound).
+   English only: each reads English printings alone, card rows have `languages=("en",)`; non-English data is skipped.
+   Each returns `SourceData`: one `Row` per printing (set + number + variant; finishes are attributes) and the `CardSet`s. Row ids
+   (`model.row_id`: `<game>:<set code>:<number>[:<variant>]`) are built here from the source's own data, never from
+   source-internal ids, and set codes are a pure function of the set's own data. Each row carries `image_source`.
+2. **Corrections** (`corrections.py`): `corrections/<slug>.toml` hand-fixes `[[card]]` by id (never changes the id) and
+   `[[set]]` by code (`source_code` pins a renamed set code). Strict schema: unknown keys/sections or wrong types fail
+   the run; stale ids only warn. Format in `corrections/README.md`.
+3. **Assemble** (`catalog.assemble`): adds the hand-written sealed products (`sealed.load`, `sealed/<slug>.toml`, id
+   `<game>:sealed:<key>`), merges rows with the same id (counted in `merged`, warned when they differ beyond
+   languages/finishes). `catalog.encode` is deterministic (sorted lists and keys): same catalog, same bytes.
+4. **Images** (`images.host`): each `image_source` is downloaded once into `<cache>/images/src/` and written as two
+   WebP renditions in `<cache>/bucket/images/v1/<slug>/<sha256 of the original>-{s,l}.webp`; rows get these
+   bucket-relative paths. A failed image leaves the row without one; the run goes on.
+5. **Index** (`cli._index`): `cardledger_vision.build_index` (a git dependency pinned to a release tag) hashes the
+   renditions in `<cache>/bucket/` into the recognition index, hashes cached in `<cache>/vision/`. It is built before
+   anything is written, so a game whose source or index fails keeps its previous pair of files. The hash, format and
+   thresholds belong to cardledger_vision: change them there.
 
-5. **Index** (`cli._index`): `cardledger_vision.build_index` (a git dependency pinned to a release tag) hashes the catalog's
-   images into the recognition index, cached in `.cache/vision/`. It is built before anything is written, so a game
-   whose source or index fails keeps its previous pair of files; `upload` checks each index's game and catalog
-   sha256 before uploading anything. The hash, format and thresholds belong to cardledger_vision: change them there.
+`upload`, per game: checks the index's game and catalog sha256 and that every referenced image is in `<cache>/bucket/`
+(else that game uploads nothing), uploads the images the bucket lacks, then the index, then the catalog last.
 
 A game that fails logs and keeps its previous output files; `SourceError` is the expected "source unavailable / bad
-shape" error (logged without traceback). HTTP goes through `http.get` (3 attempts on 5xx/transport errors); TCGdex
-cards are cached in `.cache/tcgdex/`.
+shape" error (logged without traceback). HTTP goes through `http.get` (3 attempts on 5xx/transport errors); source
+files are cached under `<cache>/` (`scryfall/`, `tcgdex/`, `ygoprodeck/`, `punkrecords/`).
 
-Tests never hit the network: sources are tested with `httpx.MockTransport` clients, the CLI tests fake `build_index`, and `tests/conftest.py`
-autouse-patches `http.sleep` so retries don't wait.
+Tests never hit the network: sources are tested with `httpx.MockTransport` clients, the CLI tests fake the sources,
+the image downloads and `build_index`, and `tests/conftest.py` autouse-patches `http.sleep` so retries don't wait.
 
 ## Constraints
 
-- `id_product` is the key the CardLedger app uses; changing or dropping it is breaking. Expansion codes are only for
-  grouping and may change between runs.
-- Data sources must be openly licensed / clear provenance; flag non-open ones. Don't reintroduce TCGCSV.
+- A row's `id` is the key the CardLedger app uses; changing it is breaking (a set code rename is pinned with a
+  `[[set]]` correction). An image path changes only when the source image's bytes do.
+- Data sources must be openly licensed / clear provenance; flag non-open ones (Scryfall and YGOPRODeck are accepted
+  exceptions, their terms in README.md). Never read Cardmarket. Don't reintroduce TCGCSV.
 - Superpowers working files (`docs/superpowers/`, `.superpowers/`) are gitignored and must never be committed.
