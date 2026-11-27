@@ -7,8 +7,7 @@ from cardledger_database.sources import lorcanajson
 
 def card(id, set_code, number, rarity="Common", foil=("None", "Silver"), name="Ariel - On Human Legs"):
     return {"id": id, "setCode": set_code, "number": number, "rarity": rarity, "foilTypes": list(foil),
-            "fullName": name, "images": {"full": f"https://img/full{id}.avif", "thumbnail": f"https://img/t{id}.avif"},
-            "externalLinks": {"cardmarketId": 999}}
+            "fullName": name, "images": {"full": f"https://img/full{id}.avif", "thumbnail": f"https://img/t{id}.avif"}}
 
 
 SETS = {

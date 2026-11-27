@@ -1,7 +1,8 @@
-"""`cardledger-db generate` writes the game catalogs and their recognition indexes to a local folder; `cardledger-db
-upload` copies them to the bucket; `cardledger-db index` rebuilds only the indexes from the catalogs in the folder.
+"""`cardledger-db generate` writes the game catalogs and their recognition indexes to a local folder, and the
+catalogs' images to the cache's bucket folder; `cardledger-db upload` copies them to the bucket; `cardledger-db index`
+rebuilds only the indexes from the catalogs in the folder.
 
-Run from the repository root: `corrections/` and `expansions/` are read relative to the working directory.
+Run from the repository root: `corrections/` and `sealed/` are read relative to the working directory.
 """
 
 import argparse
@@ -10,61 +11,47 @@ import logging
 import os
 import sys
 import time
-from collections import Counter
 from pathlib import Path
 
 from cardledger_vision import Index, InvalidIndex, build_index, index_key
 from dotenv import load_dotenv
 
-from . import corrections
+from . import corrections, images, sealed
 from .catalog import assemble, catalog_key, encode
 from .http import make_client
-from .matcher import match
-from .model import GAMES, Enrichment, GameCatalog, SourceError
-from .sources import cardmarket, lorcanajson, mtgjson, openrift, punkrecords, tcgdex, yamlyugi
+from .images import ImageStats
+from .model import GAMES, GameCatalog, SourceData, SourceError
+from .sources import lorcanajson, openrift, punkrecords, scryfall, tcgdex, ygoprodeck
 
 logger = logging.getLogger("cardledger_database")
-VISION_CACHE = "vision"  # subfolder of the cache folder with the card images and their hashes
+VISION_CACHE = "vision"  # subfolder of the cache folder with the image hashes of the recognition index
+IMAGE_CACHE_CONTROL = "public, max-age=31536000, immutable"  # an image's path changes when its bytes do
 
 
-def _enrichment(slug: str, client, cache_dir: Path, products, singles) -> Enrichment:
-    game = GAMES[slug]
-    if game.source == "mtgjson":
-        return mtgjson.fetch(client)
-    if game.source == "tcgdex":
+def _source(slug: str, client, cache_dir: Path) -> SourceData:
+    source = GAMES[slug].source
+    if source == "scryfall":
+        return scryfall.fetch(client, cache_dir)
+    if source == "tcgdex":
         return tcgdex.fetch(client, cache_dir)
-    if game.source == "lorcanajson":
+    if source == "lorcanajson":
         return lorcanajson.fetch(client)
-    if game.source == "openrift":
+    if source == "punkrecords":
+        return punkrecords.fetch(client, cache_dir)
+    if source == "ygoprodeck":
+        return ygoprodeck.fetch(client, cache_dir)
+    if source == "openrift":
         return openrift.fetch(client)
-    if game.source == "punkrecords":
-        return punkrecords.fetch(client, products, singles)
-    groups, printings = yamlyugi.fetch(client)
-    return match(products, groups, printings, singles).enrichment
+    raise ValueError(f"unknown source {source!r}")
 
 
-def generate_game(slug: str, client, cache_dir: Path) -> GameCatalog:
-    """Cardmarket products -> source -> corrections -> assemble."""
-    products, singles = cardmarket.fetch_products(client, GAMES[slug].cm_id)
-    enrichment = _enrichment(slug, client, cache_dir, products, singles)
-    enrichment, warnings = corrections.apply(corrections.load(slug), products, enrichment)
-    for warning in warnings:
+def generate_game(slug: str, client, cache_dir: Path) -> tuple[GameCatalog, ImageStats]:
+    """Source -> corrections -> assemble (with the sealed products) -> images hosted in the cache's bucket folder."""
+    data, warnings = corrections.apply(slug, corrections.load(slug), _source(slug, client, cache_dir))
+    catalog, assemble_warnings = assemble(slug, data, sealed.load(slug))
+    for warning in [*warnings, *assemble_warnings]:
         logger.warning("%s: %s", slug, warning)
-    catalog = assemble(GAMES[slug], products, enrichment, singles)
-    _log_unnamed_stand_ins(slug, catalog, enrichment)
-    return catalog
-
-
-def _log_unnamed_stand_ins(slug: str, catalog: GameCatalog, enrichment: Enrichment) -> None:
-    """Warns about the stand-in expansions (cmx<idExpansion>) that expansions/<slug>.toml does not name yet."""
-    counts = Counter(p.expansion_code for p in catalog.products)
-    missing = sorted((c for c in counts if c.startswith("cmx") and c not in enrichment.sets), key=lambda c: int(c[3:]))
-    if missing:
-        logger.warning(
-            "%s: %d Cardmarket expansion%s without a name (add to expansions/%s.toml): %s",
-            slug, len(missing), "" if len(missing) == 1 else "s", slug,
-            ", ".join(f"{c[3:]} ({counts[c]} products)" for c in missing),
-        )
+    return images.host(slug, catalog, client, cache_dir)
 
 
 def _write(path: Path, data: bytes) -> None:
@@ -78,10 +65,10 @@ def _write(path: Path, data: bytes) -> None:
         tmp.unlink(missing_ok=True)
 
 
-def _index(slug: str, data: bytes, cache_dir: Path, client) -> bytes:
-    """The recognition index of the catalog `data`."""
-    return build_index(slug, data, hashlib.sha256(data).hexdigest(), client, cache_dir / VISION_CACHE,
-                       confirm_only=GAMES[slug].confirm_only)
+def _index(slug: str, data: bytes, cache_dir: Path) -> bytes:
+    """The recognition index of the catalog `data`, from its images in the cache's bucket folder."""
+    return build_index(slug, data, hashlib.sha256(data).hexdigest(), images.bucket_dir(cache_dir),
+                       cache_dir / VISION_CACHE, confirm_only=GAMES[slug].confirm_only)
 
 
 def generate(slugs: list[str], out: Path, cache_dir: Path, client, index: bool = True) -> list[str]:
@@ -91,20 +78,22 @@ def generate(slugs: list[str], out: Path, cache_dir: Path, client, index: bool =
     for slug in slugs:
         start = time.monotonic()
         try:
-            catalog = generate_game(slug, client, cache_dir)
+            catalog, stats = generate_game(slug, client, cache_dir)
             data = encode(catalog)
             # The index is built before anything is written: a game that fails keeps its previous pair of files.
-            index_data = _index(slug, data, cache_dir, client) if index else None
+            index_data = _index(slug, data, cache_dir) if index else None
             path = out / catalog_key(slug)
             _write(path, data)
             if index_data is not None:
                 _write(out / index_key(slug), index_data)
-            with_image = sum(1 for p in catalog.products if p.image_url)
+            sealed_rows = sum(1 for r in catalog.rows if r.kind == "sealed")
+            with_image = sum(1 for r in catalog.rows if r.image)
             logger.info(
-                "%s: written %s products=%d enriched=%d expansions=%d with_image=%.1f%% skipped=%d seconds=%.0f",
-                slug, path, len(catalog.products), catalog.enriched, len(catalog.expansions),
-                100 * with_image / len(catalog.products) if catalog.products else 0, catalog.skipped,
-                time.monotonic() - start,
+                "%s: written %s rows=%d cards=%d sealed=%d sets=%d merged=%d with_image=%.1f%% images_downloaded=%d "
+                "images_failed=%d seconds=%.0f",
+                slug, path, len(catalog.rows), len(catalog.rows) - sealed_rows, sealed_rows, len(catalog.sets),
+                catalog.merged, 100 * with_image / len(catalog.rows) if catalog.rows else 0, stats.downloaded,
+                stats.failed, time.monotonic() - start,
             )
         except Exception as exc:
             failed.append(slug)
@@ -113,7 +102,7 @@ def generate(slugs: list[str], out: Path, cache_dir: Path, client, index: bool =
     return failed
 
 
-def index(slugs: list[str], out: Path, cache_dir: Path, client) -> list[str]:
+def index(slugs: list[str], out: Path, cache_dir: Path) -> list[str]:
     """Rebuilds each game's recognition index from its catalog in `out`; returns the games that failed."""
     failed = []
     for slug in slugs:
@@ -121,7 +110,7 @@ def index(slugs: list[str], out: Path, cache_dir: Path, client) -> list[str]:
         try:
             if not path.is_file():
                 raise SourceError(f"no catalog, run generate first: {path}")
-            _write(out / index_key(slug), _index(slug, path.read_bytes(), cache_dir, client))
+            _write(out / index_key(slug), _index(slug, path.read_bytes(), cache_dir))
             logger.info("%s: written %s", slug, out / index_key(slug))
         except Exception as exc:
             failed.append(slug)
@@ -145,36 +134,73 @@ def _check_index(slug: str, catalog_path: Path, index_path: Path) -> bytes:
     return data
 
 
-def upload(slugs: list[str], out: Path, s3=None) -> list[str]:
-    """Copies the games' catalogs and indexes from `out` to the bucket under the same keys; returns the keys uploaded.
+def _s3_client():
+    """The S3 client of the CARDLEDGER_S3_* variables."""
+    import boto3
 
-    Nothing is uploaded unless every catalog has its index, built from that same catalog."""
+    required = ("CARDLEDGER_S3_ACCESS_KEY_ID", "CARDLEDGER_S3_SECRET_ACCESS_KEY", "CARDLEDGER_S3_REGION")
+    unset = [name for name in required if not os.environ.get(name)]
+    if unset:
+        raise SourceError(f"{', '.join(unset)} not set")
+    return boto3.client("s3", endpoint_url=os.environ.get("CARDLEDGER_S3_ENDPOINT") or None,
+                        aws_access_key_id=os.environ["CARDLEDGER_S3_ACCESS_KEY_ID"],
+                        aws_secret_access_key=os.environ["CARDLEDGER_S3_SECRET_ACCESS_KEY"],
+                        region_name=os.environ["CARDLEDGER_S3_REGION"])
+
+
+def _listed(s3, bucket: str, prefix: str) -> set[str]:
+    """Every key of the bucket under `prefix`, page after page."""
+    keys: set[str] = set()
+    token = None
+    while True:
+        page = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, **({"ContinuationToken": token} if token else {}))
+        keys.update(obj["Key"] for obj in page.get("Contents", []))
+        if not page.get("IsTruncated"):
+            return keys
+        token = page["NextContinuationToken"]
+
+
+def _upload_game(slug: str, out: Path, cache_dir: Path, s3, bucket: str) -> None:
+    """Checks the game's files, then uploads the images the bucket lacks, the index and the catalog last, so a
+    published catalog never points to a missing image or comes without its index."""
+    catalog_path = out / catalog_key(slug)
+    if not catalog_path.is_file():
+        raise SourceError(f"nothing to upload, run generate first: {catalog_path}")
+    catalog = catalog_path.read_bytes()
+    index_data = _check_index(slug, catalog_path, out / index_key(slug))
+    root = images.bucket_dir(cache_dir)
+    needed = images.referenced(catalog)
+    missing = sorted(key for key in needed if not (root / key).is_file())
+    if missing:
+        raise SourceError(f"{len(missing)} images of {catalog_path} not in {root}, run generate: {missing[0]}")
+    there = needed & _listed(s3, bucket, images.image_prefix(slug))
+    for key in sorted(needed - there):
+        s3.put_object(Bucket=bucket, Key=key, Body=(root / key).read_bytes(), ContentType="image/webp",
+                      CacheControl=IMAGE_CACHE_CONTROL)
+    logger.info("%s: uploaded images=%d already_there=%d", slug, len(needed - there), len(there))
+    s3.put_object(Bucket=bucket, Key=index_key(slug), Body=index_data, ContentType="application/octet-stream")
+    logger.info("uploaded s3://%s/%s", bucket, index_key(slug))
+    s3.put_object(Bucket=bucket, Key=catalog_key(slug), Body=catalog, ContentType="application/json")
+    logger.info("uploaded s3://%s/%s", bucket, catalog_key(slug))
+
+
+def upload(slugs: list[str], out: Path, cache_dir: Path, s3=None) -> list[str]:
+    """Copies each game's images (from the cache's bucket folder), index and catalog (from `out`) to the bucket under
+    the same keys; returns the games that failed. A game is uploaded only if its index was built from that same
+    catalog and every image it references is in the cache; otherwise none of its files is."""
     bucket = os.environ.get("CARDLEDGER_S3_BUCKET")
     if not bucket:
         raise SourceError("CARDLEDGER_S3_BUCKET is not set")
-    files = {catalog_key(slug): out / catalog_key(slug) for slug in slugs}
-    missing = [str(path) for path in files.values() if not path.is_file()]
-    if missing:
-        raise SourceError(f"nothing to upload, run generate first: {', '.join(missing)}")
-    indexes = {index_key(slug): _check_index(slug, out / catalog_key(slug), out / index_key(slug)) for slug in slugs}
     if s3 is None:
-        import boto3
-
-        required = ("CARDLEDGER_S3_ACCESS_KEY_ID", "CARDLEDGER_S3_SECRET_ACCESS_KEY", "CARDLEDGER_S3_REGION")
-        unset = [name for name in required if not os.environ.get(name)]
-        if unset:
-            raise SourceError(f"{', '.join(unset)} not set")
-        s3 = boto3.client("s3", endpoint_url=os.environ.get("CARDLEDGER_S3_ENDPOINT") or None,
-                          aws_access_key_id=os.environ["CARDLEDGER_S3_ACCESS_KEY_ID"],
-                          aws_secret_access_key=os.environ["CARDLEDGER_S3_SECRET_ACCESS_KEY"],
-                          region_name=os.environ["CARDLEDGER_S3_REGION"])
-    for key, path in files.items():
-        s3.put_object(Bucket=bucket, Key=key, Body=path.read_bytes(), ContentType="application/json")
-        logger.info("uploaded s3://%s/%s", bucket, key)
-    for key, data in indexes.items():
-        s3.put_object(Bucket=bucket, Key=key, Body=data, ContentType="application/octet-stream")
-        logger.info("uploaded s3://%s/%s", bucket, key)
-    return [*files, *indexes]
+        s3 = _s3_client()
+    failed = []
+    for slug in slugs:
+        try:
+            _upload_game(slug, out, cache_dir, s3, bucket)
+        except Exception as exc:
+            failed.append(slug)
+            logger.error("%s: %s", slug, exc, exc_info=not isinstance(exc, SourceError))
+    return failed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -182,12 +208,11 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     for name, help in (("generate", "generate the game catalogs and their indexes into the output folder"),
                        ("index", "rebuild the indexes from the catalogs in the output folder"),
-                       ("upload", "upload the generated catalogs and indexes to the S3 bucket")):
+                       ("upload", "upload the generated catalogs, indexes and images to the S3 bucket")):
         command = commands.add_parser(name, help=help)
         command.add_argument("--game", action="append", choices=list(GAMES), help="only this game (default: all)")
         command.add_argument("--out", type=Path, default=Path("out"), help="output folder (default: out)")
-        if name in ("generate", "index"):
-            command.add_argument("--cache", type=Path, default=Path(".cache"), help="cache folder (default: .cache)")
+        command.add_argument("--cache", type=Path, default=Path(".cache"), help="cache folder (default: .cache)")
         if name == "generate":
             command.add_argument("--no-index", action="store_true",
                                  help="only the catalogs, without the recognition indexes (upload then refuses)")
@@ -205,15 +230,13 @@ def main(argv: list[str] | None = None) -> int:
             with make_client() as client:
                 return 1 if generate(slugs, args.out, args.cache, client, index=not args.no_index) else 0
         if args.command == "index":
-            with make_client() as client:
-                return 1 if index(slugs, args.out, args.cache, client) else 0
+            return 1 if index(slugs, args.out, args.cache) else 0
         load_dotenv(Path(".env"))  # the working directory's .env, without overriding the environment
         try:
-            upload(slugs, args.out)
+            return 1 if upload(slugs, args.out, args.cache) else 0
         except SourceError as exc:
             logger.error("%s", exc)
             return 1
-        return 0
     finally:
         for log in (logger, vision_logger):
             log.removeHandler(handler)
