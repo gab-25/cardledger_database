@@ -11,6 +11,7 @@ import logging
 import os
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from cardledger_vision import Index, InvalidIndex, build_index, index_key
@@ -26,6 +27,8 @@ from .sources import lorcanajson, openrift, punkrecords, scryfall, tcgdex, ygopr
 logger = logging.getLogger("cardledger_database")
 VISION_CACHE = "vision"  # subfolder of the cache folder with the image hashes of the recognition index
 IMAGE_CACHE_CONTROL = "public, max-age=31536000, immutable"  # an image's path changes when its bytes do
+UPLOAD_WORKERS = 8  # image puts at once (the boto3 client is thread-safe)
+UPLOAD_PROGRESS_EVERY = 1000  # image puts between two progress logs
 
 
 def _source(slug: str, client, cache_dir: Path) -> SourceData:
@@ -160,9 +163,35 @@ def _listed(s3, bucket: str, prefix: str) -> set[str]:
         token = page["NextContinuationToken"]
 
 
+def _check_image_keys(slug: str, keys: set[str]) -> None:
+    """Refuses a catalog whose image keys leave the game's image folder (the keys are also paths under the cache)."""
+    prefix = images.image_prefix(slug)
+    for key in sorted(keys):
+        if not key.startswith(prefix) or ".." in key or key.startswith("/"):
+            raise SourceError(f"image key {key!r} is not under {prefix}")
+
+
+def _put_images(slug: str, keys: list[str], root: Path, s3, bucket: str) -> None:
+    """Puts the images UPLOAD_WORKERS at once; returns once every put succeeded, or raises the first failure after
+    dropping the puts not started yet and waiting for the running ones."""
+    def put(key: str) -> None:
+        s3.put_object(Bucket=bucket, Key=key, Body=(root / key).read_bytes(), ContentType="image/webp",
+                      CacheControl=IMAGE_CACHE_CONTROL)
+
+    pool = ThreadPoolExecutor(UPLOAD_WORKERS)
+    try:
+        for done, future in enumerate(as_completed([pool.submit(put, key) for key in keys]), 1):
+            future.result()
+            if done % UPLOAD_PROGRESS_EVERY == 0:
+                logger.info("%s: images put %d/%d", slug, done, len(keys))
+    finally:
+        pool.shutdown(wait=True, cancel_futures=True)
+
+
 def _upload_game(slug: str, out: Path, cache_dir: Path, s3, bucket: str) -> None:
-    """Checks the game's files, then uploads the images the bucket lacks, the index and the catalog last, so a
-    published catalog never points to a missing image or comes without its index."""
+    """Checks the game's files (and that every image key is under the game's image folder), then uploads the images
+    the bucket lacks, the index and the catalog last, once every image put succeeded, so a published catalog never
+    points to a missing image or comes without its index."""
     catalog_path = out / catalog_key(slug)
     if not catalog_path.is_file():
         raise SourceError(f"nothing to upload, run generate first: {catalog_path}")
@@ -170,13 +199,12 @@ def _upload_game(slug: str, out: Path, cache_dir: Path, s3, bucket: str) -> None
     index_data = _check_index(slug, catalog_path, out / index_key(slug))
     root = images.bucket_dir(cache_dir)
     needed = images.referenced(catalog)
+    _check_image_keys(slug, needed)
     missing = sorted(key for key in needed if not (root / key).is_file())
     if missing:
         raise SourceError(f"{len(missing)} images of {catalog_path} not in {root}, run generate: {missing[0]}")
     there = needed & _listed(s3, bucket, images.image_prefix(slug))
-    for key in sorted(needed - there):
-        s3.put_object(Bucket=bucket, Key=key, Body=(root / key).read_bytes(), ContentType="image/webp",
-                      CacheControl=IMAGE_CACHE_CONTROL)
+    _put_images(slug, sorted(needed - there), root, s3, bucket)
     logger.info("%s: uploaded images=%d already_there=%d", slug, len(needed - there), len(there))
     s3.put_object(Bucket=bucket, Key=index_key(slug), Body=index_data, ContentType="application/octet-stream")
     logger.info("uploaded s3://%s/%s", bucket, index_key(slug))

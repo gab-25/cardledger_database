@@ -96,9 +96,10 @@ and `--cache` change the output and cache folders (`upload --cache` must be the 
 images downloaded and failed: compare them with the previous run before uploading. A game that fails (its source or
 its index) keeps its previous files in `out/`, and the command exits with 1.
 
-`upload`, per game: checks that its index was built from its catalog and that every image the catalog references is in
-`.cache/bucket/`, uploads the images the bucket lacks (`Cache-Control: public, max-age=31536000, immutable`), then the
-index, then the catalog last, so a published catalog never points to a missing image. A game that fails a check
+`upload`, per game: checks that its index was built from its catalog and that every image the catalog references is
+under `images/v1/<slug>/` and in `.cache/bucket/`, uploads the images the bucket lacks (8 at once, `Cache-Control:
+public, max-age=31536000, immutable`), then, once all of them are there, the index, then the catalog last, so a
+published catalog never points to a missing image. A game that fails a check
 uploads nothing and the command exits with 1. Making `images/` publicly readable (bucket policy or CDN) is set up
 outside this repository.
 

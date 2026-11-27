@@ -2,6 +2,8 @@ import dataclasses
 import hashlib
 import json
 import os
+import threading
+import time
 from pathlib import Path
 
 import cv2
@@ -308,6 +310,69 @@ def test_upload_goes_on_with_the_other_games(tmp_path, fakes, caplog):
         assert cli.upload(["lorcana", "mtg"], tmp_path, tmp_path / "c", s3) == ["lorcana"]
     assert "lorcana: " in caplog.text and "run generate" in caplog.text
     assert all("lorcana" not in k for k, _ in s3.put) and "catalog/v1/mtg.json" in dict(s3.put)
+
+
+class FailingS3(FakeS3):
+    """A bucket where the put of `failing` raises, after the other puts started."""
+
+    def __init__(self, failing, existing=()):
+        super().__init__(existing)
+        self.failing = failing
+
+    def put_object(self, Bucket, Key, Body, ContentType, **kwargs):
+        if Key == self.failing:
+            raise RuntimeError("put failed")
+        super().put_object(Bucket, Key, Body, ContentType, **kwargs)
+
+
+def test_upload_puts_the_images_with_a_pool_before_index_and_catalog(tmp_path, fakes, monkeypatch, caplog):
+    cli.generate(["lorcana"], tmp_path, tmp_path / "c", None)
+    paths = referenced(tmp_path)
+    slow = paths[0]
+    threads = set()
+
+    class SlowS3(FakeS3):
+        def put_object(self, Bucket, Key, Body, ContentType, **kwargs):
+            threads.add(threading.get_ident())
+            if Key == slow:
+                time.sleep(0.1)  # the last image to finish
+            super().put_object(Bucket, Key, Body, ContentType, **kwargs)
+
+    monkeypatch.setattr(cli, "UPLOAD_PROGRESS_EVERY", 3)
+    s3 = SlowS3()
+    with caplog.at_level("INFO"):
+        assert cli.upload(["lorcana"], tmp_path, tmp_path / "c", s3) == []
+    keys = [k for k, _ in s3.put]
+    assert sorted(keys[:-2]) == paths and keys[-2:] == ["vision/v1/lorcana.bin", "catalog/v1/lorcana.json"]
+    assert keys.index(slow) == len(paths) - 1 and len(threads) > 1
+    assert "lorcana: images put 3/8" in caplog.text and "lorcana: images put 6/8" in caplog.text
+    assert cli.UPLOAD_WORKERS == 8
+
+
+def test_upload_failed_image_put_fails_the_game_before_index_and_catalog(tmp_path, fakes, caplog):
+    cli.generate(["lorcana", "mtg"], tmp_path, tmp_path / "c", None)
+    s3 = FailingS3(failing=referenced(tmp_path)[3])
+    with caplog.at_level("ERROR"):
+        assert cli.upload(["lorcana", "mtg"], tmp_path, tmp_path / "c", s3) == ["lorcana"]
+    put = dict(s3.put)
+    assert "put failed" in caplog.text
+    assert "vision/v1/lorcana.bin" not in put and "catalog/v1/lorcana.json" not in put
+    assert "catalog/v1/mtg.json" in put
+
+
+@pytest.mark.parametrize("bad", ["images/v1/mtg/x-s.webp", "images/v1/lorcana/../../catalog/v1/x.json",
+                                 "/images/v1/lorcana/x-s.webp", "catalog/v1/lorcana.json"])
+def test_upload_refuses_an_image_key_outside_the_game_folder(tmp_path, fakes, caplog, bad):
+    cli.generate(["lorcana"], tmp_path, tmp_path / "c", None)
+    path = tmp_path / catalog_key("lorcana")
+    catalog = json.loads(path.read_bytes())
+    catalog["rows"][0]["image_large"] = bad
+    path.write_text(json.dumps(catalog))
+    assert cli.index(["lorcana"], tmp_path, tmp_path / "c") == []  # an index of this very catalog
+    s3 = FakeS3()
+    with caplog.at_level("ERROR"):
+        assert cli.upload(["lorcana"], tmp_path, tmp_path / "c", s3) == ["lorcana"]
+    assert s3.put == [] and s3.listed == [] and repr(bad) in caplog.text
 
 
 def test_upload_refuses_a_missing_catalog(fakes, tmp_path):
