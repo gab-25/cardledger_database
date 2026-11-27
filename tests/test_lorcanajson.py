@@ -1,79 +1,80 @@
-from datetime import date
-
 import httpx
 import pytest
 
-from cardledger_database.model import SourceCard, SourceError, SourceSet
+from cardledger_database.model import SourceError
 from cardledger_database.sources import lorcanajson
 
-PAYLOAD = {
-    "metadata": {"formatVersion": "2.0.0"},
-    "sets": {
-        "1": {"name": "The First Chapter", "releaseDate": "2023-09-01", "number": 1},
-        "Q1": {"name": "Illumineer's Quest", "number": 101},
-    },
-    "cards": [
-        {"setCode": "1", "number": 5, "rarity": "Uncommon", "externalLinks": {"cardmarketId": 7001},
-         "images": {"full": "https://img/full5.avif", "thumbnail": "https://img/thumb5.avif", "foilMask": "x"}},
-        {"setCode": "1", "number": 6, "rarity": "Rare", "externalLinks": {},
-         "images": {"full": "https://img/full6.avif", "thumbnail": "https://img/thumb6.avif"}},
-        {"setCode": "Q1", "number": 2, "rarity": "Promo", "images": {"full": "f", "thumbnail": "t"}},
-        {"setCode": "Q1", "number": 3, "rarity": "Promo", "externalLinks": {"cardmarketId": 7001},
-         "images": {"full": "f3", "thumbnail": "t3"}},  # duplicate id: first wins
-    ],
+
+def card(id, set_code, number, rarity="Common", foil=("None", "Silver"), name="Ariel - On Human Legs"):
+    return {"id": id, "setCode": set_code, "number": number, "rarity": rarity, "foilTypes": list(foil),
+            "fullName": name, "images": {"full": f"https://img/full{id}.avif", "thumbnail": f"https://img/t{id}.avif"},
+            "externalLinks": {"cardmarketId": 999}}
+
+
+SETS = {
+    "1": {"name": "The First Chapter", "releaseDate": "2023-09-01", "number": 1},
+    "Q1": {"name": "Illumineer's Quest", "number": 101},
 }
+EN = {"sets": SETS, "cards": [
+    card(5, "1", 5, "Uncommon", ("Silver",), "Elsa - Snow Queen"),
+    card(6, "1", 6, "Rare"),
+    card(20, "Q1", 2, "Promo"),
+]}
+FR = {"sets": SETS, "cards": [card(5, "1", 5)]}
+EMPTY = {"sets": {}, "cards": []}
 
 
-def client(payload=PAYLOAD, status=200, content=None):
+def client(payloads, status=200):
     def handler(request):
-        assert str(request.url) == lorcanajson.URL
-        if content is not None:
-            return httpx.Response(status, content=content)
-        return httpx.Response(status, json=payload)
+        for lang, payload in payloads.items():
+            if str(request.url) == lorcanajson.URL.format(lang=lang):
+                return httpx.Response(status, json=payload)
+        raise AssertionError(request.url)
 
     return httpx.Client(transport=httpx.MockTransport(handler))
 
 
-def test_card_with_cardmarket_id():
-    cards = lorcanajson.fetch(client()).cards
-    assert cards == {7001: SourceCard("1", "5", "Uncommon", "https://img/thumb5.avif", "https://img/full5.avif")}
+def by_id(data):
+    return {r.id: r for r in data.rows}
 
 
-def test_card_without_cardmarket_id_is_ignored():
-    assert set(lorcanajson.fetch(client()).cards) == {7001}
+ALL = {"en": EN, "fr": FR, "de": EN, "it": EMPTY}
 
 
-def test_sets_from_metadata():
-    sets = lorcanajson.fetch(client()).sets
-    assert sets == {
-        "1": SourceSet("1", "The First Chapter", date(2023, 9, 1)),
-        "q1": SourceSet("q1", "Illumineer's Quest", None),
-    }
+def test_rows_from_english_with_languages_from_all_files():
+    data = lorcanajson.fetch(client(ALL))
+    r = by_id(data)["lorcana:1:5"]
+    assert r.languages == ("de", "en", "fr") and r.number == "5" and r.rarity == "Uncommon"
+    assert r.finishes == ("silver",)
+    assert r.image_source == "https://img/full5.avif" and r.image == "" and r.image_large == ""
+    assert r.kind == "card" and r.name == "Elsa - Snow Queen" and r.set_code == "1"
+    assert r.variant == "" and r.category == "" and r.source_key == "5"
+    assert by_id(data)["lorcana:1:6"].languages == ("de", "en")
+    assert by_id(data)["lorcana:1:6"].finishes == ("non_foil", "silver")
 
 
-@pytest.mark.parametrize("kwargs", [
-    {"status": 500},
-    {"content": b"not json"},
-    {"payload": {"sets": {}}},
-    {"payload": []},
-])
-def test_bad_payload_raises_source_error(kwargs):
+def test_no_market_ids_and_promo_set_is_its_own_set():
+    data = lorcanajson.fetch(client(ALL))
+    assert "lorcana:q1:2" in by_id(data) and by_id(data)["lorcana:q1:2"].set_code == "q1"
+    assert {s.code for s in data.sets} >= {"1", "q1"}
+    first = next(s for s in data.sets if s.code == "1")
+    assert first.name == "The First Chapter" and str(first.released_at) == "2023-09-01" and first.region == ""
+    assert not any("999" in str(r) for r in data.rows)
+
+
+@pytest.mark.parametrize("bad", [{"sets": {}}, []])
+def test_bad_shape_is_source_error(bad):
     with pytest.raises(SourceError):
-        lorcanajson.fetch(client(**kwargs))
+        lorcanajson.fetch(client({**ALL, "fr": bad}))
+    with pytest.raises(SourceError):
+        lorcanajson.fetch(client({**ALL, "en": bad}))
 
 
-def card_with_id(cm_id, number=1):
-    return {"setCode": "1", "number": number, "rarity": "Common", "externalLinks": {"cardmarketId": cm_id},
-            "images": {"full": "f", "thumbnail": "t"}}
+def test_http_error_is_source_error():
+    with pytest.raises(SourceError):
+        lorcanajson.fetch(client(ALL, status=500))
 
 
-def test_cardmarket_id_is_coerced_to_int():
-    payload = {"sets": PAYLOAD["sets"], "cards": [card_with_id("7002"), card_with_id(7003.0, 2)]}
-    cards = lorcanajson.fetch(client(payload)).cards
-    assert set(cards) == {7002, 7003} and all(type(k) is int for k in cards)
-
-
-def test_non_integer_cardmarket_id_is_skipped():
-    payload = {"sets": PAYLOAD["sets"], "cards": [card_with_id(x) for x in ("abc", "1.5", True, [1], {"a": 1})]
-               + [card_with_id(7004, 2)]}
-    assert set(lorcanajson.fetch(client(payload)).cards) == {7004}
+def test_english_card_missing_fields_is_source_error():
+    with pytest.raises(SourceError):
+        lorcanajson.fetch(client({**ALL, "en": {"sets": {}, "cards": [{"id": 1}]}}))
