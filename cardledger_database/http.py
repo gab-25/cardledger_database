@@ -13,10 +13,15 @@ def make_client(transport=None) -> httpx.Client:
     )
 
 
-def get(client: httpx.Client, url: str, timeout: float | None = None) -> httpx.Response:
+def get(
+    client: httpx.Client, url: str, timeout: float | None = None, headers: dict[str, str] | None = None
+) -> httpx.Response:
     """GET, tried up to 3 times on transient failures (5xx answers, timeouts, connection errors). Returns the last
-    answer (the caller checks its status) or raises the last transport error. `timeout` overrides the client's."""
+    answer (the caller checks its status) or raises the last transport error. `timeout` overrides the client's;
+    `headers` are added to the client's."""
     kwargs = {} if timeout is None else {"timeout": timeout}
+    if headers:
+        kwargs["headers"] = headers
     for delay in RETRY_DELAYS:
         try:
             response = client.get(url, **kwargs)
