@@ -97,7 +97,7 @@ def by_id(data):
 def test_card_row(tmp_path):
     r = by_id(scryfall.fetch(client(), tmp_path))["mtg:lea:161"]
     assert r.finishes == ("foil", "nonfoil") and r.languages == ("en",)
-    assert r.image_source == "https://cards.scryfall.io/png/front/a/b/ab12.png"
+    assert r.image_source == "https://cards.scryfall.io/large/front/a/b/ab12.jpg"
     assert r.source_key == "ab12"
     assert (r.kind, r.name, r.set_code, r.number, r.variant, r.rarity, r.category) == (
         "card", "Black Lotus", "lea", "161", "", "rare", "")
@@ -106,7 +106,7 @@ def test_card_row(tmp_path):
 
 def test_double_faced_card_uses_front_face_image(tmp_path):
     r = by_id(scryfall.fetch(client(), tmp_path))["mtg:lea:200"]
-    assert r.image_source == "https://img/front.png"
+    assert r.image_source == "https://img/f.jpg"
     assert r.name == "Delver of Secrets // Insectile Aberration"
 
 
@@ -185,3 +185,15 @@ def test_bad_shape_is_source_error(tmp_path):
 def test_broken_bulk_file_is_source_error(tmp_path):
     with pytest.raises(SourceError):
         scryfall.fetch(client(body=b"not gzip"), tmp_path)
+
+
+@pytest.mark.parametrize("uris, expected", [
+    ({"large": "L", "png": "P", "normal": "N"}, "L"),
+    ({"png": "P", "normal": "N"}, "P"),
+    ({"normal": "N", "small": "S"}, "N"),
+    ({"small": "S"}, ""),
+])
+def test_image_prefers_large_then_png_then_normal(uris, expected):
+    assert scryfall._image({"image_uris": uris}) == expected
+    assert scryfall._image({"image_uris": None, "card_faces": [{"image_uris": uris}, {"image_uris": {"large": "B"}}]}) \
+        == expected

@@ -23,7 +23,8 @@ finishes it exists in as attributes. The catalog holds no market ids and no pric
 Scryfall and YGOPRODeck are deliberate exceptions to the open-sources rule, with their terms kept:
 
 - Scryfall: its data is never put behind a paywall; its images are never cropped, covered, distorted or colour-shifted
-  (only resized, aspect ratio kept); the bulk file is used instead of per-card calls.
+  (only resized, aspect ratio kept); the bulk file is used instead of per-card calls. The image taken is `large`
+  (else `png`, else `normal`): the renditions are at most 745 px wide and the PNG originals about 1 MB each.
 - YGOPRODeck: at most 20 requests a second (more blocks the IP for an hour); its data and images are downloaded once
   and hosted by us, never hotlinked. A run makes two API requests at most (both cached for a day).
 

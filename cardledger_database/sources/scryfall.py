@@ -56,9 +56,12 @@ def _bulk_file(client: httpx.Client, cache_dir: Path) -> Path:
 
 
 def _image(card: dict) -> str:
+    """The card's (or its front face's) `large` image, else `png`, else `normal`. `large` comes first: the hosted
+    renditions are at most 745 px wide, while the PNG originals are about 1 MB each."""
     for uris in (card.get("image_uris"), ((card.get("card_faces") or [{}])[0]).get("image_uris")):
-        if uris and (uris.get("png") or uris.get("large")):
-            return uris.get("png") or uris["large"]
+        for size in ("large", "png", "normal"):
+            if uris and uris.get(size):
+                return uris[size]
     return ""
 
 
