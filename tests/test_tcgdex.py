@@ -80,20 +80,32 @@ def write_cache(cache_dir, lang, cache):
     tcgdex._save_cache(cache_dir, lang, cache)
 
 
-def test_set_code_is_tcgdex_id_and_japanese_is_suffixed(tmp_path):
+def test_set_code_is_tcgdex_id_and_rows_are_english(tmp_path):
     data = tcgdex.fetch(make(full_routes())[0], tmp_path, now=NOW)
     sets = {s.code: s for s in data.sets}
-    assert {"sv01", "sv1a-ja"} <= set(sets)
-    assert sets["sv01"].region == "" and sets["sv1a-ja"].region == "ja"
+    assert set(sets) == {"sv01"} and sets["sv01"].region == ""
     assert sets["sv01"].released_at.isoformat() == "2023-03-31" and sets["sv01"].name == "Scarlet & Violet"
-    rows = by_id(data)
-    assert rows["pokemon:sv1a-ja:1"].languages == ("ja",)
-    assert rows["pokemon:sv1a-ja:1"].name == "トロピウス"
-    assert rows["pokemon:sv01:1"].languages == ("en",)
+    assert {r.languages for r in data.rows} == {("en",)}
+
+
+def test_only_english_is_requested(tmp_path):
+    routes = full_routes(**{"/fr/sets": [{"id": "sv01"}],
+                            "/fr/sets/sv01": {"id": "sv01", "cards": [{"id": "sv01-001"}]}})
+    client, calls = make(routes)
+    tcgdex.fetch(client, tmp_path, now=NOW)
+    assert calls and all(p.startswith("/en/") for p in calls)
+
+
+def test_existing_english_cache_is_used(tmp_path):
+    tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
+    write_cache(tmp_path, "ja", {"x": {}})
+    client, calls = make(en_routes())
+    data = tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=1))
+    assert not [p for p in calls if "/cards/" in p] and "pokemon:sv01:1" in by_id(data)
 
 
 def test_row_fields(tmp_path):
-    r = by_id(tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW))["pokemon:sv01:1"]
+    r = by_id(tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW))["pokemon:sv01:1"]
     assert (r.kind, r.name, r.set_code, r.number, r.variant, r.rarity, r.category) == (
         "card", "Pineco", "sv01", "1", "", "Common", "")
     assert r.source_key == "en:sv01-001"
@@ -101,7 +113,7 @@ def test_row_fields(tmp_path):
 
 def test_missing_rarity_is_empty(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", rarity=None)})
-    assert by_id(tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW))["pokemon:sv01:1"].rarity == ""
+    assert by_id(tcgdex.fetch(make(routes)[0], tmp_path, now=NOW))["pokemon:sv01:1"].rarity == ""
 
 
 def test_pocket_sets_are_excluded(tmp_path):
@@ -112,38 +124,38 @@ def test_pocket_sets_are_excluded(tmp_path):
         "/en/cards/A1-001": card("A1-001", "001", name="Bulbasaur"),
     })
     client, calls = make(routes)
-    data = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(client, tmp_path, now=NOW)
     assert {s.code for s in data.sets} == {"sv01"}
     assert all(r.set_code != "a1" for r in data.rows)
     assert "/en/cards/A1-001" not in calls
 
 
 def test_finishes_from_variant_flags(tmp_path):
-    data = tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
     assert by_id(data)["pokemon:sv01:1"].finishes == ("first_edition", "holo", "reverse")
 
 
 def test_unstamped_variant_entry_adds_its_finish(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
         {"type": "reverse", "size": "standard"}])})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
     assert data.rows[0].finishes == ("normal", "reverse")
 
 
 def test_image_source_is_high_webp(tmp_path):
-    data = tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
     assert by_id(data)["pokemon:sv01:1"].image_source == "https://assets.tcgdex.net/en/sv/sv01/001/high.webp"
 
 
 def test_card_without_image_has_empty_image_source(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", image=None)})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert by_id(data)["pokemon:sv01:1"].image_source == ""
 
 
 def test_stamped_variant_is_its_own_row_with_the_card_image(tmp_path):
-    data = tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
     base = by_id(data)["pokemon:sv01:1"]
     r = by_id(data)["pokemon:sv01:1:" + STAMP_LABEL]
     assert r.variant == STAMP_LABEL and r.image_source == base.image_source
@@ -156,7 +168,7 @@ def test_stamped_variant_is_its_own_row_with_the_card_image(tmp_path):
 def test_stamp_label_joins_stamp_names_and_falls_back_to_base_finishes(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
         {"stamp": ["Pokémon Center", "staff"]}])})
-    rows = by_id(tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW))
+    rows = by_id(tcgdex.fetch(make(routes)[0], tmp_path, now=NOW))
     r = rows["pokemon:sv01:1:pokemon-center-staff"]
     assert r.finishes == rows["pokemon:sv01:1"].finishes == ("normal",)
 
@@ -164,7 +176,7 @@ def test_stamp_label_joins_stamp_names_and_falls_back_to_base_finishes(tmp_path)
 def test_first_edition_stamp_is_a_finish_not_a_row(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
         {"type": "holo", "subtype": "shadowless", "stamp": ["1st-edition"]}])})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
     assert data.rows[0].finishes == ("first_edition", "holo", "normal")
 
@@ -172,7 +184,7 @@ def test_first_edition_stamp_is_a_finish_not_a_row(tmp_path):
 def test_stamp_that_slugs_to_nothing_only_adds_its_finish(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
         {"type": "reverse", "stamp": ["スタッフ"]}])})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
     assert data.rows[0].finishes == ("normal", "reverse")
 
@@ -180,13 +192,13 @@ def test_stamp_that_slugs_to_nothing_only_adds_its_finish(tmp_path):
 def test_same_stamp_on_two_finishes_is_one_row(tmp_path):
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
         {"type": "normal", "stamp": ["set-logo"]}, {"type": "reverse", "stamp": ["set-logo"]}])})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert sorted(r.id for r in data.rows) == ["pokemon:sv01:1", "pokemon:sv01:1:set-logo"]
     assert by_id(data)["pokemon:sv01:1:set-logo"].finishes == ("normal", "reverse")
 
 
 def test_cache_entry_fields(tmp_path):
-    tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW)
+    tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
     entry = json.loads((tmp_path / "tcgdex" / "en.json").read_text())["sv01-001"]
     assert entry["rarity"] == "Common" and entry["local_id"] == "001" and entry["image"] == IMG
     assert entry["name"] == "Pineco" and entry["set"] == "sv01" and entry["fetched_at"] == NOW.isoformat()
@@ -197,15 +209,15 @@ def test_cache_entry_fields(tmp_path):
 def test_v1_cache_entries_are_refetched(tmp_path):
     write_cache(tmp_path, "en", {"sv01-001": {"cm": 5, "variant_cms": [], "image": "i", "fetched_at": OLD}})
     client, requested_urls = make(en_routes())
-    data = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(client, tmp_path, now=NOW)
     assert "/en/cards/sv01-001" in requested_urls
     assert by_id(data)["pokemon:sv01:1"].image_source == IMG + "/high.webp"
 
 
 def test_cached_cards_are_not_refetched(tmp_path):
-    tcgdex.fetch(make(en_routes())[0], tmp_path, langs=("en",), now=NOW)
+    tcgdex.fetch(make(en_routes())[0], tmp_path, now=NOW)
     client, calls = make(en_routes())
-    data = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW + timedelta(days=30))
+    data = tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=30))
     assert "/en/cards/sv01-001" not in calls
     assert set(by_id(data)) == {"pokemon:sv01:1", "pokemon:sv01:1:set-logo"}
     assert by_id(data)["pokemon:sv01:1:set-logo"].finishes == ("normal",)
@@ -213,31 +225,31 @@ def test_cached_cards_are_not_refetched(tmp_path):
 
 def test_cached_card_without_image_is_refetched_after_7_days(tmp_path):
     no_image = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", image=None)})
-    tcgdex.fetch(make(no_image)[0], tmp_path, langs=("en",), now=NOW)
+    tcgdex.fetch(make(no_image)[0], tmp_path, now=NOW)
     client, calls = make(en_routes())
-    tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW + timedelta(days=3))
+    tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=3))
     assert "/en/cards/sv01-001" not in calls
-    data = tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW + timedelta(days=8))
+    data = tcgdex.fetch(client, tmp_path, now=NOW + timedelta(days=8))
     assert "/en/cards/sv01-001" in calls
     assert by_id(data)["pokemon:sv01:1"].image_source == IMG + "/high.webp"
 
 
 def test_set_without_release_date(tmp_path):
     routes = en_routes(**{"/en/sets/sv01": {"id": "sv01", "name": "S", "cards": []}})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert [(s.code, s.released_at) for s in data.sets] == [("sv01", None)]
 
 
 def test_card_404_is_skipped(tmp_path):
     routes = en_routes()
     del routes["/en/cards/sv01-001"]
-    assert tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW).rows == []
+    assert tcgdex.fetch(make(routes)[0], tmp_path, now=NOW).rows == []
 
 
 def test_other_errors_raise_source_error(tmp_path):
     client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(500)))
     with pytest.raises(SourceError):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
 
 
 def test_failed_card_keeps_the_cards_fetched_in_the_cache(tmp_path):
@@ -257,7 +269,7 @@ def test_failed_card_keeps_the_cards_fetched_in_the_cache(tmp_path):
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
     with pytest.raises(SourceError):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
     cached = json.loads((tmp_path / "tcgdex" / "en.json").read_text())
     assert set(cached) == {"sv01-001", "sv01-003"}
 
@@ -265,21 +277,21 @@ def test_failed_card_keeps_the_cards_fetched_in_the_cache(tmp_path):
 def test_ids_with_reserved_characters_are_escaped_in_urls(tmp_path):
     def handler(request):
         routes = {
-            "/v2/ja/sets": [{"id": "SM1+"}],
-            "/v2/ja/sets/SM1%2B": {"id": "SM1+", "name": "J", "cards": [{"id": "SM1+-001", "localId": "001"}]},
-            "/v2/ja/cards/SM1%2B-001": card("SM1+-001", "001"),
+            "/v2/en/sets": [{"id": "SM1+"}],
+            "/v2/en/sets/SM1%2B": {"id": "SM1+", "name": "J", "cards": [{"id": "SM1+-001", "localId": "001"}]},
+            "/v2/en/cards/SM1%2B-001": card("SM1+-001", "001"),
         }
         path = request.url.raw_path.decode()
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
-    data = tcgdex.fetch(client, tmp_path, langs=("ja",), now=NOW)
-    assert [r.id for r in data.rows] == ["pokemon:sm1+-ja:1"]
+    data = tcgdex.fetch(client, tmp_path, now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sm1+:1"]
 
 
 def test_set_detail_404_skips_the_set(tmp_path, caplog):
     routes = en_routes(**{"/en/sets": [{"id": "gone"}, {"id": "sv01"}]})
-    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(make(routes)[0], tmp_path, now=NOW)
     assert {s.code for s in data.sets} == {"sv01"} and "pokemon:sv01:1" in by_id(data)
     assert "gone" in caplog.text
 
@@ -294,7 +306,7 @@ def test_set_detail_500_raises_source_error(tmp_path):
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
     with pytest.raises(SourceError):
-        tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, now=NOW)
 
 
 def test_transient_errors_are_retried(tmp_path):
@@ -308,7 +320,7 @@ def test_transient_errors_are_retried(tmp_path):
             return httpx.Response(503)
         return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
 
-    data = tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, langs=("en",), now=NOW)
+    data = tcgdex.fetch(httpx.Client(transport=httpx.MockTransport(handler)), tmp_path, now=NOW)
     assert "pokemon:sv01:1" in by_id(data)
 
 
@@ -327,7 +339,7 @@ def test_interrupt_saves_fetched_cards_and_cancels_the_rest(tmp_path, monkeypatc
     monkeypatch.setattr(tcgdex, "_read_card", interrupted)
     monkeypatch.setattr(tcgdex, "MAX_WORKERS", 1)
     with pytest.raises(KeyboardInterrupt):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
     cached = json.loads((tmp_path / "tcgdex" / "en.json").read_text())
     assert set(cached) == {"sv01-001", "sv01-002"}
     assert sum(p.startswith("/en/cards/") for p in calls) < len(ids)
@@ -340,108 +352,5 @@ def test_progress_is_saved_every_save_every_cards(tmp_path, monkeypatch, caplog)
     client, _ = make(routes)
     monkeypatch.setattr(tcgdex, "SAVE_EVERY", 2)
     with caplog.at_level("INFO"):
-        tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
+        tcgdex.fetch(client, tmp_path, now=NOW)
     assert "en 2/5 cards fetched" in caplog.text and "en 4/5 cards fetched" in caplog.text
-
-
-def lang_routes(lang, cards, set_id="sv01"):
-    """An extra language's set list and set details listing `cards` (card ids)."""
-    return {
-        f"/{lang}/sets": [{"id": set_id}],
-        f"/{lang}/sets/{set_id}": {"id": set_id, "name": f"{lang} name", "serie": {"id": "sv"},
-                                   "cards": [{"id": c, "localId": c[-3:]} for c in cards]},
-    }
-
-
-def translated_routes():
-    routes = full_routes()
-    routes.update(lang_routes("fr", ["sv01-001"]))
-    routes.update(lang_routes("de", ["sv01-001"]))
-    routes.update(lang_routes("es", ["sv01-002"]))
-    return routes
-
-
-EXTRA = ("fr", "de", "es")
-
-
-def test_international_rows_list_every_language_whose_set_details_have_the_card(tmp_path):
-    rows = by_id(tcgdex.fetch(make(translated_routes())[0], tmp_path, extra_langs=EXTRA, now=NOW))
-    assert rows["pokemon:sv01:1"].languages == ("de", "en", "fr")
-    assert rows["pokemon:sv01:1:" + STAMP_LABEL].languages == ("de", "en", "fr")
-    assert rows["pokemon:sv1a-ja:1"].languages == ("ja",)
-
-
-def test_extra_language_fields_other_than_languages_stay_from_english(tmp_path):
-    rows = by_id(tcgdex.fetch(make(translated_routes())[0], tmp_path, extra_langs=EXTRA, now=NOW))
-    r = rows["pokemon:sv01:1"]
-    assert (r.name, r.image_source, r.source_key) == ("Pineco", IMG + "/high.webp", "en:sv01-001")
-
-
-def test_extra_languages_make_no_card_requests(tmp_path):
-    client, calls = make(translated_routes())
-    tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW)
-    assert not [p for p in calls if p.split("/")[1] in EXTRA and "/cards/" in p]
-
-
-def test_extra_language_failure_is_a_warning_and_leaves_it_out(tmp_path, caplog):
-    routes = translated_routes()
-
-    def handler(request):
-        path = request.url.path.removeprefix("/v2")
-        if path == "/de/sets":
-            return httpx.Response(500)
-        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
-
-    client = httpx.Client(transport=httpx.MockTransport(handler))
-    rows = by_id(tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW))
-    assert rows["pokemon:sv01:1"].languages == ("en", "fr")
-    assert any(r.levelname == "WARNING" and "de" in r.getMessage() for r in caplog.records)
-
-
-def test_extra_language_set_detail_failure_leaves_the_language_out(tmp_path, caplog):
-    routes = translated_routes()
-
-    def handler(request):
-        path = request.url.path.removeprefix("/v2")
-        if path == "/fr/sets/sv01":
-            return httpx.Response(500)
-        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
-
-    client = httpx.Client(transport=httpx.MockTransport(handler))
-    rows = by_id(tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW))
-    assert rows["pokemon:sv01:1"].languages == ("de", "en")
-    assert any(r.levelname == "WARNING" and "fr" in r.getMessage() for r in caplog.records)
-
-
-def test_extra_language_pocket_and_unknown_sets_are_not_read(tmp_path):
-    routes = en_routes(**{
-        "/en/sets": [{"id": "sv01"}, {"id": "A1"}],
-        "/en/sets/A1": {"id": "A1", "name": "Genetic Apex", "serie": {"id": "tcgp"}, "cards": []},
-        "/fr/sets": [{"id": "sv01"}, {"id": "A1"}, {"id": "2013bw"}],
-        "/fr/sets/sv01": {"id": "sv01", "cards": [{"id": "sv01-001"}]},
-    })
-    client, calls = make(routes)
-    tcgdex.fetch(client, tmp_path, langs=("en",), extra_langs=("fr",), now=NOW)
-    assert "/fr/sets/sv01" in calls
-    assert "/fr/sets/A1" not in calls and "/fr/sets/2013bw" not in calls
-
-
-def test_extra_language_set_details_are_cached(tmp_path):
-    tcgdex.fetch(make(translated_routes())[0], tmp_path, extra_langs=EXTRA, now=NOW)
-    client, calls = make(translated_routes())
-    rows = by_id(tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW + timedelta(days=3)))
-    assert rows["pokemon:sv01:1"].languages == ("de", "en", "fr")
-    assert not [p for p in calls if p.split("/")[1] in EXTRA and p.count("/") > 2]
-    client, calls = make(translated_routes())
-    tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW + timedelta(days=8))
-    assert "/fr/sets/sv01" in calls
-
-
-def test_extra_languages_are_read_only_with_english(tmp_path):
-    client, calls = make(translated_routes())
-    tcgdex.fetch(client, tmp_path, langs=("ja",), extra_langs=EXTRA, now=NOW)
-    assert not [p for p in calls if p.split("/")[1] in EXTRA]
-
-
-def test_default_extra_languages_are_the_international_ones():
-    assert set(tcgdex.INTERNATIONAL) == {"fr", "de", "it", "es", "es-mx", "pt", "pt-br", "pt-pt", "nl", "pl", "ru"}

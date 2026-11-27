@@ -14,7 +14,7 @@ finishes it exists in as attributes. The catalog holds no market ids and no pric
 | Game | Source | Terms |
 | --- | --- | --- |
 | Magic | [Scryfall](https://scryfall.com) `default_cards` bulk file and sets (English objects only) | Not openly licensed: accepted exception (below) |
-| Pokémon | [TCGdex](https://tcgdex.dev) (EN + JA; international rows list `en` plus the languages TCGdex has translated the card into, which can be incomplete for old sets) | MIT |
+| Pokémon | [TCGdex](https://tcgdex.dev) (EN) | MIT |
 | Lorcana | [LorcanaJSON](https://lorcanajson.org) (EN, FR, DE, IT) | Open fan project over Ravensburger's data, used under its Community Code Policy |
 | One Piece | [punk-records](https://github.com/buhbbl/punk-records) (EN + JA, from the official card lists) | Pipeline AGPL-3.0; card data © Bandai/Shueisha |
 | Yu-Gi-Oh! | [YGOPRODeck](https://ygoprodeck.com/api-guide/) API v7 (TCG printings) | Not openly licensed: accepted exception (below) |

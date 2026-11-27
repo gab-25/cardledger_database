@@ -1,16 +1,11 @@
-"""TCGdex's public API for Pokémon (English and Japanese): one row per printing, stamped variants included.
+"""TCGdex's public API for Pokémon, English only: one row per printing, stamped variants included.
 
 TCGdex has no bulk file: a card is read with one request each. What was read is cached in a local folder
-(`<cache>/tcgdex/{lang}.json`) so a run only asks for new cards, and for cards still without an image once they are
+(`<cache>/tcgdex/en.json`) so a run only asks for new cards, and for cards still without an image once they are
 a week old. TCG Pocket (serie `tcgp`) is a digital game: its sets are dropped before any card is read.
 
 A card's `variants_detailed` lists its printings; a stamped one (a set-logo, a staff or a 1st edition stamp) is a row
 of its own with the card's image (1st edition excepted), the others only add their finish to the card.
-
-An English card's `languages` are `en` plus every other international language whose set details list the card id
-(TCGdex's translations use the English set and card ids). Those languages are read from their set lists and set
-details only, never card by card; set details are cached in `<cache>/tcgdex/{lang}-sets.json` and read again once
-they are a week old. A language that fails is left out of this run with a warning.
 """
 
 import json
@@ -34,8 +29,7 @@ RETRY_AFTER = timedelta(days=7)
 SAVE_EVERY = 1000  # cards between cache saves and progress lines
 POCKET = "tcgp"  # TCGdex serie id of TCG Pocket
 FIRST_EDITION = "1st-edition"  # stamp label of 1st edition printings
-# TCGdex's international languages (same set and card ids as English); the Asian ones are regional sets of their own
-INTERNATIONAL = ("fr", "de", "it", "es", "es-mx", "pt", "pt-br", "pt-pt", "nl", "pl", "ru")
+LANG = "en"  # the only language read
 
 
 def _get(client, url, *, missing_ok=False):
@@ -159,59 +153,23 @@ def _fetch_language(client, cache_dir, lang, now):
     return details, cache
 
 
-def _set_is_stale(entry, now):
-    """Cached set details are read again when missing, malformed or `RETRY_AFTER` old."""
-    try:
-        return not isinstance(entry["cards"], list) or now - datetime.fromisoformat(entry["fetched_at"]) > RETRY_AFTER
-    except (KeyError, TypeError, ValueError):
-        return True
-
-
-def _fetch_translations(client, cache_dir, lang, set_ids, now):
-    """The ids of the cards each of `set_ids` lists in `lang` (sets the language lacks are left out), or None when a
-    request fails. Set details are cached and read again once they are `RETRY_AFTER` old; what was read is saved on
-    the way out, so a failed run keeps it."""
-    pool = ThreadPoolExecutor(MAX_WORKERS)
-    cache_key = f"{lang}-sets"
-    cache = _load_cache(cache_dir, cache_key)
-    try:
-        listed = {s["id"] for s in _get(client, f"{BASE}/{lang}/sets")}
-        wanted = [i for i in set_ids if i in listed and _set_is_stale(cache.get(i), now)]
-        for set_id, d in zip(wanted, pool.map(
-            lambda i: _get(client, f"{BASE}/{lang}/sets/{quote(i, safe='')}", missing_ok=True), wanted
-        )):
-            cache[set_id] = {"cards": [c["id"] for c in (d or {}).get("cards") or []], "fetched_at": now.isoformat()}
-        logger.info("TCGdex: %s sets=%d (read=%d)", lang, len(listed & set(set_ids)), len(wanted))
-        return {i: set(cache[i]["cards"]) for i in set_ids if i in listed}
-    except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
-        logger.warning("TCGdex: %s left out of languages: %s: %s", lang, type(exc).__name__, exc)
-        return None
-    finally:
-        pool.shutdown(wait=False, cancel_futures=True)
-        _save_cache(cache_dir, cache_key, cache)
-
-
-def _rows(lang, details, cache, translations=None):
-    """`translations`: extra language -> set id -> card ids, for the English rows' languages."""
-    translations = translations or {}
+def _rows(details, cache):
     sets, rows = [], []
     for d in details:
-        code = d["id"].lower() + ("-ja" if lang == "ja" else "")
+        code = d["id"].lower()
         released = date.fromisoformat(d["releaseDate"]) if d.get("releaseDate") else None
-        sets.append(CardSet(code, d["name"], released, "ja" if lang == "ja" else ""))
+        sets.append(CardSet(code, d["name"], released))
         for c in d.get("cards") or []:
             entry = cache.get(c["id"])
             if not entry:
                 continue
             number = normalize_number(entry.get("local_id"))
-            languages = ("ja",) if lang == "ja" else tuple(sorted({"en"} | {
-                t for t, cards in translations.items() if c["id"] in cards.get(d["id"], ())}))
             image = entry.get("image") or ""
             base = Row(
                 id=row_id("pokemon", code, number), kind="card", name=entry.get("name") or "", set_code=code,
-                number=number, variant="", rarity=entry.get("rarity") or "", languages=languages,
+                number=number, variant="", rarity=entry.get("rarity") or "", languages=("en",),
                 finishes=tuple(entry["finishes"]), category="",
-                image_source=(image + "/high.webp")[:500] if image else "", source_key=f"{lang}:{c['id']}",
+                image_source=(image + "/high.webp")[:500] if image else "", source_key=f"{LANG}:{c['id']}",
             )
             rows.append(base)
             stamp_finishes = entry.get("stamp_finishes") or {}
@@ -223,26 +181,12 @@ def _rows(lang, details, cache, translations=None):
     return sets, rows
 
 
-def fetch(client: httpx.Client, cache_dir: Path, langs=("en", "ja"), now: datetime | None = None,
-          extra_langs=INTERNATIONAL) -> SourceData:
-    """Pokémon rows and sets, one language after the other. Set codes are TCGdex's set ids lower-cased, with "-ja"
-    after the Japanese ones (TCGdex's English and Japanese ids overlap: sv8 and SV8). With English, `extra_langs`
-    add their language to the English cards they list."""
+def fetch(client: httpx.Client, cache_dir: Path, now: datetime | None = None) -> SourceData:
+    """Pokémon rows and sets in English. Set codes are TCGdex's set ids lower-cased."""
     now = now or datetime.now(UTC)
-    fetched = {lang: _fetch_language(client, cache_dir, lang, now) for lang in langs}
-    translations = {}
-    if "en" in fetched:
-        set_ids = [d["id"] for d in fetched["en"][0]]
-        for extra in extra_langs:
-            cards = _fetch_translations(client, cache_dir, extra, set_ids, now)
-            if cards is not None:
-                translations[extra] = cards
-    sets, rows = [], []
+    details, cache = _fetch_language(client, cache_dir, LANG, now)
     try:
-        for lang, (details, cache) in fetched.items():
-            lang_sets, lang_rows = _rows(lang, details, cache, translations if lang == "en" else None)
-            sets += lang_sets
-            rows += lang_rows
+        sets, rows = _rows(details, cache)
     except (ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"TCGdex: {type(exc).__name__}: {exc}") from exc
     return SourceData(rows=rows, sets=sets)
