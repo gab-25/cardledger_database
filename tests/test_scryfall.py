@@ -8,7 +8,7 @@ import pytest
 from cardledger_database.model import CardSet, SourceError
 from cardledger_database.sources import scryfall
 
-BULK_FILE_URL = "https://data.scryfall.io/all-cards/all-cards-20261126222307.jsonl.gz"
+BULK_FILE_URL = "https://data.scryfall.io/default-cards/default-cards-20261126220624.jsonl.gz"
 UPDATED_AT = "2026-11-26T22:06:24.338+00:00"
 
 
@@ -50,10 +50,10 @@ SETS = {"object": "list", "has_more": False, "data": [
 ]}
 
 
-def bulk_index(updated_at=UPDATED_AT, kinds=("oracle_cards", "default_cards", "all_cards")):
+def bulk_index(updated_at=UPDATED_AT, kinds=("oracle_cards", "default_cards")):
     return {"object": "list", "has_more": False, "data": [
         {"object": "bulk_data", "type": t, "updated_at": updated_at,
-         "jsonl_download_uri": BULK_FILE_URL if t == "all_cards" else f"https://data/{t}.jsonl.gz"}
+         "jsonl_download_uri": BULK_FILE_URL if t == "default_cards" else f"https://data/{t}.jsonl.gz"}
         for t in kinds]}
 
 
@@ -124,7 +124,7 @@ def test_token_is_in_its_own_set(tmp_path):
 def test_digital_cards_sets_and_art_series_are_excluded(tmp_path):
     data = scryfall.fetch(client(), tmp_path)
     keys = {r.source_key for r in data.rows}
-    assert keys == {"ab12", "dfc1", "tok1", "ja1", "star1", "noimg"}
+    assert keys == {"ab12", "dfc1", "tok1", "star1", "noimg"}
     assert "ylea" not in {s.code for s in data.sets}
 
 
@@ -134,9 +134,11 @@ def test_sets_without_release_date(tmp_path):
     assert sets["lea"] == CardSet("lea", "Limited Edition Alpha", date(1993, 8, 5))
 
 
-def test_non_english_only_card_keeps_its_language(tmp_path):
-    r = by_id(scryfall.fetch(client(), tmp_path))["mtg:jpn:5"]
-    assert r.languages == ("ja",) and r.finishes == ("etched",)
+def test_non_english_object_is_skipped_and_counted(tmp_path, caplog):
+    caplog.set_level("INFO")
+    data = scryfall.fetch(client(), tmp_path)
+    assert "mtg:jpn:5" not in by_id(data)
+    assert "1 not english" in caplog.text
 
 
 def test_collector_number_with_symbol_is_kept(tmp_path):
@@ -144,65 +146,26 @@ def test_collector_number_with_symbol_is_kept(tmp_path):
     assert r.number == "123★"
 
 
-def test_languages_of_a_printing_are_one_row_with_the_english_fields(tmp_path):
-    body = jsonl_gz([
-        card("lea", "161", "0de", name="Schwarzer Lotus", lang="de",
-             image_uris={"large": "https://img/de.jpg"}, rarity="uncommon"),
-        card("lea", "161", "zen", name="Black Lotus", lang="en", image_uris={"large": "https://img/en.jpg"}),
-        card("lea", "161", "1ja", name="ブラック・ロータス", lang="ja", image_uris={"large": "https://img/ja.jpg"}),
-    ])
+def test_other_languages_of_a_printing_add_nothing(tmp_path):
+    body = jsonl_gz([card("lea", "161", "b", name="Schwarzer Lotus", lang="de", finishes=["etched"]),
+                     card("lea", "161", "a", finishes=["nonfoil"])])
     rows = scryfall.fetch(client(body=body), tmp_path).rows
-    assert len(rows) == 1
-    r = rows[0]
-    assert r.id == "mtg:lea:161" and r.languages == ("de", "en", "ja")
-    assert (r.name, r.rarity, r.image_source, r.source_key) == ("Black Lotus", "rare", "https://img/en.jpg", "zen")
+    assert [(r.id, r.source_key, r.name, r.languages, r.finishes) for r in rows] == [
+        ("mtg:lea:161", "a", "Black Lotus", ("en",), ("nonfoil",))]
 
 
-def test_printing_only_in_japanese_takes_its_fields(tmp_path):
-    body = jsonl_gz([card("war", "1★", "j1", name="ボーラス", lang="ja", image_uris={"large": "https://img/j.jpg"})])
-    r = scryfall.fetch(client(body=body), tmp_path).rows[0]
-    assert (r.id, r.languages, r.name, r.image_source, r.source_key) == (
-        "mtg:war:1★", ("ja",), "ボーラス", "https://img/j.jpg", "j1")
+def test_same_english_printing_twice_is_left_to_assemble(tmp_path):
+    body = jsonl_gz([card("lea", "161", "a"), card("lea", "161", "b")])
+    rows = scryfall.fetch(client(body=body), tmp_path).rows
+    assert [(r.id, r.source_key) for r in rows] == [("mtg:lea:161", "a"), ("mtg:lea:161", "b")]
 
 
-def test_finishes_are_united_across_languages(tmp_path):
-    body = jsonl_gz([card("lea", "161", "a", finishes=["nonfoil"]),
-                     card("lea", "161", "b", lang="de", finishes=["foil"]),
-                     card("lea", "161", "c", lang="ja", finishes=["etched", "foil"])])
-    assert scryfall.fetch(client(body=body), tmp_path).rows[0].finishes == ("etched", "foil", "nonfoil")
-
-
-@pytest.mark.parametrize("order", [(0, 1, 2), (2, 1, 0), (1, 2, 0)])
-def test_representative_without_english_does_not_depend_on_line_order(tmp_path, order):
-    objs = [card("lea", "161", "b2", name="Loto B", lang="it"),
-            card("lea", "161", "a1", name="Loto A", lang="it"),
-            card("lea", "161", "0", name="Lotus noir", lang="fr")]
-    body = jsonl_gz([objs[i] for i in order])
-    r = scryfall.fetch(client(body=body), tmp_path).rows[0]
-    assert (r.name, r.source_key, r.languages) == ("Lotus noir", "0", ("fr", "it"))
-    two = jsonl_gz([objs[i] for i in order if i != 2])
-    r = scryfall.fetch(client(body=two), tmp_path / "x").rows[0]
-    assert (r.name, r.source_key) == ("Loto A", "a1")
-
-
-def test_excluded_language_object_does_not_join_the_printing(tmp_path):
-    body = jsonl_gz([card("lea", "161", "a"), card("lea", "161", "b", lang="de", digital=True)])
-    assert scryfall.fetch(client(body=body), tmp_path).rows[0].languages == ("en",)
-
-
-def test_bulk_lookup_uses_all_cards(tmp_path):
-    scryfall.fetch(client(), tmp_path)
-    assert BULK_FILE_URL in requested_urls
-    assert not any("default_cards" in u for u in requested_urls)
-    assert [p.name.split("-")[0] for p in (tmp_path / "scryfall").iterdir()] == ["all_cards"]
-
-
-def test_old_default_cards_cache_is_removed_after_download(tmp_path):
+def test_old_all_cards_cache_is_removed_after_download(tmp_path):
     folder = tmp_path / "scryfall"
     folder.mkdir()
-    (folder / "default_cards-2026-11-20.jsonl.gz").write_bytes(b"old")
+    (folder / "all_cards-2026-11-20.jsonl.gz").write_bytes(b"old")
     scryfall.fetch(client(), tmp_path)
-    assert [p.name for p in folder.iterdir()] == [f"all_cards-{'2026-11-26T22-06-24.338-00-00'}.jsonl.gz"]
+    assert [p.name for p in folder.iterdir()] == ["default_cards-2026-11-26T22-06-24.338-00-00.jsonl.gz"]
 
 
 def test_api_requests_ask_for_json(tmp_path):
@@ -234,7 +197,7 @@ def test_failed_download_keeps_the_previous_cache(tmp_path):
 
 def test_bad_shape_is_source_error(tmp_path):
     with pytest.raises(SourceError):
-        scryfall.fetch(client(index=bulk_index(kinds=("oracle_cards", "default_cards"))), tmp_path)
+        scryfall.fetch(client(index=bulk_index(kinds=("oracle_cards",))), tmp_path)
 
 
 def test_broken_bulk_file_is_source_error(tmp_path):
@@ -252,17 +215,3 @@ def test_image_prefers_large_then_png_then_normal(uris, expected):
     assert scryfall._image({"image_uris": uris}) == expected
     assert scryfall._image({"image_uris": None, "card_faces": [{"image_uris": uris}, {"image_uris": {"large": "B"}}]}) \
         == expected
-
-
-@pytest.mark.parametrize("lang, expected", [
-    ("zhs", "zh-hans"), ("zht", "zh-hant"), ("ph", "x-phyrexian"), ("en", "en"), ("qya", "qya"), ("XX", "xx"),
-])
-def test_scryfall_lang_is_mapped_to_iso(lang, expected):
-    assert scryfall.iso_lang(lang) == expected
-
-
-def test_row_languages_are_iso_and_english_still_wins(tmp_path):
-    body = jsonl_gz([card("lea", "161", "z", name="黑莲花", lang="zhs"), card("lea", "161", "y", lang="zht"),
-                     card("lea", "161", "x", lang="ph"), card("lea", "161", "w", name="Black Lotus")])
-    r = scryfall.fetch(client(body=body), tmp_path).rows[0]
-    assert r.languages == ("en", "x-phyrexian", "zh-hans", "zh-hant") and r.source_key == "w"
