@@ -9,7 +9,7 @@ import os
 import threading
 import time
 from collections.abc import Iterator
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from email.utils import parsedate_to_datetime
@@ -31,6 +31,7 @@ ATTEMPTS = 3
 BACKOFF = (0.5, 1, 2)  # seconds to wait after a failed attempt, when another one follows
 MAX_RETRY_AFTER = 60  # a longer Retry-After is capped
 WHITE = 255  # under the transparent pixels of a PNG
+PROGRESS_EVERY = 1000  # unique URLs between two progress logs
 
 logger = logging.getLogger(__name__)
 
@@ -237,8 +238,16 @@ def host(slug: str, catalog: GameCatalog, client: httpx.Client, cache_dir: Path)
     """The catalog with each row's `image` / `image_large` set to its renditions' bucket keys ("" when the source
     image can't be had), and the counts of unique source URLs. Rows without `image_source` are left as they are."""
     urls = list(dict.fromkeys(r.image_source for r in catalog.rows if r.image_source))
+    results: dict[str, tuple[tuple[str, str] | None, bool]] = {}
+    counts = {"downloaded": 0, "cached": 0, "failed": 0}
     with _pool() as pool:
-        results = dict(zip(urls, pool.map(lambda url: _safe(slug, url, client, cache_dir), urls)))
+        futures = {pool.submit(_safe, slug, url, client, cache_dir): url for url in urls}
+        for future in as_completed(futures):
+            keys, cached = results[futures[future]] = future.result()
+            counts["failed" if keys is None else "cached" if cached else "downloaded"] += 1
+            if len(results) % PROGRESS_EVERY == 0 or len(results) == len(urls):
+                logger.info("%s: images %d/%d downloaded=%d cached=%d failed=%d", slug, len(results), len(urls),
+                            counts["downloaded"], counts["cached"], counts["failed"])
     rows = []
     for row in catalog.rows:
         if row.image_source:
@@ -246,8 +255,7 @@ def host(slug: str, catalog: GameCatalog, client: httpx.Client, cache_dir: Path)
             small, large = keys or ("", "")
             row = replace(row, image=small, image_large=large)
         rows.append(row)
-    found = [cached for keys, cached in results.values() if keys is not None]
-    stats = ImageStats(downloaded=found.count(False), cached=found.count(True), failed=len(urls) - len(found))
+    stats = ImageStats(**counts)
     return replace(catalog, rows=rows), stats
 
 

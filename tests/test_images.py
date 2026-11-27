@@ -1,5 +1,6 @@
 import hashlib
 import json
+import time
 
 import cv2
 import httpx
@@ -266,3 +267,34 @@ def test_cancel_drops_the_queued_downloads(tmp_path):
         images.host("x", catalog_with(*rows), c, tmp_path)
     assert len(requested_urls) <= images.MAX_PARALLEL + 1  # each busy worker made one attempt, the queue none
     assert not images._cancel.is_set()  # the next run works again
+
+
+def test_progress_is_logged_every_batch_and_at_the_end(tmp_path, monkeypatch, caplog):
+    monkeypatch.setattr(images, "PROGRESS_EVERY", 2)
+    (tmp_path / "images" / "src").mkdir(parents=True)
+    (tmp_path / "images" / "src" / hashlib.sha1(b"http://h/small.png").hexdigest()).write_bytes(PNG_SMALL)
+    urls = ["http://h/a.png", "http://h/small.png", "http://h/missing.png", "http://h/b.jpg", "http://h/a.png"]
+    rows = [card(f"x:s:{i}", image_source=url) for i, url in enumerate(urls)]
+    with caplog.at_level("INFO", logger="cardledger_database.images"):
+        _, stats = images.host("x", catalog_with(*rows), client(), tmp_path)
+    progress = [r.getMessage() for r in caplog.records if ": images " in r.getMessage()]
+    assert [m.split()[2] for m in progress] == ["2/4", "4/4"]
+    assert progress[-1] == "x: images 4/4 downloaded=2 cached=1 failed=1"
+    assert stats == images.ImageStats(downloaded=2, cached=1, failed=1)
+
+
+def test_rows_keep_their_order_whatever_the_completion_order(tmp_path, monkeypatch):
+    real = images._safe
+
+    def slow_first(slug, url, client, cache_dir):
+        if url == "http://h/a.png":
+            time.sleep(0.05)  # done last
+        return real(slug, url, client, cache_dir)
+
+    monkeypatch.setattr(images, "_safe", slow_first)
+    rows = [card(f"x:s:{i}", image_source=url)
+            for i, url in enumerate(["http://h/a.png", "http://h/b.jpg", "http://h/small.png"])]
+    cat, _ = images.host("x", catalog_with(*rows), client(), tmp_path)
+    assert [r.id for r in cat.rows] == ["x:s:0", "x:s:1", "x:s:2"]
+    digests = [hashlib.sha256(d).hexdigest() for d in (PNG_A, JPEG_B, PNG_SMALL)]
+    assert [r.image for r in cat.rows] == [f"images/v1/x/{d}-s.webp" for d in digests]
