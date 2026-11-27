@@ -1,5 +1,6 @@
 """LorcanaJSON's public card data for Lorcana: one row per printing, languages from its four language files."""
 
+import logging
 from datetime import date
 
 import httpx
@@ -8,6 +9,8 @@ from ..model import CardSet, Row, SourceData, SourceError, finish, normalize_num
 
 URL = "https://lorcanajson.org/files/current/{lang}/allCards.json"
 LANGUAGES = ("en", "fr", "de", "it")
+
+logger = logging.getLogger(__name__)
 
 
 def _load(client: httpx.Client, lang: str) -> dict:
@@ -34,7 +37,11 @@ def fetch(client: httpx.Client) -> SourceData:
             released = date.fromisoformat(s["releaseDate"]) if s.get("releaseDate") else None
             sets.append(CardSet(str(code).lower(), s["name"], released))
         rows = []
+        no_number = 0
         for card in english["cards"]:
+            if card.get("number") is None or not str(card["number"]).strip():
+                no_number += 1  # no collector number, no stable id
+                continue
             # Promos keep their base setCode but carry a promoGrouping (P1, D23, ...): that is their own set.
             set_code = str(card.get("promoGrouping") or card["setCode"]).lower()
             number = normalize_number(str(card["number"]))
@@ -48,4 +55,6 @@ def fetch(client: httpx.Client) -> SourceData:
             ))
     except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"LorcanaJSON: {type(exc).__name__}: {exc}") from exc
+    if no_number:
+        logger.warning("LorcanaJSON: %d cards without a number skipped", no_number)
     return SourceData(rows=rows, sets=sets)

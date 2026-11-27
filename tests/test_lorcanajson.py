@@ -91,3 +91,11 @@ def test_promo_grouping_is_its_own_set_and_variant_is_in_the_id():
     assert rows["lorcana:p1:20"].set_code == "p1" and rows["lorcana:p1:20"].source_key == "678"
     assert rows["lorcana:1:7:a"].variant == "a" and rows["lorcana:1:20"].variant == ""
     assert {s.code for s in data.sets} == {"1", "q1"}
+
+
+def test_card_without_number_is_skipped_with_a_warning(caplog):
+    payload = {"sets": SETS, "cards": [card(5, "1", 5), card(6, "1", None), card(7, "1", "")]}
+    with caplog.at_level("WARNING"):
+        data = lorcanajson.fetch(client({**ALL, "en": payload}))
+    assert set(by_id(data)) == {"lorcana:1:5"}
+    assert "2 cards without a number" in caplog.text
