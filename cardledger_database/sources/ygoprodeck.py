@@ -1,11 +1,11 @@
-"""YGOPRODeck's API v7 for Yu-Gi-Oh!: one row per TCG set number and rarity. Not openly licensed: YGOPRODeck allows
+"""YGOPRODeck's API v7 for Yu-Gi-Oh!: one row per TCG set number (as printed, so "LOB-001", "LOB-EN001" and
+"LOB-E001" are three rows: the European numbering does not follow the American one) and rarity. Not openly licensed: YGOPRODeck allows
 at most 20 requests a second (more blocks the IP for an hour) and asks for its data to be downloaded once and cached
 and for its images not to be hotlinked. Both answers are cached for a day, so a run makes two requests at most."""
 
 import json
 import logging
 import os
-import re
 import time
 from collections import Counter, defaultdict
 from datetime import date
@@ -19,8 +19,6 @@ from ..model import CardSet, Row, SourceData, SourceError, row_id, slug
 CARDS_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
 SETS_URL = "https://db.ygoprodeck.com/api/v7/cardsets.php"
 CACHE_MAX_AGE = 24 * 3600  # seconds
-# A set number: prefix, region letters (EN, E, ...; "" on the oldest printings) and the number in the set.
-NUMBER = re.compile(r"^([A-Z0-9]+)-([A-Z]{0,2})(\d+[A-Z]?)$")
 
 logger = logging.getLogger(__name__)
 
@@ -71,13 +69,9 @@ def _cached(client: httpx.Client, url: str, path: Path, check) -> list:
     return result
 
 
-def _parse(number: str) -> tuple[str, str]:
-    """(set code, number for the id): region letters dropped when the number parses, else as printed."""
-    m = NUMBER.match(number)
-    if m:
-        prefix, _region, digits = m.groups()
-        return prefix.lower(), f"{prefix}-{digits}"
-    return slug(number.split("-", 1)[0]), number
+def _set_code(number: str) -> str:
+    """The set of a printed set number: its part before the first "-" ("LOB-EN001" -> "lob"), or the whole number."""
+    return slug(number.split("-", 1)[0])
 
 
 def _rows(cards: list) -> list[Row]:
@@ -87,9 +81,9 @@ def _rows(cards: list) -> list[Row]:
         image = images[0]["image_url"] if len(images) == 1 else ""
         for printing in card.get("card_sets") or []:
             number, rarity = printing["set_code"], printing["set_rarity"]
-            set_code, id_number = _parse(number)
+            set_code = _set_code(number)
             rows.append(Row(
-                id=row_id("yugioh", set_code, id_number, slug(rarity)), kind="card", name=card["name"],
+                id=row_id("yugioh", set_code, number, slug(rarity)), kind="card", name=card["name"],
                 set_code=set_code, number=number, variant=slug(rarity), rarity=rarity, languages=("en",),
                 finishes=(), category="", image_source=image, source_key=f"{card['id']}:{number}:{rarity}",
             ))

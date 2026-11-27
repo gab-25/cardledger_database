@@ -59,21 +59,26 @@ def by_id(data):
 
 def test_each_set_number_and_rarity_is_a_row(tmp_path):
     rows = by_id(ygoprodeck.fetch(client(), tmp_path))
-    assert rows["yugioh:lob:LOB-001:ultra-rare"].number == "LOB-EN001"
-    assert "yugioh:lob:LOB-001:secret-rare" in rows             # same number, second rarity
-    r = rows["yugioh:lob:LOB-001:secret-rare"]
+    assert rows["yugioh:lob:LOB-EN001:ultra-rare"].number == "LOB-EN001"
+    assert "yugioh:lob:LOB-EN001:secret-rare" in rows           # same number, second rarity
+    r = rows["yugioh:lob:LOB-EN001:secret-rare"]
     assert (r.kind, r.name, r.set_code, r.variant, r.rarity, r.languages, r.finishes, r.category) == (
         "card", "Blue-Eyes White Dragon", "lob", "secret-rare", "Secret Rare", ("en",), (), "")
     assert r.source_key == "89631139:LOB-EN001:Secret Rare"
-    assert rows["yugioh:sdk:SDK-001:common"].number == "SDK-E001"
-    assert rows["yugioh:db2:DB2-001:super-rare"].set_code == "db2"
+    assert rows["yugioh:sdk:SDK-E001:common"].number == "SDK-E001"
+    assert rows["yugioh:db2:DB2-EN001:super-rare"].set_code == "db2"
 
 
-def test_region_letters_out_of_the_id_merge_old_and_new_numbers(tmp_path):
-    cards = {"data": [card(89631139, "Blue-Eyes White Dragon", [("LOB-EN001", "Ultra Rare"), ("LOB-001", "Ultra Rare")])]}
-    data = ygoprodeck.fetch(client(cards), tmp_path)
-    same = [r for r in data.rows if r.id == "yugioh:lob:LOB-001:ultra-rare"]
-    assert sorted(r.number for r in same) == ["LOB-001", "LOB-EN001"]  # assemble merges them by id
+def test_numbers_with_other_region_letters_are_other_rows(tmp_path):
+    cards = {"data": [card(89631139, "Blue-Eyes White Dragon", [("LOB-EN001", "Ultra Rare"), ("LOB-001", "Ultra Rare")]),
+                      card(41392891, "Fissure", [("SDY-E024", "Common")]),
+                      card(93221206, "Ancient Elf", [("SDY-024", "Common")]),
+                      card(5, "Sub-lettered", [("SBC1-ENC09", "Common")])]}
+    rows = by_id(ygoprodeck.fetch(client(cards), tmp_path))
+    assert {"yugioh:lob:LOB-EN001:ultra-rare", "yugioh:lob:LOB-001:ultra-rare"} <= rows.keys()
+    assert rows["yugioh:sdy:SDY-E024:common"].name == "Fissure"
+    assert rows["yugioh:sdy:SDY-024:common"].name == "Ancient Elf"
+    assert rows["yugioh:sbc1:SBC1-ENC09:common"].set_code == "sbc1"
 
 
 def test_set_name_and_date_from_cardsets(tmp_path):
@@ -109,7 +114,7 @@ def test_unparsable_number_is_not_merged(tmp_path):
 def test_image_only_for_single_artwork(tmp_path):
     rows = by_id(ygoprodeck.fetch(client(), tmp_path))
     assert rows["yugioh:lob:LOB-005:ultra-rare"].image_source == "https://images.ygoprodeck.com/images/cards/46986414.jpg"
-    assert rows["yugioh:lob:LOB-001:secret-rare"].image_source == ""  # 4 artworks
+    assert rows["yugioh:lob:LOB-EN001:secret-rare"].image_source == ""  # 4 artworks
 
 
 def test_cached_responses_are_reused_for_a_day(tmp_path):
