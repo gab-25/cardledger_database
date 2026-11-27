@@ -49,7 +49,7 @@ def large(image_id):
 
 
 GROUP = {
-    "fr": printing("OGN-007a", language="FR", images=("fr",)),
+    "fr": printing("OGN-007a", language="FR", images=("fr",), finish="etched", rank=0),
     "foil": printing("OGN-007a", finish="foil", images=("foil",)),
     "plain": printing("OGN-007a", images=("plain",), rank=2),
     "alt": printing("OGN-007a", art="altart", images=("alt",)),
@@ -58,9 +58,9 @@ GROUP = {
 }
 
 
-def test_finishes_and_languages_of_a_group_are_one_row():
+def test_english_finishes_of_a_group_are_one_row():
     r = by_id(fetch(GROUP))["riftbound:ogn:7A"]
-    assert r.finishes == ("foil", "normal") and r.languages == ("en", "fr")
+    assert r.finishes == ("foil", "normal") and r.languages == ("en",)
     assert r.image_source == large("plain")
     assert (r.kind, r.name, r.set_code, r.number, r.variant, r.rarity, r.category, r.source_key) == (
         "card", "Annie, Fiery", "ogn", "7A", "", "Epic", "", "plain")
@@ -107,8 +107,23 @@ def test_group_takes_its_english_plain_printing():
 
 
 def test_a_printing_with_an_image_beats_one_without():
+    p = {"bare": printing("OGN-001", images=()), "foil": printing("OGN-001", finish="foil", images=("foil",))}
+    assert fetch(p).rows[0].image_source == large("foil")
+
+
+def test_representative_is_english_even_when_another_language_ranks_better():
     p = {"bare": printing("OGN-001", images=()), "sc": printing("OGN-001", language="SC", images=("sc",))}
-    assert fetch(p).rows[0].image_source == large("sc")
+    r = fetch(p).rows[0]
+    assert (r.source_key, r.image_source, r.languages) == ("bare", "", ("en",))
+
+
+def test_group_without_an_english_printing_has_no_row(caplog):
+    p = {"sc": printing("OGN-002", language="SC"), "fr": printing("OGN-002", language="FR", finish="foil"),
+         "en": printing("OGN-001")}
+    with caplog.at_level("INFO"):
+        data = fetch(p)
+    assert set(by_id(data)) == {"riftbound:ogn:1"}
+    assert "1 groups without an English printing" in caplog.text
 
 
 def test_choice_does_not_depend_on_order():
