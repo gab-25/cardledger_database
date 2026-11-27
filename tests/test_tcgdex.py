@@ -342,3 +342,106 @@ def test_progress_is_saved_every_save_every_cards(tmp_path, monkeypatch, caplog)
     with caplog.at_level("INFO"):
         tcgdex.fetch(client, tmp_path, langs=("en",), now=NOW)
     assert "en 2/5 cards fetched" in caplog.text and "en 4/5 cards fetched" in caplog.text
+
+
+def lang_routes(lang, cards, set_id="sv01"):
+    """An extra language's set list and set details listing `cards` (card ids)."""
+    return {
+        f"/{lang}/sets": [{"id": set_id}],
+        f"/{lang}/sets/{set_id}": {"id": set_id, "name": f"{lang} name", "serie": {"id": "sv"},
+                                   "cards": [{"id": c, "localId": c[-3:]} for c in cards]},
+    }
+
+
+def translated_routes():
+    routes = full_routes()
+    routes.update(lang_routes("fr", ["sv01-001"]))
+    routes.update(lang_routes("de", ["sv01-001"]))
+    routes.update(lang_routes("es", ["sv01-002"]))
+    return routes
+
+
+EXTRA = ("fr", "de", "es")
+
+
+def test_international_rows_list_every_language_whose_set_details_have_the_card(tmp_path):
+    rows = by_id(tcgdex.fetch(make(translated_routes())[0], tmp_path, extra_langs=EXTRA, now=NOW))
+    assert rows["pokemon:sv01:1"].languages == ("de", "en", "fr")
+    assert rows["pokemon:sv01:1:" + STAMP_LABEL].languages == ("de", "en", "fr")
+    assert rows["pokemon:sv1a-ja:1"].languages == ("ja",)
+
+
+def test_extra_language_fields_other_than_languages_stay_from_english(tmp_path):
+    rows = by_id(tcgdex.fetch(make(translated_routes())[0], tmp_path, extra_langs=EXTRA, now=NOW))
+    r = rows["pokemon:sv01:1"]
+    assert (r.name, r.image_source, r.source_key) == ("Pineco", IMG + "/high.webp", "en:sv01-001")
+
+
+def test_extra_languages_make_no_card_requests(tmp_path):
+    client, calls = make(translated_routes())
+    tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW)
+    assert not [p for p in calls if p.split("/")[1] in EXTRA and "/cards/" in p]
+
+
+def test_extra_language_failure_is_a_warning_and_leaves_it_out(tmp_path, caplog):
+    routes = translated_routes()
+
+    def handler(request):
+        path = request.url.path.removeprefix("/v2")
+        if path == "/de/sets":
+            return httpx.Response(500)
+        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    rows = by_id(tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW))
+    assert rows["pokemon:sv01:1"].languages == ("en", "fr")
+    assert any(r.levelname == "WARNING" and "de" in r.getMessage() for r in caplog.records)
+
+
+def test_extra_language_set_detail_failure_leaves_the_language_out(tmp_path, caplog):
+    routes = translated_routes()
+
+    def handler(request):
+        path = request.url.path.removeprefix("/v2")
+        if path == "/fr/sets/sv01":
+            return httpx.Response(500)
+        return httpx.Response(200, json=routes[path]) if path in routes else httpx.Response(404)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    rows = by_id(tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW))
+    assert rows["pokemon:sv01:1"].languages == ("de", "en")
+    assert any(r.levelname == "WARNING" and "fr" in r.getMessage() for r in caplog.records)
+
+
+def test_extra_language_pocket_and_unknown_sets_are_not_read(tmp_path):
+    routes = en_routes(**{
+        "/en/sets": [{"id": "sv01"}, {"id": "A1"}],
+        "/en/sets/A1": {"id": "A1", "name": "Genetic Apex", "serie": {"id": "tcgp"}, "cards": []},
+        "/fr/sets": [{"id": "sv01"}, {"id": "A1"}, {"id": "2013bw"}],
+        "/fr/sets/sv01": {"id": "sv01", "cards": [{"id": "sv01-001"}]},
+    })
+    client, calls = make(routes)
+    tcgdex.fetch(client, tmp_path, langs=("en",), extra_langs=("fr",), now=NOW)
+    assert "/fr/sets/sv01" in calls
+    assert "/fr/sets/A1" not in calls and "/fr/sets/2013bw" not in calls
+
+
+def test_extra_language_set_details_are_cached(tmp_path):
+    tcgdex.fetch(make(translated_routes())[0], tmp_path, extra_langs=EXTRA, now=NOW)
+    client, calls = make(translated_routes())
+    rows = by_id(tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW + timedelta(days=3)))
+    assert rows["pokemon:sv01:1"].languages == ("de", "en", "fr")
+    assert not [p for p in calls if p.split("/")[1] in EXTRA and p.count("/") > 2]
+    client, calls = make(translated_routes())
+    tcgdex.fetch(client, tmp_path, extra_langs=EXTRA, now=NOW + timedelta(days=8))
+    assert "/fr/sets/sv01" in calls
+
+
+def test_extra_languages_are_read_only_with_english(tmp_path):
+    client, calls = make(translated_routes())
+    tcgdex.fetch(client, tmp_path, langs=("ja",), extra_langs=EXTRA, now=NOW)
+    assert not [p for p in calls if p.split("/")[1] in EXTRA]
+
+
+def test_default_extra_languages_are_the_international_ones():
+    assert set(tcgdex.INTERNATIONAL) == {"fr", "de", "it", "es", "es-mx", "pt", "pt-br", "pt-pt", "nl", "pl", "ru"}
