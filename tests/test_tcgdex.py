@@ -157,8 +157,24 @@ def test_stamp_label_joins_stamp_names_and_falls_back_to_base_finishes(tmp_path)
     routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
         {"stamp": ["Pokémon Center", "staff"]}])})
     rows = by_id(tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW))
-    r = rows["pokemon:sv01:1:pok-mon-center-staff"]
+    r = rows["pokemon:sv01:1:pokemon-center-staff"]
     assert r.finishes == rows["pokemon:sv01:1"].finishes == ("normal",)
+
+
+def test_first_edition_stamp_is_a_finish_not_a_row(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"type": "holo", "subtype": "shadowless", "stamp": ["1st-edition"]}])})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
+    assert data.rows[0].finishes == ("first_edition", "holo", "normal")
+
+
+def test_stamp_that_slugs_to_nothing_only_adds_its_finish(tmp_path):
+    routes = en_routes(**{"/en/cards/sv01-001": card("sv01-001", "001", detailed=[
+        {"type": "reverse", "stamp": ["スタッフ"]}])})
+    data = tcgdex.fetch(make(routes)[0], tmp_path, langs=("en",), now=NOW)
+    assert [r.id for r in data.rows] == ["pokemon:sv01:1"]
+    assert data.rows[0].finishes == ("normal", "reverse")
 
 
 def test_same_stamp_on_two_finishes_is_one_row(tmp_path):

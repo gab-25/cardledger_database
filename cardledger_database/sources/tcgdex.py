@@ -5,7 +5,7 @@ TCGdex has no bulk file: a card is read with one request each. What was read is 
 a week old. TCG Pocket (serie `tcgp`) is a digital game: its sets are dropped before any card is read.
 
 A card's `variants_detailed` lists its printings; a stamped one (a set-logo, a staff or a 1st edition stamp) is a row
-of its own with the card's image, the others only add their finish to the card.
+of its own with the card's image (1st edition excepted), the others only add their finish to the card.
 """
 
 import json
@@ -28,6 +28,7 @@ MAX_WORKERS = 4
 RETRY_AFTER = timedelta(days=7)
 SAVE_EVERY = 1000  # cards between cache saves and progress lines
 POCKET = "tcgp"  # TCGdex serie id of TCG Pocket
+FIRST_EDITION = "1st-edition"  # stamp label of 1st edition printings
 
 
 def _get(client, url, *, missing_ok=False):
@@ -65,7 +66,8 @@ def _needs_fetch(entry, now):
 
 def _read_card(client, lang, card_id, set_id, now):
     """The card's cache entry. Its finishes are the true `variants` flags plus the type of every unstamped
-    `variants_detailed` entry; a stamped entry is a printing of its own, labelled by its stamp names."""
+    `variants_detailed` entry; a stamped entry is a printing of its own, labelled by its stamp names. The 1st edition
+    stamp is a finish, and a stamp whose label slugs to nothing makes no row (it would take the card's id)."""
     data = _get(client, f"{BASE}/{lang}/cards/{quote(card_id, safe='')}", missing_ok=True)
     if data is None:
         return None
@@ -73,8 +75,11 @@ def _read_card(client, lang, card_id, set_id, now):
     stamps: dict[str, set[str]] = {}
     for v in data.get("variants_detailed") or []:
         kind = finish(v["type"]) if v.get("type") else ""
-        if v.get("stamp"):
-            label = "-".join(slug(str(name)) for name in v["stamp"])
+        label = "-".join(filter(None, (slug(str(name)) for name in v.get("stamp") or [])))
+        if label == FIRST_EDITION:  # a finish, already a variant flag of the card
+            finishes.add("first_edition")
+            label = ""
+        if label:
             stamps.setdefault(label, set()).update({kind} - {""})
         elif kind:
             finishes.add(kind)

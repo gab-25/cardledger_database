@@ -26,4 +26,5 @@ def test_row_id():
 
 def test_slug_and_finish():
     assert slug("Ultra Rare") == "ultra-rare" and slug(" Secret  Rare! ") == "secret-rare"
+    assert slug("Pokémon Center") == "pokemon-center" and slug("ポケモン") == ""
     assert finish("firstEdition") == "first_edition" and finish("Non Foil") == "non_foil"

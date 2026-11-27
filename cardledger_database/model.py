@@ -1,6 +1,7 @@
 """The data model: the games, the printings a source returns and the assembled catalog."""
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import date
 
@@ -86,8 +87,10 @@ def sealed_id(game: str, key: str) -> str:
 
 
 def slug(value: str) -> str:
-    """Lower case, runs of anything but [a-z0-9] become "-", trimmed: "Ultra Rare" -> "ultra-rare"."""
-    return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    """Accents folded, lower case, runs of anything but [a-z0-9] become "-", trimmed: "Ultra Rare" -> "ultra-rare",
+    "Pokémon Center" -> "pokemon-center". What does not fold to ASCII (Japanese) is dropped."""
+    folded = "".join(c for c in unicodedata.normalize("NFKD", value) if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", "-", folded.lower()).strip("-")
 
 
 def finish(value: str) -> str:
