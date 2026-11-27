@@ -23,8 +23,12 @@ FR = {"sets": SETS, "cards": [card(5, "1", 5)]}
 EMPTY = {"sets": {}, "cards": []}
 
 
+requested: list[str] = []
+
+
 def client(payloads, status=200):
     def handler(request):
+        requested.append(str(request.url))
         for lang, payload in payloads.items():
             if str(request.url) == lorcanajson.URL.format(lang=lang):
                 return httpx.Response(status, json=payload)
@@ -40,16 +44,22 @@ def by_id(data):
 ALL = {"en": EN, "fr": FR, "de": EN, "it": EMPTY}
 
 
-def test_rows_from_english_with_languages_from_all_files():
+def test_rows_from_english():
     data = lorcanajson.fetch(client(ALL))
     r = by_id(data)["lorcana:1:5"]
-    assert r.languages == ("de", "en", "fr") and r.number == "5" and r.rarity == "Uncommon"
+    assert r.languages == ("en",) and r.number == "5" and r.rarity == "Uncommon"
     assert r.finishes == ("silver",)
     assert r.image_source == "https://img/full5.avif" and r.image == "" and r.image_large == ""
     assert r.kind == "card" and r.name == "Elsa - Snow Queen" and r.set_code == "1"
     assert r.variant == "" and r.category == "" and r.source_key == "5"
-    assert by_id(data)["lorcana:1:6"].languages == ("de", "en")
+    assert by_id(data)["lorcana:1:6"].languages == ("en",)
     assert by_id(data)["lorcana:1:6"].finishes == ("non_foil", "silver")
+
+
+def test_only_the_english_file_is_requested():
+    requested.clear()
+    lorcanajson.fetch(client(ALL))
+    assert requested == [lorcanajson.URL.format(lang="en")]
 
 
 def test_no_market_ids_and_promo_set_is_its_own_set():
@@ -63,8 +73,6 @@ def test_no_market_ids_and_promo_set_is_its_own_set():
 
 @pytest.mark.parametrize("bad", [{"sets": {}}, []])
 def test_bad_shape_is_source_error(bad):
-    with pytest.raises(SourceError):
-        lorcanajson.fetch(client({**ALL, "fr": bad}))
     with pytest.raises(SourceError):
         lorcanajson.fetch(client({**ALL, "en": bad}))
 

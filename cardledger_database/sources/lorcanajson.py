@@ -1,4 +1,4 @@
-"""LorcanaJSON's public card data for Lorcana: one row per printing, languages from its four language files."""
+"""LorcanaJSON's public card data for Lorcana, English only: one row per printing of the English file."""
 
 import logging
 from datetime import date
@@ -8,7 +8,6 @@ import httpx
 from ..model import CardSet, Row, SourceData, SourceError, finish, normalize_number, row_id
 
 URL = "https://lorcanajson.org/files/current/{lang}/allCards.json"
-LANGUAGES = ("en", "fr", "de", "it")
 
 logger = logging.getLogger(__name__)
 
@@ -27,11 +26,9 @@ def _finishes(card: dict) -> tuple[str, ...]:
 
 
 def fetch(client: httpx.Client) -> SourceData:
-    """Rows from the English file; a row's languages are the files holding a card with the same numeric id."""
+    """Rows from the English file."""
     try:
-        files = {lang: _load(client, lang) for lang in LANGUAGES}
-        ids = {lang: {card["id"] for card in data["cards"]} for lang, data in files.items()}
-        english = files["en"]
+        english = _load(client, "en")
         sets = []
         for code, s in english["sets"].items():
             released = date.fromisoformat(s["releaseDate"]) if s.get("releaseDate") else None
@@ -49,7 +46,7 @@ def fetch(client: httpx.Client) -> SourceData:
             rows.append(Row(
                 id=row_id("lorcana", set_code, number, variant), kind="card", name=card["fullName"], set_code=set_code,
                 number=number, variant=variant, rarity=card.get("rarity") or "",
-                languages=tuple(sorted(lang for lang in LANGUAGES if card["id"] in ids[lang])),
+                languages=("en",),
                 finishes=_finishes(card), category="",
                 image_source=((card.get("images") or {}).get("full") or "")[:500], source_key=str(card["id"]),
             ))
