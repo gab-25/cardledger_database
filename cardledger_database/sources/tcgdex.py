@@ -153,7 +153,7 @@ def _fetch_language(client, cache_dir, lang, now):
 
 
 def _rows(lang, details, cache):
-    languages = ("ja",) if lang == "ja" else ()
+    languages = ("ja",) if lang == "ja" else ("en",)
     sets, rows = [], []
     for d in details:
         code = d["id"].lower() + ("-ja" if lang == "ja" else "")

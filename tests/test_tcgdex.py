@@ -89,7 +89,7 @@ def test_set_code_is_tcgdex_id_and_japanese_is_suffixed(tmp_path):
     rows = by_id(data)
     assert rows["pokemon:sv1a-ja:1"].languages == ("ja",)
     assert rows["pokemon:sv1a-ja:1"].name == "トロピウス"
-    assert rows["pokemon:sv01:1"].languages == ()
+    assert rows["pokemon:sv01:1"].languages == ("en",)
 
 
 def test_row_fields(tmp_path):
